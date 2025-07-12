@@ -16,7 +16,7 @@ export default function BlogListShop({ blogs, isLoading }: { blogs: BlogItem[]; 
   if (!blogs.length) {
     return (
       <div className="flex justify-center items-center py-8">
-        <p className="text-gray-500">محصولی یافت نشد</p>
+        <p className="text-gray-500">مقاله ای یافت نشد</p>
       </div>
     );
   }

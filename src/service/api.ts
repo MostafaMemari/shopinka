@@ -17,6 +17,10 @@ interface ApiResponse<T = any> {
   data: T;
 }
 
+async function getAccessToken(): Promise<string | undefined> {
+  return (await cookies()).get(COOKIE_NAMES.ACCESS_TOKEN)?.value;
+}
+
 async function setAuthCookies(accessToken: string, refreshToken?: string) {
   const cookieStore = await cookies();
 
@@ -51,7 +55,7 @@ async function refreshAccessToken(): Promise<ApiResponse> {
   } catch (error: any) {
     return {
       status: error?.response?.status ?? 401,
-      data: { message: error?.data?.message ?? 'Failed to refresh token' },
+      data: { message: error?.data?.message ?? 'خطا در تمدید توکن' },
     };
   }
 }
@@ -74,39 +78,32 @@ async function doFetch(path: string, options: FetchOptions, token?: string): Pro
 }
 
 export const shopApiFetch = async (path: string, options: FetchOptions = {}): Promise<ApiResponse> => {
-  const cookieStore = await cookies();
-  const accessToken = cookieStore.get(COOKIE_NAMES.ACCESS_TOKEN)?.value;
+  const accessToken = await getAccessToken();
 
   try {
     const data = await doFetch(path, options, accessToken);
     return { status: 200, data };
   } catch (error: any) {
     const status = error?.response?.status ?? 500;
-    const message = error?.data?.message ?? error?.message ?? 'خطایی در ارتباط با سرور رخ داده است';
 
     if (status !== 401) {
       if (process.env.NODE_ENV === 'development') {
         console.error('Shop API Error:', { path, error });
       }
-      return { status, data: { message } };
+      return { status, data: { message: error?.data?.message ?? 'خطایی رخ داده است' } };
     }
 
     const refreshResult = await refreshAccessToken();
-    if (refreshResult.status !== 200) {
-      return refreshResult;
-    }
+    if (refreshResult.status !== 200) return refreshResult;
 
-    // Retry with new token
-    const cookieStore = await cookies();
-    const newAccessToken = cookieStore.get(COOKIE_NAMES.ACCESS_TOKEN)?.value;
     try {
-      const retryData = await doFetch(path, options, newAccessToken);
+      const retryData = await doFetch(path, options, await getAccessToken());
       return { status: 200, data: retryData };
     } catch (retryError: any) {
       return {
         status: retryError?.response?.status ?? 500,
         data: {
-          message: retryError?.data?.message ?? retryError?.message ?? 'خطا در تلاش مجدد',
+          message: retryError?.data?.message ?? retryError?.message ?? 'خطای تلاش مجدد',
         },
       };
     }

@@ -8,9 +8,15 @@ import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import { mainSliderBanners, sideBanners } from '@/data/bannerData';
 
-export default function BannerSlider() {
+import { BannerItem } from '@/types/bannerType';
+
+interface BannerSliderProps {
+  mainSliderBanners: BannerItem[];
+  sideBanners: BannerItem[];
+}
+
+export default function BannerSlider({ mainSliderBanners, sideBanners }: BannerSliderProps) {
   return (
     <div className="relative mb-8 grid grid-cols-12 gap-x-4 gap-y-2">
       <div className="col-span-12 lg:col-span-8">
@@ -34,12 +40,11 @@ export default function BannerSlider() {
             <SwiperSlide key={banner.id}>
               <Link href={banner.link}>
                 <Image
-                  src={banner.image}
+                  src={banner.image.fileUrl}
                   alt=""
                   width={800}
                   height={450}
                   className="max-h-[450px] w-full object-cover"
-                  priority={banner.id === 1}
                   unoptimized
                 />
               </Link>
@@ -56,7 +61,7 @@ export default function BannerSlider() {
           {sideBanners.map((banner) => (
             <div key={banner.id}>
               <Link href={banner.link}>
-                <Image src={banner.image} alt="" width={400} height={220} className="h-full w-full rounded-lg shadow-base" />
+                <Image src={banner.image.fileUrl} alt="" width={400} height={220} className="h-full w-full rounded-lg shadow-base" />
               </Link>
             </div>
           ))}

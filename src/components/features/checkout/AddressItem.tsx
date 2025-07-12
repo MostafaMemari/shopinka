@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { AddressFormType, type AddressItem as AddressItemType } from '@/types/addressType';
-import { useAddress } from '@/hooks/reactQuery/useAddress';
+import { useAddress } from '@/hooks/reactQuery/address/useAddress';
 import useIsMdUp from '@/hooks/useIsMdUp';
 
 import AddressActions from '@/components/ui/DropDownActions';

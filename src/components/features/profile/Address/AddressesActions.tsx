@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useAddress } from '@/hooks/reactQuery/useAddress';
+import { useAddress } from '@/hooks/reactQuery/address/useAddress';
 import AddressItem from './AddressItem';
 import { AddressFormType } from '@/types/addressType';
 import LoadingSpinner from '@/components/ui/LoadingSpinner';

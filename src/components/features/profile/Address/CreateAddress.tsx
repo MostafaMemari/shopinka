@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { MdOutlineAddLocationAlt } from 'react-icons/md';
-import { useAddress } from '@/hooks/reactQuery/useAddress';
+import { useAddress } from '@/hooks/reactQuery/address/useAddress';
 import { AddressFormType, AddressItem as AddressItemType } from '@/types/addressType';
 import useIsMdUp from '@/hooks/useIsMdUp';
 import ErrorState from '../ErrorState';
@@ -27,11 +27,10 @@ export default function CreateAddress({}) {
   const handleFormSubmit = async (values: AddressFormType) => {
     createAddress(
       values,
-      () => {
+      (newAddress) => {
+        handleSelectAddress(newAddress.id);
         setModalState(false);
-        if (formRef.current) {
-          formRef.current.reset();
-        }
+        formRef.current?.reset();
       },
       (error) => {
         console.error('خطا در ارسال فرم:', error);
@@ -47,12 +46,12 @@ export default function CreateAddress({}) {
 
   useEffect(() => {
     if (isLoading) return;
-    if (addresses.length === 0) {
-      setModalState(true);
-    } else if (addresses.length > 0 && selectedAddressId === null) {
+    if (addresses.length === 0) setModalState(true);
+    else if (addresses.length > 0 && selectedAddressId === null) {
+      console.log(addresses[0].id);
       handleSelectAddress(addresses[0].id);
     }
-  }, [addresses, isLoading, selectedAddressId]);
+  }, [addresses, isLoading, setSelectedAddressId]);
 
   const actions = (
     <button className="btn-primary w-full py-3 text-sm" type="button" onClick={handleSubmit} disabled={isCreateAddressLoading}>
