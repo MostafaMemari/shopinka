@@ -16,7 +16,7 @@ function DiscountFilter() {
   useResetPageOnQueryChange(JSON.stringify(hasDiscount));
 
   return (
-    <label className="flex cursor-pointer items-center justify-between py-3" htmlFor="onlySpecialDesktop">
+    <label className="flex cursor-pointer items-center justify-between" htmlFor="onlySpecialDesktop">
       <div>فقط محصولات ویژه</div>
       <div className="relative inline-flex cursor-pointer items-center">
         <input

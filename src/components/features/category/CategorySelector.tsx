@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useCallback, useEffect } from 'react';
+import { useMemo, useCallback } from 'react';
 import { useQueryState } from 'nuqs';
 import CategoryAccordion from './CategoryAccordion';
 import CategoryItem from './CategoryItem';
@@ -28,13 +28,6 @@ const CategorySelector: React.FC<Props> = ({ queryKey = 'categoryIds', title = '
     return [category.id, ...(category.children?.flatMap(collectCategoryIds) ?? [])];
   }, []);
 
-  const allCategoryIds = useMemo(() => categories.flatMap(collectCategoryIds), [categories, collectCategoryIds]);
-
-  const isCategoryActive = useMemo(
-    () => allCategoryIds.some((id) => selectedCategories.includes(id)),
-    [allCategoryIds, selectedCategories],
-  );
-
   const handleToggle = useCallback(
     (id: number) => {
       const updated = selectedCategories.includes(id) ? selectedCategories.filter((cid) => cid !== id) : [...selectedCategories, id];
@@ -48,7 +41,7 @@ const CategorySelector: React.FC<Props> = ({ queryKey = 'categoryIds', title = '
 
   return (
     <ul>
-      <CategoryAccordion title={title} checkActive={() => isCategoryActive}>
+      <CategoryAccordion title={title} defaultOpen>
         <ul>
           {categories.map((category) => (
             <CategoryItem

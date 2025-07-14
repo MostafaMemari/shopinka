@@ -3,7 +3,6 @@
 import { FC, useState } from 'react';
 import { FiFilter } from 'react-icons/fi';
 import MobileDrawer from '@/components/ui/MobileDrawer';
-import CategorySelector from '@/components/features/category/CategorySelector';
 import SearchInput from './SearchInput';
 
 interface MobileFilterProps {

@@ -1,7 +1,9 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import { Category } from '@/types/categoryType';
-import { PlaceholderImageEnum } from '@/types/enums/PlaceholderImageEnum';
-import Image from 'next/image';
-import Link from 'next/link';
+import { HiPlus } from 'react-icons/hi';
+import CategoryItemShop from './CategoryItemShop';
 
 interface CategoryChildrenGridProps {
   name: string;
@@ -9,8 +11,43 @@ interface CategoryChildrenGridProps {
   basePath?: string;
 }
 
+function getVisibleCountByScreenWidth(width: number): number {
+  if (width < 640) return 2;
+  if (width < 768) return 3;
+  if (width < 1024) return 4;
+  if (width < 1280) return 5;
+  if (width < 1536) return 6;
+  return 8;
+}
+
+function useResponsiveVisibleCount() {
+  const [visibleCount, setVisibleCount] = useState<number | null>(null);
+
+  useEffect(() => {
+    const update = () => {
+      const width = window.innerWidth;
+      setVisibleCount(getVisibleCountByScreenWidth(width));
+    };
+
+    update();
+    const resizeListener = () => update();
+
+    window.addEventListener('resize', resizeListener);
+    return () => window.removeEventListener('resize', resizeListener);
+  }, []);
+
+  return visibleCount;
+}
+
 export default function CategoryChildrenGrid({ name, categories, basePath }: CategoryChildrenGridProps) {
-  if (!categories?.length) return null;
+  const [showAll, setShowAll] = useState(false);
+  const visibleCount = useResponsiveVisibleCount();
+
+  if (!categories?.length || visibleCount === null) return null;
+
+  const slicedCount = showAll ? categories.length : visibleCount - 1;
+  const visibleCategories = categories.slice(0, slicedCount);
+  const shouldShowMore = !showAll && categories.length > slicedCount;
 
   return (
     <section className="mb-4">
@@ -20,36 +57,38 @@ export default function CategoryChildrenGrid({ name, categories, basePath }: Cat
 
       <div
         className="
-          grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4
+          grid
+          grid-cols-2
+          sm:grid-cols-3
+          md:grid-cols-4
+          lg:grid-cols-5
+          xl:grid-cols-6
+          2xl:grid-cols-8
+          gap-4
           overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300
         "
       >
-        {categories.map((child) => (
+        {visibleCategories.map((child) => (
           <div key={child.id}>
-            <Link href={basePath ? `/${basePath}/${child.slug}` : child.slug}>
-              <div
-                className="
-              flex flex-col items-center bg-white rounded-xl shadow-sm p-3 transition
-              hover:shadow-md hover:-translate-y-1
-              "
-                tabIndex={0}
-              >
-                <div className="w-20 h-20 rounded-lg overflow-hidden flex items-center justify-center bg-gray-50 mb-2">
-                  <Image
-                    src={child?.thumbnailImage?.fileUrl || PlaceholderImageEnum.SQUARE}
-                    alt={child?.name || 'زیر دسته'}
-                    width={80}
-                    height={80}
-                    className="object-contain w-full h-full"
-                    loading="lazy"
-                    unoptimized
-                  />
-                </div>
-                <span className="text-sm font-medium text-center text-gray-800">{child?.name}</span>
-              </div>
-            </Link>
+            <CategoryItemShop
+              name={child.name}
+              imageUrl={child?.thumbnailImage?.fileUrl}
+              href={basePath ? `/${basePath}/${child.slug}` : child.slug}
+            />
           </div>
         ))}
+
+        {shouldShowMore && (
+          <div>
+            <CategoryItemShop
+              name="مشاهده بیشتر"
+              onClick={() => setShowAll(true)}
+              icon={<HiPlus className="text-gray-500" size={36} />}
+              isButton
+              className="cursor-pointer"
+            />
+          </div>
+        )}
       </div>
     </section>
   );

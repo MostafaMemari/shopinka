@@ -16,7 +16,7 @@ function StockStatusFilter() {
   useResetPageOnQueryChange(JSON.stringify(isInStock));
 
   return (
-    <label className="flex cursor-pointer items-center justify-between py-3" htmlFor="onlyAvailableDesktop">
+    <label className="flex cursor-pointer items-center justify-between" htmlFor="onlyAvailableDesktop">
       <div>فقط کالاهای موجود</div>
       <div className="relative inline-flex cursor-pointer items-center">
         <input

@@ -3,16 +3,16 @@
 import { useEffect } from 'react';
 import { useQueryState } from 'nuqs';
 
-export const useResetPageOnQueryChange = (queryKey: string) => {
-  const [_, setPage] = useQueryState('page', {
+export const useResetPageOnQueryChange = (trigger: boolean | string | number) => {
+  const [page, setPage] = useQueryState('page', {
     defaultValue: '',
     history: 'replace',
     shallow: false,
   });
 
   useEffect(() => {
-    if (queryKey) {
+    if (page !== null && page !== '') {
       setPage(null);
     }
-  }, [queryKey, setPage]);
+  }, [trigger]);
 };

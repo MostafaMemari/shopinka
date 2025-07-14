@@ -7,21 +7,23 @@ interface Props {
   title: string;
   isOpen?: boolean;
   onToggle?: () => void;
-  checkActive?: () => boolean;
   className?: string;
   children: React.ReactNode;
+  defaultOpen?: boolean;
 }
 
-const CategoryAccordion: FC<Props> = ({ title, isOpen, onToggle, checkActive, className = '', children }) => {
-  const [open, setOpen] = useState(isOpen ?? false);
+const CategoryAccordion: FC<Props> = ({ title, isOpen, onToggle, className = '', children, defaultOpen = false }) => {
+  const [open, setOpen] = useState<boolean>(() => {
+    if (isOpen !== undefined) return isOpen;
+
+    return defaultOpen;
+  });
 
   useEffect(() => {
-    if (checkActive) {
-      setOpen(checkActive());
-    } else if (isOpen !== undefined) {
+    if (isOpen !== undefined) {
       setOpen(isOpen);
     }
-  }, [isOpen, checkActive]);
+  }, [isOpen]);
 
   const toggle = () => {
     setOpen((prev) => !prev);
@@ -30,7 +32,7 @@ const CategoryAccordion: FC<Props> = ({ title, isOpen, onToggle, checkActive, cl
 
   return (
     <li className={`border-b last:border-none ${className}`}>
-      <button onClick={toggle} className="w-full flex items-center justify-between text-sm font-medium text-right cursor-pointer rounded">
+      <button onClick={toggle} className="w-full flex items-center justify-between cursor-pointer rounded">
         <span>{title}</span>
         <FiChevronDown className={`transition-transform ${open ? 'rotate-180' : ''}`} />
       </button>
