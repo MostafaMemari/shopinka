@@ -11,6 +11,7 @@ import CategoryChildrenGrid from '@/components/features/category/CategoryChildre
 import CategoryHeaderSection from '@/components/features/category/CategoryHeaderSection';
 import ProductListShop from '@/components/features/shopPage/ProductListShop';
 import SidebarFilters from '@/components/features/filter/SidebarFilters';
+import SearchInput from '@/components/features/filter/SearchInput';
 
 type PageProps = {
   searchParams: Promise<SearchParams>;
@@ -51,15 +52,23 @@ export default async function ShopPage({ searchParams, params }: PageProps) {
 
   const category = items[0];
 
-  const { items: products, pager } = await getProducts({ ...query, categoryIds: category ? [category.id] : [] });
+  const { items: products, pager } = await getProducts({
+    ...query,
+    categoryIds: query.categoryIds ? query.categoryIds : [category.id],
+  });
 
   return (
     <>
       <CategoryChildrenGrid name={category.name} basePath={`product-category/${category.slug}`} categories={category.children} />
 
-      <div className="mb-6 flex items-center justify-center gap-x-4 md:hidden">
-        <MobileFilter totalCount={pager.totalCount} type="SHOP" />
-        <MobileSortDrawer />
+      <div className="mb-4 flex flex-col gap-4 md:hidden">
+        <div className="rounded-lg bg-muted shadow-base">
+          <SearchInput />
+        </div>
+        <div className="flex items-center justify-center gap-x-4">
+          <MobileFilter totalCount={pager.totalCount} categories={category.children} type="SHOP" />
+          <MobileSortDrawer />
+        </div>
       </div>
       <div className="grid grid-cols-12 grid-rows-[60px_min(500px,_1fr)] gap-4">
         <SidebarFilters categories={category.children} />
@@ -67,7 +76,10 @@ export default async function ShopPage({ searchParams, params }: PageProps) {
           <SortBar options={PRODUCT_SORT_OPTIONS} queryKey="sortBy" />
           <ProductListShop
             initialProducts={products}
-            initialQuery={{ ...query, categoryIds: category ? [category.id] : [] }}
+            initialQuery={{
+              ...query,
+              categoryIds: query.categoryIds ? query.categoryIds : [category.id],
+            }}
             pager={pager}
           />
         </div>

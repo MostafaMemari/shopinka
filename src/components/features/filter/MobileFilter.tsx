@@ -3,15 +3,19 @@
 import { FC, useState } from 'react';
 import { FiFilter } from 'react-icons/fi';
 import MobileDrawer from '@/components/ui/MobileDrawer';
-import SearchInput from './SearchInput';
+import StockStatusFilter from '../shopPage/FilterDesktop/StockStatusFilter';
+import DiscountFilter from '../shopPage/FilterDesktop/DiscountFilter';
+import CategorySelector from '../category/CategorySelector';
+import { Category } from '@/types/categoryType';
 
 interface MobileFilterProps {
   totalCount: number;
   type?: 'BLOG' | 'SHOP';
   title?: string;
+  categories?: Category[];
 }
 
-const MobileFilter: FC<MobileFilterProps> = ({ totalCount, type, title }) => {
+const MobileFilter: FC<MobileFilterProps> = ({ totalCount, categories, title }) => {
   const [isOpenDrawer, setIsOpenDrawer] = useState(false);
 
   return (
@@ -33,10 +37,19 @@ const MobileFilter: FC<MobileFilterProps> = ({ totalCount, type, title }) => {
           </button>
         }
       >
-        <ul className="space-y-6 p-4" dir="rtl">
-          <SearchInput />
-          {/* <CategorySelector type={type} title="فیلتر بر اساس دسته‌بندی" /> */}
-        </ul>
+        <div className="flex flex-col divide-y divide-border rounded-lg overflow-hidden bg-muted shadow-base">
+          {categories && categories.length > 0 && (
+            <div className="p-4">
+              <CategorySelector title="فیلتر بر اساس دسته‌بندی" categories={categories ?? []} />
+            </div>
+          )}
+          <div className="p-4">
+            <StockStatusFilter />
+          </div>
+          <div className="p-4">
+            <DiscountFilter />
+          </div>
+        </div>
       </MobileDrawer>
     </>
   );
