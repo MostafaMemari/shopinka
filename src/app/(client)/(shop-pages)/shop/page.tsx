@@ -61,9 +61,9 @@ export default async function ShopPage({ searchParams }: PageProps) {
         <MobileFilter totalCount={pager.totalCount} type="SHOP" />
         <MobileSortDrawer />
       </div>
-      <div className="grid grid-cols-12 grid-rows-[60px_min(500px,_1fr)] gap-4">
+      <div className="grid grid-cols-12 grid-rows-[60px_min(500px,_1fr)] gap-4 space-y-6">
         <div className="col-span-4 row-span-2 hidden md:block lg:col-span-3">
-          <div className="sticky top-32 mb-4 overflow-hidden rounded-lg bg-muted shadow-base">
+          <div className="rounded-lg bg-muted shadow-base">
             <div
               dir="ltr"
               className="custom-scrollbar flex max-h-[calc(95vh_-_100px)] flex-col overflow-y-auto overflow-x-hidden px-4 py-3"
@@ -73,15 +73,18 @@ export default async function ShopPage({ searchParams }: PageProps) {
                 <ul className="space-y-6">
                   <SearchInput />
                   <PriceSelector />
-                  <CategorySelector
-                    title="فیلتر بر اساس دسته‌بندی"
-                    categories={categories.items.map((cat: Category) => cat.children).flat()}
-                  />
-                  <StockStatusFilter />
-                  <DiscountFilter />
                 </ul>
               </div>
             </div>
+          </div>
+          <div className="p-2 rounded-lg bg-muted shadow-base mt-3">
+            <CategorySelector title="فیلتر بر اساس دسته‌بندی" categories={categories.items.map((cat: Category) => cat.children).flat()} />
+          </div>
+          <div className="p-2 rounded-lg bg-muted shadow-base mt-3">
+            <StockStatusFilter />
+          </div>
+          <div className="p-2 rounded-lg bg-muted shadow-base mt-3">
+            <DiscountFilter />
           </div>
         </div>
         <div className="col-span-12 space-y-4 md:col-span-8 lg:col-span-9">

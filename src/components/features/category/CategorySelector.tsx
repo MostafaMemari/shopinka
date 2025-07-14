@@ -47,22 +47,20 @@ const CategorySelector: React.FC<Props> = ({ queryKey = 'categoryIds', title = '
   if (!categories || categories.length === 0) return null;
 
   return (
-    <div className="bg-white shadow rounded-lg p-3">
-      <ul className="space-y-1">
-        <CategoryAccordion title={title} checkActive={() => isCategoryActive}>
-          <ul className="space-y-1">
-            {categories.map((category) => (
-              <CategoryItem
-                key={category.id}
-                category={category}
-                isSelected={selectedCategories.includes(category.id)}
-                onToggle={() => handleToggle(category.id)}
-              />
-            ))}
-          </ul>
-        </CategoryAccordion>
-      </ul>
-    </div>
+    <ul>
+      <CategoryAccordion title={title} checkActive={() => isCategoryActive}>
+        <ul>
+          {categories.map((category) => (
+            <CategoryItem
+              key={category.id}
+              category={category}
+              isSelected={selectedCategories.includes(category.id)}
+              onToggle={() => handleToggle(category.id)}
+            />
+          ))}
+        </ul>
+      </CategoryAccordion>
+    </ul>
   );
 };
 
