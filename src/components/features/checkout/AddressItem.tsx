@@ -7,6 +7,7 @@ import AddressActions from '@/components/ui/DropDownActions';
 import Dialog from '@/components/ui/Dialog';
 import MobileDrawer from '@/components/ui/MobileDrawer';
 import AddressForm from './AddressForm';
+import { MdCheck } from 'react-icons/md';
 
 interface AddressItemProps {
   item: AddressItemType;
@@ -83,26 +84,16 @@ const AddressItem: React.FC<AddressItemProps> = ({ item, selectedAddressId, onSe
         role="button"
       >
         <div className="absolute top-4 left-4 z-10">
-          <div className="hidden md:block">
-            <AddressActions onDelete={handleDeleteAddress} onEdit={() => setModalState(true)} />
-          </div>
-          <div className="md:hidden">
-            <AddressActions onDelete={handleDeleteAddress} onEdit={() => setModalState(true)} />
-          </div>
+          <AddressActions onDelete={handleDeleteAddress} onEdit={() => setModalState(true)} />
         </div>
 
-        {/* رادیو انتخاب آدرس */}
         <span className="absolute right-3 top-5 flex items-center justify-center h-6 w-6">
           <span
             className={`flex items-center justify-center rounded-full border-2 transition-colors
               ${isSelected ? 'border-primary bg-primary' : 'border-gray-300 bg-white dark:bg-gray-800'}
               h-6 w-6`}
           >
-            {isSelected && (
-              <svg className="h-3.5 w-3.5 text-white" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                <path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            )}
+            {isSelected && <MdCheck className="h-4 w-4 text-white" />}
           </span>
         </span>
 

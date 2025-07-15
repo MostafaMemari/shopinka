@@ -1,4 +1,4 @@
-import React, { Children, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import { formatPrice } from '@/utils/formatter';
 import Link from 'next/link';
 
@@ -26,9 +26,6 @@ const CartSummary: React.FC<CartSummaryProps> = ({
           <div className="flex items-center justify-between gap-x-2 py-6">
             <div className="flex flex-col">
               <div className="text-sm text-text/90 lg:text-base">قیمت کالا ها ({totalQuantity})</div>
-              {/* <Link href="/checkout/cart">
-                <div className="text-blue-600 hover:underline text-sm font-normal mt-1 cursor-pointer">مشاهده سبدخرید</div>
-              </Link> */}
             </div>
 
             <div className="text-sm text-primary lg:text-base">
