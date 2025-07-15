@@ -11,6 +11,7 @@ import useIsMdUp from '@/hooks/useIsMdUp';
 import ErrorState from './ErrorState';
 import { useAuth } from '@/hooks/reactQuery/auth/useAuth';
 import { useIsMounted } from '@/hooks/useIsMounted';
+import { useLoginUser } from '@/hooks/reactQuery/auth/useLoginUser';
 
 interface ProfileFieldType {
   label: string;
@@ -20,7 +21,8 @@ interface ProfileFieldType {
 }
 
 const ProfileEditActions = () => {
-  const { user, isLoading, loginUser, error } = useAuth();
+  const { user, isLoading, error } = useAuth();
+  const loginUser = useLoginUser();
   const { changeFullName, isChangeFullNameLoading } = useChangeFullName();
   const isMounted = useIsMounted();
   const isMdUp = useIsMdUp();

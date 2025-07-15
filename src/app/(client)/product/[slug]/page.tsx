@@ -8,7 +8,6 @@ import { Metadata } from 'next';
 
 type Props = {
   params: Promise<{ slug: string }>;
-  searchParams?: { [key: string]: string | string[] | undefined };
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -57,7 +56,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function Page({ params }: Props) {
-  const { slug } = await params; // await کردن params
+  const { slug } = await params;
   const res = await fetchProductBySlug(slug);
   const product = res?.data;
 
