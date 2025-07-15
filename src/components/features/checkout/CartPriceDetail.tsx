@@ -30,7 +30,7 @@ export default function CartPriceDetail({ selectedAddressId, selectedShippingIte
       {
         addressId: selectedAddressId ?? 0,
         shippingId: selectedShippingItem?.id ?? 0,
-        description: 'testtttt',
+        description: '',
       },
       () => {},
     );

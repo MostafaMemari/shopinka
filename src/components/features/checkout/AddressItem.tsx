@@ -83,7 +83,7 @@ const AddressItem: React.FC<AddressItemProps> = ({ item, selectedAddressId, onSe
         tabIndex={0}
         role="button"
       >
-        <div className="absolute top-4 left-4 z-10">
+        <div className="absolute top-4 left-4">
           <AddressActions onDelete={handleDeleteAddress} onEdit={() => setModalState(true)} />
         </div>
 
@@ -97,7 +97,7 @@ const AddressItem: React.FC<AddressItemProps> = ({ item, selectedAddressId, onSe
           </span>
         </span>
 
-        <div className="flex flex-col gap-2 pr-9">
+        <div className="flex flex-col gap-2 px-8">
           <div className="flex items-center gap-2">
             <span className="font-semibold text-base text-gray-800 dark:text-white">
               {item.province}

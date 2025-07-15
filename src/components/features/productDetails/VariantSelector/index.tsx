@@ -97,13 +97,7 @@ export default function ProductVariants({ variants, attributes, productType, def
   const colorLabel = attributes.find((attr) => attr.type === 'COLOR')?.name || 'انتخاب رنگ';
   const buttonLabel = attributes.find((attr) => attr.type === 'BUTTON')?.name || 'انتخاب نوع';
 
-  if (productType === 'SIMPLE') {
-    return (
-      <div className="mb-4">
-        <p className="text-gray-700">مشخصات محصول:</p>
-      </div>
-    );
-  }
+  if (productType === 'SIMPLE') return null;
 
   return (
     <div className="mb-6 p-4 bg-white rounded-lg shadow-sm">
