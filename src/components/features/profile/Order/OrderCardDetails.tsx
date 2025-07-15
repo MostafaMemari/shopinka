@@ -1,8 +1,10 @@
+import Link from 'next/link';
 import { getStatusConfig } from '@/config/orderStatusConfig';
 import { OrderStatus } from '@/types/orderType';
 import { TransactionStatus } from '@/types/transactionType';
 import { formatPrice, getRemainingTime } from '@/utils/formatter';
 import React from 'react';
+import RetryPaymentButton from '../../payment/RetryPaymentButton';
 
 interface OrderCardDetailsProps {
   orderStatus: OrderStatus;
@@ -12,6 +14,7 @@ interface OrderCardDetailsProps {
   createdAt: string;
   updatedAt: string;
   expiresAt: string;
+  orderId: number;
 }
 
 function OrderCardDetails({
@@ -22,10 +25,10 @@ function OrderCardDetails({
   createdAt,
   updatedAt,
   expiresAt,
+  orderId, // ← دریافت prop
 }: OrderCardDetailsProps) {
   const config = getStatusConfig(orderStatus, transactionStatus);
   const expiresInMinutes = getRemainingTime(expiresAt);
-
   const remainingTime = orderStatus === 'PENDING' ? expiresInMinutes : null;
 
   return (
@@ -39,9 +42,12 @@ function OrderCardDetails({
 
       <div className="flex flex-col lg:flex-row gap-6 py-4">
         <div className="flex-1 flex flex-col gap-3 md:flex-row md:flex-wrap md:gap-x-6 md:gap-y-4">
-          {remainingTime && (
+          {remainingTime && remainingTime > 0 ? (
             <Item label="زمان باقی‌مانده" value={<span className="text-red-500 dark:text-red-400">{remainingTime} دقیقه</span>} />
+          ) : (
+            <Item label="زمان باقی‌مانده" value={<span className="text-gray-500 dark:text-gray-400">اتمام زمان</span>} />
           )}
+
           <Item label="شماره سفارش" value={orderNumber} />
           <Item
             label="مبلغ کل"
@@ -81,6 +87,13 @@ function OrderCardDetails({
           </div>
         )}
       </div>
+
+      {/* دکمه پرداخت مجدد اگر سفارش در حالت PENDING باشد */}
+      {orderStatus === 'PENDING' && (
+        <div className="border-t border-gray-200 dark:border-gray-700 pt-4 mt-4 text-left">
+          <RetryPaymentButton orderId={orderId} />
+        </div>
+      )}
     </div>
   );
 }

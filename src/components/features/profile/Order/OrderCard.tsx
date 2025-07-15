@@ -9,6 +9,7 @@ import { getStatusConfig } from '@/config/orderStatusConfig';
 import ProductSlider from '../ProductSlider';
 import { formatPrice, getRemainingTime } from '@/utils/formatter';
 import { OrderItem } from '@/types/orderType';
+import RetryPaymentButton from '../../payment/RetryPaymentButton';
 
 interface OrderCardProps {
   order: OrderItem;
@@ -33,9 +34,12 @@ const OrderCard: React.FC<OrderCardProps> = ({ order }) => {
 
         <div className="flex flex-col lg:flex-row gap-6">
           <div className="flex-1 flex flex-col gap-3 md:flex-row md:flex-wrap md:gap-x-6 md:gap-y-4">
-            {remainingTime && (
+            {remainingTime && remainingTime > 0 ? (
               <Item label="زمان باقی‌مانده" value={<span className="text-red-500 dark:text-red-400">{remainingTime} دقیقه</span>} />
+            ) : (
+              <Item label="زمان باقی‌مانده" value={<span className="text-gray-500 dark:text-gray-400">اتمام زمان</span>} />
             )}
+
             <Item label="شماره سفارش" value={order.orderNumber} />
             <Item
               label="مبلغ کل"
@@ -78,10 +82,15 @@ const OrderCard: React.FC<OrderCardProps> = ({ order }) => {
           </div>
         </div>
       </Link>
-
       {order.items?.length > 0 && (
         <div className="p-4 border-t border-gray-200 dark:border-gray-700 mt-4">
           <ProductSlider orderProductItems={order.items} />
+        </div>
+      )}
+
+      {order.status === 'PENDING' && (
+        <div className="border-t border-gray-200 dark:border-gray-700 p-4 mt-4 text-left">
+          <RetryPaymentButton orderId={order.id} />
         </div>
       )}
     </article>

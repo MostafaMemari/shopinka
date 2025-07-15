@@ -4,7 +4,7 @@ import OrderCardDetails from '@/components/features/profile/Order/OrderCardDetai
 import OrderItems from '@/components/features/profile/Order/OrderItems';
 import { getOrderById } from '@/service/orderService';
 import Link from 'next/link';
-import { FaChevronRight } from 'react-icons/fa';
+import { FaChevronLeft } from 'react-icons/fa';
 import { OrderItem } from '@/types/orderType';
 import { notFound } from 'next/navigation';
 
@@ -33,7 +33,7 @@ async function Page({ params }: PageProps) {
           className="btn-primary flex items-center justify-center gap-2 w-full sm:w-fit px-4 py-2 text-sm font-medium"
         >
           بازگشت
-          <FaChevronRight className="h-4 w-4" />
+          <FaChevronLeft className="h-4 w-4" />
         </Link>
       </div>
 
@@ -45,6 +45,7 @@ async function Page({ params }: PageProps) {
         createdAt={order.createdAt}
         updatedAt={order.updatedAt}
         expiresAt={order.expiresAt}
+        orderId={order.id}
       />
       <DeliveryAddress address={order.address} />
       <OrderItems items={order.items} itemCount={order.quantity} />

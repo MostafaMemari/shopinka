@@ -42,13 +42,12 @@ export const getStatusConfig = (orderStatus: OrderStatus, transactionStatus: Tra
 
   const { headerLabel, headerColor, headerIcon } = transactionConfig[transactionStatus];
 
-  // Order status configurations
   const orderStatusConfig: Record<OrderStatus, Omit<StatusConfig, 'headerLabel' | 'headerColor' | 'headerIcon'>> = {
     PENDING: {
       showProgress: true,
       progress: 10,
-      statusLabel: 'در انتظار تأیید',
-      statusDescription: 'سفارش شما ثبت شده و در انتظار تأیید پرداخت است.',
+      statusLabel: 'در انتظار پرداخت',
+      statusDescription: 'سفارش شما ثبت شده و در انتظار پرداخت است.',
       statusIcon: React.createElement(FaClock, { className: 'h-5 w-5 md:h-6 md:w-6' }),
       statusColor: 'text-yellow-500',
       progressColor: 'bg-yellow-500',
