@@ -95,6 +95,7 @@ export default async function PaymentResult({ searchParams }: PageProps) {
 
             <div className="flex w-full gap-3 mt-3">
               {order.status === 'PENDING' && <RetryPaymentButton orderId={order.id} />}
+
               {isSuccess ? (
                 <>
                   <Link href={`/profile/orders/${orderId}`} className="btn-primary w-full py-3 text-center">
@@ -106,9 +107,6 @@ export default async function PaymentResult({ searchParams }: PageProps) {
                 </>
               ) : (
                 <>
-                  <Link href={`/checkout/payment?order=${orderId}`} className="btn-primary w-full py-3 text-center">
-                    پرداخت مجدد
-                  </Link>
                   <Link href="/" className="btn-secondary w-full py-3 text-center">
                     بازگشت
                   </Link>
