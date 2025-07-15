@@ -7,7 +7,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { getStatusConfig } from '@/config/orderStatusConfig';
 import ProductSlider from '../ProductSlider';
-import { formatRemainingTime, formatPrice } from '@/utils/formatter';
+import { formatPrice, getRemainingTime } from '@/utils/formatter';
 import { OrderItem } from '@/types/orderType';
 
 interface OrderCardProps {
@@ -15,8 +15,10 @@ interface OrderCardProps {
 }
 
 const OrderCard: React.FC<OrderCardProps> = ({ order }) => {
+  const expiresInMinutes = getRemainingTime(order.expiresAt);
+
   const config = getStatusConfig(order.status, order.transaction.status);
-  const remainingTime = order.status === 'PENDING' && order.createdAt ? formatRemainingTime(order.createdAt) : null;
+  const remainingTime = order.status === 'PENDING' && order.createdAt ? expiresInMinutes : null;
 
   return (
     <article className="rounded-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md transition-shadow duration-300 mt-6">
@@ -32,7 +34,7 @@ const OrderCard: React.FC<OrderCardProps> = ({ order }) => {
         <div className="flex flex-col lg:flex-row gap-6">
           <div className="flex-1 flex flex-col gap-3 md:flex-row md:flex-wrap md:gap-x-6 md:gap-y-4">
             {remainingTime && (
-              <Item label="زمان باقی‌مانده" value={<span className="text-red-500 dark:text-red-400">{remainingTime}</span>} />
+              <Item label="زمان باقی‌مانده" value={<span className="text-red-500 dark:text-red-400">{remainingTime} دقیقه</span>} />
             )}
             <Item label="شماره سفارش" value={order.orderNumber} />
             <Item

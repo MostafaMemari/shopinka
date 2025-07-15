@@ -1,7 +1,7 @@
 import { getStatusConfig } from '@/config/orderStatusConfig';
 import { OrderStatus } from '@/types/orderType';
 import { TransactionStatus } from '@/types/transactionType';
-import { formatPrice, formatRemainingTime } from '@/utils/formatter';
+import { formatPrice, getRemainingTime } from '@/utils/formatter';
 import React from 'react';
 
 interface OrderCardDetailsProps {
@@ -11,11 +11,22 @@ interface OrderCardDetailsProps {
   paymentOrder: number;
   createdAt: string;
   updatedAt: string;
+  expiresAt: string;
 }
 
-function OrderCardDetails({ orderStatus, transactionStatus, orderNumber, paymentOrder, createdAt, updatedAt }: OrderCardDetailsProps) {
+function OrderCardDetails({
+  orderStatus,
+  transactionStatus,
+  orderNumber,
+  paymentOrder,
+  createdAt,
+  updatedAt,
+  expiresAt,
+}: OrderCardDetailsProps) {
   const config = getStatusConfig(orderStatus, transactionStatus);
-  const remainingTime = orderStatus === 'PENDING' ? formatRemainingTime(createdAt) : null;
+  const expiresInMinutes = getRemainingTime(expiresAt);
+
+  const remainingTime = orderStatus === 'PENDING' ? expiresInMinutes : null;
 
   return (
     <div className="mb-8 rounded-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm p-4">
@@ -29,7 +40,7 @@ function OrderCardDetails({ orderStatus, transactionStatus, orderNumber, payment
       <div className="flex flex-col lg:flex-row gap-6 py-4">
         <div className="flex-1 flex flex-col gap-3 md:flex-row md:flex-wrap md:gap-x-6 md:gap-y-4">
           {remainingTime && (
-            <Item label="زمان باقی‌مانده" value={<span className="text-red-500 dark:text-red-400">{remainingTime}</span>} />
+            <Item label="زمان باقی‌مانده" value={<span className="text-red-500 dark:text-red-400">{remainingTime} دقیقه</span>} />
           )}
           <Item label="شماره سفارش" value={orderNumber} />
           <Item

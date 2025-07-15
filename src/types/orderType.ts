@@ -23,6 +23,7 @@ export interface OrderItem {
   createdAt: string;
   updatedAt: string;
   address: AddressItem;
+  expiresAt: string;
   items: OrderProductItem[] | [];
   shippingInfo: null;
   shipping: ShippingItem;

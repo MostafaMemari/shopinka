@@ -44,6 +44,7 @@ async function Page({ params }: PageProps) {
         paymentOrder={order.transaction.amount}
         createdAt={order.createdAt}
         updatedAt={order.updatedAt}
+        expiresAt={order.expiresAt}
       />
       <DeliveryAddress address={order.address} />
       <OrderItems items={order.items} itemCount={order.quantity} />

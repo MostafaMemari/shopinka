@@ -1,5 +1,7 @@
 import CheckoutProgress from '@/components/features/checkout/CheckoutProgress';
+import { getOrderById } from '@/service/orderService';
 import { verifyPayment } from '@/service/paymentService';
+import { getRemainingTime } from '@/utils/formatter';
 import Link from 'next/link';
 import { BiCheckCircle, BiXCircle } from 'react-icons/bi';
 import { PiWarningCircleDuotone } from 'react-icons/pi';
@@ -28,12 +30,16 @@ export default async function Page({ searchParams }: PageProps) {
 
   const res = await verifyPayment({ Authority, Status });
 
+  const order = await getOrderById(res.payment.orderId);
+
+  const expiresInMinutes = getRemainingTime(order.expiresAt);
+
   const isSuccess = Status === 'OK' && res.status === 'success';
   const payment = res.payment || {};
   const orderId = payment.orderId || '---';
   const trackingCode = payment.invoiceNumber || '---';
   const paymentDate = payment.createdAt ? formatDate(payment.createdAt) : '---';
-  const amount = payment.amount ? formatAmount(payment.amount) : '---';
+  const amount = payment.amount ? formatAmount(payment.amount / 10) : '---';
 
   return (
     <>
@@ -76,7 +82,8 @@ export default async function Page({ searchParams }: PageProps) {
                 <div className="flex items-center gap-2 bg-yellow-50 dark:bg-yellow-900/30 rounded-md px-3 py-2">
                   <PiWarningCircleDuotone className="h-6 w-6 text-yellow-600 dark:text-yellow-400" />
                   <span className="text-xs md:text-sm text-yellow-700 dark:text-yellow-100">
-                    سفارش شما تا <b className="text-destructive">۳۵</b> دقیقه دیگر حذف خواهد شد. برای تکمیل سفارش، پرداخت را انجام دهید.
+                    سفارش شما تا <b className="text-destructive">{expiresInMinutes}</b> دقیقه دیگر حذف خواهد شد. برای تکمیل سفارش، پرداخت را
+                    انجام دهید.
                   </span>
                 </div>
                 <div className="flex items-center gap-2 bg-gray-50 dark:bg-slate-700/50 rounded-md px-3 py-2">

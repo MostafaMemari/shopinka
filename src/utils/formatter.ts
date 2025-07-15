@@ -6,3 +6,5 @@ export const formatRemainingTime = (time?: string): string => {
 };
 
 export const formatPrice = (price: number) => price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+export const getRemainingTime = (date: string) => Math.ceil((new Date(date).getTime() - new Date().getTime()) / 60000);
