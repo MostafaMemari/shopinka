@@ -4,7 +4,7 @@ import React from 'react';
 import PrimaryButton from '@/components/ui/PrimaryButton';
 import CartSummary from '@/components/features/cart/CartSummary';
 import { ShippingItem } from '@/types/shippingType';
-import { useCreatePayment } from '@/hooks/reactQuery/payment/useCreatePayment';
+import { usePayment } from '@/hooks/reactQuery/payment/usePayment';
 import CartMobileFixContainer from '../../ui/CartMobileFixContainer';
 import { formatPrice } from '@/utils/formatter';
 import { useRouter } from 'next/navigation';
@@ -23,7 +23,7 @@ export default function CartPriceDetail({ selectedAddressId, selectedShippingIte
   const isCheckoutDisabled = !selectedAddressId;
   const shippingPrice = selectedShippingItem?.price ?? 0;
 
-  const { createPayment, isCreatePaymentLoading } = useCreatePayment();
+  const { createPayment, isCreatePaymentLoading } = usePayment();
 
   const handleCreatePayment = () => {
     createPayment(

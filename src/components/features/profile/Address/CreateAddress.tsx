@@ -48,7 +48,6 @@ export default function CreateAddress({}) {
     if (isLoading) return;
     if (addresses.length === 0) setModalState(true);
     else if (addresses.length > 0 && selectedAddressId === null) {
-      console.log(addresses[0].id);
       handleSelectAddress(addresses[0].id);
     }
   }, [addresses, isLoading, setSelectedAddressId]);

@@ -1,7 +1,9 @@
 import CheckoutProgress from '@/components/features/checkout/CheckoutProgress';
+import RetryPaymentButton from '@/components/features/payment/RetryPaymentButton';
 import { getOrderById } from '@/service/orderService';
-import { verifyPayment } from '@/service/paymentService';
+import { paymentRetry } from '@/service/paymentService';
 import { getRemainingTime } from '@/utils/formatter';
+import { Button } from '@headlessui/react';
 import Link from 'next/link';
 import { BiCheckCircle, BiXCircle } from 'react-icons/bi';
 import { PiWarningCircleDuotone } from 'react-icons/pi';
@@ -22,21 +24,18 @@ const formatDate = (dateString: string) => {
 };
 
 type PageProps = {
-  searchParams: Promise<{ Authority: string; Status: 'OK' | 'NOK' }>;
+  searchParams: Promise<{ status: 'success' | 'failed'; orderId: string }>;
 };
 
-export default async function Page({ searchParams }: PageProps) {
-  const { Authority, Status } = await searchParams;
+export default async function PaymentResult({ searchParams }: PageProps) {
+  const { status, orderId } = await searchParams;
 
-  const res = await verifyPayment({ Authority, Status });
-
-  const order = await getOrderById(res.payment.orderId);
+  const order = await getOrderById(Number(orderId));
 
   const expiresInMinutes = getRemainingTime(order.expiresAt);
 
-  const isSuccess = Status === 'OK' && res.status === 'success';
-  const payment = res.payment || {};
-  const orderId = payment.orderId || '---';
+  const isSuccess = status === 'success' && order.transaction.status === 'SUCCESS';
+  const payment = order.transaction || {};
   const trackingCode = payment.invoiceNumber || '---';
   const paymentDate = payment.createdAt ? formatDate(payment.createdAt) : '---';
   const amount = payment.amount ? formatAmount(payment.amount / 10) : '---';
@@ -60,7 +59,6 @@ export default async function Page({ searchParams }: PageProps) {
             </div>
 
             <div className="w-full rounded border p-4 bg-muted/70 flex flex-col gap-y-3">
-              <span className="font-medium text-base md:text-lg mb-2">جزئیات پرداخت</span>
               <div className="flex flex-col md:flex-row items-center justify-between gap-2 text-sm md:text-base">
                 <div className="flex flex-col items-center gap-1">
                   <span>شماره پیگیری</span>
@@ -96,6 +94,7 @@ export default async function Page({ searchParams }: PageProps) {
             )}
 
             <div className="flex w-full gap-3 mt-3">
+              {order.status === 'PENDING' && <RetryPaymentButton orderId={order.id} />}
               {isSuccess ? (
                 <>
                   <Link href={`/profile/orders/${orderId}`} className="btn-primary w-full py-3 text-center">

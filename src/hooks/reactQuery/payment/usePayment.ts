@@ -4,7 +4,7 @@ import { paymentCart } from '@/service/paymentService';
 import { PaymentFormType } from '@/types/paymentType';
 import { useRouter } from 'next/navigation';
 
-export function useCreatePayment() {
+export function usePayment() {
   const queryClient = useQueryClient();
   const router = useRouter();
 
