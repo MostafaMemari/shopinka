@@ -17,8 +17,8 @@ export type TrustBadge = {
   isTest?: boolean;
 };
 
-export const defaultFooterProps = {
-  supportPhone: '021-0000000',
+export const defaultFooterData = {
+  supportPhone: '02165102415',
   supportText: '۷ روز هفته، ۲۴ ساعته پاسخگوی شما هستیم',
   subscribeText: 'از جدیدترین تخفیف ها با خبر شوید',
   copyrightText: 'کلیه حقوق این سایت متعلق به فروشگاه شاپینکا می‌باشد.',

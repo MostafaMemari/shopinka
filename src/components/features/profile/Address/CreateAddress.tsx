@@ -11,7 +11,11 @@ import AddressForm from '@/components/features/checkout/AddressForm';
 import MobileDrawer from '@/components/ui/MobileDrawer';
 import SkeletonLoader from '@/components/ui/SkeletonLoader';
 
-export default function CreateAddress({}) {
+interface CreateAddressProps {
+  onAddressCreated?: (newAddress: AddressItemType) => void;
+}
+
+export default function CreateAddress({ onAddressCreated }: CreateAddressProps) {
   const { data, isLoading, error } = useAddress({});
   const addresses: AddressItemType[] = data?.data.items || [];
   const [selectedAddressId, setSelectedAddressId] = useState<number | null>(null);
@@ -28,7 +32,7 @@ export default function CreateAddress({}) {
     createAddress(
       values,
       (newAddress) => {
-        handleSelectAddress(newAddress.id);
+        onAddressCreated?.(newAddress);
         setModalState(false);
         formRef.current?.reset();
       },

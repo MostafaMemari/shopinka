@@ -6,7 +6,6 @@ import { getCategoryBySlug } from '@/service/categoryService';
 import CategoryCirclesBanners from '@/components/features/CategoryBanners';
 import BannerSlider from '@/components/features/carousel/BannerSlider';
 import CarouselBlog from '@/components/features/blog/CarouselBlog';
-import MainBannerSlider from '@/components/features/carousel/MainBannerSlider';
 import { getBanners } from '@/service/bannerService';
 
 export default async function Home() {
