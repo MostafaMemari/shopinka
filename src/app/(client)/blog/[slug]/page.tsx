@@ -4,8 +4,58 @@ import { NoImage } from '@/types/noImageEnum';
 import BlogDetailsView from '@/components/features/blog/BlogDetailsView';
 import Sidebar from '@/components/features/blog/Sidebar';
 import { Category } from '@/types/categoryType';
+import { Metadata } from 'next';
 
-export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
+type Props = {
+  params: Promise<{ slug: string }>;
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
+};
+
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  const res = await getBlogBySlug(params.slug);
+  const blog = res?.data;
+
+  if (!blog || res.status !== 200) {
+    return {
+      title: 'مقاله پیدا نشد',
+      description: 'مقاله مورد نظر یافت نشد.',
+      robots: 'noindex, nofollow',
+    };
+  }
+
+  const seo = blog.seoMeta;
+
+  const title = seo?.title || blog.name;
+  const description = seo?.description || `خواندن مقاله ${blog.name} با بهترین قیمت از فروشگاه اینترنتی شاپینکا`;
+  const ogTitle = seo?.ogTitle || title;
+  const ogDescription = seo?.ogDescription || description;
+  const imageUrl = seo?.ogImageId ? blog.mainImage?.fileUrl : blog.mainImage?.fileUrl || 'https://shopinka.ir/default-og-image.jpg';
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: seo?.canonicalUrl,
+    },
+    openGraph: {
+      title: ogTitle,
+      description: ogDescription,
+      url: seo?.canonicalUrl,
+      images: [
+        {
+          url: imageUrl,
+          width: 1200,
+          height: 630,
+          alt: ogTitle,
+        },
+      ],
+    },
+    robots: seo?.robotsTag || 'index, follow',
+    keywords: seo.keywords?.replace(/[^آ-یa-zA-Z0-9،,\s\-]/g, ''),
+  };
+}
+
+export default async function Page({ params }: Props) {
   const { slug } = await params;
   const res = await getBlogBySlug(slug);
   const blog = res?.data;
