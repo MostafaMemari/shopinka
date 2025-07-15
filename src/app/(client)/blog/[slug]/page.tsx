@@ -11,8 +11,9 @@ type Props = {
   searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const res = await getBlogBySlug(params.slug);
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const res = await getBlogBySlug(slug);
   const blog = res?.data;
 
   if (!blog || res.status !== 200) {
@@ -26,7 +27,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   const seo = blog.seoMeta;
 
   const title = seo?.title || blog.name;
-  const description = seo?.description || `خواندن مقاله ${blog.name} با بهترین قیمت از فروشگاه اینترنتی شاپینکا`;
+  const description = seo?.description || `خواندن مقاله ${blog.name} در فروشگاه اینترنتی شاپینکا`;
   const ogTitle = seo?.ogTitle || title;
   const ogDescription = seo?.ogDescription || description;
   const imageUrl = seo?.ogImageId ? blog.mainImage?.fileUrl : blog.mainImage?.fileUrl || 'https://shopinka.ir/default-og-image.jpg';
@@ -63,20 +64,17 @@ export default async function Page({ params }: Props) {
   if (!blog || res.status !== 200) return notFound();
 
   return (
-    <>
-      <div className="grid grid-cols-12 grid-rows-[60px_min(500px,1fr)] gap-4">
-        <div className="col-span-12 space-y-4 md:col-span-8 lg:col-span-9">
-          <BlogDetailsView
-            title={blog.title}
-            content={blog.content ?? ''}
-            createdAt={blog.createdAt}
-            image={blog.mainImage?.fileUrl ? blog.mainImage?.fileUrl : NoImage.BLOG}
-            username={blog.user.fullName ?? 'نامشخص'}
-          />
-        </div>
-
-        <Sidebar categoryIds={blog.categories?.map((category: Category) => category.id)} />
+    <div className="grid grid-cols-12 grid-rows-[60px_min(500px,1fr)] gap-4">
+      <div className="col-span-12 space-y-4 md:col-span-8 lg:col-span-9">
+        <BlogDetailsView
+          title={blog.title}
+          content={blog.content ?? ''}
+          createdAt={blog.createdAt}
+          image={blog.mainImage?.fileUrl ? blog.mainImage?.fileUrl : NoImage.BLOG}
+          username={blog.user.fullName ?? 'نامشخص'}
+        />
       </div>
-    </>
+      <Sidebar categoryIds={blog.categories?.map((category: Category) => category.id) || []} />
+    </div>
   );
 }

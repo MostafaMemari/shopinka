@@ -8,11 +8,12 @@ import { Metadata } from 'next';
 
 type Props = {
   params: Promise<{ slug: string }>;
-  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
+  searchParams?: { [key: string]: string | string[] | undefined };
 };
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const res = await fetchProductBySlug(params.slug);
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const res = await fetchProductBySlug(slug);
   const product = res?.data;
 
   if (!product || res.status !== 200) {
@@ -56,7 +57,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 }
 
 export default async function Page({ params }: Props) {
-  const { slug } = await params;
+  const { slug } = await params; // await کردن params
   const res = await fetchProductBySlug(slug);
   const product = res?.data;
 
