@@ -5,9 +5,9 @@ import { HiOutlineLogout } from 'react-icons/hi';
 import { usePathname } from 'next/navigation';
 import Toast from '@/utils/swalToast';
 import { logout } from '@/service/authService';
-import { useAuth } from '@/hooks/reactQuery/auth/useAuth';
 import { useState } from 'react';
 import { profileMenuItems } from '@/data/menuData';
+import { useLogoutUser } from '@/hooks/reactQuery/auth/useLogoutUser';
 
 interface ProfileMenuProps {
   closeDropdown: () => void;
@@ -15,7 +15,7 @@ interface ProfileMenuProps {
 
 const ProfileMenu = ({ closeDropdown }: ProfileMenuProps) => {
   const pathname = usePathname();
-  const { logoutUser } = useAuth();
+  const logoutUser = useLogoutUser();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   const handleUserLogout = async () => {

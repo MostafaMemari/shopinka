@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 import PrimaryButton from '@/components/ui/PrimaryButton';
 import { errorPhoneNumberStepMessages } from './PhoneInputForm';
 import { extractTimeFromText } from '@/utils/utils';
+import { useLoginUser } from '@/hooks/reactQuery/auth/useLoginUser';
 
 export const errorOtpStepMessages: Record<number, string> = {
   400: 'کد وارد شده نادرست است.',
@@ -35,7 +36,7 @@ const otpValidationSchema = Yup.object({
 
 export default function OtpForm({ mobile, isExpired, timeLeft, formatTime, resetTimer, backUrl }: OtpFormProps) {
   const router = useRouter();
-  const { loginUser } = useAuth();
+  const loginUser = useLoginUser();
 
   const handleSubmit = async (
     values: { otp: string },

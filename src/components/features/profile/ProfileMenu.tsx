@@ -1,7 +1,7 @@
 'use client';
 
 import { profileMenuItem } from '@/data/profileMenuItem';
-import { useAuth } from '@/hooks/reactQuery/auth/useAuth';
+import { useLogoutUser } from '@/hooks/reactQuery/auth/useLogoutUser';
 import { logout } from '@/service/authService';
 import Toast from '@/utils/swalToast';
 import { cn } from '@/utils/utils';
@@ -16,7 +16,7 @@ type ProfileMenuProps = {
 
 function ProfileMenu({ onClose }: ProfileMenuProps) {
   const pathname = usePathname();
-  const { logoutUser } = useAuth();
+  const logoutUser = useLogoutUser();
   const router = useRouter();
 
   const [isLoggingOut, setIsLoggingOut] = useState(false);
