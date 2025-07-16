@@ -5,7 +5,7 @@ import AddressSection from '@/components/features/checkout/AddressSection';
 import DeliverySection from '@/components/features/checkout/DeliverySection';
 import CartPriceDetail from '@/components/features/checkout/CartPriceDetail';
 import { ShippingItem } from '@/types/shippingType';
-import { useAddress } from '@/hooks/reactQuery/address/useAddress';
+import { useAddress } from '@/hooks/address/useAddress';
 import { useShipping } from '@/hooks/reactQuery/useShipping';
 import { useAuth } from '@/hooks/reactQuery/auth/useAuth';
 import { useCart } from '@/hooks/reactQuery/cart/useCart';

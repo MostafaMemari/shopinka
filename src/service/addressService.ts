@@ -9,6 +9,8 @@ export const createAddress = async (data: AddressFormType): Promise<{ message: s
     body: cleanObject(data),
   });
 
+  console.log(res);
+
   if (res.status >= 400 || !res.data?.address) {
     throw new Error(res.data?.message || 'خطا در ایجاد آدرس');
   }

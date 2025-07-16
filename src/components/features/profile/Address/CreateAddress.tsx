@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { MdOutlineAddLocationAlt } from 'react-icons/md';
-import { useAddress } from '@/hooks/reactQuery/address/useAddress';
+import { useAddress } from '@/hooks/address/useAddress';
 import { AddressFormType, AddressItem as AddressItemType } from '@/types/addressType';
 import useIsMdUp from '@/hooks/useIsMdUp';
 import ErrorState from '../ErrorState';

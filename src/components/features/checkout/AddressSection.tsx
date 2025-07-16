@@ -20,8 +20,6 @@ export default function AddressSection({ onAddressSelect, addresses }: AddressSe
   const [selectedAddressId, setSelectedAddressId] = useState<number | null>(null);
   const [_, setModalState] = useState<boolean>(false);
 
-  console.log(addresses);
-
   useEffect(() => {
     if (addresses.length === 0) {
       setModalState(true);

@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { AddressFormType, type AddressItem as AddressItemType } from '@/types/addressType';
-import { useAddress } from '@/hooks/reactQuery/address/useAddress';
+import { useAddress } from '@/hooks/address/useAddress';
 import useIsMdUp from '@/hooks/useIsMdUp';
 
 import AddressActions from '@/components/ui/DropDownActions';
@@ -8,6 +8,7 @@ import Dialog from '@/components/ui/Dialog';
 import MobileDrawer from '@/components/ui/MobileDrawer';
 import AddressForm from './AddressForm';
 import { MdCheck } from 'react-icons/md';
+import PrimaryButton from '@/components/ui/PrimaryButton';
 
 interface AddressItemProps {
   item: AddressItemType;
@@ -60,14 +61,14 @@ const AddressItem: React.FC<AddressItemProps> = ({ item, selectedAddressId, onSe
   };
 
   const ConfirmButton = (
-    <button
+    <PrimaryButton
       className="btn-primary w-full py-3 text-base font-semibold rounded-lg transition focus:ring-2 focus:ring-primary-400 disabled:opacity-60"
       type="button"
       onClick={triggerFormSubmit}
       disabled={isCreateAddressLoading}
     >
       {isCreateAddressLoading ? 'در حال ثبت...' : 'تأیید و ادامه'}
-    </button>
+    </PrimaryButton>
   );
 
   return (
