@@ -1,3 +1,5 @@
+import { Transaction } from './transactionType';
+
 export interface PaymentFormType {
   addressId: number;
   shippingId: number;
@@ -31,12 +33,11 @@ export interface PaymentResponse {
 }
 
 export interface VerifyPaymentResponse {
-  redirectUrl: string | undefined;
-  payment: Payment;
-  status: string;
+  redirectUrl: string;
   message: string;
+  payment: Transaction;
 }
 export interface VerifyPaymentFormType {
-  Authority: string;
-  Status: 'OK' | 'NOK';
+  authority: string;
+  status: 'OK' | 'NOK';
 }

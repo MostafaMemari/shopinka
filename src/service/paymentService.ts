@@ -21,12 +21,8 @@ export const paymentRetry = async (data: { orderId: number }): Promise<PaymentRe
   return res.data;
 };
 
-export const verifyPayment = async ({ Authority, Status }: VerifyPaymentFormType): Promise<VerifyPaymentResponse> => {
-  const res = await shopApiFetch(`/payment/verify?Authority=${Authority}&Status=${Status}`, { method: 'GET' });
-
-  // if (res.status >= 400 || !res.data) {
-  //   throw new Error(res.data?.message || 'خطا در اعتبار سنجی پرداخت');
-  // }
+export const verifyPayment = async ({ authority, status }: VerifyPaymentFormType): Promise<VerifyPaymentResponse> => {
+  const res = await shopApiFetch(`/payment/verify?Authority=${authority}&Status=${status}`, { method: 'GET' });
 
   return res.data;
 };

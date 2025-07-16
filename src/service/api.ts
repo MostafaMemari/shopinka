@@ -90,6 +90,7 @@ export const shopApiFetch = async (path: string, options: FetchOptions = {}): Pr
       if (process.env.NODE_ENV === 'development') {
         console.error('Shop API Error:', { path, error });
       }
+
       return { status, data: { message: error?.data?.message ?? 'خطایی رخ داده است' } };
     }
 

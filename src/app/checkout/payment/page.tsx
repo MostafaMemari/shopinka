@@ -1,27 +1,11 @@
 import CheckoutProgress from '@/components/features/checkout/CheckoutProgress';
-import RetryPaymentButton from '@/components/features/payment/RetryPaymentButton';
+import OrderNotFound from '@/components/features/payment/OrderNotFound';
+import PaymentActions from '@/components/features/payment/PaymentActions';
+import PaymentDetails from '@/components/features/payment/PaymentDetails';
+import PaymentStatus from '@/components/features/payment/PaymentStatus';
+import PaymentWarnings from '@/components/features/payment/PaymentWarnings';
 import { getOrderById } from '@/service/orderService';
-import { paymentRetry } from '@/service/paymentService';
-import { getRemainingTime } from '@/utils/formatter';
-import { Button } from '@headlessui/react';
-import Link from 'next/link';
-import { BiCheckCircle, BiXCircle } from 'react-icons/bi';
-import { PiWarningCircleDuotone } from 'react-icons/pi';
-
-const formatAmount = (amount: number) => {
-  return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' تومان';
-};
-
-const formatDate = (dateString: string) => {
-  const date = new Date(dateString);
-  return date.toLocaleDateString('fa-IR', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-  });
-};
+import { formatAmount, formatDate, getRemainingTime } from '@/utils/formatter';
 
 type PageProps = {
   searchParams: Promise<{ status: 'success' | 'failed'; orderId: string }>;
@@ -30,10 +14,14 @@ type PageProps = {
 export default async function PaymentResult({ searchParams }: PageProps) {
   const { status, orderId } = await searchParams;
 
-  const order = await getOrderById(Number(orderId));
+  const res = await getOrderById(Number(orderId));
 
+  if (res.status !== 200 || 'message' in res.data) {
+    return <OrderNotFound />;
+  }
+
+  const order = res?.data;
   const expiresInMinutes = getRemainingTime(order.expiresAt);
-
   const isSuccess = status === 'success' && order.transaction.status === 'SUCCESS';
   const payment = order.transaction || {};
   const trackingCode = payment.invoiceNumber || '---';
@@ -46,73 +34,10 @@ export default async function PaymentResult({ searchParams }: PageProps) {
       <div className="col-span-12">
         <div className="rounded-lg bg-muted p-6 min-h-[320px] flex items-center justify-center">
           <div className="mx-auto w-full max-w-xl rounded-lg bg-background shadow p-6 flex flex-col items-center gap-y-8">
-            <div className="flex flex-col items-center gap-3">
-              {isSuccess ? <BiCheckCircle className="h-20 w-20 text-success" /> : <BiXCircle className="h-20 w-20 text-destructive" />}
-
-              <h1 className={`text-center font-bold text-lg md:text-xl ${isSuccess ? 'text-success' : 'text-destructive'}`}>
-                پرداخت سفارش {orderId} {isSuccess ? 'موفق' : 'ناموفق'} بود
-              </h1>
-
-              <p className="text-center text-muted-foreground">
-                {isSuccess ? 'پرداخت با موفقیت انجام شد. سفارش شما در حال پردازش است.' : 'پرداخت ناموفق بود. لطفاً دوباره تلاش کنید.'}
-              </p>
-            </div>
-
-            <div className="w-full rounded border p-4 bg-muted/70 flex flex-col gap-y-3">
-              <div className="flex flex-col md:flex-row items-center justify-between gap-2 text-sm md:text-base">
-                <div className="flex flex-col items-center gap-1">
-                  <span>شماره پیگیری</span>
-                  <span className="font-mono tracking-wider">{trackingCode}</span>
-                </div>
-                <div className="flex flex-col items-center gap-1">
-                  <span>تاریخ پرداخت</span>
-                  <span>{paymentDate}</span>
-                </div>
-                <div className="flex flex-col items-center gap-1">
-                  <span>مبلغ</span>
-                  <span>{amount}</span>
-                </div>
-              </div>
-            </div>
-
-            {!isSuccess && (
-              <div className="w-full flex flex-col gap-y-3">
-                <div className="flex items-center gap-2 bg-yellow-50 dark:bg-yellow-900/30 rounded-md px-3 py-2">
-                  <PiWarningCircleDuotone className="h-6 w-6 text-yellow-600 dark:text-yellow-400" />
-                  <span className="text-xs md:text-sm text-yellow-700 dark:text-yellow-100">
-                    سفارش شما تا <b className="text-destructive">{expiresInMinutes}</b> دقیقه دیگر حذف خواهد شد. برای تکمیل سفارش، پرداخت را
-                    انجام دهید.
-                  </span>
-                </div>
-                <div className="flex items-center gap-2 bg-gray-50 dark:bg-slate-700/50 rounded-md px-3 py-2">
-                  <PiWarningCircleDuotone className="h-6 w-6 text-gray-400" />
-                  <span className="text-xs md:text-sm text-muted-foreground">
-                    در صورت کسر مبلغ، تا ۲۴ ساعت آینده به حساب شما بازمی‌گردد.
-                  </span>
-                </div>
-              </div>
-            )}
-
-            <div className="flex w-full gap-3 mt-3">
-              {order.status === 'PENDING' && <RetryPaymentButton orderId={order.id} />}
-
-              {isSuccess ? (
-                <>
-                  <Link href={`/profile/orders/${orderId}`} className="btn-primary w-full py-3 text-center">
-                    مشاهده سفارش
-                  </Link>
-                  <Link href="/" className="btn-secondary w-full py-3 text-center">
-                    بازگشت به خانه
-                  </Link>
-                </>
-              ) : (
-                <>
-                  <Link href="/" className="btn-secondary w-full py-3 text-center">
-                    بازگشت
-                  </Link>
-                </>
-              )}
-            </div>
+            <PaymentStatus isSuccess={isSuccess} orderId={orderId} />
+            <PaymentDetails trackingCode={trackingCode} paymentDate={paymentDate} amount={amount} />
+            {!isSuccess && <PaymentWarnings expiresInMinutes={expiresInMinutes} />}
+            <PaymentActions isSuccess={isSuccess} orderId={orderId} orderStatus={order.status} />
           </div>
         </div>
       </div>

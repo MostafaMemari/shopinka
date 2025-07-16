@@ -14,15 +14,13 @@ type PageProps = {
 
 async function Page({ params }: PageProps) {
   const { id } = await params;
+  const res = await getOrderById(Number(id));
 
-  let order: OrderItem;
-  try {
-    order = await getOrderById(Number(id));
-    if (!order) notFound();
-  } catch (error) {
-    console.error('Error fetching order:', error);
-    notFound();
+  if (res.status !== 200 || 'message' in res.data) {
+    return notFound();
   }
+
+  const order = res.data;
 
   return (
     <div className="container mx-auto px-4 py-6">

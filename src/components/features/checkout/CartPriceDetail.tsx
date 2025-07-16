@@ -30,7 +30,7 @@ export default function CartPriceDetail({ selectedAddressId, selectedShippingIte
       {
         addressId: selectedAddressId ?? 0,
         shippingId: selectedShippingItem?.id ?? 0,
-        description: '',
+        description: `پرداخت برای ${totalQuantity} کالا با هزینه ارسال ${shippingPrice.toLocaleString()} تومان`,
       },
       () => {},
     );
@@ -42,7 +42,7 @@ export default function CartPriceDetail({ selectedAddressId, selectedShippingIte
         <CartMobileFixContainer>
           <div className="flex justify-between items-center w-full">
             <div className="w-1/2 p-3">
-              <PrimaryButton type="submit" disabled={isCheckoutDisabled} onClick={handleCreatePayment} isLoading={isCreatePaymentLoading}>
+              <PrimaryButton type="submit" disabled={isCheckoutDisabled} isLoading={isCreatePaymentLoading} onClick={handleCreatePayment}>
                 {isCheckoutDisabled ? 'لطفاً آدرس را انتخاب کنید' : 'پرداخت'}
               </PrimaryButton>
             </div>
@@ -64,7 +64,7 @@ export default function CartPriceDetail({ selectedAddressId, selectedShippingIte
           totalPrice={totalPrice}
         >
           <div>
-            <PrimaryButton type="submit" disabled={isCheckoutDisabled} onClick={handleCreatePayment} isLoading={isCreatePaymentLoading}>
+            <PrimaryButton type="submit" disabled={isCheckoutDisabled} isLoading={isCreatePaymentLoading} onClick={handleCreatePayment}>
               {isCheckoutDisabled ? 'لطفاً آدرس را انتخاب کنید' : 'پرداخت'}
             </PrimaryButton>
           </div>

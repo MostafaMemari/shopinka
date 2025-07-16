@@ -25,7 +25,7 @@ function OrderCardDetails({
   createdAt,
   updatedAt,
   expiresAt,
-  orderId, // ← دریافت prop
+  orderId,
 }: OrderCardDetailsProps) {
   const config = getStatusConfig(orderStatus, transactionStatus);
   const expiresInMinutes = getRemainingTime(expiresAt);
@@ -88,7 +88,6 @@ function OrderCardDetails({
         )}
       </div>
 
-      {/* دکمه پرداخت مجدد اگر سفارش در حالت PENDING باشد */}
       {orderStatus === 'PENDING' && (
         <div className="border-t border-gray-200 dark:border-gray-700 pt-4 mt-4 text-left">
           <RetryPaymentButton orderId={orderId} />
