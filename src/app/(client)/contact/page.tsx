@@ -1,21 +1,17 @@
 'use client';
 
 import TextInput from '@/components/ui/TextInput';
-import { createContact } from '@/service/contactService';
 import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import Swal from 'sweetalert2';
+
 import { shopInfo } from '@/data/shopInfo';
 import Link from 'next/link';
-
-const validationSchema = Yup.object({
-  fullName: Yup.string().required('نام الزامی است'),
-  phone: Yup.string().matches(/^\d+$/, 'شماره تماس باید فقط شامل اعداد باشد').required('شماره تماس الزامی است'),
-  email: Yup.string().email('ایمیل نامعتبر است').optional(),
-  message: Yup.string().required('پیام الزامی است'),
-});
+import { validationContactSchema } from '@/validation/validationContactSchema';
+import { useContact } from '@/hooks/reactQuery/contact/useContact';
+import PrimaryButton from '@/components/ui/PrimaryButton';
 
 export default function ContactPage() {
+  const { createContact, isCreateContactLoading } = useContact();
+
   const formik = useFormik({
     initialValues: {
       fullName: '',
@@ -23,33 +19,23 @@ export default function ContactPage() {
       email: '',
       message: '',
     },
-    validationSchema,
+    validationSchema: validationContactSchema,
     onSubmit: async (values, { resetForm }) => {
-      try {
-        await createContact(values);
-        Swal.fire({
-          toast: true,
-          position: 'top-end',
-          icon: 'success',
-          title: 'پیام شما با موفقیت ارسال شد!',
-          showConfirmButton: false,
-          timer: 3000,
-          timerProgressBar: true,
-        });
-        resetForm();
-      } catch (error) {
-        Swal.fire({
-          toast: true,
-          position: 'top-end',
-          icon: 'error',
-          title: 'خطایی در ارسال پیام رخ داد!',
-          showConfirmButton: false,
-          timer: 3000,
-          timerProgressBar: true,
-        });
-      }
+      createContact(
+        values,
+        () => {
+          resetForm();
+        },
+        (error) => {
+          console.error('خطا در ارسال پیام:', error);
+        },
+      );
     },
   });
+
+  const handleSubmit = () => {
+    formik.handleSubmit();
+  };
 
   return (
     <div className="container rounded-2xl bg-muted/70 shadow-lg border border-border/60 p-8 transition-all duration-200">
@@ -78,9 +64,9 @@ export default function ContactPage() {
               <TextInput id="message" name="message" label="پیام شما" isRequired formik={formik} type="textarea" rows={3} />
             </div>
             <div className="col-span-1 flex justify-end md:col-span-2">
-              <button type="submit" className="w-full rounded-lg bg-primary px-4 py-2 text-white md:w-auto">
+              <PrimaryButton onClick={handleSubmit} isLoading={isCreateContactLoading} disabled={isCreateContactLoading}>
                 ارسال پیام
-              </button>
+              </PrimaryButton>
             </div>
           </form>
         </div>
