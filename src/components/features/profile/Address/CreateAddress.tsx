@@ -10,6 +10,7 @@ import Dialog from '@/components/ui/Dialog';
 import AddressForm from '@/components/features/checkout/AddressForm';
 import MobileDrawer from '@/components/ui/MobileDrawer';
 import SkeletonLoader from '@/components/ui/SkeletonLoader';
+import PrimaryButton from '@/components/ui/PrimaryButton';
 
 interface CreateAddressProps {
   onAddressCreated?: (newAddress: AddressItemType) => void;
@@ -57,9 +58,9 @@ export default function CreateAddress({ onAddressCreated }: CreateAddressProps) 
   }, [addresses, isLoading, setSelectedAddressId]);
 
   const actions = (
-    <button className="btn-primary w-full py-3 text-sm" type="button" onClick={handleSubmit} disabled={isCreateAddressLoading}>
+    <PrimaryButton type="button" onClick={handleSubmit} disabled={isCreateAddressLoading}>
       {isCreateAddressLoading ? 'در حال ثبت' : 'تأیید و ادامه'}
-    </button>
+    </PrimaryButton>
   );
 
   return (

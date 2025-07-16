@@ -14,10 +14,7 @@ interface AddressProps {
 }
 
 const AddressForm = forwardRef<HTMLFormElement, AddressProps>(({ onSubmit, initialValues, className = '' }, ref) => {
-  const { formik, selectedProvinceId, setSelectedProvinceId, filteredCities } = useAddressForm({
-    onSubmit,
-    initialValues,
-  });
+  const { formik, selectedProvinceId, setSelectedProvinceId, filteredCities } = useAddressForm({ onSubmit, initialValues });
 
   return (
     <form ref={ref} onSubmit={formik.handleSubmit} className={`space-y-1 p-4 text-right ${className}`} dir="rtl">

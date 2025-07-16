@@ -56,17 +56,12 @@ const AddressItem: React.FC<AddressItemProps> = ({ item, selectedAddressId, onSe
     province: item.province,
     fullName: item.fullName,
     streetAndAlley: item.streetAndAlley,
-    unit: item.unit,
+    unit: item.unit || '',
     plate: item.plate,
   };
 
   const ConfirmButton = (
-    <PrimaryButton
-      className="btn-primary w-full py-3 text-base font-semibold rounded-lg transition focus:ring-2 focus:ring-primary-400 disabled:opacity-60"
-      type="button"
-      onClick={triggerFormSubmit}
-      disabled={isCreateAddressLoading}
-    >
+    <PrimaryButton type="button" onClick={triggerFormSubmit} disabled={isCreateAddressLoading}>
       {isCreateAddressLoading ? 'در حال ثبت...' : 'تأیید و ادامه'}
     </PrimaryButton>
   );

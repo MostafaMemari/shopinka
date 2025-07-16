@@ -4,6 +4,7 @@ import MobileDrawer from '@/components/ui/MobileDrawer';
 import AddressForm from '@/components/features/checkout/AddressForm';
 import Dialog from '@/components/ui/Dialog';
 import { AddressFormType } from '@/types/addressType';
+import PrimaryButton from '@/components/ui/PrimaryButton';
 
 type AddressItemProps = {
   item: any;
@@ -24,14 +25,9 @@ const AddressItem: React.FC<AddressItemProps> = ({ item, isEditing, isDrawer, on
   };
 
   const ConfirmButton = (
-    <button
-      className="btn-primary w-full py-3 text-base font-semibold rounded-lg transition focus:ring-2 focus:ring-primary-400 disabled:opacity-60"
-      type="button"
-      onClick={triggerFormSubmit}
-      disabled={isLoading}
-    >
+    <PrimaryButton type="button" onClick={triggerFormSubmit} disabled={isLoading}>
       {isLoading ? 'در حال ثبت...' : 'تأیید و ادامه'}
-    </button>
+    </PrimaryButton>
   );
 
   const AddressDetails = (
