@@ -1,7 +1,15 @@
+'use client';
+
+import Toast from '@/utils/swalToast';
 import { FC } from 'react';
 import { BiCopy, BiShare } from 'react-icons/bi';
 
 const ShareButton: FC = () => {
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText(window.location.href);
+    Toast.fire({ icon: 'success', text: 'لینک مقاله با موفقیت کپی شد' });
+  };
+
   return (
     <div>
       <button
@@ -9,7 +17,8 @@ const ShareButton: FC = () => {
         data-dropdown-toggle="copy-social-share-link"
         data-tooltip-target="share-on-social"
         type="button"
-        className="btn-primary-nobg"
+        className="btn-primary-nobg cursor-pointer"
+        onClick={handleCopyLink}
       >
         <BiShare className="h-5 w-5" />
         اشتراک گذاری

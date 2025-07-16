@@ -29,7 +29,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const description = seo?.description || `خرید ${product.name} با بهترین قیمت از فروشگاه اینترنتی شاپینکا`;
   const ogTitle = seo?.ogTitle || title;
   const ogDescription = seo?.ogDescription || description;
-  const imageUrl = seo?.ogImageId ? product.mainImage?.fileUrl : product.mainImage?.fileUrl || 'https://shopinka.ir/default-og-image.jpg';
+  const imageUrl =
+    seo?.ogImageId && product.mainImage?.fileUrl
+      ? product.mainImage.fileUrl
+      : product.mainImage?.fileUrl || 'https://shopinka.ir/default-og-image.jpg';
+
+  const keywords = typeof seo?.keywords === 'string' ? seo.keywords.replace(/[^آ-یa-zA-Z0-9،,\s\-]/g, '') : '';
 
   return {
     title,
@@ -51,7 +56,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       ],
     },
     robots: seo?.robotsTag || 'index, follow',
-    keywords: seo.keywords?.replace(/[^آ-یa-zA-Z0-9،,\s\-]/g, ''),
+    keywords,
   };
 }
 
