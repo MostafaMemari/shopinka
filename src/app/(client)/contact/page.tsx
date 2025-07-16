@@ -63,10 +63,8 @@ export default function ContactPage() {
             </li>
             <li>
               <div className="flex flex-col gap-y-4">
-                <p className="min-w-fit text-gray-700">آدرس دفتر مرکزی</p>
-                <a href="#" className="text-primary hover:underline">
-                  {shopInfo.address}
-                </a>
+                <p className="min-w-fit text-gray-700">آدرس دفتر</p>
+                <div className="text-primary hover:underline">{shopInfo.address}</div>
               </div>
             </li>
           </ul>
