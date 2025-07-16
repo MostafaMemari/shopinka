@@ -1,41 +1,14 @@
 'use client';
 
 import TextInput from '@/components/ui/TextInput';
-import { useFormik } from 'formik';
-
 import { shopInfo } from '@/data/shopInfo';
 import Link from 'next/link';
-import { validationContactSchema } from '@/validation/validationContactSchema';
-import { useContact } from '@/hooks/reactQuery/contact/useContact';
 import PrimaryButton from '@/components/ui/PrimaryButton';
+import { useContactForm } from '@/hooks/contact/useContactForm';
 
 export default function ContactPage() {
-  const { createContact, isCreateContactLoading } = useContact();
-
-  const formik = useFormik({
-    initialValues: {
-      fullName: '',
-      phone: '',
-      email: '',
-      message: '',
-    },
-    validationSchema: validationContactSchema,
-    onSubmit: async (values, { resetForm }) => {
-      createContact(
-        values,
-        () => {
-          resetForm();
-        },
-        (error) => {
-          console.error('خطا در ارسال پیام:', error);
-        },
-      );
-    },
-  });
-
-  const handleSubmit = () => {
-    formik.handleSubmit();
-  };
+  const { formik, isCreateContactLoading } = useContactForm();
+  const { handleSubmit } = formik;
 
   return (
     <div className="container rounded-2xl bg-muted/70 shadow-lg border border-border/60 p-8 transition-all duration-200">
