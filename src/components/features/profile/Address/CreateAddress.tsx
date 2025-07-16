@@ -58,8 +58,8 @@ export default function CreateAddress({ onAddressCreated }: CreateAddressProps) 
   }, [addresses, isLoading, setSelectedAddressId]);
 
   const actions = (
-    <PrimaryButton type="button" onClick={handleSubmit} disabled={isCreateAddressLoading}>
-      {isCreateAddressLoading ? 'در حال ثبت' : 'تأیید و ادامه'}
+    <PrimaryButton type="button" onClick={handleSubmit} isLoading={isCreateAddressLoading} disabled={isCreateAddressLoading}>
+      تایید و ادامه
     </PrimaryButton>
   );
 

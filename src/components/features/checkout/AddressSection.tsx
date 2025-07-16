@@ -12,26 +12,21 @@ export interface Option {
 }
 
 interface AddressSectionProps {
-  onAddressSelect: (id: number | null) => void;
   addresses: AddressItemType[];
+  selectedAddressId: number | null;
+  onAddressSelect: (id: number | null) => void;
 }
 
-export default function AddressSection({ onAddressSelect, addresses }: AddressSectionProps) {
-  const [selectedAddressId, setSelectedAddressId] = useState<number | null>(null);
-  const [_, setModalState] = useState<boolean>(false);
-
+export default function AddressSection({ onAddressSelect, addresses, selectedAddressId }: AddressSectionProps) {
   useEffect(() => {
     if (addresses.length === 0) {
-      setModalState(true);
       onAddressSelect(null);
     } else if (addresses.length > 0 && selectedAddressId === null) {
-      setSelectedAddressId(addresses[0].id);
       onAddressSelect(addresses[0].id);
     }
-  }, [addresses]);
+  }, [addresses, selectedAddressId]);
 
   const handleSelectAddress = (id: number | null) => {
-    setSelectedAddressId(id);
     onAddressSelect(id);
   };
 

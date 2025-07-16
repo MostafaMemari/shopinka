@@ -61,7 +61,11 @@ function CheckoutPageView() {
         <>
           <div className="col-span-12 md:col-span-8">
             <div className="rounded-lg bg-muted p-4">
-              <AddressSection addresses={addresses?.data.items ?? []} onAddressSelect={setSelectedAddressId} />
+              <AddressSection
+                addresses={addresses?.data.items ?? []}
+                selectedAddressId={selectedAddressId}
+                onAddressSelect={setSelectedAddressId}
+              />{' '}
               <DeliverySection shippings={shippings?.data.items ?? []} onShippingSelect={setSelectedShippingItem} />
             </div>
           </div>

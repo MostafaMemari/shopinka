@@ -61,8 +61,8 @@ const AddressItem: React.FC<AddressItemProps> = ({ item, selectedAddressId, onSe
   };
 
   const ConfirmButton = (
-    <PrimaryButton type="button" onClick={triggerFormSubmit} disabled={isCreateAddressLoading}>
-      {isCreateAddressLoading ? 'در حال ثبت...' : 'تأیید و ادامه'}
+    <PrimaryButton type="button" onClick={triggerFormSubmit} isLoading={isCreateAddressLoading} disabled={isCreateAddressLoading}>
+      تایید و ادامه
     </PrimaryButton>
   );
 

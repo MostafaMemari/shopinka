@@ -13,7 +13,7 @@ function RetryPaymentButton({ orderId }: { orderId: number }) {
 
   return (
     <>
-      <PrimaryButton type="submit" onClick={handleRetryPayment} isLoading={isCreatePaymentLoading}>
+      <PrimaryButton type="submit" onClick={handleRetryPayment} disabled={isCreatePaymentLoading} isLoading={isCreatePaymentLoading}>
         پرداخت مجدد
       </PrimaryButton>
     </>
