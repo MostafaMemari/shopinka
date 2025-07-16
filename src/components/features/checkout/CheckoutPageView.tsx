@@ -65,7 +65,7 @@ function CheckoutPageView() {
                 addresses={addresses?.data.items ?? []}
                 selectedAddressId={selectedAddressId}
                 onAddressSelect={setSelectedAddressId}
-              />{' '}
+              />
               <DeliverySection shippings={shippings?.data.items ?? []} onShippingSelect={setSelectedShippingItem} />
             </div>
           </div>

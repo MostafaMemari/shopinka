@@ -34,6 +34,19 @@ export default function AddressSection({ onAddressSelect, addresses, selectedAdd
     handleSelectAddress(newAddress.id);
   };
 
+  const handleAddressDeleted = (deletedId: number) => {
+    const remaining = addresses.filter((addr) => addr.id !== deletedId);
+    if (remaining.length > 0) {
+      onAddressSelect(remaining[0].id);
+    } else {
+      onAddressSelect(null);
+    }
+  };
+
+  const handleAddressUpdated = (updatedId: number) => {
+    onAddressSelect(updatedId);
+  };
+
   return (
     <div className="mb-6">
       <div className="flex items-center justify-between gap-x-2 pb-4">
@@ -48,7 +61,14 @@ export default function AddressSection({ onAddressSelect, addresses, selectedAdd
       <fieldset className="space-y-4 grid grid-cols-1">
         {addresses.length ? (
           addresses.map((item) => (
-            <AddressItem key={item.id} item={item} selectedAddressId={selectedAddressId} onSelectAddress={handleSelectAddress} />
+            <AddressItem
+              key={item.id}
+              item={item}
+              selectedAddressId={selectedAddressId}
+              onSelectAddress={handleSelectAddress}
+              onAddressDeleted={handleAddressDeleted}
+              onAddressUpdated={handleAddressUpdated}
+            />
           ))
         ) : (
           <p className="text-sm text-gray-500">هیچ آدرسی ثبت نشده است.</p>

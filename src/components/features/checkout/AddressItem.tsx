@@ -14,9 +14,11 @@ interface AddressItemProps {
   item: AddressItemType;
   selectedAddressId: number | null;
   onSelectAddress: (id: number) => void;
+  onAddressDeleted: (deletedId: number) => void;
+  onAddressUpdated: (updatedId: number) => void;
 }
 
-const AddressItem: React.FC<AddressItemProps> = ({ item, selectedAddressId, onSelectAddress }) => {
+const AddressItem: React.FC<AddressItemProps> = ({ item, selectedAddressId, onSelectAddress, onAddressDeleted, onAddressUpdated }) => {
   const { deleteAddress, updateAddress, isCreateAddressLoading } = useAddress({});
   const formRef = useRef<HTMLFormElement>(null);
   const [modalState, setModalState] = useState(false);
@@ -31,6 +33,7 @@ const AddressItem: React.FC<AddressItemProps> = ({ item, selectedAddressId, onSe
       () => {
         setModalState(false);
         formRef.current?.reset();
+        onAddressUpdated(item.id);
       },
       (error) => {
         console.error('خطا در ارسال فرم:', error);
@@ -44,6 +47,7 @@ const AddressItem: React.FC<AddressItemProps> = ({ item, selectedAddressId, onSe
 
   const handleDeleteAddress = () => {
     deleteAddress(item.id);
+    onAddressDeleted(item.id);
   };
 
   const handleSelect = () => {
