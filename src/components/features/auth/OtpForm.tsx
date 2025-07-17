@@ -4,7 +4,6 @@ import * as Yup from 'yup';
 import { useRouter } from 'next/navigation';
 import { verifyOtp, sendOtp } from '@/service/authService';
 import { handleApiError } from '@/utils/handleApiError';
-import { useAuth } from '@/hooks/reactQuery/auth/useAuth';
 import { useEffect } from 'react';
 import PrimaryButton from '@/components/ui/PrimaryButton';
 import { errorPhoneNumberStepMessages } from './PhoneInputForm';
@@ -68,7 +67,7 @@ export default function OtpForm({ mobile, isExpired, timeLeft, formatTime, reset
       }
 
       if (res.status === 200 || res.status === 201) {
-        loginUser({ mobile, role: 'CUSTOMER', full_name: '' });
+        await loginUser({ mobile, role: 'CUSTOMER', full_name: '' });
         Toast.fire({ icon: 'success', title: 'ورود شما با موفقیت انجام شد' });
         router.push(backUrl || '/');
       }
