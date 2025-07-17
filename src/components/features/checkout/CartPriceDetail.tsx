@@ -7,7 +7,6 @@ import { ShippingItem } from '@/types/shippingType';
 import { usePayment } from '@/hooks/reactQuery/payment/usePayment';
 import CartMobileFixContainer from '../../ui/CartMobileFixContainer';
 import { formatPrice } from '@/utils/formatter';
-import { useRouter } from 'next/navigation';
 import { CartState } from '@/types/cartType';
 
 interface CartPriceDetailProps {
@@ -49,7 +48,7 @@ export default function CartPriceDetail({ selectedAddressId, selectedShippingIte
             <div className="p-2 flex flex-col justify-between items-center">
               <div className="text-xs font-light text-text/70 lg:text-base">مبلغ قابل پرداخت</div>
               <div className="text-primary">
-                <span className="text-base font-semibold lg:text-lg lg:font-bold">{formatPrice(cart.payablePrice)}</span>
+                <span className="text-base font-semibold lg:text-lg lg:font-bold">{formatPrice(cart.payablePrice + shippingPrice)}</span>
                 <span className="text-xs font-light lg:text-sm lg:font-medium"> تومان</span>
               </div>
             </div>

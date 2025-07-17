@@ -1,6 +1,5 @@
 import React, { ReactNode } from 'react';
 import { formatPrice } from '@/utils/formatter';
-import Link from 'next/link';
 
 interface CartSummaryProps {
   totalQuantity: number;
@@ -55,7 +54,7 @@ const CartSummary: React.FC<CartSummaryProps> = ({
           )}
 
           <div className="flex items-center justify-between gap-x-2 py-6">
-            <div className="text-sm text-text/90 lg:text-base">مبلغ قابل پرداخت</div>
+            <div className="text-sm text-text/90 lg:text-base">جمع سبد خرید</div>
             <div className="text-sm text-primary lg:text-base">
               <span className="font-bold">{formatPrice(payablePrice)}</span>
               <span className="text-xs lg:text-sm"> تومان</span>

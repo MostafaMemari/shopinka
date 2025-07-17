@@ -1,5 +1,7 @@
 import * as Yup from 'yup';
 
+const emailRegex = /^[\w.-]+@[a-zA-Z\d-]+\.[a-zA-Z]{2,}$/;
+
 export const validationContactSchema = Yup.object({
   fullName: Yup.string()
     .required('نام الزامی است')
@@ -11,8 +13,10 @@ export const validationContactSchema = Yup.object({
     .required('شماره تماس الزامی است')
     .matches(/^(\+98|0)?9\d{9}$/, 'شماره تماس معتبر نیست'),
 
-  email: Yup.string().optional().email('ایمیل نامعتبر است'),
-
+  email: Yup.string().trim().notRequired().matches(emailRegex, {
+    message: 'ایمیل نامعتبر است',
+    excludeEmptyString: true,
+  }),
   message: Yup.string()
     .required('پیام الزامی است')
     .min(5, 'پیام باید حداقل ۵ کاراکتر باشد')

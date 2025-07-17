@@ -87,7 +87,7 @@ function CartPageView() {
                 </PrimaryButton>
               </div>
               <div className="p-2 flex flex-col justify-between items-center">
-                <div className="text-xs font-light text-text/70 lg:text-base">مبلغ قابل پرداخت</div>
+                <div className="text-xs font-light text-text/70 lg:text-base">جمع سبد خرید</div>
                 <div className="text-primary">
                   <span className="text-base font-semibold lg:text-lg lg:font-bold">{formatPrice(cart.payablePrice)}</span>
                   <span className="text-xs font-light lg:text-sm lg:font-medium"> تومان</span>
