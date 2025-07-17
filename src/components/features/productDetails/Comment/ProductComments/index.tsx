@@ -6,10 +6,9 @@ import Pagination from '@/components/ui/Pagination';
 import DesktopComments from './DesktopComments';
 import { CommentItem } from '@/types/commentType';
 import { useComment } from '@/hooks/reactQuery/comment/useComment';
-import CommentFormDialog from '../AddReplyComment/CreateCommentFormDialog';
-import CommentFormDrawer from '../AddReplyComment/CreateCommentFormDrawer';
 import { AiOutlineLeft } from 'react-icons/ai';
 import LoadingSpinner from '@/components/ui/LoadingSpinner';
+import CreateComment from '../AddReplyComment/CreateComment';
 
 interface Props {
   productId: number;
@@ -41,12 +40,7 @@ export default function ProductComments({ productId }: Props) {
         <div className="text-center text-gray-600 dark:text-gray-300 mt-10">
           <p className="mb-4">دیدگاهی برای این محصول ثبت نشده است.</p>
           <div className="flex justify-center">
-            <div className="hidden md:block">
-              <CommentFormDialog productId={productId} />
-            </div>
-            <div className="md:hidden">
-              <CommentFormDrawer productId={productId} />
-            </div>
+            <CreateComment productId={productId} />
           </div>
         </div>
       </div>
@@ -61,11 +55,11 @@ export default function ProductComments({ productId }: Props) {
         <div className="mb-6">
           <div className="flex items-center justify-between gap-x-2 pb-4">
             <div className="hidden md:block">
-              <CommentFormDialog productId={productId} />
+              <CreateComment productId={productId} />
             </div>
             <div className="md:hidden flex justify-between items-center w-full">
               <div>
-                <CommentFormDrawer productId={productId} />
+                <CreateComment productId={productId} />
               </div>
               <div onClick={handleOpenDrawer} className="text-sm flex items-center gap-x-1 text-primary cursor-pointer">
                 {`مشاهده ${comments.length} دیدگاه`} <AiOutlineLeft className="h-4 w-4" />

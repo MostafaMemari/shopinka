@@ -4,9 +4,9 @@ import React, { useEffect, useState } from 'react';
 import { CommentItem } from '@/types/commentType';
 import MobileDrawer from '@/components/ui/MobileDrawer';
 import Recommendation from './Recommendation';
-import ReplyCommentFormDrawer from '../AddReplyComment/ReplyCommentFormDrawer';
 import { useComment } from '@/hooks/reactQuery/comment/useComment';
 import { FaUserCircle } from 'react-icons/fa';
+import ReplyComment from '../AddReplyComment/ReplyComment';
 
 interface CommentsDrawerProps {
   isOpen: boolean;
@@ -38,6 +38,8 @@ function CommentsDrawer({ isOpen, onOpen, onClose, productId }: CommentsDrawerPr
     );
   }
 
+  console.log(comments);
+
   return (
     <MobileDrawer isOpen={isOpen} onClose={onClose} onOpen={onOpen} title="دیدگاه ها">
       <ul className="space-y-5 pb-8">
@@ -55,7 +57,9 @@ function CommentsDrawer({ isOpen, onOpen, onClose, productId }: CommentsDrawerPr
                   </span>
                 </div>
                 <Recommendation isRecommended={comment.isRecommended} />
-                <ReplyCommentFormDrawer productId={comment.productId} parentId={comment.id} commentTitle={comment.title} />
+                <div>
+                  <ReplyComment productId={comment.productId} parentId={comment.id} commentTitle={comment.title} />
+                </div>
               </div>
               <h5 className="text-base font-bold text-primary mb-2 truncate">{comment.title}</h5>
               <p className="line-clamp-4 text-sm text-text/90 mb-3">{comment.content}</p>

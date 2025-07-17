@@ -1,9 +1,8 @@
 'use client';
 
 import { CommentItem } from '@/types/commentType';
-import ReplyCommentFormDialog from '../AddReplyComment/ReplyCommentFormDialog';
-import ReplyCommentFormDrawer from '../AddReplyComment/ReplyCommentFormDrawer';
 import Recommendation from './Recommendation';
+import ReplyComment from '../AddReplyComment/ReplyComment';
 
 interface Props {
   comment: CommentItem;
@@ -64,12 +63,7 @@ export default function DesktopComments({ comment }: Props) {
         isRecommended={comment.isRecommended}
         replyActions={
           <>
-            <div className="hidden md:block">
-              <ReplyCommentFormDialog productId={comment.productId} parentId={comment.id} commentTitle={comment.title} />
-            </div>
-            <div className="md:hidden">
-              <ReplyCommentFormDrawer productId={comment.productId} parentId={comment.id} commentTitle={comment.title} />
-            </div>
+            <ReplyComment productId={comment.productId} parentId={comment.id} commentTitle={comment.title} />
           </>
         }
       />

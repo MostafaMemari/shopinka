@@ -4,7 +4,8 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { forwardRef, useEffect, useRef } from 'react';
 import TextInput from '@/components/ui/TextInput';
-import SuggestionRadio from './AddReplyComment/SuggestionRadio';
+import SuggestionRadio from './SuggestionRadio';
+import { validationCommentSchema } from '@/validation/validationCommentSchema';
 
 export interface CommentFormikType {
   title: string;
@@ -33,11 +34,7 @@ const CommentForm = forwardRef<HTMLFormElement, CommentProps>(
   ) => {
     const formik = useFormik({
       initialValues,
-      validationSchema: Yup.object({
-        title: Yup.string().trim().required('عنوان الزامی است'),
-        content: Yup.string().trim().required('متن دیدگاه الزامی است'),
-        isRecommended: Yup.boolean().optional(),
-      }),
+      validationSchema: validationCommentSchema,
       onSubmit: async (values) => {
         await onSubmit(values);
       },
