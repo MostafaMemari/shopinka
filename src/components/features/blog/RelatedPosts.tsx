@@ -12,7 +12,7 @@ interface RelatedPosts {
 const RelatedPosts: FC<RelatedPosts> = ({ postCount, posts }) => {
   return (
     <div className="mb-8 rounded-lg bg-muted px-2 py-3 shadow-base xl:px-4">
-      <p className="mb-4 text-center text-sm font-medium xl:text-base">مطالب مرتبط</p>
+      <p className="mb-5 text-center text-sm font-medium xl:text-base">مقاله های مرتبط</p>
       <ul className="space-y-8">
         {posts.map((post) => (
           <li key={post.id}>
@@ -36,11 +36,11 @@ const RelatedPosts: FC<RelatedPosts> = ({ postCount, posts }) => {
             </Link>
           </li>
         ))}
-        <li>
+        {/* <li>
           <a href="#" className="btn-primary py-2">
             مشاهده همه ( {postCount} )
           </a>
-        </li>
+        </li> */}
       </ul>
     </div>
   );

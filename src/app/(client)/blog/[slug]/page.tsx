@@ -32,6 +32,7 @@ export default async function Page({ params }: Props) {
           createdAt={blog.createdAt}
           image={blog.mainImage?.fileUrl ? blog.mainImage?.fileUrl : NoImage.BLOG}
           username={blog.user.fullName ?? 'نامشخص'}
+          readingTime={blog.readingTime}
         />
       </div>
       <Sidebar categoryIds={blog.categories?.map((category: Category) => category.id) || []} />

@@ -13,7 +13,6 @@ const Sidebar: FC<SidebarProps> = async ({ categoryIds }) => {
     <div className="col-span-4 row-span-2 hidden md:block lg:col-span-3">
       <div className="sticky top-32 mb-4 overflow-hidden">
         <RelatedPosts postCount={pager.totalCount} posts={items} />
-        {/* <Categories /> */}
       </div>
     </div>
   );
