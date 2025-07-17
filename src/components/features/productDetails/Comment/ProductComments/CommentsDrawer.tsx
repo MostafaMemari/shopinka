@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { CommentItem } from '@/types/commentType';
 import MobileDrawer from '@/components/ui/MobileDrawer';
 import Recommendation from './Recommendation';
@@ -37,8 +37,6 @@ function CommentsDrawer({ isOpen, onOpen, onClose, productId }: CommentsDrawerPr
       </MobileDrawer>
     );
   }
-
-  console.log(comments);
 
   return (
     <MobileDrawer isOpen={isOpen} onClose={onClose} onOpen={onOpen} title="دیدگاه ها">
