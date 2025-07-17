@@ -8,10 +8,12 @@ import { formatPrice } from '@/utils/formatter';
 import { useCart } from '@/hooks/reactQuery/cart/useCart';
 import CartIconTotalQuantity from '../CartIconTotalQuantity';
 import { useAuth } from '@/hooks/reactQuery/auth/useAuth';
+import { useRouter } from 'next/navigation';
 
 export default function BasketDropdown() {
   const { isLogin } = useAuth();
   const { cart } = useCart(isLogin);
+  const router = useRouter();
 
   const { items: cartItems, payablePrice } = cart;
 
@@ -19,6 +21,11 @@ export default function BasketDropdown() {
     closeOnOutsideClick: false,
     openOnHover: true,
   });
+
+  const handleBasketClick = () => {
+    router.push('/checkout/cart');
+    closeDropdown();
+  };
 
   return (
     <div className="relative">
@@ -69,11 +76,9 @@ export default function BasketDropdown() {
                   <span className="text-sm"> تومان</span>
                 </div>
               </div>
-              <Link href={isLogin ? '/checkout/shipping' : '/checkout/cart'}>
-                <button className="btn-primary w-32 py-3 text-sm cursor-pointer" type="button">
-                  ثبت سفارش
-                </button>
-              </Link>
+              <button className="btn-primary w-32 py-3 text-sm cursor-pointer" onClick={handleBasketClick} type="button">
+                ثبت سفارش
+              </button>
             </div>
           </div>
         </div>
