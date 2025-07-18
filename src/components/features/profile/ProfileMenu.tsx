@@ -17,6 +17,7 @@ type ProfileMenuProps = {
 function ProfileMenu({ onClose }: ProfileMenuProps) {
   const pathname = usePathname();
   const logoutUser = useLogoutUser();
+  const router = useRouter();
 
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
@@ -27,6 +28,7 @@ function ProfileMenu({ onClose }: ProfileMenuProps) {
       if (res?.status === 201 || res?.status === 200) {
         logoutUser().then(() => {
           Toast.fire({ icon: 'success', title: 'خروج با موفقیت انجام شد' });
+          router.push('/');
         });
       }
     } catch (err) {
