@@ -9,6 +9,7 @@ import PrimaryButton from '@/components/ui/PrimaryButton';
 import { errorPhoneNumberStepMessages } from './PhoneInputForm';
 import { extractTimeFromText } from '@/utils/utils';
 import { useLoginUser } from '@/hooks/reactQuery/auth/useLoginUser';
+import { useSyncCart } from '@/hooks/reactQuery/cart/useSyncCart';
 
 export const errorOtpStepMessages: Record<number, string> = {
   400: 'کد وارد شده نادرست است.',
@@ -36,6 +37,7 @@ const otpValidationSchema = Yup.object({
 export default function OtpForm({ mobile, isExpired, timeLeft, formatTime, resetTimer, backUrl }: OtpFormProps) {
   const router = useRouter();
   const loginUser = useLoginUser();
+  const syncCart = useSyncCart();
 
   const handleSubmit = async (
     values: { otp: string },
@@ -68,8 +70,11 @@ export default function OtpForm({ mobile, isExpired, timeLeft, formatTime, reset
 
       if (res.status === 200 || res.status === 201) {
         loginUser({ mobile, role: 'CUSTOMER', full_name: '' }).then(() => {
-          Toast.fire({ icon: 'success', title: 'ورود شما با موفقیت انجام شد' });
-          router.push(backUrl || '/');
+          syncCart().then(() => {
+            resetTimer();
+            Toast.fire({ icon: 'success', title: 'ورود شما با موفقیت انجام شد' });
+            router.push(backUrl || '/');
+          });
         });
       }
     } catch (error) {

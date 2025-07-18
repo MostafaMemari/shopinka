@@ -11,7 +11,8 @@ export function useLogoutUser() {
   return useCallback(async () => {
     dispatch(loginStart());
     try {
-      queryClient.removeQueries({ queryKey: [QueryKeys.User, QueryKeys.Cart] });
+      queryClient.removeQueries({ queryKey: [QueryKeys.User] });
+      queryClient.removeQueries({ queryKey: [QueryKeys.Cart] });
       dispatch(logout());
     } catch (err) {
       dispatch(loginFailure('Logout failed'));
