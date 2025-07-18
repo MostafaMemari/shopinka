@@ -34,8 +34,8 @@ const otpValidationSchema = Yup.object({
 });
 
 export default function OtpForm({ mobile, isExpired, timeLeft, formatTime, resetTimer, backUrl }: OtpFormProps) {
-  const loginUser = useLoginUser();
   const router = useRouter();
+  const loginUser = useLoginUser();
 
   const handleSubmit = async (
     values: { otp: string },
@@ -67,8 +67,10 @@ export default function OtpForm({ mobile, isExpired, timeLeft, formatTime, reset
       }
 
       if (res.status === 200 || res.status === 201) {
-        await loginUser({ mobile, role: 'CUSTOMER', full_name: '' });
-        router.push(backUrl || '/');
+        loginUser({ mobile, role: 'CUSTOMER', full_name: '' }).then(() => {
+          Toast.fire({ icon: 'success', title: 'ورود شما با موفقیت انجام شد' });
+          router.push(backUrl || '/');
+        });
       }
     } catch (error) {
       setErrors({ otp: 'کد تأیید نامعتبر است' });

@@ -5,7 +5,6 @@ import { useQueryClient } from '@tanstack/react-query';
 import { QueryKeys } from '@/types/query-keys';
 import { useSyncCart } from '../cart/useSyncCart';
 import { UserState } from '@/types/userType';
-import Toast from '@/utils/swalToast';
 
 export function useLoginUser() {
   const dispatch = useAppDispatch();
@@ -19,7 +18,6 @@ export function useLoginUser() {
         dispatch(loginSuccess(userData));
         queryClient.invalidateQueries({ queryKey: [QueryKeys.User] });
         await syncCart();
-        Toast.fire({ icon: 'success', title: 'ورود شما با موفقیت انجام شد' });
       } catch (err) {
         dispatch(loginFailure('Login failed'));
         console.error('Login error:', err);
