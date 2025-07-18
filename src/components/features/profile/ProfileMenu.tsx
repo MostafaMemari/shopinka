@@ -26,9 +26,8 @@ function ProfileMenu({ onClose }: ProfileMenuProps) {
     try {
       const res = await logout();
       if (res?.status === 201 || res?.status === 200) {
-        Toast.fire({ icon: 'success', title: 'خروج با موفقیت انجام شد' });
+        await logoutUser();
         router.push('/');
-        logoutUser();
       }
     } catch (err) {
       Toast.fire({ icon: 'error', title: 'خروج با خطا مواجه شد' });

@@ -24,8 +24,7 @@ const ProfileMenu = ({ closeDropdown }: ProfileMenuProps) => {
       const res = await logout();
       if (res?.status === 201 || res?.status === 200) {
         closeDropdown();
-        logoutUser();
-        Toast.fire({ icon: 'success', title: 'خروج با موفقیت انجام شد' });
+        await logoutUser();
       }
     } catch (err) {
       Toast.fire({ icon: 'error', title: 'خروج با خطا مواجه شد' });
