@@ -67,7 +67,7 @@ export default function OtpForm({ mobile, isExpired, timeLeft, formatTime, reset
       }
 
       if (res.status === 200 || res.status === 201) {
-        await loginUser({ mobile, role: 'CUSTOMER', full_name: '' });
+        loginUser({ mobile, role: 'CUSTOMER', full_name: '' });
         router.push(backUrl || '/');
       }
     } catch (error) {

@@ -17,8 +17,8 @@ export function useLoginUser() {
       dispatch(loginStart());
       try {
         dispatch(loginSuccess(userData));
-        await syncCart();
         queryClient.invalidateQueries({ queryKey: [QueryKeys.User] });
+        await syncCart();
         Toast.fire({ icon: 'success', title: 'ورود شما با موفقیت انجام شد' });
       } catch (err) {
         dispatch(loginFailure('Login failed'));

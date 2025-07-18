@@ -26,7 +26,7 @@ function ProfileMenu({ onClose }: ProfileMenuProps) {
     try {
       const res = await logout();
       if (res?.status === 201 || res?.status === 200) {
-        await logoutUser();
+        logoutUser();
         router.push('/');
       }
     } catch (err) {
