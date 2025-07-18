@@ -16,7 +16,7 @@ export function useLoginUser() {
       dispatch(loginStart());
       try {
         dispatch(loginSuccess(userData));
-        queryClient.invalidateQueries({ queryKey: [QueryKeys.User] });
+        // queryClient.invalidateQueries({ queryKey: [QueryKeys.User] });
         await syncCart();
       } catch (err) {
         dispatch(loginFailure('Login failed'));
