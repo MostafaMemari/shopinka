@@ -12,13 +12,9 @@ export function useLoginUser() {
   return useCallback(
     async (userData: UserState) => {
       dispatch(loginStart());
-      try {
-        dispatch(loginSuccess(userData));
-        queryClient.invalidateQueries({ queryKey: [QueryKeys.User] });
-      } catch (err) {
-        dispatch(loginFailure('Login failed'));
-        console.error('Login error:', err);
-      }
+
+      dispatch(loginSuccess(userData));
+      queryClient.invalidateQueries({ queryKey: [QueryKeys.User] });
     },
     [dispatch, queryClient],
   );

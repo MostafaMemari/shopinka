@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 import { useRouter } from 'next/navigation';
 import { verifyOtp, sendOtp } from '@/service/authService';
 import { handleApiError } from '@/utils/handleApiError';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import PrimaryButton from '@/components/ui/PrimaryButton';
 import { errorPhoneNumberStepMessages } from './PhoneInputForm';
 import { extractTimeFromText } from '@/utils/utils';
@@ -69,13 +69,11 @@ export default function OtpForm({ mobile, isExpired, timeLeft, formatTime, reset
       }
 
       if (res.status === 200 || res.status === 201) {
-        loginUser({ mobile, role: 'CUSTOMER', full_name: '' }).then(() => {
-          syncCart().then(() => {
-            resetTimer();
-            Toast.fire({ icon: 'success', title: 'ورود شما با موفقیت انجام شد' });
-            router.push(backUrl || '/');
-          });
-        });
+        await loginUser({ mobile, role: 'CUSTOMER', full_name: '' });
+        await syncCart();
+        resetTimer();
+        Toast.fire({ icon: 'success', title: 'ورود شما با موفقیت انجام شد' });
+        router.push(backUrl || '/');
       }
     } catch (error) {
       setErrors({ otp: 'کد تأیید نامعتبر است' });
@@ -175,9 +173,12 @@ function Effect({
   isExpired: boolean;
   submitForm: () => Promise<void>;
 }) {
+  const [hasSubmitted, setHasSubmitted] = useState(false);
+
   useEffect(() => {
-    if (values.otp.length === 6 && !isSubmitting && !isExpired) {
-      submitForm();
+    if (values.otp.length === 6 && !isSubmitting && !isExpired && !hasSubmitted) {
+      setHasSubmitted(true);
+      submitForm().finally(() => setHasSubmitted(false));
     }
   }, [values.otp, isSubmitting, isExpired, submitForm]);
 
