@@ -1,16 +1,18 @@
+'use client';
+
 import Toast from '@/utils/swalToast';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, ErrorMessage, Field } from 'formik';
 import * as Yup from 'yup';
 import { useRouter } from 'next/navigation';
 import { verifyOtp, sendOtp } from '@/service/authService';
 import { handleApiError } from '@/utils/handleApiError';
-import { useEffect, useState } from 'react';
-import PrimaryButton from '@/components/ui/PrimaryButton';
 import { errorPhoneNumberStepMessages } from './PhoneInputForm';
 import { extractTimeFromText } from '@/utils/utils';
 import { useLoginUser } from '@/hooks/reactQuery/auth/useLoginUser';
 import { useSyncCart } from '@/hooks/reactQuery/cart/useSyncCart';
 import { useOtpTimer } from '@/hooks/useOtpTimer';
+import PrimaryButton from '@/components/ui/PrimaryButton';
+import OTPInput from 'react-otp-input';
 
 export const errorOtpStepMessages: Record<number, string> = {
   400: 'کد وارد شده نادرست است.',
@@ -35,7 +37,6 @@ export default function OtpForm({ mobile, backUrl }: OtpFormProps) {
   const router = useRouter();
   const loginUser = useLoginUser();
   const syncCart = useSyncCart();
-
   const { timeLeft, isExpired, formatTime, resetTimer } = useOtpTimer(300);
 
   const handleSubmit = async (
@@ -54,15 +55,14 @@ export default function OtpForm({ mobile, backUrl }: OtpFormProps) {
 
     try {
       const res = await verifyOtp(mobile, values.otp);
-
       let errorMessage = handleApiError(res.status, errorOtpStepMessages);
 
       if (errorMessage) {
-        if (res.status === 403) errorMessage = errorMessage.replace('{time}', extractTimeFromText(res?.data?.message) ?? 'بعدا');
-        if (res.status === 409) errorMessage = errorMessage.replace('{time}', extractTimeFromText(res?.data?.message) ?? 'بعدا');
+        if (res.status === 403 || res.status === 409) {
+          errorMessage = errorMessage.replace('{time}', extractTimeFromText(res?.data?.message) ?? 'بعدا');
+        }
 
         Toast.fire({ icon: 'error', title: errorMessage });
-
         resetForm();
         return;
       }
@@ -76,24 +76,23 @@ export default function OtpForm({ mobile, backUrl }: OtpFormProps) {
       }
     } catch (error) {
       setErrors({ otp: 'کد تأیید نامعتبر است' });
-
       resetForm();
     } finally {
       setSubmitting(false);
     }
   };
 
-  const handleResendOtp = async (setSubmitting: (isSubmitting: boolean) => void, setErrors: (errors: any) => void) => {
+  const handleResendOtp = async (setSubmitting: (isSubmitting: boolean) => void) => {
     try {
       const res = await sendOtp(mobile);
       let errorMessage = handleApiError(res.status, errorPhoneNumberStepMessages);
 
       if (errorMessage) {
-        if (res.status === 403) errorMessage = errorMessage.replace('{time}', extractTimeFromText(res?.data?.message) ?? 'بعدا');
-        if (res.status === 409) errorMessage = errorMessage.replace('{time}', extractTimeFromText(res?.data?.message) ?? 'بعدا');
+        if (res.status === 403 || res.status === 409) {
+          errorMessage = errorMessage.replace('{time}', extractTimeFromText(res?.data?.message) ?? 'بعدا');
+        }
 
         Toast.fire({ icon: 'error', title: errorMessage });
-
         return;
       }
 
@@ -109,52 +108,61 @@ export default function OtpForm({ mobile, backUrl }: OtpFormProps) {
   };
 
   return (
-    <Formik initialValues={{ otp: '' }} validationSchema={otpValidationSchema} onSubmit={handleSubmit} enableReinitialize>
-      {({ isSubmitting, setSubmitting, setErrors, setFieldValue, values, submitForm }) => (
-        <>
-          <Form className="space-y-4">
-            <div>
-              <Field
-                name="otp"
-                dir="ltr"
-                autoFocus
-                inputMode="numeric"
-                pattern="[0-9]*"
-                placeholder="------"
-                className={`w-full text-center tracking-[0.5em] text-xl sm:text-2xl md:text-3xl py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-primary bg-muted`}
-                maxLength={6}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  const value = e.target.value.replace(/\D/g, '').slice(0, 6);
-                  setFieldValue('otp', value);
-                }}
-              />
-              <ErrorMessage name="otp" component="p" className="h-5 text-sm text-red-500 dark:text-red-400 mt-2" />
-            </div>
-            <div className="flex flex-col sm:justify-between gap-3">
-              <PrimaryButton type="submit" isLoading={isSubmitting} disabled={isSubmitting || isExpired}>
-                تایید
-              </PrimaryButton>
-              {isExpired ? (
-                <button
-                  type="button"
-                  onClick={() => handleResendOtp(setSubmitting, setErrors)}
-                  disabled={isSubmitting}
-                  className="text-sm text-primary hover:underline disabled:text-gray-400 disabled:cursor-not-allowed cursor-pointer"
-                >
-                  ارسال مجدد کد
-                </button>
-              ) : (
-                <ul className="mb-8 space-y-4 mt-4">
-                  <li>
-                    <p className={`text-primary text-sm text-center${isExpired ? 'hidden' : ''}`} id="countdownSection">
-                      <span className="font-bold">{formatTime(timeLeft)}</span> مانده تا دریافت مجدد کد
-                    </p>
-                  </li>
-                </ul>
+    <Formik initialValues={{ otp: '' }} validationSchema={otpValidationSchema} onSubmit={handleSubmit}>
+      {({ isSubmitting, setSubmitting, setFieldValue, values, submitForm, validateForm }) => (
+        <Form className="space-y-4">
+          <div dir="ltr" className="flex justify-center">
+            <Field name="otp">
+              {({ field }: any) => (
+                <div className="relative">
+                  <input
+                    {...field}
+                    dir="ltr"
+                    autoFocus
+                    inputMode="numeric"
+                    pattern="[0-9]*"
+                    placeholder="------"
+                    className={`w-full text-center tracking-[0.5em] text-xl sm:text-2xl md:text-3xl py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-primary bg-muted transition-all duration-150 ${
+                      values.otp.length === 6 ? 'ring-2 ring-primary' : ''
+                    }`}
+                    maxLength={6}
+                    value={values.otp}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      const value = e.target.value.replace(/\D/g, '').slice(0, 6);
+                      setFieldValue('otp', value);
+
+                      if (value.length === 6 && !isExpired) {
+                        setTimeout(() => submitForm(), 0);
+                      }
+                    }}
+                  />
+                  <ErrorMessage name="otp" component="p" className="text-sm text-red-500 mt-2 text-center" />
+                </div>
               )}
-            </div>
-          </Form>
-        </>
+            </Field>
+          </div>
+
+          <div className="flex flex-col sm:justify-between gap-3">
+            <PrimaryButton type="submit" isLoading={isSubmitting} disabled={isSubmitting || isExpired}>
+              تایید
+            </PrimaryButton>
+
+            {isExpired ? (
+              <button
+                type="button"
+                onClick={() => handleResendOtp(setSubmitting)}
+                disabled={isSubmitting}
+                className="text-sm text-primary hover:underline disabled:text-gray-400 disabled:cursor-not-allowed text-center"
+              >
+                ارسال مجدد کد
+              </button>
+            ) : (
+              <p className="text-primary text-sm text-center mt-4">
+                <span className="font-bold">{formatTime(timeLeft)}</span> مانده تا دریافت مجدد کد
+              </p>
+            )}
+          </div>
+        </Form>
       )}
     </Formik>
   );
