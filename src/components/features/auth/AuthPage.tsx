@@ -17,7 +17,6 @@ export default function AuthContainer() {
 
   const searchParams = useSearchParams();
   const backUrl = searchParams.get('backUrl') || '/';
-  const { timeLeft, isExpired, formatTime, resetTimer } = useOtpTimer(300);
 
   const handleBack = () => {
     setShowOtp(false);
@@ -46,14 +45,7 @@ export default function AuthContainer() {
           </div>
           <h1 className="mb-10 text-start text-lg">{showOtp ? 'کد تأیید را وارد کنید' : 'ورود | ثبت نام'}</h1>
           {showOtp ? (
-            <OtpForm
-              mobile={mobile}
-              isExpired={isExpired}
-              timeLeft={timeLeft}
-              formatTime={formatTime}
-              resetTimer={resetTimer}
-              backUrl={backUrl}
-            />
+            <OtpForm mobile={mobile} backUrl={backUrl} />
           ) : (
             <PhoneInputForm mobile={mobile} setMobile={setMobile} handleShowOpt={handleShowOpt} />
           )}

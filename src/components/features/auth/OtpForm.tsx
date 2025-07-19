@@ -10,6 +10,7 @@ import { errorPhoneNumberStepMessages } from './PhoneInputForm';
 import { extractTimeFromText } from '@/utils/utils';
 import { useLoginUser } from '@/hooks/reactQuery/auth/useLoginUser';
 import { useSyncCart } from '@/hooks/reactQuery/cart/useSyncCart';
+import { useOtpTimer } from '@/hooks/useOtpTimer';
 
 export const errorOtpStepMessages: Record<number, string> = {
   400: 'کد وارد شده نادرست است.',
@@ -21,10 +22,6 @@ export const errorOtpStepMessages: Record<number, string> = {
 
 interface OtpFormProps {
   mobile: string;
-  isExpired: boolean;
-  timeLeft: number;
-  formatTime: (time: number) => string;
-  resetTimer: () => void;
   backUrl: string;
 }
 
@@ -34,10 +31,12 @@ const otpValidationSchema = Yup.object({
     .matches(/^\d{6}$/, 'لطفاً کد ۶ رقمی را وارد کنید'),
 });
 
-export default function OtpForm({ mobile, isExpired, timeLeft, formatTime, resetTimer, backUrl }: OtpFormProps) {
+export default function OtpForm({ mobile, backUrl }: OtpFormProps) {
   const router = useRouter();
   const loginUser = useLoginUser();
   const syncCart = useSyncCart();
+
+  const { timeLeft, isExpired, formatTime, resetTimer } = useOtpTimer(300);
 
   const handleSubmit = async (
     values: { otp: string },
@@ -155,32 +154,8 @@ export default function OtpForm({ mobile, isExpired, timeLeft, formatTime, reset
               )}
             </div>
           </Form>
-          <Effect values={values} isSubmitting={isSubmitting} isExpired={isExpired} submitForm={submitForm} />
         </>
       )}
     </Formik>
   );
-}
-
-function Effect({
-  values,
-  isSubmitting,
-  isExpired,
-  submitForm,
-}: {
-  values: { otp: string };
-  isSubmitting: boolean;
-  isExpired: boolean;
-  submitForm: () => Promise<void>;
-}) {
-  const [hasSubmitted, setHasSubmitted] = useState(false);
-
-  useEffect(() => {
-    if (values.otp.length === 6 && !isSubmitting && !isExpired && !hasSubmitted) {
-      setHasSubmitted(true);
-      submitForm().finally(() => setHasSubmitted(false));
-    }
-  }, [values.otp, isSubmitting, isExpired, submitForm]);
-
-  return null;
 }
