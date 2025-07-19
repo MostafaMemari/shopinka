@@ -12,7 +12,6 @@ import { useLoginUser } from '@/hooks/reactQuery/auth/useLoginUser';
 import { useSyncCart } from '@/hooks/reactQuery/cart/useSyncCart';
 import { useOtpTimer } from '@/hooks/useOtpTimer';
 import PrimaryButton from '@/components/ui/PrimaryButton';
-import OTPInput from 'react-otp-input';
 
 export const errorOtpStepMessages: Record<number, string> = {
   400: 'کد وارد شده نادرست است.',
