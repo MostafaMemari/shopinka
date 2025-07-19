@@ -1,34 +1,27 @@
 import { useQueryClient } from '@tanstack/react-query';
-import { createCartBulk, getCart } from '@/service/cartService';
+import { getCart, createCartReplace } from '@/service/cartService';
 import { setCart } from '@/store/slices/cartSlice';
-import { CartData, CartItemState } from '@/types/cartType';
-import { QueryKeys } from '@/types/query-keys';
 import { useAppDispatch } from '@/store/hooks';
+import { QueryKeys } from '@/types/query-keys';
+import { CartData } from '@/types/cartType';
+import { clearLocalCart, getLocalCart } from '@/utils/cartStorage';
 
 export const useSyncCart = () => {
   const queryClient = useQueryClient();
   const dispatch = useAppDispatch();
 
+  const pullServerCart = async () => {
+    const cartData = await queryClient.fetchQuery({
+      queryKey: [QueryKeys.Cart],
+      queryFn: getCart,
+      staleTime: 60 * 1000,
+    });
+
+    dispatch(setCart({ items: cartData.items }));
+  };
+
   const sync = async () => {
-    let localCart: CartItemState[] = [];
-
-    try {
-      const raw = localStorage.getItem('cart');
-      if (raw) {
-        localCart = JSON.parse(raw);
-      }
-    } catch {
-      localStorage.removeItem('cart');
-    }
-
-    const pullServerCart = async () => {
-      const cartData = await queryClient.fetchQuery({
-        queryKey: [QueryKeys.Cart],
-        queryFn: getCart,
-        staleTime: 1 * 60 * 1000,
-      });
-      dispatch(setCart({ items: cartData.items }));
-    };
+    const localCart = getLocalCart();
 
     if (localCart.length === 0) {
       await pullServerCart();
@@ -42,8 +35,8 @@ export const useSyncCart = () => {
     }));
 
     try {
-      await createCartBulk({ items: itemsPayload });
-      localStorage.removeItem('cart');
+      await createCartReplace({ items: itemsPayload });
+      clearLocalCart();
       await pullServerCart();
       queryClient.invalidateQueries({ queryKey: [QueryKeys.Cart] });
     } catch (err) {

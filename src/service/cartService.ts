@@ -24,6 +24,15 @@ export const createCartBulk = async ({ items }: { items: CartData[] }): Promise<
   }
 };
 
+export const createCartReplace = async ({ items }: { items: CartData[] }): Promise<void> => {
+  if (items.length > 0) {
+    await shopApiFetch('/cart/items/replace', {
+      method: 'POST',
+      body: { items },
+    });
+  }
+};
+
 export const getCart = async (): Promise<CartState> => {
   const res = await shopApiFetch('/cart/me', { method: 'GET' });
 

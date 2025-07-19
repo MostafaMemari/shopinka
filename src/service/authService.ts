@@ -28,6 +28,8 @@ export const verifyOtp = async (mobile: string, otp: string): Promise<{ status: 
   });
 
   if (res?.status === 201 || (res?.status === 200 && res?.data?.accessToken && res?.data?.refreshToken)) {
+    // await new Promise((resolve) => setTimeout(resolve, 2000));
+
     const { accessToken, refreshToken }: VerifyOtpResponse = res.data;
 
     const cookieStore = await cookies();
@@ -47,7 +49,6 @@ export const verifyOtp = async (mobile: string, otp: string): Promise<{ status: 
 
   return res;
 };
-
 export const logout = async (): Promise<{ status: number; data: any }> => {
   const cookieStore = await cookies();
   const refreshToken = cookieStore.get(COOKIE_NAMES.REFRESH_TOKEN)?.value;
