@@ -48,9 +48,15 @@ export const trustBadges: TrustBadge[] = [
   {
     id: '1',
     name: 'namad',
-    imageSrc: '/images/namad.png',
-    href: "<a referrerpolicy='origin' target='_blank' href='https://trustseal.enamad.ir/?id=622800&Code=cLIJRY4HL3Y3AYOJXBHINBZIOaGquUDf'><img referrerpolicy='origin' src='https://trustseal.enamad.ir/logo.aspx?id=622800&Code=cLIJRY4HL3Y3AYOJXBHINBZIOaGquUDf' alt='' style='cursor:pointer' code='cLIJRY4HL3Y3AYOJXBHINBZIOaGquUDf'></a>",
+    imageSrc: 'https://trustseal.enamad.ir/logo.aspx?id=622800&Code=cLIJRY4HL3Y3AYOJXBHINBZIOaGquUDf',
+    href: 'https://trustseal.enamad.ir/?id=622800&Code=cLIJRY4HL3Y3AYOJXBHINBZIOaGquUDf',
     isTest: false,
   },
-  { id: '2', name: 'samandehi', imageSrc: '/images/samandehi.png', href: '#', isTest: true },
+  {
+    id: '2',
+    name: 'samandehi',
+    imageSrc: '/images/samandehi.png',
+    href: '#',
+    isTest: true,
+  },
 ];

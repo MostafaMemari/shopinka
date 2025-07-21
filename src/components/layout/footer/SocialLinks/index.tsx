@@ -3,7 +3,6 @@
 import { FaInstagram, FaTelegram, FaYoutube } from 'react-icons/fa';
 import { IconType } from 'react-icons';
 import { socialLinks } from '@/data/footerData';
-import Link from 'next/link';
 
 const socialConfig: Record<string, { icon: IconType; hoverColor: string }> = {
   instagram: { icon: FaInstagram, hoverColor: 'hover:text-rose-600' },
