@@ -5,6 +5,8 @@ import { TransactionStatus } from '@/types/transactionType';
 import { formatPrice, getRemainingTime } from '@/utils/formatter';
 import React from 'react';
 import RetryPaymentButton from '../../payment/RetryPaymentButton';
+import { RemainingTimeItem } from './RemainingTimeItem';
+import { OrderDetailsList } from './OrderDetailsList';
 
 interface OrderCardDetailsProps {
   orderStatus: OrderStatus;
@@ -28,8 +30,6 @@ function OrderCardDetails({
   orderId,
 }: OrderCardDetailsProps) {
   const config = getStatusConfig(orderStatus, transactionStatus);
-  const expiresInMinutes = getRemainingTime(expiresAt);
-  const remainingTime = orderStatus === 'PENDING' ? expiresInMinutes : null;
 
   return (
     <div className="mb-8 rounded-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm p-4">
@@ -42,23 +42,14 @@ function OrderCardDetails({
 
       <div className="flex flex-col lg:flex-row gap-6 py-4">
         <div className="flex-1 flex flex-col gap-3 md:flex-row md:flex-wrap md:gap-x-6 md:gap-y-4">
-          {remainingTime && remainingTime > 0 ? (
-            <Item label="زمان باقی‌مانده" value={<span className="text-red-500 dark:text-red-400">{remainingTime} دقیقه</span>} />
-          ) : (
-            <Item label="زمان باقی‌مانده" value={<span className="text-gray-500 dark:text-gray-400">اتمام زمان</span>} />
-          )}
-
-          <Item label="شماره سفارش" value={orderNumber} />
-          <Item
-            label="مبلغ کل"
-            value={
-              <span className="text-primary-500 dark:text-primary-400 font-bold">
-                {formatPrice(paymentOrder)}
-                <span className="text-xs font-normal mr-1">تومان</span>
-              </span>
-            }
+          <OrderDetailsList
+            orderStatus={orderStatus}
+            transactionStatus={transactionStatus}
+            expiresAt={expiresAt}
+            orderNumber={orderNumber}
+            totalPrice={paymentOrder}
+            createdAt={createdAt}
           />
-          <Item label="تاریخ ثبت" value={new Date(createdAt).toLocaleDateString('fa-IR')} />
         </div>
 
         {config.showProgress && (
@@ -97,7 +88,7 @@ function OrderCardDetails({
   );
 }
 
-const Item = ({ label, value }: { label: string; value: React.ReactNode }) => (
+export const Item = ({ label, value }: { label: string; value: React.ReactNode }) => (
   <div className="flex items-center gap-2 text-sm md:text-base">
     <span className="text-gray-500 dark:text-gray-400">{label}:</span>
     <span className="text-gray-800 dark:text-gray-200 font-medium">{value}</span>

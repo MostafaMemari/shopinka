@@ -7,19 +7,16 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { getStatusConfig } from '@/config/orderStatusConfig';
 import ProductSlider from '../ProductSlider';
-import { formatPrice, getRemainingTime } from '@/utils/formatter';
 import { OrderItem } from '@/types/orderType';
 import RetryPaymentButton from '../../payment/RetryPaymentButton';
+import { OrderDetailsList } from './OrderDetailsList';
 
 interface OrderCardProps {
   order: OrderItem;
 }
 
 const OrderCard: React.FC<OrderCardProps> = ({ order }) => {
-  const expiresInMinutes = getRemainingTime(order.expiresAt);
-
   const config = getStatusConfig(order.status, order.transaction.status);
-  const remainingTime = order.status === 'PENDING' && order.createdAt ? expiresInMinutes : null;
 
   return (
     <article className="rounded-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md transition-shadow duration-300 mt-6">
@@ -34,23 +31,14 @@ const OrderCard: React.FC<OrderCardProps> = ({ order }) => {
 
         <div className="flex flex-col lg:flex-row gap-6">
           <div className="flex-1 flex flex-col gap-3 md:flex-row md:flex-wrap md:gap-x-6 md:gap-y-4">
-            {remainingTime && remainingTime > 0 ? (
-              <Item label="زمان باقی‌مانده" value={<span className="text-red-500 dark:text-red-400">{remainingTime} دقیقه</span>} />
-            ) : (
-              <Item label="زمان باقی‌مانده" value={<span className="text-gray-500 dark:text-gray-400">اتمام زمان</span>} />
-            )}
-
-            <Item label="شماره سفارش" value={order.orderNumber} />
-            <Item
-              label="مبلغ کل"
-              value={
-                <span className="text-primary-500 dark:text-primary-400 font-bold">
-                  {formatPrice(order.totalPrice)}
-                  <span className="text-xs font-normal mr-1">تومان</span>
-                </span>
-              }
+            <OrderDetailsList
+              orderStatus={order.status}
+              transactionStatus={order.transaction.status}
+              expiresAt={order.expiresAt}
+              orderNumber={order.orderNumber}
+              totalPrice={order.totalPrice}
+              createdAt={order.createdAt}
             />
-            <Item label="تاریخ ثبت" value={new Date(order.createdAt).toLocaleDateString('fa-IR')} />
           </div>
 
           <div className="flex flex-col justify-center w-full md:w-2/5 max-w-md mx-auto gap-3">
@@ -70,11 +58,11 @@ const OrderCard: React.FC<OrderCardProps> = ({ order }) => {
                 <div className={`flex justify-between text-xs md:text-sm ${config.statusColor}`}>
                   <span>
                     <span className="mr-1">تاریخ: </span>
-                    {new Date(order.updatedAt).toLocaleDateString('fa-IR') || 'نامشخص'}
+                    {new Date(order.createdAt).toLocaleDateString('fa-IR') || 'نامشخص'}
                   </span>
                   <span>
                     <span className="mr-1">ساعت: </span>
-                    {new Date(order.updatedAt).toLocaleTimeString('fa-IR') || 'نامشخص'}
+                    {new Date(order.createdAt).toLocaleTimeString('fa-IR') || 'نامشخص'}
                   </span>
                 </div>
               </>
@@ -96,12 +84,5 @@ const OrderCard: React.FC<OrderCardProps> = ({ order }) => {
     </article>
   );
 };
-
-const Item = ({ label, value }: { label: string; value: React.ReactNode }) => (
-  <div className="flex items-center gap-2 text-sm md:text-base">
-    <span className="text-gray-500 dark:text-gray-400">{label}:</span>
-    <span className="text-gray-800 dark:text-gray-200 font-medium">{value}</span>
-  </div>
-);
 
 export default OrderCard;
