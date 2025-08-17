@@ -7,6 +7,7 @@ import NextTopLoader from 'nextjs-toploader';
 import { Suspense } from 'react';
 import Loading from './loading';
 import ScrollToTop from '@/components/ui/ScrollToTop';
+import { Button } from '@/components/ui/button';
 
 export const metadata = {
   title: {
