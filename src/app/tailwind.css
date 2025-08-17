@@ -17,24 +17,64 @@
 
   --color-white: #fefeff;
   --color-black: #0d0d0d;
-  --color-border: hsl(var(--border));
-  --color-ring: hsl(var(--ring));
-  --color-background: hsl(var(--background));
-  --color-warning: hsl(var(--warning));
-  --color-alert: hsl(var(--alert));
-  --color-blue: hsl(var(--blue));
-  --color-cyan: hsl(var(--cyan));
 
-  --color-success: hsl(var(--success));
-  --color-success-secondary: hsl(var(--success-secondary));
+  /* اصلی */
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+  --color-background: var(--background);
+  --color-text: var(--text);
 
-  --color-text: hsl(var(--text));
-  --color-primary: hsl(var(--primary));
-  --color-primary-btn: hsl(var(--primary-btn));
-  --color-secondary: hsl(var(--secondary));
-  --color-muted: hsl(var(--muted));
-  --color-destructive: hsl(var(--destructive));
+  /* رنگ‌های هشدار و اطلاع‌رسانی */
+  --color-warning: var(--warning);
+  --color-alert: var(--alert);
+  --color-blue: var(--blue);
+  --color-cyan: var(--cyan);
 
+  /* موفقیت و خطا */
+  --color-success: var(--success);
+  --color-success-secondary: var(--success-secondary);
+  --color-destructive: var(--destructive);
+
+  /* پرایمری */
+  --color-primary: var(--primary);
+  --color-primary-btn: var(--primary-btn);
+
+  /* سکندری و میوت */
+  --color-secondary: var(--secondary);
+  --color-muted: var(--muted);
+
+  /* جدید اضافه‌شده‌ها */
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  /* چارت‌ها */
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  /* سایدبار */
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* فونت */
   --font-iranyekan: IRANYekan;
 }
 

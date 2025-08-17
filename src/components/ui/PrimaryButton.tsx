@@ -14,7 +14,7 @@ interface PrimaryButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 export default function PrimaryButton({ children, isLoading = false, disabled, onClick, className, ...props }: PrimaryButtonProps) {
   return (
-    <Button className="cursor-pointer text-amber-50 w-full min-h-[48px]" onClick={onClick} disabled={disabled || isLoading} {...props}>
+    <Button className="cursor-pointer w-full min-h-[48px]" onClick={onClick} disabled={disabled || isLoading} {...props}>
       {isLoading ? <Loader2Icon className="animate-spin" /> : children}
     </Button>
   );
