@@ -7,6 +7,8 @@ import PrimaryButton from '@/components/ui/PrimaryButton';
 import Link from 'next/link';
 import { validateIranPhoneNumber } from '@/validation/validateIranPhoneNumber';
 import { extractTimeFromText } from '@/utils/utils';
+import { Button } from '@/components/ui/button';
+import { Loader2Icon } from 'lucide-react';
 
 export const errorPhoneNumberStepMessages: Record<number, string> = {
   400: 'شماره نامعتبر است',

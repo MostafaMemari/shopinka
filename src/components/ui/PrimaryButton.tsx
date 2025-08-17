@@ -1,6 +1,8 @@
 import { cn } from '@/utils/utils';
+import { Loader2Icon } from 'lucide-react';
 import { ButtonHTMLAttributes } from 'react';
 import { BeatLoader } from 'react-spinners';
+import { Button } from './button';
 
 interface PrimaryButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
@@ -12,13 +14,8 @@ interface PrimaryButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 export default function PrimaryButton({ children, isLoading = false, disabled, onClick, className, ...props }: PrimaryButtonProps) {
   return (
-    <button
-      className={cn('btn-primary w-full py-3 flex items-center justify-center cursor-pointer min-h-[48px]', className)}
-      onClick={onClick}
-      disabled={disabled || isLoading}
-      {...props}
-    >
-      {isLoading ? <BeatLoader color="#ffffff" size={10} /> : children}
-    </button>
+    <Button className="cursor-pointer text-amber-50 w-full min-h-[48px]" onClick={onClick} disabled={disabled || isLoading} {...props}>
+      {isLoading ? <Loader2Icon className="animate-spin" /> : children}
+    </Button>
   );
 }

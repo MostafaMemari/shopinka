@@ -5,11 +5,9 @@ import { useSearchParams } from 'next/navigation';
 import DesktopLogo from '@/components/ui/Logo/DesktopLogo';
 import Toast from '@/utils/swalToast';
 
-import { useOtpTimer } from '@/hooks/useOtpTimer';
 import { IoChevronBack } from 'react-icons/io5';
 import PhoneInputForm from './PhoneInputForm';
 import OtpForm from './OtpForm';
-import { Button } from '@/components/ui/button';
 
 export default function AuthContainer() {
   const [mobile, setMobile] = useState('');
@@ -33,7 +31,6 @@ export default function AuthContainer() {
     <div className="flex min-h-screen items-center justify-center bg-background">
       <div className="container">
         <div className="relative mx-auto max-w-[450px] rounded-xl bg-muted p-5 shadow-base md:p-10">
-          <Button>fddfds</Button>
           {showOtp && (
             <button
               onClick={handleBack}

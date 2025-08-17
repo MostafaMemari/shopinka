@@ -14,6 +14,7 @@
   --secondary: 240 6% 90%;
   --ring: 240 10% 3.9%;
   --radius: 0.5rem;
+  --destructive: 0 68% 42%;
 }
 
 .dark {
@@ -31,6 +32,7 @@
   --primary-btn: 0 0% 7%; /* updated */
   --secondary: 240 4% 16%;
   --ring: 240 4.9% 83.9%;
+  --destructive: 0 0% 7%;
 }
 
 body {
