@@ -3,8 +3,7 @@
 import { useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import DesktopLogo from '@/components/common/Logo/DesktopLogo';
-import Toast from '@/utils/swalToast';
-
+import { toast } from 'sonner';
 import { IoChevronBack } from 'react-icons/io5';
 import PhoneInputForm from './PhoneInputForm';
 import OtpForm from './OtpForm';
@@ -20,7 +19,7 @@ export default function AuthContainer() {
   const handleBack = () => {
     setShowOtp(false);
     setMobile('');
-    Toast.fire({ icon: 'info', title: 'بازگشت به فرم ورود' });
+    toast.info('بازگشت به فرم ورود');
   };
 
   const handleShowOpt = () => {

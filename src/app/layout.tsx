@@ -7,7 +7,7 @@ import NextTopLoader from 'nextjs-toploader';
 import { Suspense } from 'react';
 import Loading from './loading';
 import ScrollToTop from '@/components/common/ScrollToTop';
-import { DirectionProvider } from '@radix-ui/react-direction';
+import { Toaster } from '@/components/ui';
 
 export const metadata = {
   title: {
@@ -27,10 +27,12 @@ export default function RootLayout({
     <html lang="fa" dir="rtl" suppressHydrationWarning>
       <body className={`${iranyekan} antialiased`}>
         <NextTopLoader showSpinner={false} color="#b22222" />
+
+        <Toaster />
+
         <Suspense>
           <ScrollToTop />
         </Suspense>
-
         <ClientProvider>
           <div className="flex min-h-screen flex-col">
             <NuqsAdapter>

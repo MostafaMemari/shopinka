@@ -1,4 +1,4 @@
-import Toast from '@/utils/swalToast';
+import { toast } from 'sonner';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { sendOtp } from '@/service/authService';
@@ -7,8 +7,6 @@ import PrimaryButton from '@/components/common/PrimaryButton';
 import Link from 'next/link';
 import { validateIranPhoneNumber } from '@/validation/validateIranPhoneNumber';
 import { extractTimeFromText } from '@/utils/utils';
-import { Button } from '@/components/ui/button';
-import { Loader2Icon } from 'lucide-react';
 
 export const errorPhoneNumberStepMessages: Record<number, string> = {
   400: 'شماره نامعتبر است',
@@ -44,12 +42,12 @@ function PhoneInputForm({ mobile, setMobile, handleShowOpt }: PhoneInputFormProp
         if (res.status == 409) errorMessage = errorMessage.replace('{time}', extractTimeFromText(res?.data?.message) ?? 'بعدا');
         if (res.status == 403) errorMessage = errorMessage.replace('{time}', extractTimeFromText(res?.data?.message) ?? 'بعدا');
 
-        Toast.fire({ icon: 'error', title: errorMessage });
+        toast.error(errorMessage);
         return;
       }
 
       if (res.status === 200 || res.status === 201) {
-        Toast.fire({ icon: 'success', title: 'کد اعتبار سنجی با موفقیت ارسال شد' });
+        toast.success('کد اعتبار سنجی با موفقیت ارسال شد');
         setMobile(values.mobile);
         handleShowOpt();
       }

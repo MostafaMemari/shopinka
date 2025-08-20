@@ -3,7 +3,7 @@ import { createAddress, deleteAddress, getAddress, setDefaultAddress, updateAddr
 import { AddressFormType, AddressItem } from '@/types/addressType';
 import { QueryOptions } from '@/types/queryOptions';
 import { QueryKeys } from '@/types/query-keys';
-import Toast from '@/utils/swalToast';
+import { toast } from 'sonner';
 
 export function useAddress({ enabled = true, staleTime = 60_000 }: QueryOptions) {
   const queryClient = useQueryClient();
@@ -42,14 +42,14 @@ export function useAddress({ enabled = true, staleTime = 60_000 }: QueryOptions)
       createMutation.mutate(data, {
         onSuccess: (response) => {
           invalidate();
-          Toast.fire({ icon: 'success', title: 'آدرس با موفقیت ثبت شد' });
+          toast.success('ثبت آدرس با موفقیت انجام شد');
           onSuccess?.(response.address);
         },
         onError: (error) => {
           if (error?.message?.includes('exists') || error?.message?.includes('409')) {
-            Toast.fire({ icon: 'error', title: 'این کد پستی قبلاً ثبت شده است' });
+            toast.error('این کد پستی قبلاً ثبت شده است');
           } else {
-            Toast.fire({ icon: 'error', title: error?.message || 'خطا در ثبت آدرس' });
+            toast.error('خطا در ثبت آدرس');
           }
           onError?.(error);
         },
@@ -62,14 +62,14 @@ export function useAddress({ enabled = true, staleTime = 60_000 }: QueryOptions)
         {
           onSuccess: () => {
             invalidate();
-            Toast.fire({ icon: 'success', title: 'آدرس با موفقیت ویرایش شد' });
+            toast.success('آدرس با موفقیت ویرایش شد');
             onSuccess?.();
           },
           onError: (error) => {
             if (error?.message?.includes('exists') || error?.message?.includes('409')) {
-              Toast.fire({ icon: 'error', title: 'این کد پستی قبلاً ثبت شده است' });
+              toast.success('این کد پستی قبلاً ثبت شده است');
             } else {
-              Toast.fire({ icon: 'error', title: error?.message || 'خطا در ویرایش آدرس' });
+              toast.error('خطا در ویرایش آدرس');
             }
             onError?.(error);
           },
@@ -81,11 +81,11 @@ export function useAddress({ enabled = true, staleTime = 60_000 }: QueryOptions)
       deleteMutation.mutate(id, {
         onSuccess: () => {
           invalidate();
-          Toast.fire({ icon: 'success', title: 'آدرس با موفقیت حذف شد' });
+          toast.success('آدرس با موفقیت حذف شد');
           onSuccess?.();
         },
         onError: (error) => {
-          Toast.fire({ icon: 'error', title: error?.message || 'خطا در حذف آدرس' });
+          toast.error('خطا در حذف آدرس');
           onError?.(error);
         },
       });
@@ -95,11 +95,9 @@ export function useAddress({ enabled = true, staleTime = 60_000 }: QueryOptions)
       setDefault.mutate(id, {
         onSuccess: () => {
           invalidate();
-          Toast.fire({ icon: 'success', title: 'آدرس با موفقیت به عنوان پیش‌فرض تنظیم شد' });
           onSuccess?.();
         },
         onError: (error) => {
-          Toast.fire({ icon: 'error', title: error?.message || 'خطا در تنظیم آدرس به عنوان پیش‌فرض' });
           onError?.(error);
         },
       });

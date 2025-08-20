@@ -1,6 +1,6 @@
 'use client';
 
-import Toast from '@/utils/swalToast';
+import { toast } from 'sonner';
 import { Formik, Form, ErrorMessage, Field } from 'formik';
 import * as Yup from 'yup';
 import { useRouter } from 'next/navigation';
@@ -61,7 +61,7 @@ export default function OtpForm({ mobile, backUrl }: OtpFormProps) {
           errorMessage = errorMessage.replace('{time}', extractTimeFromText(res?.data?.message) ?? 'بعدا');
         }
 
-        Toast.fire({ icon: 'error', title: errorMessage });
+        toast.error(errorMessage);
         resetForm();
         return;
       }
@@ -70,7 +70,7 @@ export default function OtpForm({ mobile, backUrl }: OtpFormProps) {
         await loginUser({ mobile, role: 'CUSTOMER', full_name: '' });
         await syncCart();
         resetTimer();
-        Toast.fire({ icon: 'success', title: 'ورود شما با موفقیت انجام شد' });
+        toast.success('ورود شما با موفقیت انجام شد');
         router.push(backUrl || '/');
       }
     } catch (error) {
@@ -91,16 +91,16 @@ export default function OtpForm({ mobile, backUrl }: OtpFormProps) {
           errorMessage = errorMessage.replace('{time}', extractTimeFromText(res?.data?.message) ?? 'بعدا');
         }
 
-        Toast.fire({ icon: 'error', title: errorMessage });
+        toast.error(errorMessage);
         return;
       }
 
       if (res.status === 200 || res.status === 201) {
-        Toast.fire({ icon: 'success', title: 'کد تأیید مجدداً ارسال شد' });
+        toast.success('کد تأیید مجدداً ارسال شد');
         resetTimer();
       }
     } catch (error) {
-      Toast.fire({ icon: 'error', title: 'خطا در ارسال کد تأیید. لطفاً دوباره تلاش کنید.' });
+      toast.error('خطا در ارسال کد تأیید. لطفاً دوباره تلاش کنید');
     } finally {
       setSubmitting(false);
     }

@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 
-import Toast from '@/utils/swalToast';
+import { toast } from 'sonner';
 import { createContact } from '@/service/contactService';
 import { ContactFormType, ContactItem } from '@/types/contactType';
 
@@ -13,11 +13,11 @@ export function useContact() {
     createContact: (data: ContactFormType, onSuccess?: (created: ContactItem) => void, onError?: (error: any) => void) => {
       createMutation.mutate(data, {
         onSuccess: (response) => {
-          Toast.fire({ icon: 'success', title: 'پیام شما با موفقیت ارسال شد!' });
+          toast.success('پیام شما با موفقیت ثبت شد');
           onSuccess?.(response.contact);
         },
         onError: (error) => {
-          Toast.fire({ icon: 'error', title: error?.message || 'خطا در ارسال پیام' });
+          toast.error('خطا در ارسال پیام');
           onError?.(error);
         },
       });

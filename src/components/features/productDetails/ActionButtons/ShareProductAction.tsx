@@ -1,6 +1,6 @@
 'use client';
 
-import Toast from '@/utils/swalToast';
+import { toast } from 'sonner';
 import { cn } from '@/utils/utils';
 import React from 'react';
 import { HiOutlineShare } from 'react-icons/hi';
@@ -8,7 +8,7 @@ import { HiOutlineShare } from 'react-icons/hi';
 function ShareProductAction({ className }: { className?: string }) {
   const handleCopyLink = () => {
     navigator.clipboard.writeText(window.location.href);
-    Toast.fire({ icon: 'success', text: 'لینک محصول با موفقیت کپی شد' });
+    toast.success('لینک محصول با موفقیت کپی شد');
   };
 
   return (

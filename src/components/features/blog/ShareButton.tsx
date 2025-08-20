@@ -1,13 +1,13 @@
 'use client';
 
-import Toast from '@/utils/swalToast';
+import { toast } from 'sonner';
 import { FC } from 'react';
 import { BiCopy, BiShare } from 'react-icons/bi';
 
 const ShareButton: FC = () => {
   const handleCopyLink = () => {
     navigator.clipboard.writeText(window.location.href);
-    Toast.fire({ icon: 'success', text: 'لینک مقاله با موفقیت کپی شد' });
+    toast.success('لینک مقاله با موفقیت کپی شد');
   };
 
   return (

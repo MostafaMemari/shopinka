@@ -3,7 +3,7 @@
 import { profileMenuItem } from '@/data/profileMenuItem';
 import { useLogoutUser } from '@/hooks/reactQuery/auth/useLogoutUser';
 import { logout } from '@/service/authService';
-import Toast from '@/utils/swalToast';
+import { toast } from 'sonner';
 import { cn } from '@/utils/utils';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
@@ -27,12 +27,12 @@ function ProfileMenu({ onClose }: ProfileMenuProps) {
       const res = await logout();
       if (res?.status === 201 || res?.status === 200) {
         logoutUser().then(() => {
-          Toast.fire({ icon: 'success', title: 'خروج با موفقیت انجام شد' });
+          toast.success('خروج با موفقیت انجام شد');
           router.push('/');
         });
       }
     } catch (err) {
-      Toast.fire({ icon: 'error', title: 'خروج با خطا مواجه شد' });
+      toast.error('خروج با خطا مواجه شد');
     } finally {
       setIsLoggingOut(false);
     }
