@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Card, CardContent, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui';
 import { EllipsisVertical, MoreVertical, Pencil, Trash } from 'lucide-react';
-import { UpdateAddressDialogDrawer } from './UpdateAddressDialogDrawer';
+import { UpdateAddressDialogDrawer } from '../../address/UpdateAddressDialogDrawer';
 import { useBoolean } from '@/hooks/use-boolean';
 import { RemoveDialog } from './RemoveDialog';
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { forwardRef, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import TextInput from '@/components/common/TextInput';
 import SelectInput from '@/components/common/SelectInput';
 import { AddressFormType } from '@/types/addressType';
@@ -10,17 +10,20 @@ import { useFormik } from 'formik';
 import { validationAddressSchema } from '@/validation/validationAddressSchema';
 import { useAddress } from '@/hooks/address/useAddress';
 import PrimaryButton from '@/components/common/PrimaryButton';
+import { cn } from '@/lib/utils';
 
-interface AddressProps {
+interface AddressFormProps {
   initialValues?: AddressFormType & { id: number };
   className?: string;
   onSuccess?: () => void;
 }
 
-const AddressForm = forwardRef<HTMLFormElement, AddressProps>(({ initialValues, className = '', onSuccess }) => {
+function AddressForm({ initialValues, className = '', onSuccess }: AddressFormProps) {
   const [selectedProvinceId, setSelectedProvinceId] = useState<number | null>(null);
 
   const { createAddress, updateAddress, isCreateAddressLoading, isUpdateAddressLoading } = useAddress({});
+
+  const isLoadingSubmit = isCreateAddressLoading || isUpdateAddressLoading;
 
   useEffect(() => {
     if (initialValues?.province) {
@@ -46,30 +49,26 @@ const AddressForm = forwardRef<HTMLFormElement, AddressProps>(({ initialValues, 
     },
     validationSchema: validationAddressSchema,
     onSubmit: async (values) => {
-      handleSubmit(values);
+      if (initialValues) {
+        updateAddress(initialValues.id, values, () => {
+          formik.resetForm();
+          setSelectedProvinceId(null);
+          onSuccess?.();
+        });
+      } else {
+        createAddress(values, () => {
+          formik.resetForm();
+          setSelectedProvinceId(null);
+          onSuccess?.();
+        });
+      }
     },
     validateOnChange: false,
     validateOnBlur: true,
   });
 
-  const handleSubmit = async (values: AddressFormType) => {
-    if (initialValues) {
-      updateAddress(initialValues.id, values, () => {
-        formik.resetForm();
-        setSelectedProvinceId(null);
-        onSuccess?.();
-      });
-    } else {
-      createAddress(values, () => {
-        formik.resetForm();
-        setSelectedProvinceId(null);
-        onSuccess?.();
-      });
-    }
-  };
-
   return (
-    <form onSubmit={formik.handleSubmit} className={`space-y-1 text-right ${className}`} dir="rtl">
+    <form onSubmit={formik.handleSubmit} className={cn('space-y-1 text-right', className)} dir="rtl">
       <div className="grid grid-cols-1 gap-4">
         <TextInput id="fullName" name="fullName" isRequired label="نام و نام خانوادگی تحویل گیرنده" formik={formik} />
       </div>
@@ -92,7 +91,6 @@ const AddressForm = forwardRef<HTMLFormElement, AddressProps>(({ initialValues, 
             formik.setFieldTouched('city', false);
           }}
         />
-
         <SelectInput
           key={`city-${selectedProvinceId}`}
           id="city"
@@ -120,12 +118,12 @@ const AddressForm = forwardRef<HTMLFormElement, AddressProps>(({ initialValues, 
         <TextInput id="postalCode" name="postalCode" label="کدپستی" formik={formik} isRequired />
       </div>
 
-      <PrimaryButton isLoading={isCreateAddressLoading} className="w-full mt-6" type="submit">
+      <PrimaryButton isLoading={isLoadingSubmit} className="w-full mt-6" type="submit">
         {initialValues ? 'ویرایش' : 'ثبت'} آدرس
       </PrimaryButton>
     </form>
   );
-});
+}
 
 AddressForm.displayName = 'AddressForm';
 

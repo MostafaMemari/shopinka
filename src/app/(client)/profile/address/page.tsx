@@ -1,7 +1,5 @@
-'use client';
-
 import AddressesActions from '@/components/features/profile/Address/AddressesActions';
-import { CreateAddressDialogDrawer } from '@/components/features/profile/Address/CreateAddressDialogDrawer';
+import { CreateAddressDialogDrawer } from '@/components/features/address/CreateAddressDialogDrawer';
 import DashboardHeader from '@/components/features/profile/DashboardHeader';
 
 export default function Page() {

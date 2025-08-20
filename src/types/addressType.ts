@@ -5,7 +5,7 @@ export type AddressFormType = {
   plate: string;
   streetAndAlley: string;
   unit: string | null;
-  postalCode: string | null;
+  postalCode: string;
 };
 
 export type AddressItem = {

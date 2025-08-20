@@ -1,7 +1,7 @@
-import React from 'react';
-import Select from 'react-select';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { cn } from '@/lib/utils';
 
-export interface Option {
+interface Option {
   label: string;
   value: string;
 }
@@ -29,19 +29,6 @@ const SelectInput: React.FC<SelectInputProps> = ({
   isRequired = false,
   onChange,
 }) => {
-  const selectedOption = options.find((opt) => opt.value === formik.values[name]);
-
-  const defaultHandleChange = (selected: Option | null) => {
-    const value = selected?.value || '';
-    formik.setFieldValue(name, value, true);
-    formik.validateField(name).then(() => {
-      if (value) {
-        formik.setFieldTouched(name, false, false);
-      }
-      if (onChange) onChange(selected);
-    });
-  };
-
   return (
     <div className="mb-4">
       <label htmlFor={id} className="mb-2 block text-sm font-medium text-gray-700">
@@ -49,33 +36,38 @@ const SelectInput: React.FC<SelectInputProps> = ({
         {isRequired && <span className="text-red-500"> *</span>}
       </label>
       <Select
-        inputId={id}
         name={name}
-        value={selectedOption || null}
-        onChange={defaultHandleChange}
-        onBlur={() => formik.setFieldTouched(name, true)}
-        options={options}
-        placeholder={placeholder}
-        isClearable
-        isDisabled={isDisabled}
-        isSearchable
-        styles={{
-          control: (base, state) => ({
-            ...base,
-            direction: 'rtl',
-            borderRadius: '0.5rem',
-            minHeight: '40px',
-            borderColor: state.isFocused ? '#a00' : '#D1D5DB',
-            boxShadow: state.isFocused ? '0 0 0 1px #a00' : undefined,
-            '&:hover': {
-              borderColor: '#a00',
-            },
-          }),
-          input: (base) => ({ ...base, direction: 'rtl' }),
-          placeholder: (base) => ({ ...base, textAlign: 'right' }),
-          singleValue: (base) => ({ ...base, textAlign: 'right', direction: 'rtl' }),
+        value={formik.values[name] ?? ''}
+        onValueChange={(value) => {
+          const selectedOption = options.find((opt) => opt.value === value) || null;
+          formik.setFieldValue(name, value);
+          if (onChange) onChange(selectedOption);
         }}
-      />
+        onOpenChange={(open) => {
+          if (!open) formik.setFieldTouched(name, true); // فقط موقع بستن منو touched بشه
+        }}
+        disabled={isDisabled}
+      >
+        <SelectTrigger
+          id={id}
+          className={cn(
+            'h-10 w-full rounded-md border border-gray-300',
+            formik.touched[name] && formik.errors[name] && 'border-red-500',
+            isDisabled && 'opacity-50 cursor-not-allowed',
+            'text-right',
+          )}
+          dir="rtl"
+        >
+          <SelectValue placeholder={placeholder} />
+        </SelectTrigger>
+        <SelectContent>
+          {options.map((option) => (
+            <SelectItem key={option.value} value={option.value}>
+              {option.label}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
       {formik.touched[name] && formik.errors[name] && <p className="text-red-500 text-xs mt-1">{formik.errors[name]}</p>}
     </div>
   );

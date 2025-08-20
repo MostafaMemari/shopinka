@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import AddressSection from '@/components/features/checkout/address/AddressSection';
 import DeliverySection from '@/components/features/checkout/delivery/DeliverySection';
 import CartPriceDetail from '@/components/features/checkout/CartPriceDetail';
 import { ShippingItem } from '@/types/shippingType';
@@ -12,6 +11,7 @@ import LoadingSpinner from '@/components/common/LoadingSpinner';
 import EmptyState from '../profile/EmptyState';
 import { PiBasketFill } from 'react-icons/pi';
 import Link from 'next/link';
+import AddressSection from '../address/AddressSection';
 
 function CheckoutPageView() {
   const [selectedAddressId, setSelectedAddressId] = useState<number | null>(null);

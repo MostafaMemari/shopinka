@@ -3,9 +3,9 @@
 import React, { useEffect } from 'react';
 import { MdOutlineEditLocation } from 'react-icons/md';
 import AddressItem from './AddressItem';
-import { CreateAddressDialogDrawer } from '../../profile/Address/CreateAddressDialogDrawer';
 import { useAddress } from '@/hooks/address/useAddress';
 import { AddressCardSkeleton } from './AddressCardSkeleton';
+import { CreateAddressDialogDrawer } from './CreateAddressDialogDrawer';
 
 export interface Option {
   value: string;

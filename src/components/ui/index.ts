@@ -7,3 +7,4 @@ export * from './card';
 export * from './dropdown-menu';
 export * from './alert-dialog';
 export * from './skeleton';
+export * from './select';
