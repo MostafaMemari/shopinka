@@ -2,7 +2,7 @@ import React from 'react';
 import { type AddressItem as AddressItemType } from '@/types/addressType';
 import { useAddress } from '@/hooks/address/useAddress';
 import { Card, CardContent, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui';
-import { EllipsisVertical, MapPin } from 'lucide-react';
+import { EllipsisVertical, MapPin, Square, SquareCheckBig } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface AddressItemProps {
@@ -35,12 +35,10 @@ const AddressItem: React.FC<AddressItemProps> = ({ item }) => {
       tabIndex={0}
       role="button"
     >
-      <CardContent className="flex justify-between p-0">
-        <span className="flex items-center justify-center h-6 w-6">
-          <MapPin size={20} />
-        </span>
+      <CardContent className="flex justify-between p-0 gap-2">
+        {item.isDefault ? <SquareCheckBig size={20} /> : <Square size={20} />}
 
-        <div className="flex flex-col gap-2 flex-1 ms-2">
+        <div className="flex flex-col gap-2 flex-1">
           <div className="flex items-center gap-2">
             <span className="font-semibold text-base text-foreground dark:text-white">
               {item.province}

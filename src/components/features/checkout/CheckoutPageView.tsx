@@ -1,17 +1,14 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import AddressSection from '@/components/features/checkout/AddressSection';
-import DeliverySection from '@/components/features/checkout/DeliverySection';
+import React, { useState } from 'react';
+import AddressSection from '@/components/features/checkout/address/AddressSection';
+import DeliverySection from '@/components/features/checkout/delivery/DeliverySection';
 import CartPriceDetail from '@/components/features/checkout/CartPriceDetail';
 import { ShippingItem } from '@/types/shippingType';
-import { useAddress } from '@/hooks/address/useAddress';
-import { useShipping } from '@/hooks/reactQuery/useShipping';
 import { useAuth } from '@/hooks/reactQuery/auth/useAuth';
 import { useCart } from '@/hooks/reactQuery/cart/useCart';
 import { useIsMounted } from '@/hooks/useIsMounted';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
-import ErrorState from '../profile/ErrorState';
 import EmptyState from '../profile/EmptyState';
 import { PiBasketFill } from 'react-icons/pi';
 import Link from 'next/link';
@@ -24,21 +21,12 @@ function CheckoutPageView() {
   const { cart, isLoading: isLoadingCart } = useCart(isLogin);
   const isMounted = useIsMounted();
 
-  const { data: addresses, isLoading: isLoadingAddresses, error: errorAddresses } = useAddress({});
-  const { data: shippings, isLoading: isLoadingShippings, error: errorShippings } = useShipping({});
-
   return (
     <>
-      {!isMounted || isLoadingCart || isLoadingAddresses || isLoadingShippings ? (
+      {!isMounted || isLoadingCart ? (
         <div className="col-span-12">
           <div className="rounded-lg bg-muted p-4 min-h-[300px] flex items-center justify-center">
             <LoadingSpinner />
-          </div>
-        </div>
-      ) : errorAddresses || errorShippings ? (
-        <div className="col-span-12">
-          <div className="rounded-lg bg-muted p-4 min-h-[300px] flex items-center justify-center">
-            <ErrorState message={errorAddresses?.message || errorShippings?.message} />
           </div>
         </div>
       ) : cart.items.length === 0 ? (
@@ -61,10 +49,11 @@ function CheckoutPageView() {
         <>
           <div className="col-span-12 md:col-span-8">
             <div className="rounded-lg bg-muted p-4">
-              <AddressSection addresses={addresses?.data.items ?? []} onAddressSelect={setSelectedAddressId} />
-              <DeliverySection shippings={shippings?.data.items ?? []} onShippingSelect={setSelectedShippingItem} />
+              <AddressSection onAddressSelect={setSelectedAddressId} />
+              <DeliverySection onShippingSelect={setSelectedShippingItem} />
             </div>
           </div>
+
           <CartPriceDetail cart={cart} selectedAddressId={selectedAddressId} selectedShippingItem={selectedShippingItem} />
         </>
       )}

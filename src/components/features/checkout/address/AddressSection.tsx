@@ -2,9 +2,10 @@
 
 import React, { useEffect } from 'react';
 import { MdOutlineEditLocation } from 'react-icons/md';
-import { AddressItem as AddressItemType } from '@/types/addressType';
 import AddressItem from './AddressItem';
-import { CreateAddressDialogDrawer } from '../profile/Address/CreateAddressDialogDrawer';
+import { CreateAddressDialogDrawer } from '../../profile/Address/CreateAddressDialogDrawer';
+import { useAddress } from '@/hooks/address/useAddress';
+import { AddressCardSkeleton } from './AddressCardSkeleton';
 
 export interface Option {
   value: string;
@@ -12,11 +13,14 @@ export interface Option {
 }
 
 interface AddressSectionProps {
-  addresses: AddressItemType[];
   onAddressSelect: (id: number | null) => void;
 }
 
-export default function AddressSection({ onAddressSelect, addresses }: AddressSectionProps) {
+export default function AddressSection({ onAddressSelect }: AddressSectionProps) {
+  const { data, isLoading, error } = useAddress({});
+
+  const addresses = data?.data.items ?? [];
+
   useEffect(() => {
     onAddressSelect(addresses.filter((address) => address.isDefault)[0]?.id || null);
   }, [addresses]);
@@ -33,7 +37,9 @@ export default function AddressSection({ onAddressSelect, addresses }: AddressSe
       </div>
 
       <fieldset className="space-y-4 grid grid-cols-1">
-        {addresses.length ? (
+        {isLoading ? (
+          Array.from({ length: 2 }, (_, index) => <AddressCardSkeleton key={index} />)
+        ) : addresses.length ? (
           addresses.map((item) => <AddressItem key={item.id} item={item} />)
         ) : (
           <p className="text-sm text-gray-500">هیچ آدرسی ثبت نشده است</p>

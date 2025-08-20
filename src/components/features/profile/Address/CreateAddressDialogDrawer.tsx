@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui';
 import { Drawer, DrawerClose, DrawerContent, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from '@/components/ui/drawer';
 import { useMediaQuery } from '@/hooks/use-media-query';
-import AddressForm from '../../checkout/AddressForm';
+import AddressForm from '../../checkout/address/AddressForm';
 import { MapPinPlus } from 'lucide-react';
 import { useState } from 'react';
 
