@@ -18,6 +18,7 @@ export type AddressItem = {
   fullName: string;
   streetAndAlley: string;
   unit: string | null;
+  isDefault: boolean;
   createdAt: string;
   updatedAt: string;
 };

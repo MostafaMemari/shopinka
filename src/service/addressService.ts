@@ -29,6 +29,18 @@ export const updateAddress = async (id: number, data: AddressFormType): Promise<
   return res.data;
 };
 
+export const setDefaultAddress = async (id: number): Promise<{ message: string; address: AddressItem }> => {
+  const res = await shopApiFetch(`/address/${id}/set-default`, {
+    method: 'PATCH',
+  });
+
+  if (res.status >= 400 || !res.data?.address) {
+    throw new Error(res.data?.message || 'خطا در ویرایش آدرس');
+  }
+
+  return res.data;
+};
+
 export const deleteAddress = async (id: number): Promise<{ message: string }> => {
   const res = await shopApiFetch(`/address/${id}`, {
     method: 'DELETE',

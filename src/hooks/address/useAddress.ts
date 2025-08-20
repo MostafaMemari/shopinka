@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { createAddress, deleteAddress, getAddress, updateAddress } from '@/service/addressService';
+import { createAddress, deleteAddress, getAddress, setDefaultAddress, updateAddress } from '@/service/addressService';
 import { AddressFormType, AddressItem } from '@/types/addressType';
 import { QueryOptions } from '@/types/queryOptions';
 import { QueryKeys } from '@/types/query-keys';
@@ -26,6 +26,10 @@ export function useAddress({ enabled = true, staleTime = 60_000 }: QueryOptions)
 
   const deleteMutation = useMutation({
     mutationFn: deleteAddress,
+  });
+
+  const setDefault = useMutation({
+    mutationFn: setDefaultAddress,
   });
 
   return {
@@ -87,8 +91,23 @@ export function useAddress({ enabled = true, staleTime = 60_000 }: QueryOptions)
       });
     },
 
+    setDefaultAddress: (id: number, onSuccess?: () => void, onError?: (error: any) => void) => {
+      setDefault.mutate(id, {
+        onSuccess: () => {
+          invalidate();
+          Toast.fire({ icon: 'success', title: 'آدرس با موفقیت به عنوان پیش‌فرض تنظیم شد' });
+          onSuccess?.();
+        },
+        onError: (error) => {
+          Toast.fire({ icon: 'error', title: error?.message || 'خطا در تنظیم آدرس به عنوان پیش‌فرض' });
+          onError?.(error);
+        },
+      });
+    },
+
     isCreateAddressLoading: createMutation.isPending,
     isUpdateAddressLoading: updateMutation.isPending,
     isDeleteAddressLoading: deleteMutation.isPending,
+    isSetDefaultAddressLoading: setDefault.isPending,
   };
 }

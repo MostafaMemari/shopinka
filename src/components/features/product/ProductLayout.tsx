@@ -8,8 +8,8 @@ import { PiPhoneCall } from 'react-icons/pi';
 import { LuList, LuShoppingCart, LuUser, LuCheck } from 'react-icons/lu';
 import { RiHome3Line } from 'react-icons/ri';
 import { useAuth } from '@/hooks/reactQuery/auth/useAuth';
-import MobileLogo from '@/components/ui/Logo/MobileLogo';
-import CartMobileFixContainer from '../../ui/CartMobileFixContainer';
+import MobileLogo from '@/components/common/Logo/MobileLogo';
+import CartMobileFixContainer from '../../common/CartMobileFixContainer';
 import MobileMenu from '../../layout/mobileLayout/MobileMenu';
 
 const ProductLayout = () => {

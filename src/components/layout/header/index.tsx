@@ -1,4 +1,4 @@
-import DesktopLogo from '../../ui/Logo/DesktopLogo';
+import DesktopLogo from '../../common/Logo/DesktopLogo';
 import ProfileDropdown from './ProfileDropdown';
 import SearchBarBase from './Search/SearchBar';
 import BasketDropdown from '../../features/cart/views/BasketDropdown';

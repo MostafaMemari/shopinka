@@ -6,8 +6,8 @@ import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import NextTopLoader from 'nextjs-toploader';
 import { Suspense } from 'react';
 import Loading from './loading';
-import ScrollToTop from '@/components/ui/ScrollToTop';
-import { Button } from '@/components/ui/button';
+import ScrollToTop from '@/components/common/ScrollToTop';
+import { DirectionProvider } from '@radix-ui/react-direction';
 
 export const metadata = {
   title: {

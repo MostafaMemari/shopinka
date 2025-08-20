@@ -1,6 +1,6 @@
 import { FaShoppingBag, FaTruck, FaTimesCircle, FaChevronLeft } from 'react-icons/fa';
 import Link from 'next/link';
-import CardBox from '@/components/ui/CardBox';
+import CardBox from '@/components/common/CardBox';
 
 const statusConfig = [
   {

@@ -1,150 +1,75 @@
-import React, { useRef, useState } from 'react';
-import { AddressFormType, type AddressItem as AddressItemType } from '@/types/addressType';
+import React from 'react';
+import { type AddressItem as AddressItemType } from '@/types/addressType';
 import { useAddress } from '@/hooks/address/useAddress';
-import useIsMdUp from '@/hooks/useIsMdUp';
-
-import AddressActions from '@/components/ui/DropDownActions';
-import Dialog from '@/components/ui/Dialog';
-import MobileDrawer from '@/components/ui/MobileDrawer';
-import AddressForm from './AddressForm';
-import { MdCheck } from 'react-icons/md';
-import PrimaryButton from '@/components/ui/PrimaryButton';
+import { Card, CardContent, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui';
+import { EllipsisVertical, MapPin } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface AddressItemProps {
   item: AddressItemType;
-  selectedAddressId: number | null;
-  onSelectAddress: (id: number) => void;
-  onAddressDeleted: (deletedId: number) => void;
-  onAddressUpdated: (updatedId: number) => void;
 }
 
-const AddressItem: React.FC<AddressItemProps> = ({ item, selectedAddressId, onSelectAddress, onAddressDeleted, onAddressUpdated }) => {
-  const { deleteAddress, updateAddress, isCreateAddressLoading } = useAddress({});
-  const formRef = useRef<HTMLFormElement>(null);
-  const [modalState, setModalState] = useState(false);
-
-  const isMdUp = useIsMdUp();
-  const isSelected = selectedAddressId === item.id;
-
-  const handleFormSubmit = async (values: AddressFormType) => {
-    updateAddress(
-      item.id,
-      values,
-      () => {
-        setModalState(false);
-        formRef.current?.reset();
-        onAddressUpdated(item.id);
-      },
-      (error) => {
-        console.error('خطا در ارسال فرم:', error);
-      },
-    );
-  };
-
-  const triggerFormSubmit = () => {
-    formRef.current?.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
-  };
+const AddressItem: React.FC<AddressItemProps> = ({ item }) => {
+  const { deleteAddress, setDefaultAddress, isSetDefaultAddressLoading } = useAddress({});
 
   const handleDeleteAddress = () => {
     deleteAddress(item.id);
-    onAddressDeleted(item.id);
   };
 
-  const handleSelect = () => {
-    if (!isSelected) onSelectAddress(item.id);
+  const handleSetDefaultAddress = () => {
+    setDefaultAddress(item.id);
   };
-
-  const formInitialValues = {
-    city: item.city,
-    postalCode: item.postalCode,
-    province: item.province,
-    fullName: item.fullName,
-    streetAndAlley: item.streetAndAlley,
-    unit: item.unit || '',
-    plate: item.plate,
-  };
-
-  const ConfirmButton = (
-    <PrimaryButton type="button" onClick={triggerFormSubmit} isLoading={isCreateAddressLoading} disabled={isCreateAddressLoading}>
-      تایید و ادامه
-    </PrimaryButton>
-  );
 
   return (
-    <div>
-      <div
-        onClick={handleSelect}
-        className={`
-          relative block cursor-pointer rounded-xl border p-5 shadow-sm transition-all
-          ${isSelected ? 'border-primary bg-primary/10 shadow-md' : 'border-gray-200 bg-white hover:border-gray-300'}
-          dark:bg-gray-800 dark:border-gray-700
-        `}
-        aria-selected={isSelected}
-        tabIndex={0}
-        role="button"
-      >
-        <div className="absolute top-4 left-4">
-          <AddressActions onDelete={handleDeleteAddress} onEdit={() => setModalState(true)} />
-        </div>
-
-        <span className="absolute right-3 top-5 flex items-center justify-center h-6 w-6">
-          <span
-            className={`flex items-center justify-center rounded-full border-2 transition-colors
-              ${isSelected ? 'border-primary bg-primary' : 'border-gray-300 bg-white dark:bg-gray-800'}
-              h-6 w-6`}
-          >
-            {isSelected && <MdCheck className="h-4 w-4 text-white" />}
-          </span>
+    <Card
+      onClick={handleSetDefaultAddress}
+      className={cn(
+        isSetDefaultAddressLoading && 'opacity-50 cursor-not-allowed',
+        'cursor-pointer transition-all p-4',
+        {
+          'border-primary bg-primary/10 shadow-md': item.isDefault,
+          'border-border bg-card hover:border-muted-foreground/50': !item.isDefault,
+        },
+        'dark:bg-gray-800 dark:border-gray-700',
+      )}
+      tabIndex={0}
+      role="button"
+    >
+      <CardContent className="flex justify-between p-0">
+        <span className="flex items-center justify-center h-6 w-6">
+          <MapPin size={20} />
         </span>
 
-        <div className="flex flex-col gap-2 px-8">
+        <div className="flex flex-col gap-2 flex-1 ms-2">
           <div className="flex items-center gap-2">
-            <span className="font-semibold text-base text-gray-800 dark:text-white">
+            <span className="font-semibold text-base text-foreground dark:text-white">
               {item.province}
               {item.city && `، ${item.city}`}
               {item.streetAndAlley && ` - ${item.streetAndAlley}`}
             </span>
           </div>
-          <div className="flex flex-wrap gap-x-6 gap-y-1 text-xs text-gray-600 dark:text-gray-300">
+          <div className="flex flex-wrap gap-x-6 gap-y-1 text-xs text-muted-foreground dark:text-gray-300">
             {item.plate && <span>پلاک: {item.plate}</span>}
             {item.unit && <span>واحد: {item.unit}</span>}
             {item.postalCode && <span>کد پستی: {item.postalCode}</span>}
           </div>
-          <div className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
+          <div className="flex items-center gap-1 text-xs text-muted-foreground dark:text-gray-400">
             <span>گیرنده:</span>
             <span className="font-medium">{item.fullName}</span>
           </div>
         </div>
-      </div>
 
-      {isMdUp ? (
-        <Dialog
-          title="ویرایش آدرس"
-          isOpen={modalState}
-          onOpen={() => setModalState(true)}
-          onClose={() => setModalState(false)}
-          actions={ConfirmButton}
-          size="md"
-        >
-          <div className="py-2">
-            <AddressForm onSubmit={handleFormSubmit} ref={formRef} initialValues={formInitialValues} />
-          </div>
-        </Dialog>
-      ) : (
-        <MobileDrawer
-          title="ویرایش آدرس"
-          isOpen={modalState}
-          onOpen={() => setModalState(true)}
-          onClose={() => setModalState(false)}
-          triggerButton={null}
-          footerActions={ConfirmButton}
-        >
-          <div className="py-2">
-            <AddressForm onSubmit={handleFormSubmit} ref={formRef} initialValues={formInitialValues} />
-          </div>
-        </MobileDrawer>
-      )}
-    </div>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <EllipsisVertical size={20} />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="start">
+            <DropdownMenuItem>ویرایش</DropdownMenuItem>
+            <DropdownMenuItem onClick={handleDeleteAddress}>حذف</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </CardContent>
+    </Card>
   );
 };
 

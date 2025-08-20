@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { SiSearxng } from 'react-icons/si';
 import Link from 'next/link';
-import Accordion from '@/components/ui/Accordion';
+import Accordion from '@/components/common/Accordion';
 import { faqData } from '@/data/faqData';
 
 function Page() {

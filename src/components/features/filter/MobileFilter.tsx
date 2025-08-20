@@ -2,7 +2,7 @@
 
 import { FC, useState } from 'react';
 import { FiFilter } from 'react-icons/fi';
-import MobileDrawer from '@/components/ui/MobileDrawer';
+import MobileDrawer from '@/components/common/MobileDrawer';
 import StockStatusFilter from '../shopPage/FilterDesktop/StockStatusFilter';
 import DiscountFilter from '../shopPage/FilterDesktop/DiscountFilter';
 import CategorySelector from '../category/CategorySelector';

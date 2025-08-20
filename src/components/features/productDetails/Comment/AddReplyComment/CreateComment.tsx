@@ -1,4 +1,4 @@
-import Dialog from '@/components/ui/Dialog';
+import Dialog from '@/components/common/Dialog';
 import { useAuth } from '@/hooks/reactQuery/auth/useAuth';
 import { useCreateComment } from '@/hooks/reactQuery/comment/useCreateComment';
 import useIsMdUp from '@/hooks/useIsMdUp';
@@ -6,8 +6,8 @@ import { usePathname, useRouter } from 'next/navigation';
 import React, { useRef, useState } from 'react';
 import { AiOutlineComment } from 'react-icons/ai';
 import CommentForm, { CommentFormikType } from './CommentForm';
-import MobileDrawer from '@/components/ui/MobileDrawer';
-import PrimaryButton from '@/components/ui/PrimaryButton';
+import MobileDrawer from '@/components/common/MobileDrawer';
+import PrimaryButton from '@/components/common/PrimaryButton';
 
 function CreateComment({ productId }: { productId: number }) {
   const isMdUp = useIsMdUp();

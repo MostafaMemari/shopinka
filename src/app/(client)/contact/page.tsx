@@ -1,9 +1,9 @@
 'use client';
 
-import TextInput from '@/components/ui/TextInput';
+import TextInput from '@/components/common/TextInput';
 import { shopInfo } from '@/data/shopInfo';
 import Link from 'next/link';
-import PrimaryButton from '@/components/ui/PrimaryButton';
+import PrimaryButton from '@/components/common/PrimaryButton';
 import { useContactForm } from '@/hooks/contact/useContactForm';
 
 export default function ContactPage() {

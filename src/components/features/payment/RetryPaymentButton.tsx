@@ -1,6 +1,6 @@
 'use client';
 
-import PrimaryButton from '@/components/ui/PrimaryButton';
+import PrimaryButton from '@/components/common/PrimaryButton';
 import { useRetryPayment } from '@/hooks/reactQuery/payment/useRetryPayment';
 import React from 'react';
 

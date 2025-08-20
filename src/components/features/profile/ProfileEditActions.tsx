@@ -2,11 +2,11 @@
 
 import { useRef, useState } from 'react';
 import ProfileField from './ProfileField';
-import MobileDrawer from '../../ui/MobileDrawer';
+import MobileDrawer from '../../common/MobileDrawer';
 import FullNameForm from './FullNameForm';
 import { useChangeFullName } from '@/hooks/reactQuery/user/userUser';
-import LoadingSpinner from '../../ui/LoadingSpinner';
-import Dialog from '../../ui/Dialog';
+import LoadingSpinner from '../../common/LoadingSpinner';
+import Dialog from '../../common/Dialog';
 import useIsMdUp from '@/hooks/useIsMdUp';
 import ErrorState from './ErrorState';
 import { useAuth } from '@/hooks/reactQuery/auth/useAuth';

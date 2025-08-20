@@ -1,7 +1,7 @@
 // src/components/AddToCartButtonMobile.tsx
 'use client';
 
-import PrimaryButton from '@/components/ui/PrimaryButton';
+import PrimaryButton from '@/components/common/PrimaryButton';
 import { ProductCardLogic } from '@/types/productCardLogic';
 import Link from 'next/link';
 import { PulseLoader } from 'react-spinners';

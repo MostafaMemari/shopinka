@@ -1,7 +1,7 @@
 :root {
   --radius: 0.5rem;
 
-  --background: oklch(0.97 0.01 250); /* hsl(240 4.8% 95.9%) */
+  --background: oklch(98.846% 0.00552 274.896); /* hsl(240 4.8% 95.9%) */
   --foreground: oklch(0.15 0.01 250); /* hsl(240 10% 3.9%) */
 
   --card: oklch(0.97 0.01 250);
@@ -92,6 +92,10 @@
   --sidebar-accent-foreground: oklch(0.98 0 0);
   --sidebar-border: oklch(0.2 0.01 250);
   --sidebar-ring: oklch(0.83 0.01 250);
+}
+
+html[dir='rtl'] * {
+  direction: rtl;
 }
 
 body {

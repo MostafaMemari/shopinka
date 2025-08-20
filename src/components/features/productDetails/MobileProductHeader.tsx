@@ -6,7 +6,7 @@ import { IoIosArrowBack } from 'react-icons/io';
 import { RiHome3Line } from 'react-icons/ri';
 import { HiOutlineShare } from 'react-icons/hi';
 import FavoriteProductAction from './ActionButtons/FavoriteProductAction';
-import SkeletonLoader from '../../ui/SkeletonLoader';
+import SkeletonLoader from '../../common/SkeletonLoader';
 import CartIconTotalQuantity from '../cart/CartIconTotalQuantity';
 import { useIsMounted } from '@/hooks/useIsMounted';
 import { useAuth } from '@/hooks/reactQuery/auth/useAuth';

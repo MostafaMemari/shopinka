@@ -1,4 +1,4 @@
-import CardBox from '@/components/ui/CardBox';
+import CardBox from '@/components/common/CardBox';
 import { GrLocation } from 'react-icons/gr';
 import { HiOutlineHeart, HiOutlineShoppingBag } from 'react-icons/hi';
 import { RiAccountCircle2Line } from 'react-icons/ri';

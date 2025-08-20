@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { BiLogIn } from 'react-icons/bi';
 import { usePathname } from 'next/navigation';
 import { useDropdown } from '@/hooks/useDropdown';
-import SkeletonLoader from '../../../ui/SkeletonLoader';
+import SkeletonLoader from '../../../common/SkeletonLoader';
 import { useAuth } from '@/hooks/reactQuery/auth/useAuth';
 import ProfileButton from './ProfileButton';
 

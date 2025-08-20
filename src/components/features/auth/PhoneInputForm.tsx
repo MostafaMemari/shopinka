@@ -3,7 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { sendOtp } from '@/service/authService';
 import { handleApiError } from '@/utils/handleApiError';
-import PrimaryButton from '@/components/ui/PrimaryButton';
+import PrimaryButton from '@/components/common/PrimaryButton';
 import Link from 'next/link';
 import { validateIranPhoneNumber } from '@/validation/validateIranPhoneNumber';
 import { extractTimeFromText } from '@/utils/utils';

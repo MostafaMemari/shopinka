@@ -17,7 +17,7 @@ import ProductGuaranteeBadge from '../ProductGuaranteeBadge';
 
 import FavoriteProductAction from '../ActionButtons/FavoriteProductAction';
 import ShareProductAction from '../ActionButtons/ShareProductAction';
-import CartMobileFixContainer from '@/components/ui/CartMobileFixContainer';
+import CartMobileFixContainer from '@/components/common/CartMobileFixContainer';
 
 interface ProductDetailsViewProps {
   product: ProductDetails;

@@ -2,12 +2,12 @@
 
 import React, { useState } from 'react';
 import MobileCommentsSwiper from './MobileCommentsSwiper';
-import Pagination from '@/components/ui/Pagination';
+import Pagination from '@/components/common/Pagination';
 import DesktopComments from './DesktopComments';
 import { CommentItem } from '@/types/commentType';
 import { useComment } from '@/hooks/reactQuery/comment/useComment';
 import { AiOutlineLeft } from 'react-icons/ai';
-import LoadingSpinner from '@/components/ui/LoadingSpinner';
+import LoadingSpinner from '@/components/common/LoadingSpinner';
 import CreateComment from '../AddReplyComment/CreateComment';
 
 interface Props {

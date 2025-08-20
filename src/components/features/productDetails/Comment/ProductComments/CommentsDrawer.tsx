@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { CommentItem } from '@/types/commentType';
-import MobileDrawer from '@/components/ui/MobileDrawer';
+import MobileDrawer from '@/components/common/MobileDrawer';
 import Recommendation from './Recommendation';
 import { useComment } from '@/hooks/reactQuery/comment/useComment';
 import { FaUserCircle } from 'react-icons/fa';

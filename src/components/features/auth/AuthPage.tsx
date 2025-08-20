@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import DesktopLogo from '@/components/ui/Logo/DesktopLogo';
+import DesktopLogo from '@/components/common/Logo/DesktopLogo';
 import Toast from '@/utils/swalToast';
 
 import { IoChevronBack } from 'react-icons/io5';

@@ -3,7 +3,7 @@
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { forwardRef, useEffect, useRef } from 'react';
-import TextInput from '@/components/ui/TextInput';
+import TextInput from '@/components/common/TextInput';
 import SuggestionRadio from './SuggestionRadio';
 import { validationCommentSchema } from '@/validation/validationCommentSchema';
 

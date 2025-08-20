@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { MdOutlineEditLocation } from 'react-icons/md';
 import { AddressItem as AddressItemType } from '@/types/addressType';
-import CreateAddress from '../profile/Address/CreateAddress';
 import AddressItem from './AddressItem';
+import { CreateAddressDialogDrawer } from '../profile/Address/CreateAddressDialogDrawer';
 
 export interface Option {
   value: string;
@@ -13,39 +13,13 @@ export interface Option {
 
 interface AddressSectionProps {
   addresses: AddressItemType[];
-  selectedAddressId: number | null;
   onAddressSelect: (id: number | null) => void;
 }
 
-export default function AddressSection({ onAddressSelect, addresses, selectedAddressId }: AddressSectionProps) {
+export default function AddressSection({ onAddressSelect, addresses }: AddressSectionProps) {
   useEffect(() => {
-    if (addresses.length === 0) {
-      onAddressSelect(null);
-    } else if (addresses.length > 0 && selectedAddressId === null) {
-      onAddressSelect(addresses[0].id);
-    }
-  }, [addresses, selectedAddressId]);
-
-  const handleSelectAddress = (id: number | null) => {
-    onAddressSelect(id);
-  };
-
-  const handleNewAddressCreated = (newAddress: AddressItemType) => {
-    handleSelectAddress(newAddress.id);
-  };
-
-  const handleAddressDeleted = (deletedId: number) => {
-    const remaining = addresses.filter((addr) => addr.id !== deletedId);
-    if (remaining.length > 0) {
-      onAddressSelect(remaining[0].id);
-    } else {
-      onAddressSelect(null);
-    }
-  };
-
-  const handleAddressUpdated = (updatedId: number) => {
-    onAddressSelect(updatedId);
-  };
+    onAddressSelect(addresses.filter((address) => address.isDefault)[0]?.id || null);
+  }, [addresses]);
 
   return (
     <div className="mb-6">
@@ -55,23 +29,14 @@ export default function AddressSection({ onAddressSelect, addresses, selectedAdd
           آدرس تحویل سفارش
         </h3>
 
-        <CreateAddress onAddressCreated={handleNewAddressCreated} />
+        <CreateAddressDialogDrawer />
       </div>
 
       <fieldset className="space-y-4 grid grid-cols-1">
         {addresses.length ? (
-          addresses.map((item) => (
-            <AddressItem
-              key={item.id}
-              item={item}
-              selectedAddressId={selectedAddressId}
-              onSelectAddress={handleSelectAddress}
-              onAddressDeleted={handleAddressDeleted}
-              onAddressUpdated={handleAddressUpdated}
-            />
-          ))
+          addresses.map((item) => <AddressItem key={item.id} item={item} />)
         ) : (
-          <p className="text-sm text-gray-500">هیچ آدرسی ثبت نشده است.</p>
+          <p className="text-sm text-gray-500">هیچ آدرسی ثبت نشده است</p>
         )}
       </fieldset>
     </div>

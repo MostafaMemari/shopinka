@@ -1,6 +1,6 @@
 'use client';
 
-import MobileDrawer from '@/components/ui/MobileDrawer';
+import MobileDrawer from '@/components/common/MobileDrawer';
 import React, { useState } from 'react';
 import { FaUserCircle } from 'react-icons/fa';
 import { IoIosMenu } from 'react-icons/io';

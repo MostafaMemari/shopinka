@@ -4,7 +4,7 @@ import PreviewCard from '../PreviewCard';
 import Pagination from '../Pagination';
 import { useFavorite } from '@/hooks/reactQuery/favorite/useFavorite';
 import { useToggleFavorite } from '@/hooks/reactQuery/favorite/useToggleFavorite';
-import LoadingSpinner from '@/components/ui/LoadingSpinner';
+import LoadingSpinner from '@/components/common/LoadingSpinner';
 import { useState } from 'react';
 import EmptyState from '../EmptyState';
 import { FaHeartBroken } from 'react-icons/fa';

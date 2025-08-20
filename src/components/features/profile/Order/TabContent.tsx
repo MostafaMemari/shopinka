@@ -4,7 +4,7 @@ import { useState, useCallback } from 'react';
 import EmptyState from '../EmptyState';
 import ErrorState from '../ErrorState';
 import Pagination from '../Pagination';
-import LoadingSpinner from '@/components/ui/LoadingSpinner';
+import LoadingSpinner from '@/components/common/LoadingSpinner';
 import { useOrder } from '@/hooks/reactQuery/order/useOrder';
 import OrderCard from './OrderCard';
 import { FaBoxOpen } from 'react-icons/fa';
