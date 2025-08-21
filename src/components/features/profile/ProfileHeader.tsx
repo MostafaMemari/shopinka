@@ -4,22 +4,21 @@ import { FaUserCircle } from 'react-icons/fa';
 import SkeletonLoader from '../../common/SkeletonLoader';
 import { useIsMounted } from '@/hooks/useIsMounted';
 import { useAuth } from '@/hooks/reactQuery/auth/useAuth';
+import { Skeleton } from '@/components/ui';
 
 function ProfileHeader() {
   const { user, isLoading } = useAuth();
   const isMounted = useIsMounted();
 
-  // if (!isMounted) return null;
-
   if (!isMounted || isLoading) {
     return (
-      <div className="mb-2 flex items-center justify-between border-b border-gray-200 pb-6">
+      <div className="flex items-center justify-between border-b border-gray-200 pb-4">
         <div className="flex items-center gap-x-2">
-          <SkeletonLoader width="3rem" height="3rem" shape="circle" />
+          <Skeleton className="animate-pulse w-10 h-10 rounded-full" />
 
           <div className="flex flex-col gap-1">
-            <SkeletonLoader width="6rem" height="0.8rem" className="rounded-xl" />
-            <SkeletonLoader width="6rem" height="0.8rem" className="rounded-xl" />
+            <Skeleton className="animate-pulse w-24 h-3 rounded-xl" />
+            <Skeleton className="animate-pulse w-24 h-3 rounded-xl" />
           </div>
         </div>
       </div>
@@ -28,7 +27,7 @@ function ProfileHeader() {
 
   if (user) {
     return (
-      <div className="mb-2 flex items-center justify-between border-b border-gray-200 pb-6">
+      <div className="flex items-center justify-between border-b border-gray-200 pb-4">
         <div className="flex items-center gap-x-2">
           <FaUserCircle className="h-10 w-10 only:rounded-full" />
 
