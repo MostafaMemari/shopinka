@@ -59,11 +59,11 @@ const AddressItem: React.FC<AddressItemProps> = ({ item }) => {
             </div>
           </div>
 
-          <DropdownMenu>
+          <DropdownMenu modal={false}>
             <DropdownMenuTrigger asChild>
               <EllipsisVertical size={20} onClick={(e) => e.stopPropagation()} />
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="start">
+            <DropdownMenuContent align="end">
               <DropdownMenuItem
                 onClick={(e) => {
                   e.stopPropagation();

@@ -1,28 +1,24 @@
 'use client';
 
 import Link from 'next/link';
-import { BiLogIn } from 'react-icons/bi';
 import { usePathname } from 'next/navigation';
-import SkeletonLoader from '../../../common/SkeletonLoader';
 import { useAuth } from '@/hooks/reactQuery/auth/useAuth';
 
-import { useEffect, useState } from 'react';
 import ProfileMenu from './ProfileMenu';
+import { Button, Skeleton } from '@/components/ui';
+import { LogIn } from 'lucide-react';
+import { useIsMounted } from '@/hooks/useIsMounted';
 
 const ProfileDropdown = () => {
   const pathname = usePathname();
   const { isLogin } = useAuth();
-
-  const [isMounted, setIsMounted] = useState(false);
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
+  const isMounted = useIsMounted();
 
   if (!isMounted) {
     return (
       <div className="flex h-9 items-center justify-center gap-2 rounded-md border border-gray-300 px-4">
-        <SkeletonLoader width="2rem" height="1.5rem" className="rounded-md" />
-        <SkeletonLoader width="4rem" height="1rem" className="rounded-md" />
+        <Skeleton className="h-5 w-5" />
+        <Skeleton className="h-4 w-16 rounded-md" />
       </div>
     );
   }
@@ -33,10 +29,10 @@ const ProfileDropdown = () => {
         <ProfileMenu />
       ) : (
         <Link href={`/login/?backUrl=${pathname}`}>
-          <div className="flex h-9 items-center justify-center gap-2 rounded-md border border-gray-300 px-4 text-sm font-medium text-gray-700 dark:border-gray-600 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition">
-            <BiLogIn size={18} className="transform scale-x-[-1]" />
+          <Button variant="outline" className="flex items-center justify-center gap-2 focus:outline-none focus:ring-0">
+            <LogIn />
             <span>ورود | ثبت‌نام</span>
-          </div>
+          </Button>
         </Link>
       )}
     </>

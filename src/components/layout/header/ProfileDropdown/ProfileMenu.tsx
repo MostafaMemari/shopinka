@@ -42,7 +42,7 @@ const ProfileMenu = () => {
   };
 
   return (
-    <DropdownMenu onOpenChange={dropdownOpen.onTrue}>
+    <DropdownMenu modal={false} onOpenChange={dropdownOpen.onTrue}>
       <DropdownMenuTrigger asChild>
         <Button variant="outline" className="flex items-center justify-center gap-2 focus:outline-none focus:ring-0">
           <User /> کاربر گرامی {dropdownOpen.value ? <ChevronDown className="h-5 w-5" /> : <ChevronUp className="h-5 w-5" />}
