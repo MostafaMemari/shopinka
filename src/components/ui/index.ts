@@ -9,3 +9,5 @@ export * from './alert-dialog';
 export * from './skeleton';
 export * from './select';
 export * from './sonner';
+export * from './scroll-area';
+export * from './hover-card';

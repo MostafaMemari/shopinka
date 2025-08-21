@@ -1,88 +1,76 @@
 'use client';
 
 import { HiOutlineChevronLeft } from 'react-icons/hi';
-import { useDropdown } from '@/hooks/useDropdown';
 import Link from 'next/link';
+import { ScrollArea, Button, HoverCard, HoverCardTrigger, HoverCardContent, Card } from '@/components/ui';
+import { cn } from '@/lib/utils';
 import DesktopBasketItem from './DesktopBasketItem';
 import { formatPrice } from '@/utils/formatter';
 import { useCart } from '@/hooks/reactQuery/cart/useCart';
 import CartIconTotalQuantity from '../CartIconTotalQuantity';
 import { useAuth } from '@/hooks/reactQuery/auth/useAuth';
 import { useRouter } from 'next/navigation';
+import { ShoppingCart } from 'lucide-react';
 
 export default function BasketDropdown() {
   const { isLogin } = useAuth();
   const { cart } = useCart(isLogin);
   const router = useRouter();
 
-  const { items: cartItems, payablePrice } = cart;
-
-  const { isOpen, dropdownRef, handleMouseEnter, handleMouseLeave, closeDropdown } = useDropdown({
-    closeOnOutsideClick: false,
-    openOnHover: true,
-  });
+  const { items: cartItems, payablePrice } = cart || { items: [], payablePrice: 0 };
 
   const handleBasketClick = () => {
     router.push('/checkout/cart');
-    closeDropdown();
   };
 
   return (
-    <div className="relative">
-      <div className="relative hidden md:block">
-        <div className="relative" ref={dropdownRef} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-          <button
-            className="rounded-full p-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition cursor-pointer"
-            onClick={closeDropdown}
-            aria-label="باز کردن سبد خرید"
-          >
-            <CartIconTotalQuantity isLogin={isLogin} />
-          </button>
+    <HoverCard openDelay={30} closeDelay={120}>
+      <HoverCardTrigger>
+        <CartIconTotalQuantity isLogin={isLogin} />
+      </HoverCardTrigger>
 
-          <div
-            className={`absolute left-0 z-10 w-[400px] rounded-lg border-t-2 border-t-primary bg-muted shadow-lg dark:bg-gray-800 transition-all duration-200 origin-top ${
-              isOpen ? 'opacity-100 scale-100 translate-y-0 pointer-events-auto' : 'opacity-0 scale-95 -translate-y-2 pointer-events-none'
-            }`}
-          >
-            <div className="flex items-center justify-between p-5 pb-2">
-              <div className="text-sm text-text/90">{cartItems?.length} مورد</div>
+      <HoverCardContent className={cn('w-[400px] rounded-lg border-t-2 border-t-primary bg-muted shadow-lg dark:bg-gray-800')}>
+        {cartItems.length > 0 ? (
+          <Card>
+            <div className="flex items-center justify-between pb-2">
+              <span className="text-sm text-text/90">{cartItems?.length || 0} مورد</span>
               <Link className="flex items-center gap-x-1 text-sm text-primary" href="/checkout/cart">
-                <div>مشاهده سبد خرید</div>
-                <div>
-                  <HiOutlineChevronLeft className="h-5 w-5" />
-                </div>
+                <span>مشاهده سبد خرید</span>
+                <HiOutlineChevronLeft className="h-5 w-5" />
               </Link>
             </div>
 
-            <div className="h-60">
-              <ul className="main-scroll h-full space-y-2 divide-y overflow-y-auto p-5 pl-2">
-                {cartItems?.length > 0 ? (
-                  cartItems?.map((item) => (
-                    <li key={item.id}>
-                      <DesktopBasketItem item={item} />
-                    </li>
-                  ))
-                ) : (
-                  <div className="flex h-full items-center justify-center text-sm text-text/60">سبد خرید خالی است</div>
-                )}
+            <ScrollArea dir="ltr" className="h-60">
+              <ul className="space-y-2 divide-y p-3 pl-1">
+                {cartItems.map((item) => (
+                  <li key={item.id}>
+                    <DesktopBasketItem item={item} />
+                  </li>
+                ))}
               </ul>
-            </div>
+            </ScrollArea>
 
-            <div className="flex items-center justify-between border-t p-5">
+            <div className="flex items-center justify-between border-t pt-3">
               <div className="flex flex-col items-center gap-y-1">
-                <div className="text-sm text-text/60">مبلغ قابل پرداخت</div>
+                <span className="text-sm text-text/60">مبلغ قابل پرداخت</span>
                 <div className="text-text/90">
                   <span className="font-bold">{formatPrice(payablePrice)}</span>
                   <span className="text-sm"> تومان</span>
                 </div>
               </div>
-              <button className="btn-primary w-32 py-3 text-sm cursor-pointer" onClick={handleBasketClick} type="button">
+              <Button className="w-32 text-sm" onClick={handleBasketClick}>
                 ثبت سفارش
-              </button>
+              </Button>
             </div>
+          </Card>
+        ) : (
+          <div className="flex flex-col items-center justify-center gap-4 p-8">
+            <ShoppingCart />
+
+            <div className="flex h-full items-center justify-center text-sm text-text/60">سبد خرید خالی است</div>
           </div>
-        </div>
-      </div>
-    </div>
+        )}
+      </HoverCardContent>
+    </HoverCard>
   );
 }

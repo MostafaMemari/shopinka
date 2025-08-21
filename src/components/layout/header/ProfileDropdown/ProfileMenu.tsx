@@ -1,22 +1,29 @@
 'use client';
 
 import Link from 'next/link';
-import { HiOutlineLogout } from 'react-icons/hi';
+import { LogOut, ChevronUp, ChevronDown, User } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { toast } from 'sonner';
 import { logout } from '@/service/authService';
 import { useState } from 'react';
 import { profileMenuItems } from '@/data/menuData';
 import { useLogoutUser } from '@/hooks/reactQuery/auth/useLogoutUser';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { Button } from '@/components/ui/button';
+import { useBoolean } from '@/hooks/use-boolean';
 
-interface ProfileMenuProps {
-  closeDropdown: () => void;
-}
-
-const ProfileMenu = ({ closeDropdown }: ProfileMenuProps) => {
+const ProfileMenu = () => {
   const pathname = usePathname();
   const logoutUser = useLogoutUser();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+
+  const dropdownOpen = useBoolean(false);
 
   const handleUserLogout = async () => {
     setIsLoggingOut(true);
@@ -25,7 +32,6 @@ const ProfileMenu = ({ closeDropdown }: ProfileMenuProps) => {
       if (res?.status === 201 || res?.status === 200) {
         logoutUser().then(() => {
           toast.success('خروج با موفقیت انجام شد');
-          closeDropdown();
         });
       }
     } catch (err) {
@@ -36,41 +42,41 @@ const ProfileMenu = ({ closeDropdown }: ProfileMenuProps) => {
   };
 
   return (
-    <div className="absolute left-0 top-full z-10 w-60 rounded-lg border-t-2 border-t-primary bg-muted shadow-lg dark:bg-gray-800 transition-all duration-200 origin-top scale-100 opacity-100 translate-y-0 pointer-events-auto">
-      <ul className="space-y-1 p-2">
+    <DropdownMenu onOpenChange={dropdownOpen.onTrue}>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline" className="flex items-center justify-center gap-2 focus:outline-none focus:ring-0">
+          <User /> کاربر گرامی {dropdownOpen.value ? <ChevronDown className="h-5 w-5" /> : <ChevronUp className="h-5 w-5" />}
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="w-60 rounded-lg border-t-2 border-t-primary bg-muted shadow-lg dark:bg-gray-800">
         {profileMenuItems.map((item) => (
-          <li key={item.href}>
+          <DropdownMenuItem key={item.href} className="p-3" asChild>
             <Link
               href={item.href}
-              className="flex items-center justify-between gap-x-2 rounded-lg p-4 hover:bg-gray-100 dark:hover:bg-gray-700 transition group"
+              className="flex items-center gap-2"
               aria-current={pathname === item.href ? 'page' : undefined}
-              onClick={closeDropdown}
+              onClick={dropdownOpen.onFalse}
             >
-              <span className="flex items-center gap-x-4">
-                <span className="flex items-center gap-x-2">
-                  <item.icon className="h-6 w-6 group-hover:text-primary dark:group-hover:text-emerald-400" />
-                  <span className="group-hover:text-primary dark:group-hover:text-emerald-400">{item.label}</span>
-                </span>
-              </span>
+              <item.icon className="h-5 w-5" />
+              <span>{item.label}</span>
             </Link>
-          </li>
+          </DropdownMenuItem>
         ))}
-        <li>
-          <div className="my-2 h-px w-full rounded-full bg-border" />
-        </li>
-        <li>
-          <button
+        <DropdownMenuSeparator />
+        <DropdownMenuItem asChild>
+          <Button
+            variant="ghost"
+            className="w-full justify-start gap-2 text-red-500 hover:text-red-600 hover:bg-red-50"
             onClick={handleUserLogout}
-            className="w-full flex items-center gap-x-2 rounded-lg p-4 text-red-500 hover:bg-red-100 dark:text-red-400 dark:hover:bg-red-900/20 transition group cursor-pointer"
             aria-label="خروج از حساب کاربری"
             disabled={isLoggingOut}
           >
-            <HiOutlineLogout className="h-6 w-6 group-hover:text-red-600 dark:group-hover:text-red-300" />
-            <span className="group-hover:text-red-600 dark:group-hover:text-red-300">{isLoggingOut ? 'در حال خروج...' : 'خروج'}</span>
-          </button>
-        </li>
-      </ul>
-    </div>
+            <LogOut className="h-5 w-5" />
+            <span>{isLoggingOut ? 'در حال خروج...' : 'خروج'}</span>
+          </Button>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
 
