@@ -1,12 +1,11 @@
-import Link from 'next/link';
 import { getStatusConfig } from '@/config/orderStatusConfig';
 import { OrderStatus } from '@/types/orderType';
 import { TransactionStatus } from '@/types/transactionType';
-import { formatPrice, getRemainingTime } from '@/utils/formatter';
 import React from 'react';
 import RetryPaymentButton from '../../payment/RetryPaymentButton';
 import { RemainingTimeItem } from './RemainingTimeItem';
-import { OrderDetailsList } from './OrderDetailsList';
+import { formatPrice } from '@/utils/formatter';
+import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui';
 
 interface OrderCardDetailsProps {
   orderStatus: OrderStatus;
@@ -32,24 +31,31 @@ function OrderCardDetails({
   const config = getStatusConfig(orderStatus, transactionStatus);
 
   return (
-    <div className="mb-8 rounded-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm p-4">
-      <div className="flex items-center justify-between gap-2 pb-4 border-b border-gray-200 dark:border-gray-700">
+    <Card>
+      <CardHeader className="flex items-center justify-between border-b">
         <div className={`flex items-center gap-2 ${config.headerColor}`}>
           {config.headerIcon}
           <span className="font-semibold text-base md:text-lg">{config.headerLabel}</span>
         </div>
-      </div>
+      </CardHeader>
 
-      <div className="flex flex-col lg:flex-row gap-6 py-4">
-        <div className="flex-1 flex flex-col gap-3 md:flex-row md:flex-wrap md:gap-x-6 md:gap-y-4">
-          <OrderDetailsList
-            orderStatus={orderStatus}
-            transactionStatus={transactionStatus}
-            expiresAt={expiresAt}
-            orderNumber={orderNumber}
-            totalPrice={paymentOrder}
-            createdAt={createdAt}
+      <CardContent className="flex flex-col lg:flex-row">
+        <div className="flex-1 flex flex-col md:flex-row md:flex-wrap">
+          <RemainingTimeItem orderStatus={orderStatus} transactionStatus={transactionStatus} expiresAt={expiresAt} />
+
+          <Item label="شماره سفارش" value={orderNumber} />
+
+          <Item
+            label="مبلغ کل"
+            value={
+              <span className="text-primary-500 dark:text-primary-400 font-bold">
+                {formatPrice(paymentOrder)}
+                <span className="text-xs font-normal mr-1">تومان</span>
+              </span>
+            }
           />
+
+          <Item label="تاریخ ثبت" value={new Date(createdAt).toLocaleDateString('fa-IR')} />
         </div>
 
         {config.showProgress && (
@@ -77,14 +83,14 @@ function OrderCardDetails({
             </div>
           </div>
         )}
-      </div>
+      </CardContent>
 
       {orderStatus === 'PENDING' && (
-        <div className="border-t border-gray-200 dark:border-gray-700 pt-4 mt-4 text-left">
+        <CardFooter className="border-t border-gray-200 dark:border-gray-700 text-left">
           <RetryPaymentButton orderId={orderId} />
-        </div>
+        </CardFooter>
       )}
-    </div>
+    </Card>
   );
 }
 

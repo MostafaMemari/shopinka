@@ -1,12 +1,12 @@
-import DeliveryAddress from '@/components/features/profile/Address/DeliveryAddress';
 import DashboardHeader from '@/components/features/profile/DashboardHeader';
 import OrderCardDetails from '@/components/features/profile/Order/OrderCardDetails';
 import OrderItems from '@/components/features/profile/Order/OrderItems';
 import { getOrderById } from '@/service/orderService';
 import Link from 'next/link';
-import { FaChevronLeft } from 'react-icons/fa';
-import { OrderItem } from '@/types/orderType';
 import { notFound } from 'next/navigation';
+import DeliveryAddress from '@/components/features/address/DeliveryAddress';
+import { Button } from '@/components/ui';
+import { ChevronLeft } from 'lucide-react';
 
 type PageProps = {
   params: Promise<{ id: string }>;
@@ -26,12 +26,11 @@ async function Page({ params }: PageProps) {
     <div className="container mx-auto px-4 py-6">
       <div className="mb-10 flex flex-col items-center justify-between gap-y-6 sm:flex-row">
         <DashboardHeader title={`جزئیات سفارش #${order.orderNumber}`} />
-        <Link
-          href="/profile/orders"
-          className="btn-primary flex items-center justify-center gap-2 w-full sm:w-fit px-4 py-2 text-sm font-medium"
-        >
-          بازگشت
-          <FaChevronLeft className="h-4 w-4" />
+        <Link href="/profile/orders">
+          <Button className="cursor-pointer">
+            بازگشت
+            <ChevronLeft />
+          </Button>
         </Link>
       </div>
 

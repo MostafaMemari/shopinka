@@ -13,7 +13,7 @@ interface ProductSliderProps {
 
 const ProductSlider: React.FC<ProductSliderProps> = ({ orderProductItems }) => {
   return (
-    <div className="orders-product-swiper px-2 mb-4">
+    <div className="orders-product-swiper">
       <Swiper
         slidesPerView={1.1}
         spaceBetween={12}

@@ -4,7 +4,11 @@ import Link from 'next/link';
 
 const PaymentActions = ({ isSuccess, orderId, orderStatus }: { isSuccess: boolean; orderId: string; orderStatus: string }) => (
   <div className="flex w-full gap-3 mt-3">
-    {orderStatus === 'PENDING' && <RetryPaymentButton orderId={Number(orderId)} />}
+    {orderStatus === 'PENDING' && (
+      <div>
+        <RetryPaymentButton orderId={Number(orderId)} />
+      </div>
+    )}
     {isSuccess ? (
       <>
         <Link href={`/profile/orders/${orderId}`} className="btn-primary w-full py-3 text-center">
