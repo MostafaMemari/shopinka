@@ -11,3 +11,4 @@ export * from './select';
 export * from './sonner';
 export * from './scroll-area';
 export * from './hover-card';
+export * from './tabs';

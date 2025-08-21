@@ -1,8 +1,11 @@
+'use client';
+
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import DashboardHeader from '@/components/features/profile/DashboardHeader';
 import TabContent from '@/components/features/profile/Order/TabContent';
 import { getCountOrders } from '@/service/orderService';
-import { cn } from '@/utils/utils';
-import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 const TABS = [
   { id: 'current', label: 'جاری' },
@@ -13,15 +16,36 @@ const TABS = [
 type TabId = (typeof TABS)[number]['id'];
 const DEFAULT_TAB: TabId = 'current';
 
-const OrderTabs = async ({ searchParams }: { searchParams: Promise<{ [key: string]: string | string[] | undefined }> }) => {
-  const currSearchParams = await searchParams;
-  const activeTabParam = currSearchParams?.activeTab;
-  const { cancelled, current, delivered } = await getCountOrders();
+const OrderTabs = () => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
-  const isValidTab = typeof activeTabParam === 'string' && TABS.some((tab) => tab.id === activeTabParam);
-  const tabId: TabId = isValidTab ? (activeTabParam as TabId) : DEFAULT_TAB;
+  const activeTabParam = searchParams.get('activeTab');
+  const isValidTab = activeTabParam && TABS.some((tab) => tab.id === activeTabParam);
+  const initialTab: TabId = (isValidTab ? activeTabParam : DEFAULT_TAB) as TabId;
 
-  const tabCounts = { current, delivered, canceled: cancelled };
+  const [tabId, setTabId] = useState<TabId>(initialTab);
+  const [tabCounts, setTabCounts] = useState<Record<TabId, number>>({
+    current: 0,
+    delivered: 0,
+    canceled: 0,
+  });
+
+  useEffect(() => {
+    (async () => {
+      const { cancelled, current, delivered } = await getCountOrders();
+      setTabCounts({ current, delivered, canceled: cancelled });
+    })();
+  }, []);
+
+  const handleTabChange = (val: string) => {
+    const newTab = val as TabId;
+    setTabId(newTab);
+
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('activeTab', newTab);
+    router.replace(`?${params.toString()}`, { scroll: false });
+  };
 
   return (
     <div className="space-y-10">
@@ -29,30 +53,24 @@ const OrderTabs = async ({ searchParams }: { searchParams: Promise<{ [key: strin
         <DashboardHeader title="سفارشات" />
       </div>
 
-      <nav className="flex gap-x-2 overflow-x-auto scrollbar-thin scrollbar-thumb-gray-200 dark:scrollbar-thumb-zinc-800" role="tablist">
-        {TABS.map((tab) => (
-          <Link
-            key={tab.id}
-            href={`?activeTab=${tab.id}`}
-            className={cn(
-              'flex items-center gap-x-2 px-3 py-2 rounded-t-lg text-sm font-medium border-b-2 transition-colors duration-150 min-w-max',
-              tabId === tab.id
-                ? 'border-primary bg-primary/5 text-primary shadow-sm'
-                : 'border-transparent text-gray-500 hover:text-primary/90 hover:border-primary/40',
-            )}
-            role="tab"
-            aria-selected={tabId === tab.id}
-            tabIndex={tabId === tab.id ? 0 : -1}
-          >
-            <span dir="rtl">{tab.label}</span>
-            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs text-white dark:bg-emerald-600">
-              {tabCounts[tab.id] || 0}
-            </span>
-          </Link>
-        ))}
-      </nav>
+      <Tabs value={tabId} onValueChange={handleTabChange}>
+        <TabsList className="flex gap-x-1 overflow-x-auto scrollbar-thin scrollbar-thumb-gray-200 dark:scrollbar-thumb-zinc-800">
+          {TABS.map((tab) => (
+            <TabsTrigger key={tab.id} value={tab.id} className="flex items-center gap-x-2 cursor-pointer">
+              <span>{tab.label}</span>
+              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs text-white dark:bg-emerald-600">
+                {tabCounts[tab.id] || 0}
+              </span>
+            </TabsTrigger>
+          ))}
+        </TabsList>
 
-      <TabContent tabId={tabId} />
+        {TABS.map((tab) => (
+          <TabsContent key={tab.id} value={tab.id}>
+            <TabContent tabId={tab.id} />
+          </TabsContent>
+        ))}
+      </Tabs>
     </div>
   );
 };

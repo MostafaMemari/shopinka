@@ -40,14 +40,14 @@ function ProfileMenu({ onClose }: ProfileMenuProps) {
   };
 
   return (
-    <ScrollArea dir="ltr" className="h-96 rounded-md">
+    <ScrollArea dir="ltr" className="h-80 rounded-md">
       <ul className="space-y-1 px-4">
         {profileMenuItem.map((item) => (
           <li key={item.href}>
             <Link
               href={item.href}
               className={cn(
-                'profile-menu flex items-center justify-between rounded-lg px-2 py-4 xl:px-4',
+                'profile-menu flex items-center justify-between rounded-lg px-2 py-3',
                 pathname === item.href && 'profile-menu-active',
               )}
               onClick={onClose}
@@ -62,7 +62,7 @@ function ProfileMenu({ onClose }: ProfileMenuProps) {
         <li>
           <button
             onClick={handleUserLogout}
-            className="w-full flex items-center gap-x-2 rounded-lg p-4 text-red-500 hover:bg-red-100 dark:text-red-400 dark:hover:bg-red-900/20 transition group cursor-pointer"
+            className="w-full flex items-center gap-x-2 rounded-lg px-1 py-3 text-red-500 hover:bg-red-100 dark:text-red-400 dark:hover:bg-red-900/20 transition group cursor-pointer"
             aria-label="خروج از حساب کاربری"
             disabled={isLoggingOut}
           >

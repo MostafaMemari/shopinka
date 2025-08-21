@@ -1,17 +1,27 @@
 'use client';
 
 import MobileDrawer from '@/components/common/MobileDrawer';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaUserCircle } from 'react-icons/fa';
-import { IoIosMenu } from 'react-icons/io';
 import ProfileMenu from '../ProfileMenu';
 import { useIsMounted } from '@/hooks/useIsMounted';
 import { useAuth } from '@/hooks/reactQuery/auth/useAuth';
+import { Button, Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from '@/components/ui';
+import { useBoolean } from '@/hooks/use-boolean';
+import { Menu } from 'lucide-react';
+import { useMediaQuery } from '@/hooks/use-media-query';
 
 function ProfileMenuCard() {
-  const [isOpen, setIsOpen] = useState(false);
   const { user } = useAuth();
   const isMounted = useIsMounted();
+  const isDesktop = useMediaQuery('(min-width: 1024px)');
+  const drawerControl = useBoolean(false);
+
+  useEffect(() => {
+    if (isDesktop) {
+      drawerControl.onFalse();
+    }
+  }, [isDesktop]);
 
   if (!isMounted) return null;
 
@@ -28,20 +38,24 @@ function ProfileMenuCard() {
               <p className="text-text/60">{user?.mobile}</p>
             </div>
             <div>
-              <button onClick={() => setIsOpen(true)} className="btn-primary px-4 py-2" type="button">
-                <IoIosMenu className="h-6 w-6 text-white" />
-                منوی پنل کاربری
-              </button>
+              <Drawer open={drawerControl.value} onOpenChange={drawerControl.setValue}>
+                <DrawerTrigger asChild>
+                  <Button>
+                    <Menu /> منوی پنل کاربری
+                  </Button>
+                </DrawerTrigger>
+                <DrawerContent>
+                  <DrawerHeader>
+                    <DrawerTitle>منوی پنل کاربری</DrawerTitle>
+                  </DrawerHeader>
+
+                  <ProfileMenu onClose={drawerControl.onFalse} />
+                </DrawerContent>
+              </Drawer>
             </div>
           </div>
         </div>
       </div>
-
-      <MobileDrawer title="منوی پنل کاربری" isOpen={isOpen} onOpen={() => setIsOpen(true)} onClose={() => setIsOpen(false)}>
-        <div className="pt-3">
-          <ProfileMenu onClose={() => setIsOpen(false)} />
-        </div>
-      </MobileDrawer>
     </>
   );
 }
