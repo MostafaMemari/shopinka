@@ -2,7 +2,7 @@
 
 import React, { useEffect } from 'react';
 import { MdOutlineEditLocation } from 'react-icons/md';
-import AddressItem from './AddressItem';
+import AddressItem from './AddressCard';
 import { useAddress } from '@/hooks/address/useAddress';
 import { AddressCardSkeleton } from './AddressCardSkeleton';
 import { CreateAddressDialogDrawer } from './CreateAddressDialogDrawer';

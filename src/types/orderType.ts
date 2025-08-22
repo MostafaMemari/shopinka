@@ -24,7 +24,7 @@ export interface OrderItem {
   status: OrderStatus;
   createdAt: string;
   updatedAt: string;
-  address: AddressItem;
+  addressSnapshot: AddressItem;
   expiresAt: string;
   items: OrderProductItem[] | [];
   shippingInfo: null;

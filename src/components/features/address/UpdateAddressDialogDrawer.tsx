@@ -6,13 +6,13 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui';
 import { Drawer, DrawerClose, DrawerContent, DrawerFooter, DrawerHeader, DrawerTitle } from '@/components/ui/drawer';
 import { useMediaQuery } from '@/hooks/use-media-query';
-import { AddressFormType } from '@/types/addressType';
+import { AddressItem } from '@/types/addressType';
 import AddressForm from './AddressForm';
 
 interface UpdateAddressDialogDrawerProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  item: AddressFormType & { id: number };
+  item: AddressItem;
 }
 
 export function UpdateAddressDialogDrawer({ open, onOpenChange, item }: UpdateAddressDialogDrawerProps) {

@@ -1,24 +1,19 @@
-export type AddressFormType = {
-  fullName: string;
-  province: string;
-  city: string;
-  plate: string;
-  streetAndAlley: string;
-  unit: string | null;
-  postalCode: string;
-};
+import { validationAddressSchema } from '@/validation/validationAddressSchema';
+import * as yup from 'yup';
+
+export type AddressFormType = yup.InferType<typeof validationAddressSchema>;
 
 export type AddressItem = {
   id: number;
   userId: number;
+  fullName: string;
   province: string;
   city: string;
-  plate: string;
-  postalCode: string;
-  fullName: string;
-  streetAndAlley: string;
-  unit: string | null;
+  postalAddress: string;
+  buildingNumber: number;
+  unit: number | null;
   isDefault: boolean;
+  postalCode: string;
   createdAt: string;
   updatedAt: string;
 };

@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import TextInput from '@/components/common/TextInput';
 import SelectInput from '@/components/common/SelectInput';
-import { AddressFormType } from '@/types/addressType';
+import { AddressItem } from '@/types/addressType';
 import { provinces } from '@/data/provinces';
 import { cities } from '@/data/cities';
 import { useFormik } from 'formik';
@@ -13,7 +13,7 @@ import PrimaryButton from '@/components/common/PrimaryButton';
 import { cn } from '@/lib/utils';
 
 interface AddressFormProps {
-  initialValues?: AddressFormType & { id: number };
+  initialValues?: AddressItem;
   className?: string;
   onSuccess?: () => void;
 }
@@ -42,35 +42,42 @@ function AddressForm({ initialValues, className = '', onSuccess }: AddressFormPr
       fullName: '',
       province: '',
       city: '',
-      plate: '',
+      postalAddress: '',
+      buildingNumber: '',
       unit: '',
       postalCode: '',
-      streetAndAlley: '',
     },
     validationSchema: validationAddressSchema,
     onSubmit: async (values) => {
+      const payload = {
+        ...values,
+        buildingNumber: Number(values.buildingNumber),
+        unit: values.unit ? Number(values.unit) : undefined,
+      };
+
       if (initialValues) {
-        updateAddress(initialValues.id, values, () => {
+        updateAddress(initialValues.id, payload, () => {
           formik.resetForm();
           setSelectedProvinceId(null);
           onSuccess?.();
         });
       } else {
-        createAddress(values, () => {
+        createAddress(payload, () => {
           formik.resetForm();
           setSelectedProvinceId(null);
           onSuccess?.();
         });
       }
     },
-    validateOnChange: false,
+    validateOnChange: true,
     validateOnBlur: true,
   });
 
   return (
     <form onSubmit={formik.handleSubmit} className={cn('space-y-1 text-right', className)} dir="rtl">
-      <div className="grid grid-cols-1 gap-4">
-        <TextInput id="fullName" name="fullName" isRequired label="نام و نام خانوادگی تحویل گیرنده" formik={formik} />
+      <div className="grid grid-cols-2 gap-4">
+        <TextInput id="fullName" name="fullName" isRequired label="نام تحویل گیرنده" formik={formik} />
+        <TextInput id="postalCode" name="postalCode" label="کدپستی" formik={formik} isRequired />
       </div>
 
       <div className="grid grid-cols-2 gap-4">
@@ -91,6 +98,7 @@ function AddressForm({ initialValues, className = '', onSuccess }: AddressFormPr
             formik.setFieldTouched('city', false);
           }}
         />
+
         <SelectInput
           key={`city-${selectedProvinceId}`}
           id="city"
@@ -109,13 +117,14 @@ function AddressForm({ initialValues, className = '', onSuccess }: AddressFormPr
       </div>
 
       <div className="grid grid-cols-2 gap-4">
-        <TextInput id="plate" name="plate" label="پلاک" isRequired formik={formik} />
-        <TextInput id="streetAndAlley" name="streetAndAlley" isRequired label="خیابان و کوچه" formik={formik} />
+        <TextInput id="buildingNumber" name="buildingNumber" label="پلاک" isRequired formik={formik} />
+        <TextInput id="unit" name="unit" label="واحد" formik={formik} />
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
-        <TextInput id="unit" name="unit" label="واحد" formik={formik} />
-        <TextInput id="postalCode" name="postalCode" label="کدپستی" formik={formik} isRequired />
+      <div className="grid grid-cols-2 gap-4"></div>
+
+      <div className="grid grid-cols-1 gap-4">
+        <TextInput id="postalAddress" name="postalAddress" type="textarea" isRequired label="آدرس پستی" formik={formik} />
       </div>
 
       <PrimaryButton isLoading={isLoadingSubmit} className="w-full mt-6" type="submit">

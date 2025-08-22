@@ -1,12 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
 import { useAddress } from '@/hooks/address/useAddress';
-import AddressItem from './AddressItem';
+import AddressItem from './AddressCard';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
-import ErrorState from '../ErrorState';
-import EmptyState from '../EmptyState';
 import { GrLocation } from 'react-icons/gr';
+import ErrorState from '../profile/ErrorState';
+import EmptyState from '../profile/EmptyState';
 
 export default function AddressSection() {
   const { data, isLoading, error } = useAddress({});

@@ -44,7 +44,7 @@ async function Page({ params }: PageProps) {
         expiresAt={order.expiresAt}
         orderId={order.id}
       />
-      <DeliveryAddress address={order.address} />
+      <DeliveryAddress address={order.addressSnapshot} />
       <OrderItems items={order.items} itemCount={order.quantity} />
     </div>
   );

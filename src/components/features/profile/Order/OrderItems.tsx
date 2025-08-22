@@ -25,7 +25,6 @@ const OrderItems: React.FC<OrderItemsProps> = ({ items, itemCount }) => {
           const variantAttributes = item.productVariant?.attributeValues;
           const primaryAttribute = variantAttributes?.[0] || null;
           const product = item?.product || item?.productVariant?.product;
-          const productId = product?.id || '';
           const productName = product?.name || '';
           const productSlug = product?.slug || '';
           const productImageUrl =

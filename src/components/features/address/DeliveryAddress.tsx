@@ -8,11 +8,11 @@ interface DeliveryAddressProps {
 
 const DeliveryAddress: React.FC<DeliveryAddressProps> = ({ address }) => {
   const fullAddress = [
-    address?.province,
-    address?.city,
-    address?.streetAndAlley,
-    address?.plate ? `پلاک ${address.plate}` : null,
-    address?.unit ? `واحد ${address.unit}` : null,
+    `استان ${address?.province}`,
+    `شهر ${address?.city}`,
+    address?.postalAddress,
+    address?.buildingNumber ? `پلاک ${address?.buildingNumber}` : null,
+    address?.unit ? `واحد ${address?.unit}` : null,
   ]
     .filter(Boolean)
     .join('، ');

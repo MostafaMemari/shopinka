@@ -7,7 +7,7 @@ import LoadingSpinner from '@/components/common/LoadingSpinner';
 import ErrorState from '../ErrorState';
 import EmptyState from '../EmptyState';
 import { GrLocation } from 'react-icons/gr';
-import AddressItem from '../../address/AddressItem';
+import AddressItem from '../../address/AddressCard';
 
 export default function AddressSection() {
   const { data, isLoading, error } = useAddress({});

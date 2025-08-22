@@ -20,5 +20,7 @@ export const getCountOrders = async (): Promise<OrderCountsResponse> => {
 };
 
 export const getOrderById = async (id: number): Promise<GetOrderResponse> => {
-  return await shopApiFetch(`/order/my/${id}`, { method: 'GET' });
+  const res = await shopApiFetch(`/order/my/${id}`, { method: 'GET' });
+
+  return res;
 };

@@ -31,7 +31,7 @@ const OrderCard: React.FC<OrderCardProps> = ({ order }) => {
   return (
     <Card className="mt-6">
       <Link href={`/profile/orders/${order.id}`} aria-label={`مشاهده جزئیات سفارش ${order.orderNumber}`} className="block">
-        <CardHeader className="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 mb-4">
+        <CardHeader className="flex items-center justify-between border-b mb-4">
           <div className={cn('flex items-center gap-2', config.headerColor)}>
             {config.headerIcon}
             <span className="font-semibold text-base md:text-lg">{config.headerLabel}</span>
