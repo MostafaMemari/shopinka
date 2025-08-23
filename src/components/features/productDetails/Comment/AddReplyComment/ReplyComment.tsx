@@ -1,13 +1,13 @@
-import Dialog from '@/components/common/Dialog';
 import { useAuth } from '@/hooks/reactQuery/auth/useAuth';
-import { useCreateComment } from '@/hooks/reactQuery/comment/useCreateComment';
-import useIsMdUp from '@/hooks/useIsMdUp';
 import { usePathname, useRouter } from 'next/navigation';
-import React, { useRef, useState } from 'react';
-import { AiOutlineLeft } from 'react-icons/ai';
-import CommentForm, { CommentFormikType } from './CommentForm';
-import MobileDrawer from '@/components/common/MobileDrawer';
-import PrimaryButton from '@/components/common/PrimaryButton';
+import React from 'react';
+
+import { Button, Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui';
+import { Drawer, DrawerClose, DrawerContent, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from '@/components/ui';
+import { useMediaQuery } from '@/hooks/use-media-query';
+import { useBoolean } from '@/hooks/use-boolean';
+import { ChevronLeft } from 'lucide-react';
+import CommentForm from './CommentForm';
 
 interface ReplyCommentProps {
   productId: number;
@@ -16,77 +16,64 @@ interface ReplyCommentProps {
 }
 
 function ReplyComment({ productId, parentId, commentTitle }: ReplyCommentProps) {
-  const isMdUp = useIsMdUp();
-  const [modalState, setModalState] = useState<boolean>(false);
+  const isDesktop = useMediaQuery('(min-width: 768px)');
 
-  const formRef = useRef<HTMLFormElement>(null);
-  const { createComment, isCreateCommentLoading } = useCreateComment();
+  const commentControl = useBoolean(false);
 
   const pathname = usePathname();
   const { isLogin } = useAuth();
   const router = useRouter();
 
-  const handleFormSubmit = async (values: CommentFormikType) => {
-    createComment(
-      { ...values, productId, parentId },
-      () => {
-        setModalState(false);
-        if (formRef.current) {
-          formRef.current.reset();
-        }
-      },
-      (error) => {
-        console.error('خطا در ارسال فرم:', error);
-      },
-    );
-  };
-
-  const handleSubmit = () => {
-    if (formRef.current) formRef.current.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
-  };
-
-  const actions = (
-    <PrimaryButton type="button" onClick={handleSubmit} isLoading={isCreateCommentLoading} disabled={isCreateCommentLoading}>
-      ارسال دیدگاه
-    </PrimaryButton>
-  );
-
   const handleReplyComment = () => {
-    if (isLogin) setModalState(true);
+    if (isLogin) commentControl.onTrue();
     else router.push(`/login/?backUrl=${pathname}`);
   };
 
-  return (
-    <>
-      <button type="button" onClick={handleReplyComment} className="btn-secondary-nobg cursor-pointer">
-        پاسخ
-        <AiOutlineLeft className="h-5 w-5" />
-      </button>
+  const commentButtonLabel = 'پاسخ';
+  const commentFormTitle = 'پاسخ به دیدگاه: ' + commentTitle;
 
-      {isMdUp ? (
-        <Dialog
-          isOpen={modalState}
-          onClose={() => setModalState(false)}
-          title={`پاسخ به دیدگاه "${commentTitle}"`}
-          actions={actions}
-          size="xl"
-        >
-          <div className="mt-4">
-            <CommentForm onSubmit={handleFormSubmit} ref={formRef} />
-          </div>
-        </Dialog>
-      ) : (
-        <MobileDrawer
-          title={`پاسخ به دیدگاه "${commentTitle}"`}
-          isOpen={modalState}
-          onOpen={() => setModalState(true)}
-          onClose={() => setModalState(false)}
-          footerActions={actions}
-        >
-          <CommentForm onSubmit={handleFormSubmit} ref={formRef} />
-        </MobileDrawer>
-      )}
-    </>
+  if (isDesktop) {
+    return (
+      <Dialog open={commentControl.value} onOpenChange={commentControl.onToggle}>
+        <DialogTrigger asChild>
+          <Button variant="ghost" onClick={handleReplyComment} className="cursor-pointer">
+            {commentButtonLabel}
+            <ChevronLeft />
+          </Button>
+        </DialogTrigger>
+
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>{commentFormTitle}</DialogTitle>
+          </DialogHeader>
+          <CommentForm className="pt-2" productId={productId} parentId={parentId} onSuccess={commentControl.onFalse} />
+        </DialogContent>
+      </Dialog>
+    );
+  }
+
+  return (
+    <Drawer open={commentControl.value} onOpenChange={commentControl.onToggle}>
+      <DrawerTrigger asChild>
+        <Button variant="ghost" onClick={handleReplyComment} className="cursor-pointer">
+          {commentButtonLabel}
+          <ChevronLeft />
+        </Button>
+      </DrawerTrigger>
+      <DrawerContent>
+        <DrawerHeader className="text-left">
+          <DrawerTitle>{commentFormTitle}</DrawerTitle>
+        </DrawerHeader>
+
+        <CommentForm className="px-4" productId={productId} parentId={parentId} onSuccess={commentControl.onFalse} />
+
+        <DrawerFooter className="pt-2">
+          <DrawerClose asChild>
+            <Button variant="outline">انصراف</Button>
+          </DrawerClose>
+        </DrawerFooter>
+      </DrawerContent>
+    </Drawer>
   );
 }
 

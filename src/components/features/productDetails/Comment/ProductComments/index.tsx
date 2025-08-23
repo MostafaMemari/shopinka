@@ -9,6 +9,7 @@ import { useComment } from '@/hooks/reactQuery/comment/useComment';
 import { AiOutlineLeft } from 'react-icons/ai';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 import CreateComment from '../AddReplyComment/CreateComment';
+import { useBoolean } from '@/hooks/use-boolean';
 
 interface Props {
   productId: number;
@@ -16,7 +17,7 @@ interface Props {
 
 export default function ProductComments({ productId }: Props) {
   const [currentPage, setCurrentPage] = useState(1);
-  const [isSwiperOpen, setIsSwiperOpen] = useState(false);
+  const drawerHandlers = useBoolean();
 
   const { data, isLoading, error } = useComment({
     params: { productId, page: currentPage },
@@ -24,10 +25,6 @@ export default function ProductComments({ productId }: Props) {
 
   const comments: CommentItem[] = data?.items || [];
   const commentPager = data?.pager ?? { totalCount: 0, totalPages: 1 };
-
-  const handleOpenDrawer = () => {
-    setIsSwiperOpen(true);
-  };
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -61,7 +58,7 @@ export default function ProductComments({ productId }: Props) {
               <div>
                 <CreateComment productId={productId} />
               </div>
-              <div onClick={handleOpenDrawer} className="text-sm flex items-center gap-x-1 text-primary cursor-pointer">
+              <div onClick={drawerHandlers.onTrue} className="text-sm flex items-center gap-x-1 text-primary cursor-pointer">
                 {`مشاهده ${comments.length} دیدگاه`} <AiOutlineLeft className="h-4 w-4" />
               </div>
             </div>
@@ -70,13 +67,7 @@ export default function ProductComments({ productId }: Props) {
       )}
 
       {comments?.length !== 0 && (
-        <MobileCommentsSwiper
-          onOpen={handleOpenDrawer}
-          onClose={() => setIsSwiperOpen(false)}
-          comments={comments.slice(0, 5)}
-          isOpen={isSwiperOpen}
-          productId={productId}
-        />
+        <MobileCommentsSwiper comments={comments.slice(0, 5)} productId={productId} drawerHandlers={drawerHandlers} />
       )}
 
       {error && (

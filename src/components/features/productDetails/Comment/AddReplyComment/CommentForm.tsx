@@ -19,12 +19,12 @@ export interface CommentFormikType {
 
 interface CommentFormProps {
   productId: number;
-  initialValues?: CommentItem;
+  parentId?: number;
   className?: string;
   onSuccess?: () => void;
 }
 
-function CommentForm({ productId, initialValues, className = '', onSuccess }: CommentFormProps) {
+function CommentForm({ productId, className = '', parentId, onSuccess }: CommentFormProps) {
   const { createComment, isCreateCommentLoading } = useCreateComment();
 
   const formik = useFormik({
@@ -34,7 +34,12 @@ function CommentForm({ productId, initialValues, className = '', onSuccess }: Co
       isRecommended: true,
     },
     validationSchema: validationCommentSchema,
-    onSubmit: async (values) => {},
+    onSubmit: async (values) => {
+      createComment({ productId, parentId, ...values }, () => {
+        formik.resetForm();
+        onSuccess?.();
+      });
+    },
     validateOnChange: true,
     validateOnBlur: true,
   });
@@ -86,7 +91,7 @@ function CommentForm({ productId, initialValues, className = '', onSuccess }: Co
       </div>
 
       <PrimaryButton isLoading={isCreateCommentLoading} className="w-full mt-6" type="submit">
-        {initialValues ? 'ویرایش' : 'ثبت'} نظر
+        {parentId ? 'پاسخ به دیدگاه' : 'ثبت دیدگاه'}
       </PrimaryButton>
     </form>
   );

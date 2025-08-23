@@ -1,77 +1,64 @@
 import { useAuth } from '@/hooks/reactQuery/auth/useAuth';
 
 import { usePathname, useRouter } from 'next/navigation';
-import React, { useRef, useState } from 'react';
+import React from 'react';
 import { useMediaQuery } from '@/hooks/use-media-query';
 
 import { Button, Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui';
 import { Drawer, DrawerClose, DrawerContent, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from '@/components/ui';
-import { MapPinPlus } from 'lucide-react';
+import { MessageCirclePlus } from 'lucide-react';
 import CommentForm from './CommentForm';
+import { useBoolean } from '@/hooks/use-boolean';
 
 function CreateComment({ productId }: { productId: number }) {
-  const [modalState, setModalState] = useState<boolean>(false);
+  const commentControl = useBoolean(false);
 
-  const [open, setOpen] = useState(false);
   const isDesktop = useMediaQuery('(min-width: 768px)');
-
-  const formRef = useRef<HTMLFormElement>(null);
 
   const pathname = usePathname();
   const { isLogin } = useAuth();
   const router = useRouter();
 
-  const handleSubmit = () => {
-    if (formRef.current) formRef.current.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
-  };
-
-  // const actions = (
-  //   <PrimaryButton type="button" onClick={handleSubmit} isLoading={isCreateCommentLoading} disabled={isCreateCommentLoading}>
-  //     ارسال دیدگاه
-  //   </PrimaryButton>
-  // );
-
   const handleAddComment = () => {
-    if (isLogin) setModalState(true);
+    if (isLogin) commentControl.onTrue();
     else router.push(`/login/?backUrl=${pathname}`);
   };
 
-  const handleSuccess = () => {
-    setOpen(false);
-  };
+  const commentButtonLabel = 'ثبت نظر جدید';
+  const commentFormTitle = 'افزون نظر جدید';
 
   if (isDesktop) {
     return (
-      <Dialog open={open} onOpenChange={setOpen}>
+      <Dialog open={commentControl.value} onOpenChange={commentControl.onToggle}>
         <DialogTrigger asChild>
           <Button className="cursor-pointer">
-            <MapPinPlus /> ثبت آدرس جدید
+            <MessageCirclePlus /> {commentButtonLabel}
           </Button>
         </DialogTrigger>
 
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>افزون آدرس جدید</DialogTitle>
+            <DialogTitle>{commentFormTitle}</DialogTitle>
           </DialogHeader>
-          <CommentForm productId={productId} onSuccess={handleSuccess} />
+          <CommentForm className="pt-2" productId={productId} onSuccess={commentControl.onFalse} />
         </DialogContent>
       </Dialog>
     );
   }
 
   return (
-    <Drawer open={open} onOpenChange={setOpen}>
+    <Drawer open={commentControl.value} onOpenChange={commentControl.onToggle}>
       <DrawerTrigger asChild>
         <Button>
-          <MapPinPlus /> ثبت آدرس جدید
+          <MessageCirclePlus /> {commentButtonLabel}
         </Button>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className="text-left">
-          <DrawerTitle>افزون آدرس جدید</DrawerTitle>
+          <DrawerTitle>{commentFormTitle}</DrawerTitle>
         </DrawerHeader>
 
-        <CommentForm productId={productId} onSuccess={handleSuccess} />
+        <CommentForm className="px-4" productId={productId} onSuccess={commentControl.onFalse} />
 
         <DrawerFooter className="pt-2">
           <DrawerClose asChild>

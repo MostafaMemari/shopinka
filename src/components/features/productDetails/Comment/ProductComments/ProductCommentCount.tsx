@@ -4,6 +4,7 @@ import { useComment } from '@/hooks/reactQuery/comment/useComment';
 import React, { useState } from 'react';
 import CommentsDrawer from './CommentsDrawer';
 import useIsMdUp from '@/hooks/useIsMdUp';
+import { useBoolean } from '@/hooks/use-boolean';
 
 interface ProductCommentCountProps {
   productId: number;
@@ -14,13 +15,7 @@ function ProductCommentCount({ productId }: ProductCommentCountProps) {
     params: { productId, page: 1 },
   });
   const isMdUp = useIsMdUp();
-
-  const [isOpenDrawer, setIsOpenDrawer] = useState(false);
-
-  const drawerHandlers = {
-    onOpen: () => setIsOpenDrawer(true),
-    onClose: () => setIsOpenDrawer(false),
-  };
+  const drawerHandlers = useBoolean();
 
   const CommentCount = data?.pager.totalCount || 0;
 
@@ -34,9 +29,9 @@ function ProductCommentCount({ productId }: ProductCommentCountProps) {
         </div>
       ) : (
         <div>
-          <span onClick={drawerHandlers.onOpen}>{CommentCount} دیدگاه</span>
+          <span onClick={drawerHandlers.onTrue}>{CommentCount} دیدگاه</span>
 
-          <CommentsDrawer isOpen={isOpenDrawer} onOpen={drawerHandlers.onOpen} onClose={drawerHandlers.onClose} productId={productId} />
+          <CommentsDrawer drawerHandlers={drawerHandlers} productId={productId} />
         </div>
       )}
     </>

@@ -5,38 +5,19 @@ import { FreeMode } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/free-mode';
 import CommentsDrawer from './CommentsDrawer';
-import { useEffect, useState } from 'react';
 import { AiOutlineLeft } from 'react-icons/ai';
 import { CommentItem } from '@/types/commentType';
 import Recommendation from './Recommendation';
 import { FaUserCircle } from 'react-icons/fa';
+import { useBoolean } from '@/hooks/use-boolean';
 
 interface Props {
   comments: CommentItem[];
-  onOpen?: () => void;
-  onClose?: () => void;
-  isOpen: boolean;
   productId: number;
+  drawerHandlers: ReturnType<typeof useBoolean>;
 }
 
-export default function MobileCommentsSwiper({ comments, onOpen, onClose, isOpen, productId }: Props) {
-  const [isOpenDrawer, setIsOpenDrawer] = useState(isOpen);
-
-  useEffect(() => {
-    setIsOpenDrawer(isOpen);
-  }, [isOpen]);
-
-  const drawerHandlers = {
-    onOpen: () => {
-      setIsOpenDrawer(true);
-      if (onOpen) onOpen();
-    },
-    onClose: () => {
-      setIsOpenDrawer(false);
-      if (onClose) onClose();
-    },
-  };
-
+export default function MobileCommentsSwiper({ comments, productId, drawerHandlers }: Props) {
   return (
     <div className="md:hidden">
       <Swiper
@@ -74,7 +55,7 @@ export default function MobileCommentsSwiper({ comments, onOpen, onClose, isOpen
           <div className="flex h-56 items-center justify-center">
             <button
               type="button"
-              onClick={drawerHandlers.onOpen}
+              onClick={drawerHandlers.onTrue}
               className="flex flex-col items-center justify-center gap-y-2 text-primary"
             >
               <div className="rounded-full border border-primary p-2 bg-primary/10">
@@ -86,7 +67,7 @@ export default function MobileCommentsSwiper({ comments, onOpen, onClose, isOpen
         </SwiperSlide>
       </Swiper>
 
-      <CommentsDrawer isOpen={isOpenDrawer} onOpen={drawerHandlers.onOpen} onClose={drawerHandlers.onClose} productId={productId} />
+      <CommentsDrawer drawerHandlers={drawerHandlers} productId={productId} />
     </div>
   );
 }
