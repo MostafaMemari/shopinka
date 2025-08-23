@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useEffect, useRef, type FC } from 'react';
-import { menuItems } from '@/data/menuData';
+import { navigationMenuItems } from '@/data/menuData';
 import { Transition } from '@headlessui/react';
 import { usePathname } from 'next/navigation';
 
@@ -60,8 +60,8 @@ const MobileMenu: FC<MobileMenuProps> = ({ isMenuOpen, onToggleMenu }) => {
             </div>
 
             <ul className="mb-4 space-y-2">
-              {menuItems.map(({ id, name, href, icon: Icon }) => (
-                <li key={id}>
+              {navigationMenuItems.map(({ title, href, icon: Icon }) => (
+                <li key={title}>
                   <Link
                     href={href}
                     onClick={() => onToggleMenu(false)}
@@ -70,7 +70,7 @@ const MobileMenu: FC<MobileMenuProps> = ({ isMenuOpen, onToggleMenu }) => {
                     }`}
                   >
                     {Icon && <Icon className="h-5 w-5" />}
-                    <span>{name}</span>
+                    <span>{title}</span>
                   </Link>
                 </li>
               ))}

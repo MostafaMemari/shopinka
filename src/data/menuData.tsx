@@ -1,7 +1,7 @@
 import { HiOutlineHeart, HiOutlineShoppingBag } from 'react-icons/hi';
 import { RiAccountCircle2Line } from 'react-icons/ri';
 import { TbSmartHome } from 'react-icons/tb';
-import { FiShoppingCart, FiPhoneCall, FiBookOpen, FiMessageCircle } from 'react-icons/fi';
+import { BookA, MessageCircle, PhoneCall, ShoppingBag } from 'lucide-react';
 
 export interface MenuItem {
   id: number;
@@ -19,32 +19,11 @@ export interface ProfileMenuItem {
   badge?: React.ReactNode;
 }
 
-export const menuItems: MenuItem[] = [
-  {
-    id: 10,
-    name: 'فروشگاه',
-    href: '/shop',
-    icon: FiShoppingCart,
-    color: { light: '#ef4444', dark: '#f87171' },
-  },
-  {
-    id: 2,
-    name: 'بلاگ',
-    href: '/blog',
-    icon: FiBookOpen,
-  },
-  {
-    id: 3,
-    name: 'سوال دارید',
-    href: '/faq',
-    icon: FiMessageCircle,
-  },
-  {
-    id: 4,
-    name: 'تماس با ما',
-    href: '/contact',
-    icon: FiPhoneCall,
-  },
+export const navigationMenuItems = [
+  { title: 'فروشگاه', href: '/shop', icon: ShoppingBag, isActive: true },
+  { title: 'بلاگ', href: '/blog', icon: BookA },
+  { title: 'سوال دارید', href: '#docs', icon: MessageCircle },
+  { title: 'تماس با ما', href: '/contact', icon: PhoneCall },
 ];
 
 export const profileMenuItems = [
