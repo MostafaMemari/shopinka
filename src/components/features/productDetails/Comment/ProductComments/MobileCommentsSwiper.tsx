@@ -52,7 +52,7 @@ export default function MobileCommentsSwiper({ comments, productId, drawerHandle
             </SwiperSlide>
           ))}
         <SwiperSlide>
-          <div className="flex h-56 items-center justify-center">
+          <div className="flex flex-col h-56 rounded-xl items-center justify-center border border-gray-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 px-4 py-5 shadow-md transition hover:shadow-lg">
             <button
               type="button"
               onClick={drawerHandlers.onTrue}

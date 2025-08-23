@@ -6,7 +6,7 @@ import Recommendation from './Recommendation';
 import { useComment } from '@/hooks/reactQuery/comment/useComment';
 import { FaUserCircle } from 'react-icons/fa';
 import ReplyComment from '../AddReplyComment/ReplyComment';
-import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from '@/components/ui';
+import { Card, CardContent, CardHeader, CardTitle, Drawer, DrawerContent, DrawerHeader, DrawerTitle } from '@/components/ui';
 import { useBoolean } from '@/hooks/use-boolean';
 
 interface CommentsDrawerProps {
@@ -62,11 +62,11 @@ function CommentsDrawer({ drawerHandlers, productId }: CommentsDrawerProps) {
           <DrawerTitle>دیدگاه ها</DrawerTitle>
         </DrawerHeader>
 
-        <ul className="space-y-5 pb-8">
+        <ul className="space-y-5 pb-8 mx-4">
           {comments.map((comment) => (
             <li key={comment.id}>
-              <div className="flex flex-col rounded-xl border border-gray-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 px-4 py-5 shadow-md">
-                <div className="flex items-center justify-between mb-3">
+              <Card className="flex flex-col p-4 shadow-md">
+                <CardHeader className="flex items-center justify-between mb-3 p-0">
                   <div className="flex items-center gap-2">
                     <FaUserCircle className="text-gray-400 dark:text-zinc-500 w-7 h-7" />
                     <span
@@ -80,14 +80,19 @@ function CommentsDrawer({ drawerHandlers, productId }: CommentsDrawerProps) {
                   <div>
                     <ReplyComment productId={comment.productId} parentId={comment.id} commentTitle={comment.title} />
                   </div>
-                </div>
-                <h5 className="text-base font-bold text-primary mb-2 truncate">{comment.title}</h5>
-                <p className="line-clamp-4 text-sm text-text/90 mb-3">{comment.content}</p>
-                <div className="flex items-center justify-between mt-auto pt-3 border-t border-dashed border-zinc-200 dark:border-zinc-700">
-                  <span className="text-xs text-text/60">{new Date(comment.createdAt).toLocaleDateString('fa-IR')}</span>
-                </div>
+                </CardHeader>
+
+                <CardContent className="p-0 mb-3 flex flex-col gap-3">
+                  <CardTitle className="flex justify-between">
+                    {comment.title}
+
+                    <span className="text-xs text-text/60">{new Date(comment.createdAt).toLocaleDateString('fa-IR')}</span>
+                  </CardTitle>
+                  <p className="line-clamp-4 text-sm text-text/90">{comment.content}</p>
+                </CardContent>
+
                 {comment.replies && comment.replies.length > 0 && <ReplyList replies={comment.replies} />}
-              </div>
+              </Card>
             </li>
           ))}
         </ul>
@@ -104,20 +109,23 @@ function ReplyList({ replies }: { replies: CommentItem[] }) {
         .filter((reply) => reply.isActive)
         .map((reply) => (
           <li key={reply.id}>
-            <div className="flex flex-col rounded-lg border border-zinc-100 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 px-3 py-3 shadow-sm relative mr-4">
-              <div className="flex items-center gap-2 mb-2">
-                <FaUserCircle className="text-gray-400 dark:text-zinc-500 w-5 h-5" />
-                <span
-                  className={`text-xs rounded-full px-2 py-0.5 font-semibold
+            <Card className="flex flex-col p-3 bg-gray-50 dark:bg-zinc-800">
+              <CardHeader className="flex items-center justify-between mb-2 p-0">
+                <div className="flex items-center gap-2">
+                  <FaUserCircle className="text-gray-400 dark:text-zinc-500 w-5 h-5" />
+                  <span
+                    className={`text-xs rounded-full px-2 py-0.5 font-semibold
                     ${reply.userId ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' : 'bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400'}`}
-                >
-                  {reply.userId ? 'خریدار' : 'کاربر'}
-                </span>
-              </div>
+                  >
+                    {reply.userId ? 'خریدار' : 'کاربر'}
+                  </span>
+                </div>
+
+                <span className="text-[10px] text-text/60 mt-auto">{new Date(reply.createdAt).toLocaleDateString('fa-IR')}</span>
+              </CardHeader>
               <h6 className="text-xs font-bold text-primary mb-1 truncate">{reply.title}</h6>
               <p className="line-clamp-4 text-xs text-text/90 mb-1">{reply.content}</p>
-              <span className="text-[10px] text-text/60 mt-auto">{new Date(reply.createdAt).toLocaleDateString('fa-IR')}</span>
-            </div>
+            </Card>
           </li>
         ))}
     </ul>
