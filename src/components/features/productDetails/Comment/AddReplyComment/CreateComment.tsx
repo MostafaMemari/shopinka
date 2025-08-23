@@ -1,83 +1,85 @@
-import Dialog from '@/components/common/Dialog';
 import { useAuth } from '@/hooks/reactQuery/auth/useAuth';
-import { useCreateComment } from '@/hooks/reactQuery/comment/useCreateComment';
-import useIsMdUp from '@/hooks/useIsMdUp';
+
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useRef, useState } from 'react';
-import { AiOutlineComment } from 'react-icons/ai';
-import CommentForm, { CommentFormikType } from './CommentForm';
-import MobileDrawer from '@/components/common/MobileDrawer';
-import PrimaryButton from '@/components/common/PrimaryButton';
+import { useMediaQuery } from '@/hooks/use-media-query';
+
+import { Button, Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui';
+import { Drawer, DrawerClose, DrawerContent, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from '@/components/ui';
+import { MapPinPlus } from 'lucide-react';
+import CommentForm from './CommentForm';
 
 function CreateComment({ productId }: { productId: number }) {
-  const isMdUp = useIsMdUp();
   const [modalState, setModalState] = useState<boolean>(false);
 
+  const [open, setOpen] = useState(false);
+  const isDesktop = useMediaQuery('(min-width: 768px)');
+
   const formRef = useRef<HTMLFormElement>(null);
-  const { createComment, isCreateCommentLoading } = useCreateComment();
 
   const pathname = usePathname();
   const { isLogin } = useAuth();
   const router = useRouter();
 
-  const handleFormSubmit = async (values: CommentFormikType) => {
-    createComment(
-      { ...values, productId },
-      () => {
-        setModalState(false);
-        if (formRef.current) {
-          formRef.current.reset();
-        }
-      },
-      (error) => {
-        console.error('خطا در ارسال فرم:', error);
-      },
-    );
-  };
-
   const handleSubmit = () => {
     if (formRef.current) formRef.current.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
   };
 
-  const actions = (
-    <PrimaryButton type="button" onClick={handleSubmit} isLoading={isCreateCommentLoading} disabled={isCreateCommentLoading}>
-      ارسال دیدگاه
-    </PrimaryButton>
-  );
+  // const actions = (
+  //   <PrimaryButton type="button" onClick={handleSubmit} isLoading={isCreateCommentLoading} disabled={isCreateCommentLoading}>
+  //     ارسال دیدگاه
+  //   </PrimaryButton>
+  // );
 
   const handleAddComment = () => {
     if (isLogin) setModalState(true);
     else router.push(`/login/?backUrl=${pathname}`);
   };
 
-  return (
-    <>
-      <button
-        className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-primary rounded-md hover:bg-primary-600 focus:outline-none focus:ring focus:ring-primary-300 cursor-pointer"
-        onClick={handleAddComment}
-      >
-        <AiOutlineComment className="h-6 w-6" />
-        <span>ثبت دیدگاه جدید</span>
-      </button>
+  const handleSuccess = () => {
+    setOpen(false);
+  };
 
-      {isMdUp ? (
-        <Dialog isOpen={modalState} onClose={() => setModalState(false)} title="افزودن نظر جدید" actions={actions} size="xl">
-          <div className="mt-4">
-            <CommentForm onSubmit={handleFormSubmit} ref={formRef} />
-          </div>
-        </Dialog>
-      ) : (
-        <MobileDrawer
-          title="افزودن نظر جدید"
-          isOpen={modalState}
-          onOpen={() => setModalState(true)}
-          onClose={() => setModalState(false)}
-          footerActions={actions}
-        >
-          <CommentForm onSubmit={handleFormSubmit} ref={formRef} />
-        </MobileDrawer>
-      )}
-    </>
+  if (isDesktop) {
+    return (
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogTrigger asChild>
+          <Button className="cursor-pointer">
+            <MapPinPlus /> ثبت آدرس جدید
+          </Button>
+        </DialogTrigger>
+
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>افزون آدرس جدید</DialogTitle>
+          </DialogHeader>
+          <CommentForm productId={productId} onSuccess={handleSuccess} />
+        </DialogContent>
+      </Dialog>
+    );
+  }
+
+  return (
+    <Drawer open={open} onOpenChange={setOpen}>
+      <DrawerTrigger asChild>
+        <Button>
+          <MapPinPlus /> ثبت آدرس جدید
+        </Button>
+      </DrawerTrigger>
+      <DrawerContent>
+        <DrawerHeader className="text-left">
+          <DrawerTitle>افزون آدرس جدید</DrawerTitle>
+        </DrawerHeader>
+
+        <CommentForm productId={productId} onSuccess={handleSuccess} />
+
+        <DrawerFooter className="pt-2">
+          <DrawerClose asChild>
+            <Button variant="outline">انصراف</Button>
+          </DrawerClose>
+        </DrawerFooter>
+      </DrawerContent>
+    </Drawer>
   );
 }
 

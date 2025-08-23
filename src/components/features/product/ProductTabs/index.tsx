@@ -5,6 +5,7 @@ import ProductDescription from './ProductDescription';
 import ProductSpecifications from './ProductSpecifications';
 import ProductComments from '@/components/features/productDetails/Comment/ProductComments';
 import { useComment } from '@/hooks/reactQuery/comment/useComment';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui';
 
 interface Tab {
   id: string;
@@ -45,36 +46,34 @@ export default function ProductTabs({ description, specifications, productId }: 
     }
   };
 
+  const handleTabChange = (val: string) => {
+    setActiveTab(val);
+  };
+
   return (
     <div className="rounded-lg bg-muted p-4 shadow-base">
       <div className="mb-6">
-        <ul className="-mb-px flex justify-between gap-x-2 border-b text-center text-sm font-medium xs:justify-start xs:gap-x-4 xs:text-base">
-          {tabs.map((tab) => (
-            <li key={tab.id}>
-              <button
-                onClick={() => setActiveTab(tab.id)}
-                className={`relative cursor-pointer inline-block rounded-t-lg border-b-2 px-2 pb-2 transition-colors ${
-                  activeTab === tab.id
-                    ? 'border-primary text-primary dark:border-emerald-400 dark:text-emerald-400'
-                    : 'border-transparent hover:text-text/90 dark:hover:text-zinc-300'
-                }`}
-              >
-                {tab.title}
-                {isLoading && tab.id === 'comments' ? (
-                  <span className="absolute -left-5 -top-4 h-4 w-4 animate-spin rounded-full border-2 border-primary border-t-transparent"></span>
-                ) : null}
+        <Tabs value={activeTab} onValueChange={handleTabChange}>
+          <TabsList className="flex gap-x-1 overflow-x-auto scrollbar-thin scrollbar-thumb-gray-200 dark:scrollbar-thumb-zinc-800">
+            {tabs.map((tab) => (
+              <TabsTrigger key={tab.id} value={tab.id} className="flex items-center gap-x-2 cursor-pointer">
+                <span>{tab.title}</span>
                 {tab.count !== undefined && tab.count > 0 && (
-                  <span className="absolute -left-5 -top-4 flex h-7 w-7 items-center justify-center rounded-full bg-primary text-xs text-white dark:bg-emerald-600 xs:text-sm">
+                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs text-white dark:bg-emerald-600">
                     {tab.count}
                   </span>
                 )}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
+              </TabsTrigger>
+            ))}
+          </TabsList>
 
-      <div className="space-y-16 divide-y">{renderTabContent()}</div>
+          {tabs.map((tab) => (
+            <TabsContent key={tab.id} value={tab.id}>
+              <div className="space-y-16 divide-y">{renderTabContent()}</div>
+            </TabsContent>
+          ))}
+        </Tabs>
+      </div>
     </div>
   );
 }
