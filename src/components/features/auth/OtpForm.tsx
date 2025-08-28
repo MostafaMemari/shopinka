@@ -6,7 +6,6 @@ import * as Yup from 'yup';
 import { useRouter } from 'next/navigation';
 import { verifyOtp, sendOtp } from '@/service/authService';
 import { handleApiError } from '@/utils/handleApiError';
-import { errorPhoneNumberStepMessages } from './PhoneInputForm';
 import { extractTimeFromText } from '@/utils/utils';
 import { useLoginUser } from '@/hooks/reactQuery/auth/useLoginUser';
 import { useSyncCart } from '@/hooks/reactQuery/cart/useSyncCart';
@@ -23,7 +22,6 @@ export const errorOtpStepMessages: Record<number, string> = {
 
 interface OtpFormProps {
   mobile: string;
-  backUrl: string;
 }
 
 const otpValidationSchema = Yup.object({
@@ -32,7 +30,7 @@ const otpValidationSchema = Yup.object({
     .matches(/^\d{6}$/, 'لطفاً کد ۶ رقمی را وارد کنید'),
 });
 
-export default function OtpForm({ mobile, backUrl }: OtpFormProps) {
+export default function OtpForm({ mobile }: OtpFormProps) {
   const router = useRouter();
   const loginUser = useLoginUser();
   const syncCart = useSyncCart();
@@ -53,7 +51,7 @@ export default function OtpForm({ mobile, backUrl }: OtpFormProps) {
     }
 
     try {
-      const res = await verifyOtp(mobile, values.otp);
+      const res = await verifyOtp({ mobile, otp: values.otp });
       let errorMessage = handleApiError(res.status, errorOtpStepMessages);
 
       if (errorMessage) {
@@ -71,7 +69,6 @@ export default function OtpForm({ mobile, backUrl }: OtpFormProps) {
         await syncCart();
         resetTimer();
         toast.success('ورود شما با موفقیت انجام شد');
-        router.push(backUrl || '/');
       }
     } catch (error) {
       setErrors({ otp: 'کد تأیید نامعتبر است' });
@@ -84,16 +81,16 @@ export default function OtpForm({ mobile, backUrl }: OtpFormProps) {
   const handleResendOtp = async (setSubmitting: (isSubmitting: boolean) => void) => {
     try {
       const res = await sendOtp(mobile);
-      let errorMessage = handleApiError(res.status, errorPhoneNumberStepMessages);
+      // let errorMessage = handleApiError(res.status, errorPhoneNumberStepMessages);
 
-      if (errorMessage) {
-        if (res.status === 403 || res.status === 409) {
-          errorMessage = errorMessage.replace('{time}', extractTimeFromText(res?.data?.message) ?? 'بعدا');
-        }
+      // if (errorMessage) {
+      //   if (res.status === 403 || res.status === 409) {
+      //     errorMessage = errorMessage.replace('{time}', extractTimeFromText(res?.data?.message) ?? 'بعدا');
+      //   }
 
-        toast.error(errorMessage);
-        return;
-      }
+      //   toast.error(errorMessage);
+      //   return;
+      // }
 
       if (res.status === 200 || res.status === 201) {
         toast.success('کد تأیید مجدداً ارسال شد');

@@ -1,18 +1,25 @@
 'use client';
 
-import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAuth } from '@/hooks/reactQuery/auth/useAuth';
-
 import ProfileMenu from './ProfileMenu';
 import { Button, Skeleton } from '@/components/ui';
-import { LogIn } from 'lucide-react';
 import { useIsMounted } from '@/hooks/useIsMounted';
+import Link from 'next/link';
+import { LogIn } from 'lucide-react';
+import { useDispatch } from 'react-redux';
+import { openDialog } from '@/store/slices/authDialogSlice';
 
 const ProfileDropdown = () => {
   const pathname = usePathname();
   const { isLogin } = useAuth();
   const isMounted = useIsMounted();
+
+  const dispatch = useDispatch();
+
+  const handleClick = () => {
+    dispatch(openDialog());
+  };
 
   if (!isMounted) {
     return (
@@ -28,12 +35,10 @@ const ProfileDropdown = () => {
       {isLogin ? (
         <ProfileMenu />
       ) : (
-        <Link href={`/login/?backUrl=${pathname}`}>
-          <Button variant="outline" className="flex items-center justify-center gap-2 focus:outline-none focus:ring-0">
-            <LogIn />
-            <span>ورود | ثبت‌نام</span>
-          </Button>
-        </Link>
+        <Button onClick={handleClick} variant="outline" className="flex items-center justify-center gap-2 focus:outline-none focus:ring-0">
+          <LogIn />
+          <span>ورود | ثبت‌نام</span>
+        </Button>
       )}
     </>
   );

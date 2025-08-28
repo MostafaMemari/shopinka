@@ -13,3 +13,4 @@ export * from './scroll-area';
 export * from './hover-card';
 export * from './tabs';
 export * from './navigation-menu';
+export * from './input-otp';

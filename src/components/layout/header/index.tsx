@@ -20,7 +20,7 @@ async function Header() {
 
   return (
     <>
-      <header>
+      <header className="hidden lg:block">
         <div className="fixed left-0 right-0 top-0 z-30 bg-muted" style={{ height: headerHeight }}>
           <div className="hidden lg:block">
             <div className="container flex max-w-[1640px] items-center justify-between gap-x-4 py-4">
@@ -36,7 +36,7 @@ async function Header() {
             </div>
           </div>
         </div>
-        <div className={cn('fixed left-0 right-0 z-20')} style={{ top: headerHeight }}>
+        <div className={cn('hidden lg:block fixed left-0 right-0 z-20')} style={{ top: headerHeight }}>
           <DesktopNavbar categories={categories} />
         </div>
       </header>

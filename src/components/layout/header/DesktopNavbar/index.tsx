@@ -3,8 +3,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { Category } from '@/types/categoryType';
 import MenuItem from './MenuItem';
-import NavigationMenuWithActiveItem from '@/components/navigation-menu-05';
 import { cn } from '@/lib/utils';
+import NavigationMenuDesktop from '@/components/layout/header/DesktopNavbar/NavigationMenuDesktop';
 
 interface DesktopNavbarProps {
   categories: Category[];
@@ -36,7 +36,7 @@ const DesktopNavbar = ({ categories }: DesktopNavbarProps) => {
         <div className="flex justify-between items-center w-full">
           <div className="flex gap-x-2">
             <div className="flex items-center gap-x-2">
-              <NavigationMenuWithActiveItem categories={categories || []} />
+              <NavigationMenuDesktop categories={categories || []} />
             </div>
           </div>
           <MenuItem menu={{ id: 1, name: 'فروش ویژه', href: '/shop?hasDiscount=true' }} isAlwaysActive />

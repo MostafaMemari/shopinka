@@ -45,19 +45,13 @@ export const getCart = async (): Promise<CartState> => {
 };
 
 export const clearCart = async (): Promise<CartResponse> => {
-  const res = await shopApiFetch('/cart/clear', { method: 'POST' });
-
-  return res.data;
+  return await shopApiFetch('/cart/clear', { method: 'POST' });
 };
 
 export const updateQuantityItemCart = async ({ quantity, itemId }: { quantity: number; itemId: number }): Promise<CartResponse> => {
-  const res = await shopApiFetch(`/cart/item/${itemId}`, { method: 'PATCH', body: { quantity } });
-
-  return res.data;
+  return await shopApiFetch(`/cart/item/${itemId}`, { method: 'PATCH', body: { quantity } });
 };
 
 export const removeItemCart = async (itemId: number): Promise<CartResponse> => {
-  const res = await shopApiFetch(`/cart/item/${itemId}`, { method: 'DELETE' });
-
-  return res.data;
+  return await shopApiFetch(`/cart/item/${itemId}`, { method: 'DELETE' });
 };

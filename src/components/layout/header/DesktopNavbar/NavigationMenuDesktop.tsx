@@ -2,19 +2,18 @@ import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuL
 import { cn } from '@/lib/utils';
 import { ShoppingBag } from 'lucide-react';
 import Link from 'next/link';
-import { HoverCard, HoverCardContent, HoverCardTrigger } from './ui';
+import { HoverCard, HoverCardContent, HoverCardTrigger } from '../../../ui';
 
 import { useMemo, useState } from 'react';
-import { useIsMounted } from '@/hooks/useIsMounted';
 import { Category } from '@/types/categoryType';
-import SubCategoryList from './layout/header/DesktopNavbar/SubCategoryList';
+import SubCategoryList from './SubCategoryList';
 import { navigationMenuItems } from '@/data/menuData';
 
 interface NavigationMenuWithActiveItemProps {
   categories: Category[];
 }
 
-export default function NavigationMenuWithActiveItem({ categories }: NavigationMenuWithActiveItemProps) {
+export default function NavigationMenuDesktop({ categories }: NavigationMenuWithActiveItemProps) {
   const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null);
   const [isOpen, setIsOpen] = useState(false);
 

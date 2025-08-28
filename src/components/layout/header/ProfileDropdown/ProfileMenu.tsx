@@ -48,6 +48,7 @@ const ProfileMenu = () => {
           <User /> کاربر گرامی {dropdownOpen.value ? <ChevronDown className="h-5 w-5" /> : <ChevronUp className="h-5 w-5" />}
         </Button>
       </DropdownMenuTrigger>
+
       <DropdownMenuContent align="end" className="w-60 rounded-lg border-t-2 border-t-primary bg-muted shadow-lg dark:bg-gray-800">
         {profileMenuItems.map((item) => (
           <DropdownMenuItem key={item.href} className="p-3" asChild>

@@ -4,7 +4,6 @@ import { shopApiFetch } from '@/service/api';
 import { revalidateTag } from 'next/cache';
 import { Pager } from '@/types/pagerType';
 import { Product, ProductParams } from '../types/productType';
-import { ofetch } from 'ofetch';
 
 // export const getProducts = unstable_cache(
 //   async (params?: ProductParams): Promise<{ items: Product[]; pager: Pager }> => {
@@ -25,45 +24,24 @@ import { ofetch } from 'ofetch';
 //   { tags: ['products'] },
 // );
 
-export const getProducts = async (params?: ProductParams): Promise<{ items: Product[]; pager: Pager }> => {
-  const response = await ofetch(`/product`, {
-    baseURL: process.env.API_BASE_URL,
-    method: 'GET',
+export async function getProducts(params?: ProductParams): Promise<{ items: Product[]; pager: Pager }> {
+  return await shopApiFetch(`/product`, {
     query: { ...params, includeMainImage: true, includeVariants: true },
   });
-
-  return {
-    items: response.items,
-    pager: response.pager,
-  };
-};
+}
 
 export async function refetchProducts() {
   revalidateTag('products');
 }
 
 export async function fetchProductBySlug(slug: string) {
-  const res = await shopApiFetch(`/product/by-slug/${slug}`);
-
-  return res;
+  return await shopApiFetch(`/product/by-slug/${slug}`);
 }
 
 export async function favoriteToggle(productId: number) {
-  const res = await shopApiFetch(`/product/favorite-toggle/${productId}`, {
-    method: 'PATCH',
-  });
-
-  if (res.status !== 200) throw new Error('Failed to toggle favorite');
-
-  return res;
+  return await shopApiFetch(`/product/favorite-toggle/${productId}`);
 }
 
 export async function isFavorite(productId: number) {
-  const res = await shopApiFetch(`/product/${productId}/favorite`, {
-    method: 'GET',
-  });
-
-  if (res.status !== 200) throw new Error('Failed to check favorite status');
-
-  return res.data === 'true' ? true : false;
+  return await shopApiFetch(`/product/${productId}/favorite`);
 }

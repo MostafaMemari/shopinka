@@ -1,25 +1,21 @@
 import { toast } from 'sonner';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
-import { sendOtp } from '@/service/authService';
-import { handleApiError } from '@/utils/handleApiError';
+import { Input } from '@/components/ui/input';
+import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
+import { validateIranPhoneNumber } from '@/validation/validateIranPhoneNumber';
+import { cn } from '@/lib/utils';
+import { useAuthMutations } from '@/hooks/auth/useAuth';
+import React from 'react';
+import { Button, DrawerClose, DrawerFooter } from '@/components/ui';
 import PrimaryButton from '@/components/common/PrimaryButton';
 import Link from 'next/link';
-import { validateIranPhoneNumber } from '@/validation/validateIranPhoneNumber';
-import { extractTimeFromText } from '@/utils/utils';
-
-export const errorPhoneNumberStepMessages: Record<number, string> = {
-  400: 'شماره نامعتبر است',
-  403: 'درخواست بیش‌از‌حد. لطفاً {time} بعد دوباره تلاش کنید',
-  409: 'کد قبلاً ارسال شده، {time} بعد امتحان کنید',
-  429: 'تعداد درخواست بیش از حد مجاز بود',
-  500: 'خطای سرور',
-};
 
 interface PhoneInputFormProps {
   mobile: string;
   setMobile: (value: string) => void;
-  handleShowOpt: () => void;
+  className?: string;
 }
 
 const phoneValidationSchema = Yup.object({
@@ -28,71 +24,86 @@ const phoneValidationSchema = Yup.object({
     .test('is-valid-iran-phone', 'شماره موبایل معتبر نیست', (value) => validateIranPhoneNumber(value || '')),
 });
 
-function PhoneInputForm({ mobile, setMobile, handleShowOpt }: PhoneInputFormProps) {
-  const handleSubmit = async (
-    values: { mobile: string },
-    { setSubmitting, setErrors }: { setSubmitting: (isSubmitting: boolean) => void; setErrors: (errors: any) => void },
-  ) => {
-    try {
-      const res = await sendOtp(values.mobile);
+type PhoneFormValues = { mobile: string };
 
-      let errorMessage = handleApiError(res.status, errorPhoneNumberStepMessages);
+function PhoneInputForm({ mobile, setMobile, className }: PhoneInputFormProps) {
+  const { sendOtp, sendOtpStatus } = useAuthMutations();
 
-      if (errorMessage) {
-        if (res.status == 409) errorMessage = errorMessage.replace('{time}', extractTimeFromText(res?.data?.message) ?? 'بعدا');
-        if (res.status == 403) errorMessage = errorMessage.replace('{time}', extractTimeFromText(res?.data?.message) ?? 'بعدا');
+  const form = useForm<PhoneFormValues>({
+    resolver: yupResolver(phoneValidationSchema),
+    defaultValues: {
+      mobile,
+    },
+  });
 
-        toast.error(errorMessage);
-        return;
-      }
-
-      if (res.status === 200 || res.status === 201) {
-        toast.success('کد اعتبار سنجی با موفقیت ارسال شد');
+  const handleSubmit = async (values: PhoneFormValues) => {
+    sendOtp(values.mobile, {
+      onSuccess: () => {
+        toast.success('کد تایید به شماره موبایل شما ارسال شد');
         setMobile(values.mobile);
-        handleShowOpt();
-      }
-    } catch (error) {
-      setErrors({ mobile: 'خطا در ارسال کد تأیید. لطفاً دوباره تلاش کنید.' });
-    } finally {
-      setSubmitting(false);
-    }
+      },
+      onError: (error) => {
+        form.reset();
+        toast.error(error.message);
+      },
+    });
   };
 
   return (
-    <Formik initialValues={{ mobile }} validationSchema={phoneValidationSchema} onSubmit={handleSubmit}>
-      {({ isSubmitting }) => (
-        <Form className="mb-4 space-y-4">
-          <div className="relative block rounded-lg border shadow-base">
-            <Field
-              type="text"
-              id="mobile"
-              name="mobile"
-              dir="auto"
-              className={`peer w-full rounded-lg border-none bg-transparent p-4 text-left placeholder-transparent focus:outline-none focus:ring-0`}
-              placeholder="شماره موبایل"
-              autoFocus
-            />
-            <span className="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-muted px-2 py-0.5 text-sm text-text/90 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-focus:top-0 peer-focus:text-sm">
-              شماره موبایل
-            </span>
-          </div>
-          <ErrorMessage name="mobile" component="p" className="h-5 text-sm text-red-500 dark:text-red-400 mt-2" />
-          <div className="mb-5">
-            <PrimaryButton type="submit" isLoading={isSubmitting} disabled={isSubmitting}>
-              ورود
-            </PrimaryButton>
-          </div>
-          <p className="text-center text-sm text-text/90">
-            با ورود به فروشگاه،
-            <Link href="/info/terms-of-service" className="text-primary">
-              {' '}
-              کلیه قوانین
-            </Link>{' '}
-            را می‌پذیرم
-          </p>
-        </Form>
-      )}
-    </Formik>
+    <>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(handleSubmit)} className={cn('flex flex-col gap-4', className)}>
+          <FormField
+            control={form.control}
+            name="mobile"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input
+                    {...field}
+                    autoFocus
+                    type="tel"
+                    placeholder="شماره موبایل"
+                    dir="ltr"
+                    className="h-12 text-sm text-center"
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        e.preventDefault();
+                        form.handleSubmit(handleSubmit)();
+                      }
+                    }}
+                  />
+                </FormControl>
+                <FormMessage className="block h-4 text-xs text-red-500 dark:text-red-400" />
+              </FormItem>
+            )}
+          />
+        </form>
+      </Form>
+
+      <p className="text-center text-sm text-text/90 pb-1">
+        با ورود به فروشگاه،
+        <Link href="/info/terms-of-service" className="text-primary">
+          {' '}
+          کلیه قوانین
+        </Link>{' '}
+        را می‌پذیرم
+      </p>
+
+      <DrawerFooter className="h-auto flex-shrink-0">
+        <div className="flex justify-between gap-2 w-full">
+          <PrimaryButton onClick={form.handleSubmit(handleSubmit)} isLoading={sendOtpStatus === 'pending'} className="flex-1">
+            ارسال کد ورود
+          </PrimaryButton>
+
+          <DrawerClose asChild>
+            <Button variant="secondary" className="w-24">
+              بستن
+            </Button>
+          </DrawerClose>
+        </div>
+      </DrawerFooter>
+    </>
   );
 }
 

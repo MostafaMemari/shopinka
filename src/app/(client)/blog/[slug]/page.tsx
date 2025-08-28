@@ -18,10 +18,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function Page({ params }: Props) {
   const { slug } = await params;
-  const res = await getBlogBySlug(slug);
-  const blog = res?.data;
+  const blog = await getBlogBySlug(slug);
 
-  if (!blog || res.status !== 200) return notFound();
+  if (!blog) return notFound();
 
   return (
     <div className="grid grid-cols-12 grid-rows-[60px_min(500px,1fr)] gap-4">

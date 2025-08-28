@@ -18,10 +18,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function Page({ params }: Props) {
   const { slug } = await params;
-  const res = await fetchProductBySlug(slug);
-  const product = res?.data;
+  const product = await fetchProductBySlug(slug);
 
-  if (!product || res.status !== 200) return notFound();
+  if (!product) return notFound();
 
   const lastCategory = product.categories?.[product.categories.length - 1];
   const categoryIds = lastCategory ? [lastCategory.id] : [];

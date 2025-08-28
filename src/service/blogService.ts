@@ -2,23 +2,13 @@ import { BlogItem, BlogParams, BlogResponse } from '@/types/blogType';
 import { shopApiFetch } from './api';
 
 export const getBlogs = async (params: BlogParams): Promise<BlogResponse> => {
-  const res = await shopApiFetch('/blog', { method: 'GET', query: { ...params, includeMainImage: true } });
-
-  return {
-    ...res.data,
-  };
+  return await shopApiFetch('/blog', { method: 'GET', query: { ...params, includeMainImage: true } });
 };
 
 export const getBlogBySlug = async (slug: string) => {
-  const res = await shopApiFetch(`/blog/by-slug/${slug}`, { method: 'GET' });
-
-  return res;
+  return await shopApiFetch(`/blog/by-slug/${slug}`, { method: 'GET' });
 };
 
 export const getBlogById = async (id: string): Promise<BlogItem> => {
-  const res = await shopApiFetch(`/blog/${id}`, { method: 'GET' });
-
-  return {
-    ...res.data,
-  };
+  return await shopApiFetch(`/blog/${id}`, { method: 'GET' });
 };

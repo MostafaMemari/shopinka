@@ -5,48 +5,22 @@ import { User } from '../types/userType';
 import { cookies } from 'next/headers';
 import { COOKIE_NAMES } from '@/types/constants';
 import { FavoriteResponse } from '@/types/favoriteType';
-import { ofetch } from 'ofetch';
 
-export const getMe = async (): Promise<{ status: number; data: User | null }> => {
+export const getMe = async (): Promise<User | null> => {
   const cookieStore = await cookies();
   const accessToken = cookieStore.get(COOKIE_NAMES.ACCESS_TOKEN)?.value;
 
-  if (!accessToken) return { status: 401, data: null };
+  if (!accessToken) return null;
 
-  try {
-    const res = await ofetch('/user/me', {
-      method: 'GET',
-      headers: { Authorization: `Bearer ${accessToken}` },
-      baseURL: process.env.API_BASE_URL,
-    });
-
-    return {
-      status: 200,
-      data: res,
-    };
-  } catch (error: any) {
-    cookieStore.delete(COOKIE_NAMES.ACCESS_TOKEN);
-    cookieStore.delete(COOKIE_NAMES.REFRESH_TOKEN);
-
-    return {
-      status: error.response.status,
-      data: null,
-    };
-  }
+  return await shopApiFetch('/user/me', {
+    headers: { Authorization: `Bearer ${accessToken}` },
+  });
 };
 
 export const getFavorites = async (params: { page?: number; take?: number }): Promise<FavoriteResponse> => {
-  const res = await shopApiFetch('/user/favorites', { method: 'GET', query: { ...params } });
-
-  return res.data;
+  return await shopApiFetch('/user/favorites', { method: 'GET', query: { ...params } });
 };
 
 export const updateFullName = async (data: { fullName: string }): Promise<{ message: string; user: User }> => {
-  const res = await shopApiFetch(`/user/profile`, { method: 'PATCH', body: { ...data } });
-
-  if (res.status >= 400 || !res.data?.user) {
-    throw new Error(res.data?.message || 'خطا در ویرایش آدرس');
-  }
-
-  return res.data;
+  return await shopApiFetch(`/user/profile`, { method: 'PATCH', body: { ...data } });
 };

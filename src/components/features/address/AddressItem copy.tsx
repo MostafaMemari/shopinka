@@ -1,7 +1,6 @@
 import React from 'react';
 import { Button, Card, CardContent, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui';
-import { EllipsisVertical, MoreVertical, Pencil, Trash } from 'lucide-react';
-import { UpdateAddressDialogDrawer } from '../../address/UpdateAddressDialogDrawer';
+import { EllipsisVertical, Pencil, Trash } from 'lucide-react';
 import { useBoolean } from '@/hooks/use-boolean';
 import { RemoveDialog } from './RemoveDialog';
 
@@ -53,7 +52,7 @@ const AddressItem: React.FC<AddressItemProps> = ({ item }) => {
         </CardContent>
       </Card>
 
-      <UpdateAddressDialogDrawer open={updateDrawerDialogControl.value} onOpenChange={updateDrawerDialogControl.onToggle} item={item} />
+      {/* <UpdateAddressDialogDrawer open={updateDrawerDialogControl.value} onOpenChange={updateDrawerDialogControl.onToggle} item={item} /> */}
       <RemoveDialog open={removeDialogControl.value} onOpenChange={removeDialogControl.onToggle} addressId={item.id} />
     </>
   );

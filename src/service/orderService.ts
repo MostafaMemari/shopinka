@@ -4,23 +4,13 @@ import { shopApiFetch } from '@/service/api';
 import { GetOrderResponse, OrderCountsResponse, OrderItem, OrderParams, OrderResponse } from '@/types/orderType';
 
 export const getOrders = async ({ params }: { params: OrderParams }): Promise<OrderResponse> => {
-  const res = await shopApiFetch('/order/my', { method: 'GET', query: { ...params } });
-
-  return {
-    ...res.data,
-  };
+  return await shopApiFetch('/order/my', { method: 'GET', query: { ...params } });
 };
 
 export const getCountOrders = async (): Promise<OrderCountsResponse> => {
-  const res = await shopApiFetch('/order/my/counts', { method: 'GET' });
-
-  return {
-    ...res.data,
-  };
+  return await shopApiFetch('/order/my/counts', { method: 'GET' });
 };
 
 export const getOrderById = async (id: number): Promise<GetOrderResponse> => {
-  const res = await shopApiFetch(`/order/my/${id}`, { method: 'GET' });
-
-  return res;
+  return await shopApiFetch(`/order/my/${id}`, { method: 'GET' });
 };

@@ -14,16 +14,11 @@ export default function AuthContainer() {
   const [showOtp, setShowOtp] = useState(false);
 
   const searchParams = useSearchParams();
-  const backUrl = searchParams.get('backUrl') || '/';
 
   const handleBack = () => {
     setShowOtp(false);
     setMobile('');
     toast.info('بازگشت به فرم ورود');
-  };
-
-  const handleShowOpt = () => {
-    setShowOtp(true);
   };
 
   return (
@@ -42,11 +37,7 @@ export default function AuthContainer() {
             <DesktopLogo />
           </div>
           <h1 className="mb-10 text-start text-lg">{showOtp ? 'کد تأیید را وارد کنید' : 'ورود | ثبت نام'}</h1>
-          {showOtp ? (
-            <OtpForm mobile={mobile} backUrl={backUrl} />
-          ) : (
-            <PhoneInputForm mobile={mobile} setMobile={setMobile} handleShowOpt={handleShowOpt} />
-          )}
+          {showOtp ? <OtpForm mobile={mobile} /> : <PhoneInputForm mobile={mobile} setMobile={setMobile} />}
         </div>
       </div>
     </div>

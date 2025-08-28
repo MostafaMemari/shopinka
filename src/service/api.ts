@@ -1,112 +1,72 @@
 'use server';
 
-import 'server-only';
 import { ofetch } from 'ofetch';
-import { cookies } from 'next/headers';
+import 'server-only';
+
 import { COOKIE_NAMES } from '@/types/constants';
+import { deleteCookie, getCookie } from '@/utils/cookie';
+import { refreshToken } from './refreshToken';
 
-interface FetchOptions {
-  method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
-  query?: Record<string, any>;
-  body?: any;
-  headers?: HeadersInit;
-}
+export const shopApiFetch = ofetch.create({
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  retry: 1,
+  retryStatusCodes: [401],
+  async onRequest({ options }) {
+    const accessToken = await getCookie(COOKIE_NAMES.ACCESS_TOKEN);
 
-interface ApiResponse<T = any> {
-  status: number;
-  data: T;
-}
+    if (accessToken) {
+      const headers = new Headers(options.headers as HeadersInit);
 
-async function getAccessToken(): Promise<string | undefined> {
-  return (await cookies()).get(COOKIE_NAMES.ACCESS_TOKEN)?.value;
-}
+      headers.set('Authorization', `Bearer ${accessToken}`);
+      options.headers = headers;
+    }
+  },
+  async onResponseError({ request, options, response }: any) {
+    if (String(request).slice(options.baseURL.length) === '/auth/signout') {
+      await deleteCookie(COOKIE_NAMES.ACCESS_TOKEN);
+      await deleteCookie(COOKIE_NAMES.REFRESH_TOKEN);
 
-async function setAuthCookies(accessToken: string, refreshToken?: string) {
-  const cookieStore = await cookies();
+      return;
+    }
 
-  cookieStore.set(COOKIE_NAMES.ACCESS_TOKEN, accessToken, {
-    httpOnly: true,
-    path: '/',
-    expires: new Date(Date.now() + Number(process.env.ACCESS_TOKEN_EXPIRE_TIME) * 1000),
-  });
+    if (response.status === 401 && response._data?.message === 'invalid signature') {
+      await deleteCookie(COOKIE_NAMES.ACCESS_TOKEN);
+      await deleteCookie(COOKIE_NAMES.REFRESH_TOKEN);
 
-  if (refreshToken) {
-    cookieStore.set(COOKIE_NAMES.REFRESH_TOKEN, refreshToken, {
-      httpOnly: true,
-      path: '/',
-      expires: new Date(Date.now() + Number(process.env.REFRESH_TOKEN_EXPIRE_TIME) * 1000),
-    });
-  }
-}
+      throw new Error(
+        JSON.stringify({
+          status: response.status,
+          message: 'Unauthorized: Invalid token signature',
+        }),
+      );
+    }
 
-async function refreshAccessToken(): Promise<ApiResponse> {
-  try {
-    const response = await ofetch('/auth/refresh-token', {
-      baseURL: process.env.API_BASE_URL,
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      retry: 0,
-    });
+    if (response.status === 401 && response._data?.message === 'jwt expired') {
+      try {
+        const res = await refreshToken();
+        const { accessToken } = res.data;
 
-    const { accessToken, refreshToken } = response;
-    await setAuthCookies(accessToken, refreshToken);
+        if (accessToken) {
+          const headers = new Headers(options.headers as HeadersInit);
 
-    return { status: 200, data: { message: 'Token refreshed' } };
-  } catch (error: any) {
-    return {
-      status: error?.response?.status ?? 401,
-      data: { message: error?.data?.message ?? 'خطا در تمدید توکن' },
-    };
-  }
-}
+          headers.set('Authorization', `Bearer ${accessToken}`);
+          options.headers = headers;
+        }
 
-async function doFetch(path: string, options: FetchOptions, token?: string): Promise<any> {
-  const isFormData = typeof FormData !== 'undefined' && options.body instanceof FormData;
+        return await ofetch(request, options);
+      } catch (error) {
+        await deleteCookie(COOKIE_NAMES.ACCESS_TOKEN);
+        await deleteCookie(COOKIE_NAMES.REFRESH_TOKEN);
 
-  return ofetch(path, {
-    baseURL: process.env.API_BASE_URL,
-    method: options.method ?? 'GET',
-    query: options.query,
-    body: isFormData ? options.body : options.body ? JSON.stringify(options.body) : undefined,
-    headers: {
-      ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-      ...options.headers,
-    },
-    retry: 0,
-  });
-}
-
-export const shopApiFetch = async (path: string, options: FetchOptions = {}): Promise<ApiResponse> => {
-  const accessToken = await getAccessToken();
-
-  try {
-    const data = await doFetch(path, options, accessToken);
-    return { status: 200, data };
-  } catch (error: any) {
-    const status = error?.response?.status ?? 500;
-
-    if (status !== 401) {
-      if (process.env.NODE_ENV === 'development') {
-        console.error('Shop API Error:', { path, error });
+        throw new Error(
+          JSON.stringify({
+            status: response.status,
+            message: 'Unauthorized: Failed to refresh token',
+          }),
+        );
       }
-
-      return { status, data: { message: error?.data?.message ?? 'خطایی رخ داده است' } };
     }
 
-    const refreshResult = await refreshAccessToken();
-    if (refreshResult.status !== 200) return refreshResult;
-
-    try {
-      const retryData = await doFetch(path, options, await getAccessToken());
-      return { status: 200, data: retryData };
-    } catch (retryError: any) {
-      return {
-        status: retryError?.response?.status ?? 500,
-        data: {
-          message: retryError?.data?.message ?? retryError?.message ?? 'خطای تلاش مجدد',
-        },
-      };
-    }
-  }
-};
+    throw new Error(response._data?.message || 'Request failed');
+  },
+});
