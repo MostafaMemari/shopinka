@@ -4,11 +4,13 @@ import { useAuth } from '@/hooks/reactQuery/auth/useAuth';
 import { useToggleFavorite } from '@/hooks/reactQuery/favorite/useToggleFavorite';
 import { useProductFavorite } from '@/hooks/reactQuery/product/useProduct';
 import { useIsMounted } from '@/hooks/useIsMounted';
+import { openDialog } from '@/store/slices/authDialogSlice';
 import { cn } from '@/utils/utils';
 import { usePathname, useRouter } from 'next/navigation';
 import React from 'react';
 import { FaSpinner } from 'react-icons/fa';
 import { HiHeart, HiOutlineHeart } from 'react-icons/hi';
+import { useDispatch } from 'react-redux';
 
 interface FavoriteProductActionProps {
   productId: number;
@@ -19,8 +21,7 @@ interface FavoriteProductActionProps {
 function FavoriteProductAction({ productId, isTooltip = false, className }: FavoriteProductActionProps) {
   const isMounted = useIsMounted();
   const { isLogin, isLoading } = useAuth();
-  const router = useRouter();
-  const pathname = usePathname();
+  const dispatch = useDispatch();
 
   const { data: isFavoriteProduct, refetch, isLoading: isFavoriteLoading } = useProductFavorite({ productId, isLogin });
 
@@ -31,7 +32,7 @@ function FavoriteProductAction({ productId, isTooltip = false, className }: Favo
       if (isToggleFavoriteLoading) return;
       favoriteToggle(productId, refetch);
     } else {
-      router.push(`/login?backUrl=${pathname}`);
+      dispatch(openDialog());
     }
   };
 

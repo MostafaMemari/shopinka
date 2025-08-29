@@ -32,7 +32,7 @@ function MobileBottomNav() {
             {isLogin && <Check size={14} className="absolute -bottom-1 -right-1 text-blue-600 bg-white rounded-full p-0.5" />}
           </div>
         ),
-        isActive: pathname === '/profile' || pathname === '/login',
+        isActive: pathname === '/profile',
       },
       {
         label: 'سبد خرید',
@@ -54,6 +54,7 @@ function MobileBottomNav() {
       },
     ];
   }, [isLogin, pathname, router, dispatch]);
+
   return (
     <nav className="fixed bottom-3 right-3 left-3 z-50 bg-white shadow-md rounded-2xl">
       <ul className="flex justify-between items-center text-xs flex-row-reverse h-[60px]">

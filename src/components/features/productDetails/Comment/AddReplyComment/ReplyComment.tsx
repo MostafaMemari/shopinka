@@ -8,6 +8,8 @@ import { useMediaQuery } from '@/hooks/use-media-query';
 import { useBoolean } from '@/hooks/use-boolean';
 import { ChevronLeft } from 'lucide-react';
 import CommentForm from './CommentForm';
+import { useDispatch } from 'react-redux';
+import { openDialog } from '@/store/slices/authDialogSlice';
 
 interface ReplyCommentProps {
   productId: number;
@@ -17,16 +19,14 @@ interface ReplyCommentProps {
 
 function ReplyComment({ productId, parentId, commentTitle }: ReplyCommentProps) {
   const isDesktop = useMediaQuery('(min-width: 768px)');
-
+  const dispatch = useDispatch();
   const commentControl = useBoolean(false);
 
-  const pathname = usePathname();
   const { isLogin } = useAuth();
-  const router = useRouter();
 
   const handleReplyComment = () => {
     if (isLogin) commentControl.onTrue();
-    else router.push(`/login/?backUrl=${pathname}`);
+    else dispatch(openDialog());
   };
 
   const commentButtonLabel = 'پاسخ';

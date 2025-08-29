@@ -1,6 +1,3 @@
-import { useAuth } from '@/hooks/reactQuery/auth/useAuth';
-
-import { usePathname, useRouter } from 'next/navigation';
 import React from 'react';
 import { useMediaQuery } from '@/hooks/use-media-query';
 
@@ -15,17 +12,8 @@ function CreateComment({ productId }: { productId: number }) {
 
   const isDesktop = useMediaQuery('(min-width: 768px)');
 
-  const pathname = usePathname();
-  const { isLogin } = useAuth();
-  const router = useRouter();
-
-  const handleAddComment = () => {
-    if (isLogin) commentControl.onTrue();
-    else router.push(`/login/?backUrl=${pathname}`);
-  };
-
-  const commentButtonLabel = 'ثبت نظر جدید';
-  const commentFormTitle = 'افزون نظر جدید';
+  const commentButtonLabel = 'ثبت دیدگاه جدید';
+  const commentFormTitle = 'افزودن دیدگاه جدید';
 
   if (isDesktop) {
     return (
@@ -47,13 +35,13 @@ function CreateComment({ productId }: { productId: number }) {
   }
 
   return (
-    <Drawer open={commentControl.value} onOpenChange={commentControl.onToggle}>
+    <Drawer open={commentControl.value} onOpenChange={commentControl.onToggle} modal repositionInputs={false}>
       <DrawerTrigger asChild>
         <Button>
           <MessageCirclePlus /> {commentButtonLabel}
         </Button>
       </DrawerTrigger>
-      <DrawerContent>
+      <DrawerContent className="!h-auto">
         <DrawerHeader className="text-left">
           <DrawerTitle>{commentFormTitle}</DrawerTitle>
         </DrawerHeader>

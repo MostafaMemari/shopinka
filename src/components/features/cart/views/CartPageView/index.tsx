@@ -18,9 +18,12 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/reactQuery/auth/useAuth';
 import { useIsMounted } from '@/hooks/useIsMounted';
 import Link from 'next/link';
+import { useDispatch } from 'react-redux';
+import { openDialog } from '@/store/slices/authDialogSlice';
 
 function CartPageView() {
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const { isLogin } = useAuth();
 
@@ -44,7 +47,7 @@ function CartPageView() {
 
   const handleNextCartShipping = async () => {
     if (isLogin) router.push('/checkout/shipping');
-    else router.push('/login?backUrl=/checkout/shipping');
+    else dispatch(openDialog());
   };
 
   return (

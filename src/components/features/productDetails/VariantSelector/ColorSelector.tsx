@@ -43,8 +43,8 @@ export default function ColorSelector({ colors, selectedColor, onColorChange, la
                 color.isDisabled
                   ? 'opacity-50 cursor-not-allowed'
                   : selectedColor === color.id
-                    ? 'border-[hsl(var(--primary))]'
-                    : 'border-[hsl(var(--border))]'
+                    ? 'border-[var(--primary)]'
+                    : 'border-[var(--border)]'
               }`}
             >
               <div className="flex items-center gap-x-2">
@@ -52,7 +52,7 @@ export default function ColorSelector({ colors, selectedColor, onColorChange, la
                   className="h-6 w-6 rounded-full border-2"
                   style={{
                     backgroundColor: color.color,
-                    borderColor: 'hsl(var(--border) / 0.3)',
+                    borderColor: 'var(--border) / 0.3',
                   }}
                 />
                 <p className="text-text/90">{color.name}</p>

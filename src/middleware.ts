@@ -4,8 +4,7 @@ import { COOKIE_NAMES } from './types/constants';
 import { getMe } from './service/userService';
 
 async function isAuthenticated() {
-  const res = await getMe();
-  return res.status === 200;
+  return await getMe();
 }
 
 export async function middleware(request: NextRequest) {

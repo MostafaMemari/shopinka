@@ -48,8 +48,8 @@ export default function ButtonSelector({ options, selectedOption, onOptionChange
                 option.isDisabled
                   ? 'opacity-50 cursor-not-allowed'
                   : selectedOption === option.slug
-                    ? 'border-[hsl(var(--primary))]'
-                    : 'border-[hsl(var(--border))]'
+                    ? 'border-[var(--primary)]'
+                    : 'border-[var(--border)]'
               }`}
             >
               <p className="text-text/90">{option.label}</p>

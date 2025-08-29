@@ -44,26 +44,10 @@ function CommentForm({ productId, className = '', parentId, onSuccess }: Comment
     validateOnBlur: true,
   });
 
-  const titleInputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    if (titleInputRef.current) {
-      titleInputRef.current.focus();
-    }
-  }, []);
-
   return (
     <form onSubmit={formik.handleSubmit} className={cn('space-y-1 text-right', className)} dir="rtl">
       <div className="grid grid-cols-2 gap-4">
-        <TextInput
-          id="title"
-          name="title"
-          isRequired
-          label="عنوان دیدگاه"
-          formik={formik}
-          className="col-span-2 mb-1"
-          inputRef={titleInputRef}
-        />
+        <TextInput id="title" name="title" isRequired label="عنوان دیدگاه" formik={formik} className="col-span-2 mb-1" />
       </div>
       <div className="grid grid-cols-2 gap-4">
         <div className="col-span-2">

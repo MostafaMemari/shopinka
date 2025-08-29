@@ -29,7 +29,7 @@ export function CreateAddressDialogDrawer() {
 
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>افزون آدرس جدید</DialogTitle>
+            <DialogTitle>افزودن آدرس جدید</DialogTitle>
           </DialogHeader>
           <AddressForm className="pt-2" onSuccess={handleSuccess} />
         </DialogContent>
@@ -46,7 +46,7 @@ export function CreateAddressDialogDrawer() {
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className="text-left">
-          <DrawerTitle>افزون آدرس جدید</DrawerTitle>
+          <DrawerTitle>افزودن آدرس جدید</DrawerTitle>
         </DrawerHeader>
 
         <AddressForm className="px-4" onSuccess={handleSuccess} />
