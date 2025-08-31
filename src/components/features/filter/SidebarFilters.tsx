@@ -13,7 +13,7 @@ function SidebarFilters({ categories }: { categories: Category[] }) {
           <SearchInput />
         </div>
         {categories && categories.length > 0 && (
-          <div className="py-4 px-3 rounded-lg bg-muted shadow-base">
+          <div className="px-3 rounded-lg bg-muted shadow-base">
             <CategorySelector title="فیلتر بر اساس دسته‌بندی" categories={categories} />
           </div>
         )}

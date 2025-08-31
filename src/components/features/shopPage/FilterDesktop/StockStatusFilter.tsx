@@ -3,6 +3,8 @@
 import { useResetPageOnQueryChange } from '@/hooks/useResetPageOnQueryChange';
 import { useQueryState } from 'nuqs';
 import React from 'react';
+import { Switch } from '@/components/ui/switch';
+import { Label } from '@/components/ui/label';
 
 function StockStatusFilter() {
   const [isInStock, setIsInStock] = useQueryState<boolean>('stockStatus', {
@@ -16,19 +18,17 @@ function StockStatusFilter() {
   useResetPageOnQueryChange(JSON.stringify(isInStock));
 
   return (
-    <label className="flex cursor-pointer items-center justify-between" htmlFor="onlyAvailableDesktop">
-      <div>فقط کالاهای موجود</div>
-      <div className="relative inline-flex cursor-pointer items-center">
-        <input
-          className="peer sr-only"
-          id="onlyAvailableDesktop"
-          type="checkbox"
-          checked={isInStock}
-          onChange={() => setIsInStock(!isInStock)}
-        />
-        <div className="peer h-6 w-11 rounded-full bg-background after:absolute after:left-[2px] after:top-0.5 after:h-5 after:w-5 after:rounded-full after:bg-muted after:transition-all after:content-[''] peer-checked:bg-primary peer-checked:after:translate-x-full peer-focus:ring-emerald-500 dark:bg-zinc-800 peer-focus:dark:ring-emerald-400"></div>
-      </div>
-    </label>
+    <div className="flex items-center justify-between">
+      <Label htmlFor="onlyAvailableDesktop" className="cursor-pointer">
+        فقط کالاهای موجود
+      </Label>
+      <Switch
+        id="onlyAvailableDesktop"
+        className="cursor-pointer"
+        checked={isInStock}
+        onCheckedChange={(checked) => setIsInStock(checked)}
+      />
+    </div>
   );
 }
 

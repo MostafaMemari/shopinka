@@ -5,6 +5,7 @@ import ProductPrice from './ProductPrice';
 import Link from 'next/link';
 import ProductImage from './ProductImage';
 import { Product } from '@/types/productType';
+import { Card } from '@/components/ui';
 
 interface Props {
   product: Product;
@@ -45,8 +46,8 @@ const ProductCard: FC<Props> = ({ product }) => {
   };
 
   return (
-    <article className="border-gradient group relative rounded-base p-px before:absolute before:-inset-px before:h-[calc(100%+2px)] before:w-[calc(100%+2px)] before:rounded-base">
-      <div className="relative rounded-xl bg-muted p-2 shadow-base md:p-5">
+    <Card className="p-px mb-0.5">
+      <div className="p-2 md:p-5">
         <div className="mb-2 md:mb-5" draggable={false}>
           <Link href={`/product/${slug}`} aria-label={`مشاهده جزئیات ${productName}`}>
             <ProductImage src={imageUrl} alt={productName} />
@@ -60,7 +61,7 @@ const ProductCard: FC<Props> = ({ product }) => {
         <ProductPrice salePrice={salePrice} basePrice={basePrice} />
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       </div>
-    </article>
+    </Card>
   );
 };
 

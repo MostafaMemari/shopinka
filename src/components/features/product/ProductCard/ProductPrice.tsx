@@ -20,7 +20,7 @@ const ProductPrice: FC<Props> = ({ basePrice, salePrice }) => {
           </div>
           <div className="flex items-center justify-between">
             <div>
-              <p className="w-9 rounded-full bg-warning py-px text-center text-sm text-white">{discount}%</p>
+              <p className="w-9 rounded-full bg-accent-foreground py-px text-center text-sm text-white">{discount}%</p>
             </div>
             <div className="text-sm font-bold text-primary md:text-base">
               {salePrice && formatPrice(salePrice)}

@@ -24,9 +24,12 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const dir = 'rtl';
+  const lang = 'fa';
+
   return (
-    <html lang="fa" dir="rtl" suppressHydrationWarning>
-      <body className={`${iranyekan} antialiased`}>
+    <html lang={lang} dir={dir} suppressHydrationWarning>
+      <body className={`${iranyekan.variable} antialiased`}>
         <NextTopLoader showSpinner={false} color="#b22222" />
 
         <Toaster />

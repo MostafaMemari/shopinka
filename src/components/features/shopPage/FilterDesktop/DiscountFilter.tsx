@@ -1,5 +1,7 @@
 'use client';
 
+import { Label } from '@/components/ui';
+import { Switch } from '@/components/ui/switch';
 import { useResetPageOnQueryChange } from '@/hooks/useResetPageOnQueryChange';
 import { useQueryState } from 'nuqs';
 import React from 'react';
@@ -16,19 +18,17 @@ function DiscountFilter() {
   useResetPageOnQueryChange(JSON.stringify(hasDiscount));
 
   return (
-    <label className="flex cursor-pointer items-center justify-between" htmlFor="onlySpecialDesktop">
-      <div>فقط محصولات ویژه</div>
-      <div className="relative inline-flex cursor-pointer items-center">
-        <input
-          className="peer sr-only"
-          id="onlySpecialDesktop"
-          type="checkbox"
-          checked={hasDiscount}
-          onChange={() => setHasDiscount(!hasDiscount)}
-        />
-        <div className="peer h-6 w-11 rounded-full bg-background after:absolute after:left-[2px] after:top-0.5 after:h-5 after:w-5 after:rounded-full after:bg-muted after:transition-all after:content-[''] peer-checked:bg-primary peer-checked:after:translate-x-full peer-focus:ring-emerald-500 dark:bg-zinc-800 peer-focus:dark:ring-emerald-400"></div>
-      </div>
-    </label>
+    <div className="flex items-center justify-between">
+      <Label htmlFor="onlyAvailableDesktop" className="cursor-pointer">
+        فقط کالاهای دارای تخفیف
+      </Label>
+      <Switch
+        id="onlyAvailableDesktop"
+        className="cursor-pointer"
+        checked={hasDiscount}
+        onCheckedChange={(checked) => setHasDiscount(checked)}
+      />
+    </div>
   );
 }
 

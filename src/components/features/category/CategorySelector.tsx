@@ -2,8 +2,8 @@
 
 import { useMemo, useCallback } from 'react';
 import { useQueryState } from 'nuqs';
-import CategoryAccordion from './CategoryAccordion';
-import CategoryItem from './CategoryItem';
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Category } from '@/types/categoryType';
 import { useResetPageOnQueryChange } from '@/hooks/useResetPageOnQueryChange';
 
@@ -41,18 +41,33 @@ const CategorySelector: React.FC<Props> = ({ queryKey = 'categoryIds', title = '
 
   return (
     <ul>
-      <CategoryAccordion title={title} defaultOpen>
-        <ul>
-          {categories.map((category) => (
-            <CategoryItem
-              key={category.id}
-              category={category}
-              isSelected={selectedCategories.includes(category.id)}
-              onToggle={() => handleToggle(category.id)}
-            />
-          ))}
-        </ul>
-      </CategoryAccordion>
+      <Accordion type="single" collapsible defaultValue="categories">
+        <AccordionItem value="categories">
+          <AccordionTrigger className="hover:no-underline cursor-pointer">{title}</AccordionTrigger>
+          <AccordionContent>
+            <ul className="space-y-3">
+              {categories.map((category) => (
+                <li key={category.id}>
+                  <div className="flex items-center gap-2">
+                    <Checkbox
+                      id={`category-${category.id}`}
+                      className="cursor-pointer"
+                      checked={selectedCategories.includes(category.id)}
+                      onCheckedChange={() => handleToggle(category.id)}
+                    />
+                    <label
+                      htmlFor={`category-${category.id}`}
+                      className="text-sm font-medium leading-none cursor-pointer peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    >
+                      {category.name}
+                    </label>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
     </ul>
   );
 };

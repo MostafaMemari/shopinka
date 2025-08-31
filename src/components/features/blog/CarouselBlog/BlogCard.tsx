@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { BlogItem } from '@/types/blogType';
 import { NoImage } from '@/types/noImageEnum';
 import BlogImage from './BlogImage';
+import { Card } from '@/components/ui';
 
 interface Props {
   blog: BlogItem;
@@ -10,9 +11,9 @@ interface Props {
 
 const BlogCard: FC<Props> = ({ blog }) => {
   return (
-    <article className="border-gradient group relative rounded-base p-px before:absolute before:-inset-px before:h-[calc(100%+2px)] before:w-[calc(100%+2px)] before:rounded-base">
+    <Card className="p-px mb-0.5">
       <Link href={`/blog/${blog.slug}`}>
-        <div className="relative rounded-xl bg-muted p-2 shadow-base">
+        <div className="p-2">
           <div className="mb-2 md:mb-5" draggable={false}>
             <BlogImage src={blog?.mainImage?.fileUrl ?? NoImage.BLOG} alt={blog.title} />
           </div>
@@ -30,7 +31,7 @@ const BlogCard: FC<Props> = ({ blog }) => {
           </div>
         </div>
       </Link>
-    </article>
+    </Card>
   );
 };
 

@@ -14,3 +14,5 @@ export * from './hover-card';
 export * from './tabs';
 export * from './navigation-menu';
 export * from './input-otp';
+export * from './accordion';
+export * from './checkbox';
