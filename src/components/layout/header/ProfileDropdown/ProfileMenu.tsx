@@ -49,7 +49,7 @@ const ProfileMenu = () => {
         </Button>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent align="end" className="w-60 rounded-lg border-t-2 border-t-primary bg-muted shadow-lg dark:bg-gray-800">
+      <DropdownMenuContent align="end" className="w-60 border-t-2 border-t-primary">
         {profileMenuItems.map((item) => (
           <DropdownMenuItem key={item.href} className="p-3" asChild>
             <Link

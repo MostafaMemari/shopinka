@@ -11,7 +11,7 @@ export const getMe = async (): Promise<User> => {
   const accessToken = cookieStore.get(COOKIE_NAMES.ACCESS_TOKEN)?.value;
 
   if (!accessToken) {
-    throw new Error('No access or refresh token found');
+    throw new Error('No access or access token found');
   }
 
   return await shopApiFetch('/user/me', {

@@ -29,9 +29,9 @@ export default function BasketDropdown() {
         <CartIconTotalQuantity isLogin={isLogin} />
       </HoverCardTrigger>
 
-      <HoverCardContent className={cn('w-[400px] rounded-lg border-t-2 border-t-primary bg-muted shadow-lg dark:bg-gray-800')}>
+      <HoverCardContent className={cn('w-[400px] border-t-2 border-t-primary')}>
         {cartItems.length > 0 ? (
-          <Card>
+          <>
             <div className="flex items-center justify-between pb-2">
               <span className="text-sm text-text/90">{cartItems?.length || 0} مورد</span>
               <Link className="flex items-center gap-x-1 text-sm text-primary" href="/checkout/cart">
@@ -62,7 +62,7 @@ export default function BasketDropdown() {
                 ثبت سفارش
               </Button>
             </div>
-          </Card>
+          </>
         ) : (
           <div className="flex flex-col items-center justify-center gap-4 p-8">
             <ShoppingCart />

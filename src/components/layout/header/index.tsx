@@ -30,7 +30,7 @@ async function Header() {
               </div>
               <div className="flex items-center gap-x-3">
                 <ProfileDropdown />
-                <div className="h-6 w-px" aria-hidden="true" />
+                <div className="h-6 w-px bg-border" />
                 <BasketDropdown />
               </div>
             </div>

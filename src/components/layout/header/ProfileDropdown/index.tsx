@@ -1,17 +1,14 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
 import { useAuth } from '@/hooks/reactQuery/auth/useAuth';
 import ProfileMenu from './ProfileMenu';
 import { Button, Skeleton } from '@/components/ui';
 import { useIsMounted } from '@/hooks/useIsMounted';
-import Link from 'next/link';
 import { LogIn } from 'lucide-react';
 import { useDispatch } from 'react-redux';
 import { openDialog } from '@/store/slices/authDialogSlice';
 
 const ProfileDropdown = () => {
-  const pathname = usePathname();
   const { isLogin } = useAuth();
   const isMounted = useIsMounted();
 
