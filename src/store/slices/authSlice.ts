@@ -1,12 +1,26 @@
-// src/store/slices/authSlice.ts
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AuthState } from '@/types/authType';
-import { UserState } from '@/types/userType';
+import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
+import type { UserState } from '@/types/userType';
+import type { AuthState } from '@/types/authType';
+import { getMe } from '@/service/userService';
+
+export const checkAuth = createAsyncThunk<UserState, void, { rejectValue: string }>('auth/checkAuth', async (_, { rejectWithValue }) => {
+  try {
+    const res = await getMe();
+    const user: UserState = {
+      full_name: res.fullName || '',
+      mobile: res.mobile,
+      role: res.role,
+    };
+    return user;
+  } catch (err: any) {
+    return rejectWithValue(err.message || 'خطا در دریافت اطلاعات کاربر');
+  }
+});
 
 const initialState: AuthState = {
   isLogin: false,
   user: null,
-  isLoading: true,
+  isLoading: false,
   error: null,
 };
 
@@ -22,8 +36,11 @@ const authSlice = createSlice({
       state.isLogin = true;
       state.user = action.payload;
       state.isLoading = false;
+      state.error = null;
     },
     loginFailure(state, action: PayloadAction<string>) {
+      state.isLogin = false;
+      state.user = null;
       state.isLoading = false;
       state.error = action.payload;
     },
@@ -33,11 +50,27 @@ const authSlice = createSlice({
       state.isLoading = false;
       state.error = null;
     },
-    setLoading(state, action: PayloadAction<boolean>) {
-      state.isLoading = action.payload;
-    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(checkAuth.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(checkAuth.fulfilled, (state, action: PayloadAction<UserState>) => {
+        state.isLogin = true;
+        state.user = action.payload;
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(checkAuth.rejected, (state, action: PayloadAction<string | undefined>) => {
+        state.isLogin = false;
+        state.user = null;
+        state.isLoading = false;
+        state.error = action.payload || 'خطای ناشناخته';
+      });
   },
 });
 
-export const { loginStart, loginSuccess, loginFailure, logout, setLoading } = authSlice.actions;
+export const { loginStart, loginSuccess, loginFailure, logout } = authSlice.actions;
 export default authSlice.reducer;

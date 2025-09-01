@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 import { store } from '@/store';
 import { DirectionProvider } from '@radix-ui/react-direction';
 import { useFixedAppHeight } from '@/hooks/useFixedAppHeight';
+import AuthInitializer from '@/components/AuthInitializer';
 
 interface Props {
   children: React.ReactNode;
@@ -19,6 +20,7 @@ export default function ClientProvider({ children }: Props) {
 
   return (
     <Provider store={store}>
+      <AuthInitializer />
       <QueryClientProvider client={queryClient}>
         <DirectionProvider dir="rtl">{children}</DirectionProvider>
         <ReactQueryDevtools initialIsOpen={false} />

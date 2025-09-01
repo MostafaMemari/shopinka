@@ -1,20 +1,13 @@
 'use client';
 
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { useEffect, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState, AppDispatch } from '@/store';
-import {
-  setCart,
-  addToCart as addLocalCart,
-  increaseCount,
-  decreaseCount,
-  deleteFromCart as deleteLocalCart,
-} from '@/store/slices/cartSlice';
+import { useMemo } from 'react';
 import { createCart, getCart, updateQuantityItemCart, removeItemCart, clearCart } from '@/service/cartService';
 import { CartData, CartItemState, CartState } from '@/types/cartType';
 import { QueryOptions } from '@/types/queryOptions';
 import { QueryKeys } from '@/types/query-keys';
+import { useDispatch } from 'react-redux';
+import { openDialog } from '@/store/slices/authDialogSlice';
 
 const useCartData = ({ enabled = true, staleTime = 60_000 }: QueryOptions) => {
   const query = useQuery<CartState>({
@@ -28,21 +21,10 @@ const useCartData = ({ enabled = true, staleTime = 60_000 }: QueryOptions) => {
 };
 
 export const useCart = (isLogin: boolean) => {
-  const dispatch = useDispatch<AppDispatch>();
   const queryClient = useQueryClient();
-
-  const { items: reduxCart, payablePrice, totalDiscountPrice, totalPrice } = useSelector((state: RootState) => state.cart);
+  const dispatch = useDispatch();
 
   const { data, isLoading, error, refetch } = useCartData({ enabled: !!isLogin });
-
-  useEffect(() => {
-    if (isLogin && data) {
-      dispatch(setCart({ items: data.items }));
-    } else {
-      const localCart = JSON.parse(localStorage.getItem('cart') ?? '[]');
-      dispatch(setCart({ items: localCart }));
-    }
-  }, [data, dispatch, isLogin]);
 
   const invalidateCart = () => {
     queryClient.invalidateQueries({ queryKey: [QueryKeys.Cart] });
@@ -68,52 +50,43 @@ export const useCart = (isLogin: boolean) => {
     onSuccess: invalidateCart,
   });
 
-  const currentCart: CartState = useMemo(() => {
-    return isLogin && data?.items ? data : { items: reduxCart, payablePrice, totalDiscountPrice, totalPrice };
-  }, [isLogin, data, reduxCart, payablePrice, totalDiscountPrice, totalPrice]);
-
   const handleAddToCart = (item: CartItemState) => {
-    if (!isLogin) {
-      dispatch(addLocalCart(item));
-    } else {
+    if (isLogin) {
       addToCartMutation.mutate({
         quantity: item.count,
         productId: item.type === 'SIMPLE' ? item.id : null,
         productVariantId: item.type === 'VARIABLE' ? item.id : null,
       });
+    } else {
+      dispatch(openDialog());
     }
   };
 
   const handleIncrease = (item: CartItemState) => {
-    if (!isLogin) {
-      dispatch(increaseCount(item));
-    } else {
-      updateQuantityMutation.mutate({ itemId: Number(item.itemId), quantity: item.count + 1 });
-    }
+    if (isLogin) updateQuantityMutation.mutate({ itemId: Number(item.itemId), quantity: item.count + 1 });
+    else dispatch(openDialog());
   };
 
   const handleDecrease = (item: CartItemState) => {
-    if (!isLogin) {
-      dispatch(decreaseCount(item));
-    } else {
-      updateQuantityMutation.mutate({ itemId: Number(item.itemId), quantity: item.count - 1 });
-    }
+    if (isLogin) updateQuantityMutation.mutate({ itemId: Number(item.itemId), quantity: item.count - 1 });
+    else dispatch(openDialog());
   };
 
   const handleDelete = (item: CartItemState) => {
-    if (!isLogin) {
-      dispatch(deleteLocalCart(item.id));
-    } else {
-      removeItemMutation.mutate({ itemId: Number(item.itemId) });
-    }
+    if (isLogin) removeItemMutation.mutate({ itemId: Number(item.itemId) });
+    else dispatch(openDialog());
   };
 
   const handleClearAll = () => {
-    if (isLogin) clearCartMutation.mutate();
+    if (isLogin) {
+      clearCartMutation.mutate();
+    } else {
+      dispatch(openDialog());
+    }
   };
 
   return {
-    cart: currentCart,
+    cart: data,
     isLoading,
     error,
     addToCart: handleAddToCart,

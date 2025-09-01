@@ -1,6 +1,5 @@
 import { useCart } from '@/hooks/reactQuery/cart/useCart';
 import { ShoppingCart } from 'lucide-react';
-import React from 'react';
 
 interface CartIconTotalQuantityProps {
   isLogin: boolean;
@@ -9,7 +8,7 @@ interface CartIconTotalQuantityProps {
 function CartIconTotalQuantity({ isLogin }: CartIconTotalQuantityProps) {
   const { cart } = useCart(isLogin);
 
-  const totalQuantity = cart.items?.reduce((sum, item) => sum + item.count, 0) || 0;
+  const totalQuantity = cart?.items?.reduce((sum, item) => sum + item.count, 0) || 0;
 
   return (
     <div className="relative p-1">

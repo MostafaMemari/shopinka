@@ -3,7 +3,6 @@
 import { ProductDetails } from '@/types/productType';
 import ProductVariants from './VariantSelector';
 import { HiOutlineShieldCheck } from 'react-icons/hi';
-import AddToCartButtonMobile from '@/components/features/cart/AddToCartButton/AddToCartButtonMobile';
 
 interface Props {
   product: ProductDetails;

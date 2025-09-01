@@ -4,7 +4,7 @@ import { CartData, CartResponse, CartState } from '@/types/cartType';
 
 export const createCart = async ({ cartData }: { cartData?: CartData }): Promise<void> => {
   if (cartData) {
-    await shopApiFetch('/cart/item', {
+    const res = await shopApiFetch('/cart/item', {
       method: 'POST',
       body: {
         quantity: cartData.quantity,
@@ -36,10 +36,15 @@ export const createCartReplace = async ({ items }: { items: CartData[] }): Promi
 export const getCart = async (): Promise<CartState> => {
   const res = await shopApiFetch('/cart/me', { method: 'GET' });
 
-  const mappedItems = mapCartResponseToCartItemState(res.data.items);
+  const mappedItems = mapCartResponseToCartItemState(res.items);
+
+  console.log({
+    ...res,
+    items: mappedItems,
+  });
 
   return {
-    ...res.data,
+    ...res,
     items: mappedItems,
   };
 };

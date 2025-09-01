@@ -1,9 +1,6 @@
-export default function Loader() {
-  return (
-    <div className="lds-grid">
-      <div></div>
-      <div></div>
-      <div></div>
-    </div>
-  );
+import { Ellipsis } from 'lucide-react';
+import { cn } from '@/lib/utils';
+
+export default function Loader({ className }: { className?: string }) {
+  return <Ellipsis className={cn('h-12 w-12 text-primary animate-pulse', className)} />;
 }

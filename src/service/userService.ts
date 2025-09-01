@@ -6,11 +6,13 @@ import { cookies } from 'next/headers';
 import { COOKIE_NAMES } from '@/types/constants';
 import { FavoriteResponse } from '@/types/favoriteType';
 
-export const getMe = async (): Promise<User | null> => {
+export const getMe = async (): Promise<User> => {
   const cookieStore = await cookies();
   const accessToken = cookieStore.get(COOKIE_NAMES.ACCESS_TOKEN)?.value;
 
-  if (!accessToken) return null;
+  if (!accessToken) {
+    throw new Error('No access or refresh token found');
+  }
 
   return await shopApiFetch('/user/me', {
     headers: { Authorization: `Bearer ${accessToken}` },

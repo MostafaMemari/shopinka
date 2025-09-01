@@ -1,7 +1,6 @@
 'use client';
 
 import { FaUserCircle } from 'react-icons/fa';
-import SkeletonLoader from '../../common/SkeletonLoader';
 import { useIsMounted } from '@/hooks/useIsMounted';
 import { useAuth } from '@/hooks/reactQuery/auth/useAuth';
 import { Skeleton } from '@/components/ui';

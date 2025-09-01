@@ -7,7 +7,9 @@ import React, { useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import CartIconTotalQuantity from '../../features/cart/CartIconTotalQuantity';
 
-import { Check, House, List, User } from 'lucide-react';
+import { House, List } from 'lucide-react';
+
+import UserIconMobile from './UserIconMobile';
 
 function MobileBottomNav() {
   const { isLogin } = useAuth();
@@ -26,12 +28,7 @@ function MobileBottomNav() {
             dispatch(openDialog());
           }
         },
-        icon: (
-          <div className="relative">
-            <User size={22} />
-            {isLogin && <Check size={14} className="absolute -bottom-1 -right-1 text-blue-600 bg-white rounded-full p-0.5" />}
-          </div>
-        ),
+        icon: <UserIconMobile isLogin={isLogin} />,
         isActive: pathname === '/profile',
       },
       {
