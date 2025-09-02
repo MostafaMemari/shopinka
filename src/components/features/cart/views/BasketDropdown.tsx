@@ -1,6 +1,5 @@
 'use client';
 
-import { HiOutlineChevronLeft } from 'react-icons/hi';
 import Link from 'next/link';
 import { ScrollArea, Button, HoverCard, HoverCardTrigger, HoverCardContent, Card } from '@/components/ui';
 import { cn } from '@/lib/utils';
@@ -10,7 +9,7 @@ import { useCart } from '@/hooks/reactQuery/cart/useCart';
 import CartIconTotalQuantity from '../CartIconTotalQuantity';
 import { useAuth } from '@/hooks/reactQuery/auth/useAuth';
 import { useRouter } from 'next/navigation';
-import { ShoppingCart } from 'lucide-react';
+import { ChevronLeft, ShoppingCart } from 'lucide-react';
 
 export default function BasketDropdown() {
   const { isLogin } = useAuth();
@@ -36,7 +35,7 @@ export default function BasketDropdown() {
               <span className="text-sm text-text/90">{cartItems?.length || 0} مورد</span>
               <Link className="flex items-center gap-x-1 text-sm text-primary" href="/checkout/cart">
                 <span>مشاهده سبد خرید</span>
-                <HiOutlineChevronLeft className="h-5 w-5" />
+                <ChevronLeft className="h-5 w-5" />
               </Link>
             </div>
 
