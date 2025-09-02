@@ -1,7 +1,6 @@
 'use client';
 
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { useMemo } from 'react';
 import { createCart, getCart, updateQuantityItemCart, removeItemCart, clearCart } from '@/service/cartService';
 import { CartData, CartItemState, CartState } from '@/types/cartType';
 import { QueryOptions } from '@/types/queryOptions';

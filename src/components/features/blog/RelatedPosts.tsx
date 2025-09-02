@@ -1,3 +1,4 @@
+import { Card } from '@/components/ui';
 import { BlogItem } from '@/types/blogType';
 import { NoImage } from '@/types/noImageEnum';
 import Image from 'next/image';
@@ -9,9 +10,9 @@ interface RelatedPosts {
   posts: BlogItem[];
 }
 
-const RelatedPosts: FC<RelatedPosts> = ({ postCount, posts }) => {
+const RelatedPosts: FC<RelatedPosts> = ({ posts }) => {
   return (
-    <div className="mb-8 rounded-lg bg-muted px-2 py-3 shadow-base xl:px-4">
+    <Card className="mb-8 px-2 py-3 xl:px-4">
       <p className="mb-5 text-center text-sm font-medium xl:text-base">مقاله های مرتبط</p>
       <ul className="space-y-8">
         {posts.map((post) => (
@@ -36,13 +37,8 @@ const RelatedPosts: FC<RelatedPosts> = ({ postCount, posts }) => {
             </Link>
           </li>
         ))}
-        {/* <li>
-          <a href="#" className="btn-primary py-2">
-            مشاهده همه ( {postCount} )
-          </a>
-        </li> */}
       </ul>
-    </div>
+    </Card>
   );
 };
 

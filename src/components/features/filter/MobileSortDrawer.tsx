@@ -5,25 +5,35 @@ import { ArrowDownUp } from 'lucide-react';
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from '@/components/ui/drawer';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
+import { useQueryState } from 'nuqs';
 
 interface SortOption {
   label: string;
   value: string;
 }
-const SORT_OPTIONS = {
-  default: { label: 'پیش‌فرض', value: '' },
-  newest: { label: 'جدیدترین', value: 'newest' },
-  price_asc: { label: 'ارزان‌ترین', value: 'price_asc' },
-  price_desc: { label: 'گران‌ترین', value: 'price_desc' },
-};
 
-function MobileSortDrawer() {
-  const [sortBy, setSortBy] = useState('');
+interface MobileSortDrawerProps {
+  options: Record<string, SortOption>;
+}
+
+function MobileSortDrawer({ options }: MobileSortDrawerProps) {
+  const [sortBy, setSortBy] = useQueryState('sortBy', {
+    defaultValue: '',
+    parse: (value) => value,
+    serialize: (value) => value,
+    history: 'replace',
+    shallow: false,
+  });
+
   const [open, setOpen] = useState(false);
 
-  const handleOptionChange = (value: string) => {
-    setSortBy(value);
-    setOpen(false);
+  const handleOptionChange = (key: string) => {
+    if (key === 'default' || !options[key]?.value) {
+      setSortBy('');
+    } else {
+      setSortBy(key);
+      setOpen(false);
+    }
   };
 
   return (
@@ -40,7 +50,7 @@ function MobileSortDrawer() {
         </DrawerHeader>
         <div className="main-scroll h-full overflow-y-auto p-4">
           <RadioGroup dir="rtl" value={sortBy} onValueChange={handleOptionChange} className="flex flex-col space-y-2 divide-y">
-            {Object.values(SORT_OPTIONS).map((option: SortOption) => (
+            {Object.values(options).map((option: SortOption) => (
               <div key={option.value} className="first:pt-0">
                 <div className="relative flex items-center">
                   <RadioGroupItem value={option.value} id={`sort-${option.value}`} className="peer sr-only" />

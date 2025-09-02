@@ -40,7 +40,7 @@ export const useCartLogic = ({ product }: ProductCardLogicProps) => {
   }, [isVariableProduct, selectedVariant, product.id]);
 
   useEffect(() => {
-    const found = cart.items.find((item) => item.id === cartItemId);
+    const found = cart?.items.find((item) => item.id === cartItemId);
     if (found?.id !== existingProduct?.id || found?.count !== existingProduct?.count) {
       setExistingProduct(found);
     }

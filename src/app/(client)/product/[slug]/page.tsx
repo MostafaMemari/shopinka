@@ -31,7 +31,11 @@ export default async function Page({ params }: Props) {
     <>
       <MobileHeader productId={product.id} />
       <ProductDetailsView product={product} />
-      <CarouselProduct title="محصولات مرتبط" products={discountProducts.items} viewAllLink={`/shop?categoryIds=${categoryIds.join(',')}`} />
+      <CarouselProduct
+        title="محصولات مرتبط"
+        products={discountProducts?.items}
+        viewAllLink={`/shop?categoryIds=${categoryIds.join(',')}`}
+      />
       <ProductTabs description={product?.description} specifications={product?.properties} productId={product.id} />
     </>
   );

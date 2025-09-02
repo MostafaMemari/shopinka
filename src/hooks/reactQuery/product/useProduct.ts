@@ -25,7 +25,7 @@ export function useProductFavorite({ productId, isLogin }: { productId: number; 
   return useQuery<any, Error>({
     queryKey: [QueryKeys.ProductFavorite, productId],
     queryFn: () => isFavorite(productId || 0),
-    enabled: isLogin,
+    enabled: !!isLogin,
     staleTime: 5 * 60 * 1000,
     gcTime: 30 * 60 * 1000,
     refetchOnWindowFocus: false,

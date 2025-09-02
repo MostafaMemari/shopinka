@@ -5,7 +5,7 @@ import ProductDescription from './ProductDescription';
 import ProductSpecifications from './ProductSpecifications';
 import ProductComments from '@/components/features/productDetails/Comment/ProductComments';
 import { useComment } from '@/hooks/reactQuery/comment/useComment';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui';
+import { Card, Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui';
 
 interface Tab {
   id: string;
@@ -51,12 +51,12 @@ export default function ProductTabs({ description, specifications, productId }: 
   };
 
   return (
-    <div className="rounded-lg bg-muted p-4 shadow-base">
+    <Card className="p-4">
       <div className="mb-6">
         <Tabs value={activeTab} onValueChange={handleTabChange}>
-          <TabsList className="flex gap-x-1 overflow-x-auto scrollbar-thin scrollbar-thumb-gray-200 dark:scrollbar-thumb-zinc-800">
+          <TabsList className="flex overflow-x-auto scrollbar-thin scrollbar-thumb-gray-200 dark:scrollbar-thumb-zinc-800 w-full lg:w-2/4">
             {tabs.map((tab) => (
-              <TabsTrigger key={tab.id} value={tab.id} className="flex items-center gap-x-2 cursor-pointer">
+              <TabsTrigger key={tab.id} value={tab.id} className="flex items-center cursor-pointer bg-card gap-1">
                 <span>{tab.title}</span>
                 {tab.count !== undefined && tab.count > 0 && (
                   <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs text-white dark:bg-emerald-600">
@@ -74,6 +74,6 @@ export default function ProductTabs({ description, specifications, productId }: 
           ))}
         </Tabs>
       </div>
-    </div>
+    </Card>
   );
 }

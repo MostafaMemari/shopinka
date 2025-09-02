@@ -18,6 +18,7 @@ import ProductGuaranteeBadge from '../ProductGuaranteeBadge';
 import FavoriteProductAction from '../ActionButtons/FavoriteProductAction';
 import ShareProductAction from '../ActionButtons/ShareProductAction';
 import CartMobileFixContainer from '@/components/common/CartMobileFixContainer';
+import { Card } from '@/components/ui';
 
 interface ProductDetailsViewProps {
   product: ProductDetails;
@@ -44,7 +45,7 @@ const ProductDetailsView: FC<ProductDetailsViewProps> = ({ product }) => {
     <>
       <div className="hidden lg:block">
         <BreadcrumbContainer variant="boxed" items={[{ name: 'خانه', href: '/' }, ...breadcrumbItems]} />
-        <div className="mb-6 rounded-lg bg-muted p-6 shadow-base">
+        <Card className="mb-6 p-6">
           <div className="mb-10 grid grow grid-cols-12 gap-4">
             <div className="col-span-4">
               <div className="hidden lg:block mb-4">
@@ -130,11 +131,11 @@ const ProductDetailsView: FC<ProductDetailsViewProps> = ({ product }) => {
           <div className="flex justify-between gap-4">
             <ProductGuarantees />
           </div>
-        </div>
+        </Card>
       </div>
 
       <div className="lg:hidden">
-        <div className="mb-6 relative rounded-lg bg-muted p-4 shadow-base">
+        <Card className="mb-6 relative p-4">
           <div className="mb-4">
             <ProductImageSwiper
               product={{
@@ -208,7 +209,7 @@ const ProductDetailsView: FC<ProductDetailsViewProps> = ({ product }) => {
               </div>
             </div>
           </div>
-        </div>
+        </Card>
       </div>
     </>
   );

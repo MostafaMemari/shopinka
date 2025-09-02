@@ -1,15 +1,14 @@
 'use client';
 
+import { TooltipProvider, TooltipTrigger, TooltipContent, Tooltip } from '@/components/ui/tooltip';
 import { useAuth } from '@/hooks/reactQuery/auth/useAuth';
 import { useToggleFavorite } from '@/hooks/reactQuery/favorite/useToggleFavorite';
 import { useProductFavorite } from '@/hooks/reactQuery/product/useProduct';
 import { useIsMounted } from '@/hooks/useIsMounted';
 import { openDialog } from '@/store/slices/authDialogSlice';
 import { cn } from '@/utils/utils';
-import { usePathname, useRouter } from 'next/navigation';
+import { Heart, Loader } from 'lucide-react';
 import React from 'react';
-import { FaSpinner } from 'react-icons/fa';
-import { HiHeart, HiOutlineHeart } from 'react-icons/hi';
 import { useDispatch } from 'react-redux';
 
 interface FavoriteProductActionProps {
@@ -36,38 +35,41 @@ function FavoriteProductAction({ productId, isTooltip = false, className }: Favo
     }
   };
 
-  if (!isMounted || isLoading || isFavoriteLoading || isToggleFavoriteLoading) return <FaSpinner className="h-6 w-6 animate-spin" />;
-
-  return (
-    <>
-      <button
-        type="button"
-        onClick={handleAddToFavorite}
-        disabled={isFavoriteLoading || isToggleFavoriteLoading}
-        className={cn('text-gray-700 hover:text-red-500 dark:text-white transition-colors duration-200', {
-          'text-red-500': isFavoriteProduct,
-          'opacity-60 cursor-not-allowed': isFavoriteLoading || isToggleFavoriteLoading,
-          className,
-        })}
-      >
-        {!isLogin ? (
-          <HiOutlineHeart className="h-6 w-6" />
-        ) : isFavoriteProduct ? (
-          <HiHeart className="h-6 w-6" />
-        ) : (
-          <HiOutlineHeart className="h-6 w-6" />
-        )}
+  if (!isMounted || isLoading || isFavoriteLoading || isToggleFavoriteLoading)
+    return (
+      <button type="button" className={cn('text-gray-700 dark:text-white', className)} disabled>
+        <Loader className="h-6 w-6 animate-spin" />
       </button>
-      {isTooltip && <Tooltip text="افزودن به علاقه‌مندی‌ها" />}
-    </>
-  );
-}
+    );
 
-function Tooltip({ text }: { text: string }) {
   return (
-    <div className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 hidden w-max rounded bg-zinc-900 px-3 py-1 text-sm text-white group-hover:block opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-      {text}
-    </div>
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <button
+            type="button"
+            onClick={handleAddToFavorite}
+            disabled={isFavoriteLoading || isToggleFavoriteLoading}
+            aria-label={isFavoriteProduct ? 'حذف از علاقه‌مندی‌ها' : 'افزودن به علاقه‌مندی‌ها'}
+            className={cn(
+              'text-gray-700 hover:text-red-500 dark:text-white transition-colors duration-200',
+              {
+                'text-red-500': isFavoriteProduct && isLogin,
+                'opacity-60 cursor-not-allowed': isFavoriteLoading || isToggleFavoriteLoading,
+              },
+              className,
+            )}
+          >
+            <Heart
+              className={cn('h-6 w-6', {
+                'fill-red-500': isFavoriteProduct && isLogin,
+              })}
+            />
+          </button>
+        </TooltipTrigger>
+        {isTooltip && <TooltipContent>افزودن به علاقه‌مندی‌ها</TooltipContent>}
+      </Tooltip>
+    </TooltipProvider>
   );
 }
 

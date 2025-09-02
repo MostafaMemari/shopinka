@@ -39,9 +39,11 @@ export async function fetchProductBySlug(slug: string) {
 }
 
 export async function favoriteToggle(productId: number) {
-  return await shopApiFetch(`/product/favorite-toggle/${productId}`);
+  return await shopApiFetch(`/product/favorite-toggle/${productId}`, { method: 'Patch' });
 }
 
-export async function isFavorite(productId: number) {
-  return await shopApiFetch(`/product/${productId}/favorite`);
+export async function isFavorite(productId: number): Promise<Boolean> {
+  const isFavorite = await shopApiFetch(`/product/${productId}/favorite`);
+
+  return isFavorite === 'true' ? true : false;
 }

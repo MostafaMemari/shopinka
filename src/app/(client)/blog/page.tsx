@@ -8,6 +8,7 @@ import SortBar from '@/components/features/filter/SortBar';
 import MobileFilter from '@/components/features/filter/MobileFilter';
 import MobileSort from '@/components/features/filter/MobileSort';
 import BlogListBlogClient from '@/components/features/blog/BlogListClient';
+import MobileSortDrawer from '@/components/features/filter/MobileSortDrawer';
 
 type PageProps = {
   searchParams: Promise<SearchParams>;
@@ -35,7 +36,7 @@ export default async function BlogPage({ searchParams }: PageProps) {
 
         <div className="flex items-center justify-center gap-x-4">
           <MobileFilter totalCount={pager.totalCount} type="BLOG" />
-          <MobileSort options={BLOG_SORT_OPTIONS} queryKey="sortBy" />
+          <MobileSortDrawer options={BLOG_SORT_OPTIONS} />
         </div>
       </div>
       <div className="grid grid-cols-12 grid-rows-[60px_min(500px,_1fr)] gap-4">

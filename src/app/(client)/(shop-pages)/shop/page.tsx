@@ -58,7 +58,7 @@ export default async function ShopPage({ searchParams }: PageProps) {
         </div>
         <div className="flex gap-x-4">
           <MobileFilter totalCount={pager.totalCount} type="SHOP" />
-          <MobileSortDrawer />
+          <MobileSortDrawer options={PRODUCT_SORT_OPTIONS} />
         </div>
       </div>
       <div className="grid grid-cols-12 grid-rows-[60px_min(500px,_1fr)]  text-sm font-medium text-right gap-4">

@@ -38,11 +38,6 @@ export const getCart = async (): Promise<CartState> => {
 
   const mappedItems = mapCartResponseToCartItemState(res.items);
 
-  console.log({
-    ...res,
-    items: mappedItems,
-  });
-
   return {
     ...res,
     items: mappedItems,

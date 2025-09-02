@@ -11,6 +11,7 @@ import CartIconTotalQuantity from '../cart/CartIconTotalQuantity';
 import { useIsMounted } from '@/hooks/useIsMounted';
 import { useAuth } from '@/hooks/reactQuery/auth/useAuth';
 import ShareProductAction from './ActionButtons/ShareProductAction';
+import { Skeleton } from '@/components/ui';
 
 interface MobileHeaderProps {
   productId: number;
@@ -38,12 +39,11 @@ const MobileHeader = ({ productId }: MobileHeaderProps) => {
       <div className="flex items-center justify-between py-2 px-4">
         {!isMounted ? (
           <>
-            <div className="flex gap-2">
-              <SkeletonLoader width="3rem" height="3rem" className="rounded-lg" />
-              <SkeletonLoader width="3rem" height="3rem" className="rounded-lg" />
+            <div className="flex items-center gap-2">
+              <Skeleton className="h-12 w-12 rounded-lg" />
+              <Skeleton className="h-12 w-12 rounded-lg" />
             </div>
-
-            <SkeletonLoader width="8rem" height="3rem" className="rounded-lg" />
+            <Skeleton className="h-12 w-32 rounded-lg" />
           </>
         ) : (
           <>
