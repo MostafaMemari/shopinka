@@ -14,7 +14,7 @@ interface DeliverySectionProps {
 export default function DeliverySection({ onShippingSelect }: DeliverySectionProps) {
   const { data, isLoading, error } = useShipping({});
 
-  const shippings = data?.data.items ?? [];
+  const shippings = data?.items ?? [];
 
   const [selected, setSelected] = useState<string | number | null>(null);
 

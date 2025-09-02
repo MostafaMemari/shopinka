@@ -22,7 +22,6 @@ const ProfileMenu = () => {
   const pathname = usePathname();
   const logoutUser = useLogoutUser();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
-
   const dropdownOpen = useBoolean(false);
 
   const handleUserLogout = async () => {
@@ -42,19 +41,32 @@ const ProfileMenu = () => {
   };
 
   return (
-    <DropdownMenu modal={false} onOpenChange={dropdownOpen.onTrue}>
+    <DropdownMenu modal={false} onOpenChange={dropdownOpen.setValue}>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" className="flex items-center justify-center gap-2 focus:outline-none focus:ring-0">
-          <User /> کاربر گرامی {dropdownOpen.value ? <ChevronDown className="h-5 w-5" /> : <ChevronUp className="h-5 w-5" />}
+        <Button
+          variant="outline"
+          className="flex items-center justify-center gap-2 focus:outline-none focus:ring-0 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+        >
+          <User className="h-5 w-5" />
+          کاربر گرامی
+          {dropdownOpen.value ? (
+            <ChevronUp className="h-5 w-5 transition-transform duration-200" />
+          ) : (
+            <ChevronDown className="h-5 w-5 transition-transform duration-200" />
+          )}
         </Button>
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="end" className="w-60 border-t-2 border-t-primary">
         {profileMenuItems.map((item) => (
-          <DropdownMenuItem key={item.href} className="p-3" asChild>
+          <DropdownMenuItem
+            key={item.href}
+            className="p-3 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
+            asChild
+          >
             <Link
               href={item.href}
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 text-gray-800 hover:text-primary"
               aria-current={pathname === item.href ? 'page' : undefined}
               onClick={dropdownOpen.onFalse}
             >
@@ -67,7 +79,7 @@ const ProfileMenu = () => {
         <DropdownMenuItem asChild>
           <Button
             variant="ghost"
-            className="w-full justify-start gap-2 text-red-500 hover:text-red-600 hover:bg-red-50"
+            className="w-full justify-start gap-2 py-1 text-red-500 hover:text-red-600 hover:bg-red-50 cursor-pointer transition-colors duration-200"
             onClick={handleUserLogout}
             aria-label="خروج از حساب کاربری"
             disabled={isLoggingOut}

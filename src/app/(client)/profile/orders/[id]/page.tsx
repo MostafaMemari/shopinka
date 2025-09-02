@@ -3,7 +3,7 @@ import OrderCardDetails from '@/components/features/profile/Order/OrderCardDetai
 import OrderItems from '@/components/features/profile/Order/OrderItems';
 import { getOrderById } from '@/service/orderService';
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
+import { redirect } from 'next/navigation';
 import DeliveryAddress from '@/components/features/address/DeliveryAddress';
 import { Button } from '@/components/ui';
 import { ChevronLeft } from 'lucide-react';
@@ -14,13 +14,12 @@ type PageProps = {
 
 async function Page({ params }: PageProps) {
   const { id } = await params;
-  const res = await getOrderById(Number(id));
 
-  if (res.status !== 200 || 'message' in res.data) {
-    return notFound();
-  }
+  const order = await getOrderById(Number(id)).catch(() => {
+    return null;
+  });
 
-  const order = res.data;
+  if (!order) return redirect('/profile/orders');
 
   return (
     <div className="container mx-auto px-4 py-6">
@@ -34,16 +33,7 @@ async function Page({ params }: PageProps) {
         </Link>
       </div>
 
-      <OrderCardDetails
-        orderStatus={order.status}
-        transactionStatus={order.transaction.status}
-        orderNumber={order.orderNumber}
-        paymentOrder={order.transaction.amount}
-        createdAt={order.createdAt}
-        updatedAt={order.updatedAt}
-        expiresAt={order.expiresAt}
-        orderId={order.id}
-      />
+      <OrderCardDetails order={order} />
       <DeliveryAddress address={order.addressSnapshot} />
       <OrderItems items={order.items} itemCount={order.quantity} />
     </div>

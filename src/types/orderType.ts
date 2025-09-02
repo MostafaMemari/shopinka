@@ -5,8 +5,6 @@ import { Product, ProductVariant } from './productType';
 import { ShippingItem } from './shippingType';
 import { Transaction } from './transactionType';
 
-export type GetOrderResponse = { status: 200; data: OrderItem } | { status: number; data: { message: string } };
-
 export interface Order {
   pager: Pager;
   items: OrderItem[];

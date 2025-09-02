@@ -1,10 +1,10 @@
 'use client';
 
 import React, { useState } from 'react';
-import { SiSearxng } from 'react-icons/si';
 import Link from 'next/link';
 import Accordion from '@/components/common/Accordion';
 import { faqData } from '@/data/faqData';
+import { Search } from 'lucide-react';
 
 function Page() {
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -38,7 +38,7 @@ function Page() {
           <div className="sticky top-24">
             <p className="mb-4 text-sm sm:text-base text-gray-600">سوال خود را جستجو کنید</p>
             <div className="flex items-center rounded-lg bg-white border border-gray-200 px-3 py-2 shadow-sm">
-              <SiSearxng className="h-5 w-5 text-gray-500" />
+              <Search className="h-5 w-5 text-gray-500" />
               <label className="sr-only">جستجوی سوالات متداول</label>
               <input
                 className="flex-grow bg-transparent px-3 py-2 text-sm sm:text-base placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-300 transition-all"

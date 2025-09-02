@@ -18,45 +18,50 @@ function CheckoutPageView() {
   const [selectedShippingItem, setSelectedShippingItem] = useState<ShippingItem | null>(null);
 
   const { isLogin } = useAuth();
+
   const { cart, isLoading: isLoadingCart } = useCart(isLogin);
   const isMounted = useIsMounted();
 
+  if (!isMounted || isLoadingCart) {
+    return (
+      <div className="col-span-12">
+        <div className="rounded-lg bg-muted p-4 min-h-[300px] flex items-center justify-center">
+          <LoadingSpinner />
+        </div>
+      </div>
+    );
+  }
+
+  if (!cart || cart?.items) {
+    return (
+      <div className="col-span-12">
+        <div className="rounded-lg bg-muted p-6 min-h-[300px] flex flex-col items-center justify-center gap-4">
+          <EmptyState
+            icon={<PiBasketFill className="w-12 h-12 text-gray-400" />}
+            message="سبد خرید شما خالی است!"
+            description="محصولات مورد علاقه‌تون رو به سبد خرید اضافه کنید و دوباره به این صفحه برگردید."
+          />
+          <Link
+            href="/shop"
+            className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-primary rounded-md hover:bg-primary-600 focus:outline-none focus:ring focus:ring-primary-300"
+          >
+            مشاهده محصولات
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
-      {!isMounted || isLoadingCart ? (
-        <div className="col-span-12">
-          <div className="rounded-lg bg-muted p-4 min-h-[300px] flex items-center justify-center">
-            <LoadingSpinner />
-          </div>
+      <div className="col-span-12 md:col-span-8">
+        <div className="rounded-lg bg-muted p-4">
+          <AddressSection onAddressSelect={setSelectedAddressId} />
+          <DeliverySection onShippingSelect={setSelectedShippingItem} />
         </div>
-      ) : cart.items.length === 0 ? (
-        <div className="col-span-12">
-          <div className="rounded-lg bg-muted p-6 min-h-[300px] flex flex-col items-center justify-center gap-4">
-            <EmptyState
-              icon={<PiBasketFill className="w-12 h-12 text-gray-400" />}
-              message="سبد خرید شما خالی است!"
-              description="محصولات مورد علاقه‌تون رو به سبد خرید اضافه کنید و دوباره به این صفحه برگردید."
-            />
-            <Link
-              href="/shop"
-              className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-primary rounded-md hover:bg-primary-600 focus:outline-none focus:ring focus:ring-primary-300"
-            >
-              مشاهده محصولات
-            </Link>
-          </div>
-        </div>
-      ) : (
-        <>
-          <div className="col-span-12 md:col-span-8">
-            <div className="rounded-lg bg-muted p-4">
-              <AddressSection onAddressSelect={setSelectedAddressId} />
-              <DeliverySection onShippingSelect={setSelectedShippingItem} />
-            </div>
-          </div>
+      </div>
 
-          <CartPriceDetail cart={cart} selectedAddressId={selectedAddressId} selectedShippingItem={selectedShippingItem} />
-        </>
-      )}
+      <CartPriceDetail cart={cart} selectedAddressId={selectedAddressId} selectedShippingItem={selectedShippingItem} />
     </>
   );
 }

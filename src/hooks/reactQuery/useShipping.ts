@@ -6,7 +6,7 @@ import { getShipping } from '@/service/shippingService';
 import { ShippingItem } from '@/types/shippingType';
 
 export function useShipping({ enabled = true, staleTime = 1 * 60 * 1000 }: QueryOptions) {
-  return useQuery<{ status: number; data: { items: ShippingItem[]; pager: pager } }>({
+  return useQuery<{ items: ShippingItem[]; pager: pager }>({
     queryKey: [QueryKeys.Shipping],
     queryFn: getShipping,
     enabled: enabled,

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Disclosure } from '@headlessui/react';
-import { BiChevronLeft } from 'react-icons/bi';
+import { ChevronLeft } from 'lucide-react';
 
 interface FaqItem {
   question: string;
@@ -30,7 +30,7 @@ const Accordion: React.FC<AccordionProps> = ({ category, items }) => {
                   <Disclosure.Button className="w-full px-4 py-3 sm:px-6 sm:py-4 text-right cursor-pointer hover:bg-gray-50 transition-colors">
                     <div className="flex items-center justify-between gap-3 text-sm sm:text-base font-medium text-gray-700">
                       <span>{item.question}</span>
-                      <BiChevronLeft
+                      <ChevronLeft
                         className={`h-5 w-5 text-gray-500 transform transition-transform duration-300 ${open ? 'rotate-90' : ''}`}
                       />
                     </div>

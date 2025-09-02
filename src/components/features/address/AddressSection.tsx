@@ -19,7 +19,7 @@ interface AddressSectionProps {
 export default function AddressSection({ onAddressSelect }: AddressSectionProps) {
   const { data, isLoading, error } = useAddress({});
 
-  const addresses = data?.data.items ?? [];
+  const addresses = data?.items ?? [];
 
   useEffect(() => {
     onAddressSelect(addresses.filter((address) => address.isDefault)[0]?.id || null);

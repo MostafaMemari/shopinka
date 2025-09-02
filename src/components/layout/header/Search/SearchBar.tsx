@@ -1,17 +1,18 @@
 'use client';
 
-import { HiOutlineSearch } from 'react-icons/hi';
+import { Search } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { useDebounce } from 'use-debounce';
 import { Product } from '@/types/productType';
 import { useProducts } from '@/hooks/reactQuery/product/useProduct';
 import SearchItem from './SearchItem';
+import { Input } from '@/components/ui/input';
+import { cn } from '@/lib/utils';
 
 const SearchBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchInput, setSearchInput] = useState('');
   const [debouncedSearch] = useDebounce(searchInput.trim(), 500);
-
   const wrapperRef = useRef<HTMLDivElement>(null);
 
   const { data, isFetching, isLoading } = useProducts({
@@ -40,14 +41,12 @@ const SearchBar = () => {
   return (
     <div ref={wrapperRef} className="relative w-full max-w-3xl flex-1">
       <div
-        className={`flex items-center rounded-lg border px-3 py-2 transition-all ${
-          isOpen ? 'border-primary bg-white shadow-md dark:bg-muted' : 'border-border bg-background'
-        }`}
+        className={cn(
+          'flex items-center rounded-lg border bg-background px-4 py-2 transition-all',
+          isOpen ? 'border-primary shadow-md' : 'border-border',
+        )}
       >
-        <HiOutlineSearch className="h-6 w-6 text-text/60 flex-shrink-0" />
-        <label htmlFor="search" className="sr-only">
-          جستجو
-        </label>
+        <Search className={cn('h-6 w-6 text-muted-foreground flex-shrink-0', isOpen && 'text-primary')} />
         <input
           id="search"
           type="text"
@@ -61,12 +60,16 @@ const SearchBar = () => {
       </div>
 
       {isOpen && debouncedSearch && (
-        <div className="absolute inset-x-0 top-full w-full overflow-hidden rounded-b-lg border border-t-transparent bg-muted shadow-lg dark:border-white/10 z-50">
+        <div
+          className={cn(
+            'absolute inset-x-0 top-full z-50 w-full overflow-hidden rounded-b-lg border border-t-transparent bg-background shadow-lg',
+          )}
+        >
           <div className="max-h-[400px] overflow-y-auto p-4">
             {isFetching && isLoading ? (
-              <p className="text-center text-text/60">در حال بارگذاری...</p>
+              <p className="text-center text-muted-foreground">در حال بارگذاری...</p>
             ) : productItems.length === 0 ? (
-              <p className="text-center text-text/60">نتیجه‌ای یافت نشد</p>
+              <p className="text-center text-muted-foreground">نتیجه‌ای یافت نشد</p>
             ) : (
               <ul className="space-y-2">
                 {productItems.map((product) => (

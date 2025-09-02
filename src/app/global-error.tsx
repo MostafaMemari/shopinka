@@ -1,8 +1,7 @@
 'use client';
 
+import { Instagram, Twitter } from 'lucide-react';
 import Image from 'next/image';
-import { FaInstagram, FaTwitter } from 'react-icons/fa';
-import { SiAparat } from 'react-icons/si';
 
 export default function GlobalError({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
   return (
@@ -20,19 +19,13 @@ export default function GlobalError({ error, reset }: { error: Error & { digest?
           <div className="transition-colors duration-200 hover:text-rose-600 dark:hover:text-rose-500">
             <a aria-label="Follow us on instagram" href="#" target="_blank">
               <div className="sr-only">instagram link</div>
-              <FaInstagram className="h-8 w-8" />
+              <Instagram className="h-8 w-8" />
             </a>
           </div>
           <div className="transition-colors duration-200 hover:text-blue-600 dark:hover:text-blue-500">
             <a aria-label="Follow us on twitter" href="#" target="_blank">
               <div className="sr-only">x - twitter link</div>
-              <FaTwitter className="h-8 w-8" />
-            </a>
-          </div>
-          <div className="transition-colors duration-200 hover:text-red-600 dark:hover:text-red-500">
-            <a aria-label="Follow us on aparat" href="#" target="_blank">
-              <div className="sr-only">aparat link</div>
-              <SiAparat className="h-8 w-8" />
+              <Twitter className="h-8 w-8" />
             </a>
           </div>
         </div>

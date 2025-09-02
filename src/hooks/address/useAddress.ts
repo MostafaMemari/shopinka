@@ -4,12 +4,13 @@ import { AddressFormType, AddressItem } from '@/types/addressType';
 import { QueryOptions } from '@/types/queryOptions';
 import { QueryKeys } from '@/types/query-keys';
 import { toast } from 'sonner';
+import { pager } from '@/types/paginationType';
 
 export function useAddress({ enabled = true, staleTime = 60_000 }: QueryOptions) {
   const queryClient = useQueryClient();
   const invalidate = () => queryClient.invalidateQueries({ queryKey: [QueryKeys.Address] });
 
-  const { data, isLoading, error, refetch } = useQuery({
+  const { data, isLoading, error, refetch } = useQuery<{ items: AddressItem[]; pager: pager }>({
     queryKey: [QueryKeys.Address],
     queryFn: getAddress,
     enabled,
@@ -46,11 +47,7 @@ export function useAddress({ enabled = true, staleTime = 60_000 }: QueryOptions)
           onSuccess?.(response.address);
         },
         onError: (error) => {
-          if (error?.message?.includes('exists') || error?.message?.includes('409')) {
-            toast.error('این کد پستی قبلاً ثبت شده است');
-          } else {
-            toast.error('خطا در ثبت آدرس');
-          }
+          toast.error(error.message);
           onError?.(error);
         },
       });
@@ -66,11 +63,7 @@ export function useAddress({ enabled = true, staleTime = 60_000 }: QueryOptions)
             onSuccess?.();
           },
           onError: (error) => {
-            if (error?.message?.includes('exists') || error?.message?.includes('409')) {
-              toast.success('این کد پستی قبلاً ثبت شده است');
-            } else {
-              toast.error('خطا در ویرایش آدرس');
-            }
+            toast.error(error.message);
             onError?.(error);
           },
         },

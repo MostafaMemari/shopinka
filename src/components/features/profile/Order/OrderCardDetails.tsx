@@ -1,6 +1,5 @@
 import { getStatusConfig } from '@/config/orderStatusConfig';
-import { OrderStatus } from '@/types/orderType';
-import { TransactionStatus } from '@/types/transactionType';
+import { OrderItem } from '@/types/orderType';
 import React from 'react';
 import RetryPaymentButton from '../../payment/RetryPaymentButton';
 import { RemainingTimeItem } from './RemainingTimeItem';
@@ -8,26 +7,19 @@ import { formatPrice } from '@/utils/formatter';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui';
 
 interface OrderCardDetailsProps {
-  orderStatus: OrderStatus;
-  transactionStatus: TransactionStatus;
-  orderNumber: string;
-  paymentOrder: number;
-  createdAt: string;
-  updatedAt: string;
-  expiresAt: string;
-  orderId: number;
+  order: OrderItem;
 }
 
-function OrderCardDetails({
-  orderStatus,
-  transactionStatus,
-  orderNumber,
-  paymentOrder,
-  createdAt,
-  updatedAt,
-  expiresAt,
-  orderId,
-}: OrderCardDetailsProps) {
+function OrderCardDetails({ order }: OrderCardDetailsProps) {
+  const orderId = order.id;
+  const orderStatus = order.status;
+  const transactionStatus = order.transaction.status;
+  const orderNumber = order.orderNumber;
+  const paymentOrder = order.transaction.amount;
+  const createdAt = new Date(order.createdAt).toLocaleDateString('fa-IR');
+  const updatedAt = new Date(order.updatedAt).toLocaleDateString('fa-IR');
+  const expiresAt = new Date(order.expiresAt).toLocaleTimeString('fa-IR');
+
   const config = getStatusConfig(orderStatus, transactionStatus);
 
   return (
@@ -55,7 +47,7 @@ function OrderCardDetails({
             }
           />
 
-          <Item label="تاریخ ثبت" value={new Date(createdAt).toLocaleDateString('fa-IR')} />
+          <Item label="تاریخ ثبت" value={createdAt} />
         </div>
 
         {config.showProgress && (
@@ -73,12 +65,10 @@ function OrderCardDetails({
             </div>
             <div className={`flex justify-between text-xs md:text-sm ${config.statusColor}`}>
               <span>
-                <span className="mr-1">تاریخ:</span>
-                {new Date(updatedAt).toLocaleDateString('fa-IR')}
+                <span className="mr-1">تاریخ:</span> {updatedAt}{' '}
               </span>
               <span>
-                <span className="mr-1">ساعت:</span>
-                {new Date(updatedAt).toLocaleTimeString('fa-IR')}
+                <span className="mr-1">ساعت:</span> {updatedAt}{' '}
               </span>
             </div>
           </div>
