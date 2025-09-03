@@ -27,6 +27,7 @@ export default async function Home() {
           sideBanners={bannerts.items.filter((item) => item.type === 'SIDE').slice(0, 2)}
         />
       </div>
+
       <CarouselProduct title="فروش ویژه" products={discountProducts.items} viewAllLink="/shop?hasDiscount=true" />
       <CarouselProduct title="جدیدترین محصولات" products={newestProducts.items} viewAllLink="/shop?sortBy=newest" />
       <CategoryCirclesBanners basePath={`/product-category/${categories.slug}`} categories={categories.children} />

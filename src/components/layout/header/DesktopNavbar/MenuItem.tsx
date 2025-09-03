@@ -1,59 +1,67 @@
 'use client';
 
-import { type MenuItem } from '@/data/menuData';
-import { useIsMounted } from '@/hooks/useIsMounted';
+import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
 
 interface MenuItemProps {
-  menu: MenuItem;
+  menu: { id: number; name: string; href: string };
   isAlwaysActive?: boolean;
+  className?: string;
 }
 
-const MenuItem = ({ menu, isAlwaysActive = false }: MenuItemProps) => {
-  const [isHovered, setIsHovered] = useState(false);
+const MenuItem = ({ menu, isAlwaysActive, className }: MenuItemProps) => {
   const pathname = usePathname();
-  const isMounted = useIsMounted();
-
-  if (!isMounted) return null;
-
-  const isActive = isAlwaysActive || pathname === menu.href || (menu.href !== '/' && pathname.startsWith(menu.href));
+  const isActive = isAlwaysActive || pathname === menu.href;
 
   return (
-    <div className="group relative" dir="rtl" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
-      <div className="relative flex items-center">
-        <Link
-          href={menu.href}
-          className={`flex cursor-pointer items-center gap-x-2 p-2 text-sm hover:text-primary ${
-            isActive ? 'text-primary font-bold' : 'text-neutral-600 dark:text-white'
-          }`}
-          style={menu.color ? ({ '--color-light': menu.color.light, '--color-dark': menu.color.dark } as React.CSSProperties) : undefined}
-        >
-          {menu.icon && <menu.icon className="text-lg" />}
-          {menu.name}
-          {menu.name === 'سایر' && <span className="text-primary">...</span>}
-        </Link>
-
-        <span
-          className={`absolute bottom-0 right-0 h-0.5 bg-primary transition-all duration-500 ${isActive || isHovered ? 'w-full' : 'w-0'}`}
-        />
-      </div>
-
-      {menu.subItems && (
-        <div className="absolute right-0 top-full hidden w-44 overflow-hidden rounded-b-lg bg-muted shadow-base group-hover:block">
-          <ul className="space-y-1 p-2">
-            {menu.subItems.map((subItem) => (
-              <li key={subItem.id}>
-                <Link className="flex rounded-lg px-4 py-3 text-sm text-neutral-600 dark:text-white hover:text-primary" href={subItem.href}>
-                  {subItem.name}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
+    <Link
+      href={menu.href}
+      className={cn(
+        'relative px-4 py-2 rounded-lg text-sm font-bold transition-all duration-300',
+        isActive
+          ? 'text-white dark:text-white bg-gradient-to-r from-red-500 to-pink-500 dark:from-red-600 dark:to-pink-600 animate-pulse-unique'
+          : 'text-gray-700 dark:text-gray-200 hover:text-white dark:hover:text-white hover:bg-gradient-to-r hover:from-red-400 hover:to-pink-400 dark:hover:from-red-500 dark:hover:to-pink-500',
+        'hover:scale-105 hover:shadow-lg',
+        className,
       )}
-    </div>
+      aria-current={isActive ? 'page' : undefined}
+    >
+      {menu.name}
+      {isActive && (
+        <span className="absolute bottom-0 left-1/2 -translate-x-1/2 h-0.5 w-0 bg-white dark:bg-gray-200 rounded-full animate-underline" />
+      )}
+
+      <style jsx>{`
+        @keyframes pulse-unique {
+          0%,
+          100% {
+            transform: scale(1);
+            box-shadow: 0 0 10px 2px rgba(239, 68, 68, 0.3);
+            opacity: 1;
+          }
+          50% {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px 6px rgba(239, 68, 68, 0.7);
+            opacity: 0.9;
+          }
+        }
+        .animate-pulse-unique {
+          animation: pulse-unique 1.8s infinite ease-in-out;
+        }
+        @keyframes underline {
+          0% {
+            width: 0;
+          }
+          100% {
+            width: 75%;
+          }
+        }
+        .animate-underline {
+          animation: underline 0.4s ease-out forwards;
+        }
+      `}</style>
+    </Link>
   );
 };
 

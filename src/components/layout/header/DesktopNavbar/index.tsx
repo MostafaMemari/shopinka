@@ -39,6 +39,7 @@ const DesktopNavbar = ({ categories }: DesktopNavbarProps) => {
               <NavigationMenuDesktop categories={categories || []} />
             </div>
           </div>
+
           <MenuItem menu={{ id: 1, name: 'فروش ویژه', href: '/shop?hasDiscount=true' }} isAlwaysActive />
         </div>
         <div id="header-desktop-navbar-indicator" className="absolute bottom-0 h-0.5 rounded-2xl end-0 transition-all duration-350 w-0" />
