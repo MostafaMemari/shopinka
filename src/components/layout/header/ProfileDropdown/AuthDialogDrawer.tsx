@@ -18,6 +18,7 @@ export function AuthDialogDrawer() {
   const isDesktop = useMediaQuery('(min-width: 768px)');
 
   const open = useSelector((state: RootState) => state.authDialog.open);
+  const { phone, otpSentAt } = useSelector((state: RootState) => state.otp);
 
   const dispatch = useDispatch();
 
@@ -29,8 +30,20 @@ export function AuthDialogDrawer() {
   };
 
   useEffect(() => {
-    setShowOtp(!!mobile);
-  }, [mobile]);
+    if (phone && otpSentAt) {
+      const diff = Date.now() - otpSentAt;
+      if (diff < 2 * 60 * 1000) {
+        setMobile(phone);
+        setShowOtp(true);
+      } else {
+        setMobile('');
+        setShowOtp(false);
+      }
+    } else {
+      setMobile('');
+      setShowOtp(false);
+    }
+  }, [phone, otpSentAt, open]);
 
   if (isDesktop) {
     return (
@@ -46,7 +59,11 @@ export function AuthDialogDrawer() {
             <DialogDescription>{description}</DialogDescription>
           </DialogHeader>
 
-          {showOtp ? <InputOTPForm mobile={mobile} onSuccess={handleSuccess} /> : <PhoneInputForm mobile={mobile} setMobile={setMobile} />}
+          {showOtp ? (
+            <InputOTPForm mobile={mobile} isDialog onSuccess={handleSuccess} />
+          ) : (
+            <PhoneInputForm mobile={mobile} isDialog setMobile={setMobile} />
+          )}
         </DialogContent>
       </Dialog>
     );

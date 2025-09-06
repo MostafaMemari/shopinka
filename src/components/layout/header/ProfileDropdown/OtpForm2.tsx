@@ -10,8 +10,12 @@ import { useEffect, useRef } from 'react';
 import { useCountdownSeconds } from '@/hooks/use-countdown';
 import { secondsToTime } from '@/utils/utils';
 import { useAuthMutations } from '@/hooks/auth/useAuth';
-import { Button, DrawerClose, DrawerFooter } from '@/components/ui';
+import { Button, DialogFooter, DrawerClose, DrawerFooter } from '@/components/ui';
 import PrimaryButton from '@/components/common/PrimaryButton';
+import { DialogClose } from '@radix-ui/react-dialog';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@/store';
+import { clearOtp, setOtpSentAt } from '@/store/slices/otpSlice';
 
 const FormSchema = Yup.object().shape({
   otp: Yup.string()
@@ -22,14 +26,18 @@ const FormSchema = Yup.object().shape({
 interface InputOTPFormProps {
   mobile: string;
   onSuccess: () => void;
+  isDialog?: boolean;
 }
 
 type OTPFormValues = { otp: string };
 
-function InputOTPForm({ mobile, onSuccess }: InputOTPFormProps) {
+function InputOTPForm({ mobile, onSuccess, isDialog }: InputOTPFormProps) {
   const { verifyOtp, sendOtp, verifyOtpStatus, sendOtpStatus } = useAuthMutations();
 
-  const { countdown, counting, startCountdown } = useCountdownSeconds(60 * 5);
+  const { otpSentAt } = useSelector((state: RootState) => state.otp);
+  const dispatch = useDispatch();
+
+  const { countdown, startCountdown, counting } = useCountdownSeconds(60 * 5);
   const isExpired = countdown === 0;
   const timeLeft = secondsToTime(countdown);
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -42,10 +50,16 @@ function InputOTPForm({ mobile, onSuccess }: InputOTPFormProps) {
   });
 
   useEffect(() => {
-    startCountdown();
-  }, [startCountdown]);
+    if (otpSentAt) {
+      const diff = Math.floor((Date.now() - otpSentAt) / 1000);
+      const left = 5 * 60 - diff;
+      if (left > 0) {
+        startCountdown(left);
+      }
+    }
+  }, [otpSentAt, startCountdown]);
 
-  const handleSubmit = async (values: OTPFormValues) => {
+  const handleSubmit = async (values: { otp: string }) => {
     if (isExpired) {
       toast.error('کد یک‌بارمصرف منقضی شده است. لطفا مجددا تلاش کنید.');
       return;
@@ -55,18 +69,14 @@ function InputOTPForm({ mobile, onSuccess }: InputOTPFormProps) {
       { mobile, otp: values.otp },
       {
         onSuccess: () => {
+          dispatch(clearOtp());
           onSuccess();
           toast.success('ورود شما با موفقیت انجام شد');
         },
         onError: (error) => {
           toast.error(error.message);
           form.reset();
-
-          setTimeout(() => {
-            if (inputRef.current) {
-              inputRef.current.focus();
-            }
-          }, 0);
+          setTimeout(() => inputRef.current?.focus(), 0);
         },
       },
     );
@@ -77,10 +87,11 @@ function InputOTPForm({ mobile, onSuccess }: InputOTPFormProps) {
       sendOtp(mobile, {
         onSuccess: () => {
           toast.success('کد اعتبار سنجی مجددا ارسال شد');
-          startCountdown();
+          dispatch(setOtpSentAt(Date.now()));
+          startCountdown(60 * 5);
           form.reset();
         },
-        onError: (error: Error) => {
+        onError: (error) => {
           toast.error(error.message);
           form.reset();
         },
@@ -133,12 +144,39 @@ function InputOTPForm({ mobile, onSuccess }: InputOTPFormProps) {
         </form>
       </Form>
 
-      <Button variant="ghost" onClick={handleResendCode} className="mt-1 text-sm text-gray-500 dark:text-gray-400 text-center">
-        ارسال مجدد کد {counting && `${String(timeLeft.minutes).padStart(2, '0')}:${String(timeLeft.seconds).padStart(2, '0')}`}
+      <Button
+        variant="ghost"
+        onClick={handleResendCode}
+        className="mt-1 text-sm text-gray-500 dark:text-gray-400 text-center"
+        disabled={counting}
+      >
+        {counting ? (
+          <>
+            ارسال مجدد کد ({String(timeLeft.minutes).padStart(2, '0')}:{String(timeLeft.seconds).padStart(2, '0')})
+          </>
+        ) : (
+          'ارسال مجدد کد'
+        )}
       </Button>
 
-      <DrawerFooter className="h-auto flex-shrink-0">
-        <div className="flex justify-between gap-2 w-full">
+      {isDialog ? (
+        <DialogFooter>
+          <PrimaryButton
+            isLoading={verifyOtpStatus === 'pending'}
+            disabled={form.formState.isSubmitting || isExpired}
+            onClick={form.handleSubmit(handleSubmit)}
+            className="flex-1"
+          >
+            ارسال کد ورود
+          </PrimaryButton>
+          <DialogClose asChild>
+            <Button variant="secondary" className="w-24">
+              بستن
+            </Button>
+          </DialogClose>
+        </DialogFooter>
+      ) : (
+        <DrawerFooter className="h-auto flex-shrink-0">
           <PrimaryButton
             isLoading={verifyOtpStatus === 'pending'}
             disabled={form.formState.isSubmitting || isExpired}
@@ -153,8 +191,8 @@ function InputOTPForm({ mobile, onSuccess }: InputOTPFormProps) {
               بستن
             </Button>
           </DrawerClose>
-        </div>
-      </DrawerFooter>
+        </DrawerFooter>
+      )}
     </>
   );
 }

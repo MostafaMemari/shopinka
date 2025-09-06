@@ -1,12 +1,9 @@
 'use client';
 
-import { FC } from 'react';
 import { FaArrowUp } from 'react-icons/fa';
 import Copyright from './Copyright';
 import SupportInfo from './SupportInfo';
 import ScrollTopButton from './ScrollTopButton';
-import SubscribeForm from './SubscribeForm';
-import SocialLinks from './SocialLinks';
 import MenuLinks from './MenuLinks';
 import TrustBadges from './TrustBadges';
 import { defaultFooterData, menuLinks1, menuLinks2, trustBadges } from '@/data/footerData';
@@ -22,14 +19,9 @@ const Footer = () => {
       </div>
 
       <div className="container">
-        <div className="mt-10 flex flex-col items-center justify-between gap-y-4 md:flex-row">
+        <div className="my-5 flex flex-col items-center justify-between gap-y-4 md:flex-row">
           <SupportInfo supportPhone={defaultFooterData.supportPhone} supportText={defaultFooterData.supportText} />
           <ScrollTopButton />
-        </div>
-
-        <div className="relative mb-10 mt-10 flex flex-col items-center justify-between gap-x-4 gap-y-8 rounded-xl bg-background px-10 py-4 shadow-base backdrop-blur-3xl md:flex-row">
-          <SubscribeForm subscribeText={defaultFooterData.subscribeText} />
-          <SocialLinks />
         </div>
 
         <div className="grid grid-cols-12 gap-y-10">

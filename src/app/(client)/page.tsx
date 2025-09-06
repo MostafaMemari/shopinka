@@ -7,7 +7,6 @@ import CategoryCirclesBanners from '@/components/features/CategoryBanners';
 import BannerSlider from '@/components/features/carousel/BannerSlider';
 import CarouselBlog from '@/components/features/blog/CarouselBlog';
 import { getBanners } from '@/service/bannerService';
-import DesignShowcase from '@/components/common/DesignShowcase';
 
 export default async function Home() {
   const [bannerts, discountProducts, newestProducts, blogs, categories] = await Promise.all([
@@ -31,8 +30,8 @@ export default async function Home() {
 
       {/* <DesignShowcase /> */}
 
-      <CarouselProduct title="فروش ویژه" products={discountProducts.items} viewAllLink="/shop?hasDiscount=true" />
-      <CarouselProduct title="جدیدترین محصولات" products={newestProducts.items} viewAllLink="/shop?sortBy=newest" />
+      <CarouselProduct key="discount" title="فروش ویژه" products={discountProducts.items} viewAllLink="/shop?hasDiscount=true" />
+      <CarouselProduct key="newest" title="جدیدترین محصولات" products={newestProducts.items} viewAllLink="/shop?sortBy=newest" />
       <CategoryCirclesBanners basePath={`/product-category/${categories.slug}`} categories={categories.children} />
       <CarouselBlog title="آخرین مقالات" blogs={blogs.items} viewAllLink="/shop?sortBy=newest" />
     </>

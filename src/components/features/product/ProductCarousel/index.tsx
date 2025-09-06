@@ -75,6 +75,9 @@ const ProductCarousel: FC<ProductCarouselProps> = ({ title, viewAllLink, viewAll
                 <ProductCard product={product} />
               </SwiperSlide>
             ))}
+
+            <div className="swiper-button-prev absolute top-1/2 -left-4 z-10 -translate-y-1/2 after:text-sm after:text-gray-600" />
+            <div className="swiper-button-next absolute top-1/2 -right-4 z-10 -translate-y-1/2 after:text-sm after:text-gray-600" />
           </Swiper>
         </div>
       ) : (

@@ -56,29 +56,42 @@ export function useCountdownSeconds(initCountdown: number) {
   const intervalIdRef = useRef<NodeJS.Timeout | null>(null);
   const remainingSecondsRef = useRef(initCountdown);
 
-  const startCountdown = useCallback(() => {
-    if (intervalIdRef.current) return;
+  const startCountdown = useCallback(
+    (customSeconds?: number) => {
+      if (intervalIdRef.current) return;
 
-    setCounting(true);
-    remainingSecondsRef.current = initCountdown;
-    setCountdown(initCountdown);
+      const startValue = customSeconds ?? initCountdown;
+      setCounting(true);
+      remainingSecondsRef.current = startValue;
+      setCountdown(startValue);
 
-    intervalIdRef.current = setInterval(() => {
-      remainingSecondsRef.current -= 1;
-      setCountdown(remainingSecondsRef.current);
+      intervalIdRef.current = setInterval(() => {
+        remainingSecondsRef.current -= 1;
+        setCountdown(remainingSecondsRef.current);
 
-      if (remainingSecondsRef.current <= 0) {
-        clearInterval(intervalIdRef.current!);
-        intervalIdRef.current = null;
-        setCounting(false);
-      }
-    }, 1000);
-  }, [initCountdown]);
+        if (remainingSecondsRef.current <= 0) {
+          clearInterval(intervalIdRef.current!);
+          intervalIdRef.current = null;
+          setCounting(false);
+        }
+      }, 1000);
+    },
+    [initCountdown],
+  );
+
+  const stopCountdown = useCallback(() => {
+    if (intervalIdRef.current) {
+      clearInterval(intervalIdRef.current);
+      intervalIdRef.current = null;
+    }
+    setCounting(false);
+  }, []);
 
   return {
     counting,
     countdown,
     startCountdown,
+    stopCountdown,
   };
 }
 

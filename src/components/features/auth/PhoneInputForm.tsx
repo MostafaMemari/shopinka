@@ -8,14 +8,18 @@ import { validateIranPhoneNumber } from '@/validation/validateIranPhoneNumber';
 import { cn } from '@/lib/utils';
 import { useAuthMutations } from '@/hooks/auth/useAuth';
 import React from 'react';
-import { Button, DrawerClose, DrawerFooter } from '@/components/ui';
+import { Button, DialogFooter, DrawerClose, DrawerFooter } from '@/components/ui';
 import PrimaryButton from '@/components/common/PrimaryButton';
 import Link from 'next/link';
+import { DialogClose } from '@radix-ui/react-dialog';
+import { useDispatch } from 'react-redux';
+import { setOtpSentAt, setPhone } from '@/store/slices/otpSlice';
 
 interface PhoneInputFormProps {
   mobile: string;
   setMobile: (value: string) => void;
   className?: string;
+  isDialog?: boolean;
 }
 
 const phoneValidationSchema = Yup.object({
@@ -26,8 +30,10 @@ const phoneValidationSchema = Yup.object({
 
 type PhoneFormValues = { mobile: string };
 
-function PhoneInputForm({ mobile, setMobile, className }: PhoneInputFormProps) {
+function PhoneInputForm({ mobile, setMobile, className, isDialog }: PhoneInputFormProps) {
   const { sendOtp, sendOtpStatus } = useAuthMutations();
+
+  const dispatch = useDispatch();
 
   const form = useForm<PhoneFormValues>({
     resolver: yupResolver(phoneValidationSchema),
@@ -40,6 +46,8 @@ function PhoneInputForm({ mobile, setMobile, className }: PhoneInputFormProps) {
     sendOtp(values.mobile, {
       onSuccess: () => {
         toast.success('کد تایید به شماره موبایل شما ارسال شد');
+        dispatch(setPhone(values.mobile));
+        dispatch(setOtpSentAt(Date.now()));
         setMobile(values.mobile);
       },
       onError: (error) => {
@@ -90,19 +98,35 @@ function PhoneInputForm({ mobile, setMobile, className }: PhoneInputFormProps) {
         را می‌پذیرم
       </p>
 
-      <DrawerFooter className="h-auto flex-shrink-0">
-        <div className="flex justify-between gap-2 w-full">
-          <PrimaryButton onClick={form.handleSubmit(handleSubmit)} isLoading={sendOtpStatus === 'pending'} className="flex-1">
-            ارسال کد ورود
-          </PrimaryButton>
+      {isDialog ? (
+        <DialogFooter className="h-auto flex-shrink-0">
+          <div className="flex justify-between gap-2 w-full">
+            <PrimaryButton onClick={form.handleSubmit(handleSubmit)} isLoading={sendOtpStatus === 'pending'} className="flex-1">
+              ارسال کد ورود
+            </PrimaryButton>
 
-          <DrawerClose asChild>
-            <Button variant="secondary" className="w-24">
-              بستن
-            </Button>
-          </DrawerClose>
-        </div>
-      </DrawerFooter>
+            <DialogClose asChild>
+              <Button variant="secondary" className="w-24">
+                بستن
+              </Button>
+            </DialogClose>
+          </div>
+        </DialogFooter>
+      ) : (
+        <DrawerFooter className="h-auto flex-shrink-0">
+          <div className="flex justify-between gap-2 w-full">
+            <PrimaryButton onClick={form.handleSubmit(handleSubmit)} isLoading={sendOtpStatus === 'pending'} className="flex-1">
+              ارسال کد ورود
+            </PrimaryButton>
+
+            <DrawerClose asChild>
+              <Button variant="secondary" className="w-24">
+                بستن
+              </Button>
+            </DrawerClose>
+          </div>
+        </DrawerFooter>
+      )}
     </>
   );
 }
