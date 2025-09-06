@@ -102,6 +102,31 @@ body {
   font-family: 'IRANYekan';
 }
 
+.embla {
+  overflow: hidden !important;
+}
+
+.embla__container {
+  display: flex !important;
+}
+
+.embla__slide {
+  flex: 0 0 100% !important;
+  min-width: 0 !important;
+}
+
+.embla-carousel-wrapper .embla {
+  overflow: hidden;
+}
+.embla-carousel-wrapper .embla__container {
+  display: flex;
+  flex-direction: row;
+}
+.embla-carousel-wrapper .embla__slide {
+  flex: 0 0 100%;
+  min-width: 0;
+}
+
 .custom-scrollbar {
   scrollbar-width: thin;
   scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
@@ -156,6 +181,18 @@ body {
 }
 .prose-custom li {
   margin-bottom: 0.35em;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  width: 32px !important;
+  height: 32px !important;
+  border: 1px solid #e5e7eb;
+}
+.swiper-button-prev:after,
+.swiper-button-next:after {
+  font-size: 14px !important;
+  font-weight: bold;
 }
 
 /* .Toastify__toast {

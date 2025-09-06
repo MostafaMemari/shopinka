@@ -7,6 +7,7 @@ import CategoryCirclesBanners from '@/components/features/CategoryBanners';
 import BannerSlider from '@/components/features/carousel/BannerSlider';
 import CarouselBlog from '@/components/features/blog/CarouselBlog';
 import { getBanners } from '@/service/bannerService';
+import DesignShowcase from '@/components/common/DesignShowcase';
 
 export default async function Home() {
   const [bannerts, discountProducts, newestProducts, blogs, categories] = await Promise.all([
@@ -27,6 +28,8 @@ export default async function Home() {
           sideBanners={bannerts.items.filter((item) => item.type === 'SIDE').slice(0, 2)}
         />
       </div>
+
+      {/* <DesignShowcase /> */}
 
       <CarouselProduct title="فروش ویژه" products={discountProducts.items} viewAllLink="/shop?hasDiscount=true" />
       <CarouselProduct title="جدیدترین محصولات" products={newestProducts.items} viewAllLink="/shop?sortBy=newest" />
