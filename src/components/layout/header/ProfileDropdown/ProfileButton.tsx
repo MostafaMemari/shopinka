@@ -1,7 +1,7 @@
 'use client';
 
 import { HiOutlineChevronDown, HiOutlineChevronUp, HiOutlineUser } from 'react-icons/hi';
-import { useAuth } from '@/hooks/reactQuery/auth/useAuth';
+import { useAppSelector } from '@/store/hooks';
 
 interface ProfileButtonProps {
   toggleDropdown: () => void;
@@ -9,7 +9,7 @@ interface ProfileButtonProps {
 }
 
 const ProfileButton = ({ toggleDropdown, isOpen }: ProfileButtonProps) => {
-  const { user } = useAuth();
+  const { user } = useAppSelector((state) => state.auth);
 
   return (
     <button

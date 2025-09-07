@@ -5,8 +5,9 @@ import { createCart, getCart, updateQuantityItemCart, removeItemCart, clearCart 
 import { CartData, CartItemState, CartState } from '@/types/cartType';
 import { QueryOptions } from '@/types/queryOptions';
 import { QueryKeys } from '@/types/query-keys';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { openDialog } from '@/store/slices/authDialogSlice';
+import { useAppSelector } from '@/store/hooks';
 
 const useCartData = ({ enabled = true, staleTime = 60_000 }: QueryOptions) => {
   const query = useQuery<CartState>({
@@ -19,7 +20,8 @@ const useCartData = ({ enabled = true, staleTime = 60_000 }: QueryOptions) => {
   return query;
 };
 
-export const useCart = (isLogin: boolean) => {
+export const useCart = () => {
+  const isLogin = useAppSelector((state) => state.auth.isLogin);
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
 
@@ -94,6 +96,7 @@ export const useCart = (isLogin: boolean) => {
     deleteFromCart: handleDelete,
     clearAllCartItems: handleClearAll,
     refetchCart: refetch,
+
     isAddingToCart: addToCartMutation.isPending,
     isUpdatingQuantity: updateQuantityMutation.isPending,
     isRemovingItem: removeItemMutation.isPending,

@@ -7,7 +7,6 @@ import { setSelectedVariant } from '@/store/slices/productSlice';
 import { CartItemState } from '@/types/cartType';
 import { useCart } from './useCart';
 import { ProductCardLogic } from '@/types/productCardLogic';
-import { useAuth } from '../auth/useAuth';
 
 export interface ProductCardLogicProps {
   product: ProductCardLogic;
@@ -15,9 +14,9 @@ export interface ProductCardLogicProps {
 
 export const useCartLogic = ({ product }: ProductCardLogicProps) => {
   const dispatch = useDispatch();
-  const { isLogin } = useAuth();
+
   const { selectedVariant } = useSelector((state: RootState) => state.product);
-  const { cart, addToCart, isAddingToCart } = useCart(isLogin);
+  const { cart, addToCart, isAddingToCart } = useCart();
   const [existingProduct, setExistingProduct] = useState<CartItemState | undefined>();
 
   const isVariableProduct = product.type === 'VARIABLE';

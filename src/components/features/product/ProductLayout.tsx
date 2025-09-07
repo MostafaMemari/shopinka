@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { PiPhoneCall } from 'react-icons/pi';
 import { LuList, LuShoppingCart, LuUser, LuCheck } from 'react-icons/lu';
 import { RiHome3Line } from 'react-icons/ri';
-import { useAuth } from '@/hooks/reactQuery/auth/useAuth';
+import { useAppSelector } from '@/store/hooks';
 import MobileLogo from '@/components/common/Logo/MobileLogo';
 import CartMobileFixContainer from '../../common/CartMobileFixContainer';
 import MobileMenu from '../../layout/mobileLayout/MobileMenu';
@@ -15,7 +15,7 @@ import MobileMenu from '../../layout/mobileLayout/MobileMenu';
 const ProductLayout = () => {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { isLogin } = useAuth();
+  const { isLogin } = useAppSelector((state) => state.auth);
 
   if (pathname.startsWith('/product')) {
     return null;

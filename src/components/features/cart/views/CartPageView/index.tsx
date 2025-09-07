@@ -15,7 +15,7 @@ import EmptyState from '@/components/features/profile/EmptyState';
 import CartMobileFixContainer from '@/components/common/CartMobileFixContainer';
 import { formatPrice } from '@/utils/formatter';
 import { useRouter } from 'next/navigation';
-import { useAuth } from '@/hooks/reactQuery/auth/useAuth';
+import { useAppSelector } from '@/store/hooks';
 import { useIsMounted } from '@/hooks/useIsMounted';
 import Link from 'next/link';
 import { useDispatch } from 'react-redux';
@@ -25,9 +25,9 @@ function CartPageView() {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const { isLogin } = useAuth();
+  const { isLogin } = useAppSelector((state) => state.auth);
 
-  const { cart, isLoading, error, clearAllCartItems } = useCart(isLogin);
+  const { cart, isLoading, error, clearAllCartItems } = useCart();
 
   const isMounted = useIsMounted();
 

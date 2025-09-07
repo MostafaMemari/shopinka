@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import DeliverySection from '@/components/features/checkout/delivery/DeliverySection';
 import CartPriceDetail from '@/components/features/checkout/CartPriceDetail';
 import { ShippingItem } from '@/types/shippingType';
-import { useAuth } from '@/hooks/reactQuery/auth/useAuth';
+import { useAppSelector } from '@/store/hooks';
 import { useCart } from '@/hooks/reactQuery/cart/useCart';
 import { useIsMounted } from '@/hooks/useIsMounted';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
@@ -17,9 +17,9 @@ function CheckoutPageView() {
   const [selectedAddressId, setSelectedAddressId] = useState<number | null>(null);
   const [selectedShippingItem, setSelectedShippingItem] = useState<ShippingItem | null>(null);
 
-  const { isLogin } = useAuth();
+  const { isLogin } = useAppSelector((state) => state.auth);
 
-  const { cart, isLoading: isLoadingCart } = useCart(isLogin);
+  const { cart, isLoading: isLoadingCart } = useCart();
   const isMounted = useIsMounted();
 
   if (!isMounted || isLoadingCart) {

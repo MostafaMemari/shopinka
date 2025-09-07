@@ -9,7 +9,7 @@ import FavoriteProductAction from './ActionButtons/FavoriteProductAction';
 import SkeletonLoader from '../../common/SkeletonLoader';
 import CartIconTotalQuantity from '../cart/CartIconTotalQuantity';
 import { useIsMounted } from '@/hooks/useIsMounted';
-import { useAuth } from '@/hooks/reactQuery/auth/useAuth';
+import { useAppSelector } from '@/store/hooks';
 import ShareProductAction from './ActionButtons/ShareProductAction';
 import { Skeleton } from '@/components/ui';
 
@@ -18,7 +18,7 @@ interface MobileHeaderProps {
 }
 
 const MobileHeader = ({ productId }: MobileHeaderProps) => {
-  const { isLogin } = useAuth();
+  const { isLogin } = useAppSelector((state) => state.auth);
   const router = useRouter();
   const isMounted = useIsMounted();
 

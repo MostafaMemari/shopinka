@@ -1,15 +1,15 @@
 'use client';
 
-import { useAuth } from '@/hooks/reactQuery/auth/useAuth';
 import ProfileMenu from './ProfileMenu';
 import { Button, Skeleton } from '@/components/ui';
 import { useIsMounted } from '@/hooks/useIsMounted';
 import { LogIn } from 'lucide-react';
 import { useDispatch } from 'react-redux';
 import { openDialog } from '@/store/slices/authDialogSlice';
+import { useAppSelector } from '@/store/hooks';
 
 const ProfileDropdown = () => {
-  const { isLogin } = useAuth();
+  const { isLogin } = useAppSelector((state) => state.auth);
   const isMounted = useIsMounted();
 
   const dispatch = useDispatch();

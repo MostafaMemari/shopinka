@@ -5,14 +5,14 @@ import React, { useEffect, useState } from 'react';
 import { FaUserCircle } from 'react-icons/fa';
 import ProfileMenu from '../ProfileMenu';
 import { useIsMounted } from '@/hooks/useIsMounted';
-import { useAuth } from '@/hooks/reactQuery/auth/useAuth';
+import { useAppSelector } from '@/store/hooks';
 import { Button, Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from '@/components/ui';
 import { useBoolean } from '@/hooks/use-boolean';
 import { Menu } from 'lucide-react';
 import { useMediaQuery } from '@/hooks/use-media-query';
 
 function ProfileMenuCard() {
-  const { user } = useAuth();
+  const { user } = useAppSelector((state) => state.auth);
   const isMounted = useIsMounted();
   const isDesktop = useMediaQuery('(min-width: 1024px)');
   const drawerControl = useBoolean(false);

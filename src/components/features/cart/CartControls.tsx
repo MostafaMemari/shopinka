@@ -1,12 +1,10 @@
 'use client';
 
-import { FaRegTrashAlt } from 'react-icons/fa';
-import { HiOutlineMinus, HiOutlinePlus } from 'react-icons/hi';
-import { CartItemState } from '@/types/cartType';
-import { PulseLoader } from 'react-spinners';
-import { useCart } from '@/hooks/reactQuery/cart/useCart';
+import { Plus, Minus, Trash2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import { cn } from '@/utils/utils';
-import { useAuth } from '@/hooks/reactQuery/auth/useAuth';
+import { useCart } from '@/hooks/reactQuery/cart/useCart';
+import { CartItemState } from '@/types/cartType';
 
 interface CartControlsProps {
   product: CartItemState;
@@ -14,8 +12,7 @@ interface CartControlsProps {
 }
 
 export function CartControls({ product, className }: CartControlsProps) {
-  const { isLogin } = useAuth();
-  const { increaseCount, decreaseCount, deleteFromCart, isUpdatingQuantity, isRemovingItem } = useCart(isLogin);
+  const { increaseCount, decreaseCount, deleteFromCart, isUpdatingQuantity, isRemovingItem } = useCart();
 
   const isLoading = isUpdatingQuantity || isRemovingItem;
 
@@ -26,44 +23,47 @@ export function CartControls({ product, className }: CartControlsProps) {
         className,
       )}
     >
-      <button
-        type="button"
+      <Button
+        variant="ghost"
+        size="icon"
         onClick={() => increaseCount(product)}
-        className="flex h-8 w-8 items-center justify-center rounded-md text-primary transition-colors hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
+        className="h-8 w-8 text-primary hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
         aria-label="افزایش تعداد"
         disabled={isLoading}
       >
-        <HiOutlinePlus className="h-5 w-5" />
-      </button>
+        <Plus className="h-5 w-5" />
+      </Button>
 
       <div className="flex h-9 w-8 items-center justify-center">
         {isLoading ? (
-          <PulseLoader color="var(--color-primary, #10b981)" size={6} loading aria-label="در حال بارگذاری" />
+          <div className="animate-pulse rounded-full bg-primary/20 h-5 w-5" aria-label="در حال بارگذاری" />
         ) : (
           <span className="w-full text-center font-bold text-gray-900 dark:text-gray-100">{product.count}</span>
         )}
       </div>
 
       {product.count > 1 ? (
-        <button
-          type="button"
+        <Button
+          variant="ghost"
+          size="icon"
           onClick={() => decreaseCount(product)}
-          className="flex h-8 w-8 items-center justify-center rounded-md text-primary transition-colors hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
+          className="h-8 w-8 text-primary hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
           aria-label="کاهش تعداد"
           disabled={isLoading}
         >
-          <HiOutlineMinus className="h-5 w-5" />
-        </button>
+          <Minus className="h-5 w-5" />
+        </Button>
       ) : (
-        <button
-          type="button"
+        <Button
+          variant="ghost"
+          size="icon"
           onClick={() => deleteFromCart(product)}
-          className="flex h-8 w-8 items-center justify-center rounded-md text-primary transition-colors hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
+          className="h-8 w-8 text-primary hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
           aria-label="حذف از سبد خرید"
           disabled={isLoading}
         >
-          <FaRegTrashAlt className="h-5 w-5" />
-        </button>
+          <Trash2 className="h-5 w-5" />
+        </Button>
       )}
     </div>
   );

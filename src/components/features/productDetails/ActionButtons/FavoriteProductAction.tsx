@@ -1,7 +1,7 @@
 'use client';
 
 import { TooltipProvider, TooltipTrigger, TooltipContent, Tooltip } from '@/components/ui/tooltip';
-import { useAuth } from '@/hooks/reactQuery/auth/useAuth';
+import { useAppSelector } from '@/store/hooks';
 import { useToggleFavorite } from '@/hooks/reactQuery/favorite/useToggleFavorite';
 import { useProductFavorite } from '@/hooks/reactQuery/product/useProduct';
 import { useIsMounted } from '@/hooks/useIsMounted';
@@ -19,7 +19,7 @@ interface FavoriteProductActionProps {
 
 function FavoriteProductAction({ productId, isTooltip = false, className }: FavoriteProductActionProps) {
   const isMounted = useIsMounted();
-  const { isLogin, isLoading } = useAuth();
+  const { isLogin, isLoading } = useAppSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   const { data: isFavoriteProduct, refetch, isLoading: isFavoriteLoading } = useProductFavorite({ productId, isLogin });

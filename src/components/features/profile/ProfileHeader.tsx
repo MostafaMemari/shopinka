@@ -2,11 +2,11 @@
 
 import { FaUserCircle } from 'react-icons/fa';
 import { useIsMounted } from '@/hooks/useIsMounted';
-import { useAuth } from '@/hooks/reactQuery/auth/useAuth';
+import { useAppSelector } from '@/store/hooks';
 import { Skeleton } from '@/components/ui';
 
 function ProfileHeader() {
-  const { user, isLoading } = useAuth();
+  const { user, isLoading } = useAppSelector((state) => state.auth);
   const isMounted = useIsMounted();
 
   if (!isMounted || isLoading) {

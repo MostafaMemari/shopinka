@@ -1,6 +1,6 @@
 'use client';
 
-import { useAuth } from '@/hooks/reactQuery/auth/useAuth';
+import { useAppSelector } from '@/store/hooks';
 import { openDialog } from '@/store/slices/authDialogSlice';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useMemo } from 'react';
@@ -12,7 +12,7 @@ import { House, List } from 'lucide-react';
 import UserIconMobile from './UserIconMobile';
 
 function MobileBottomNav() {
-  const { isLogin } = useAuth();
+  const { isLogin } = useAppSelector((state) => state.auth);
   const dispatch = useDispatch();
   const pathname = usePathname();
   const router = useRouter();

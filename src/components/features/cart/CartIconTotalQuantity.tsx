@@ -12,7 +12,7 @@ interface CartIconTotalQuantityProps {
 }
 
 function CartIconTotalQuantity({ isLogin, className }: CartIconTotalQuantityProps) {
-  const { cart } = useCart(isLogin);
+  const { cart } = useCart();
   const isMounted = useIsMounted();
 
   const totalQuantity = cart?.items?.reduce((sum, item) => sum + item.count, 0) || 0;

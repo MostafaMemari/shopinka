@@ -1,4 +1,4 @@
-import { useAuth } from '@/hooks/reactQuery/auth/useAuth';
+import { useAppSelector } from '@/store/hooks';
 import { usePathname, useRouter } from 'next/navigation';
 import React from 'react';
 
@@ -22,7 +22,7 @@ function ReplyComment({ productId, parentId, commentTitle }: ReplyCommentProps) 
   const dispatch = useDispatch();
   const commentControl = useBoolean(false);
 
-  const { isLogin } = useAuth();
+  const { isLogin } = useAppSelector((state) => state.auth);
 
   const handleReplyComment = () => {
     if (isLogin) commentControl.onTrue();

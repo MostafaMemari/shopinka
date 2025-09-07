@@ -9,7 +9,7 @@ import LoadingSpinner from '../../common/LoadingSpinner';
 import Dialog from '../../common/Dialog';
 import useIsMdUp from '@/hooks/useIsMdUp';
 import ErrorState from './ErrorState';
-import { useAuth } from '@/hooks/reactQuery/auth/useAuth';
+import { useAppSelector } from '@/store/hooks';
 import { useIsMounted } from '@/hooks/useIsMounted';
 import { useLoginUser } from '@/hooks/reactQuery/auth/useLoginUser';
 
@@ -21,7 +21,7 @@ interface ProfileFieldType {
 }
 
 const ProfileEditActions = () => {
-  const { user, isLoading, error } = useAuth();
+  const { user, isLoading, error } = useAppSelector((state) => state.auth);
   const loginUser = useLoginUser();
   const { changeFullName, isChangeFullNameLoading } = useChangeFullName();
   const isMounted = useIsMounted();

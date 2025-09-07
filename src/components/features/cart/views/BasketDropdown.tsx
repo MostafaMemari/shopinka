@@ -7,13 +7,13 @@ import DesktopBasketItem from './DesktopBasketItem';
 import { formatPrice } from '@/utils/formatter';
 import { useCart } from '@/hooks/reactQuery/cart/useCart';
 import CartIconTotalQuantity from '../CartIconTotalQuantity';
-import { useAuth } from '@/hooks/reactQuery/auth/useAuth';
+import { useAppSelector } from '@/store/hooks';
 import { useRouter } from 'next/navigation';
 import { ChevronLeft, ShoppingCart } from 'lucide-react';
 
 export default function BasketDropdown() {
-  const { isLogin } = useAuth();
-  const { cart } = useCart(isLogin);
+  const { isLogin } = useAppSelector((state) => state.auth);
+  const { cart } = useCart();
   const router = useRouter();
 
   const { items: cartItems, payablePrice } = cart || { items: [], payablePrice: 0 };
