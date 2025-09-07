@@ -12,12 +12,11 @@ import { Button, DialogFooter, DrawerClose, DrawerFooter } from '@/components/ui
 import PrimaryButton from '@/components/common/PrimaryButton';
 import Link from 'next/link';
 import { DialogClose } from '@radix-ui/react-dialog';
-import { useDispatch } from 'react-redux';
-import { setOtpSentAt, setPhone } from '@/store/slices/otpSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { setOtpSentAt, setMobile } from '@/store/slices/otpSlice';
+import { RootState } from '@/store';
 
 interface PhoneInputFormProps {
-  mobile: string;
-  setMobile: (value: string) => void;
   className?: string;
   isDialog?: boolean;
 }
@@ -30,25 +29,24 @@ const phoneValidationSchema = Yup.object({
 
 type PhoneFormValues = { mobile: string };
 
-function PhoneInputForm({ mobile, setMobile, className, isDialog }: PhoneInputFormProps) {
+function PhoneInputForm({ className, isDialog }: PhoneInputFormProps) {
   const { sendOtp, sendOtpStatus } = useAuthMutations();
+  const mobile = useSelector((state: RootState) => state.otp.mobile)!;
 
   const dispatch = useDispatch();
 
   const form = useForm<PhoneFormValues>({
     resolver: yupResolver(phoneValidationSchema),
     defaultValues: {
-      mobile,
+      mobile: mobile || '',
     },
   });
 
   const handleSubmit = async (values: PhoneFormValues) => {
     sendOtp(values.mobile, {
       onSuccess: () => {
-        toast.success('کد تایید به شماره موبایل شما ارسال شد');
-        dispatch(setPhone(values.mobile));
+        dispatch(setMobile(values.mobile));
         dispatch(setOtpSentAt(Date.now()));
-        setMobile(values.mobile);
       },
       onError: (error) => {
         form.reset();

@@ -4,10 +4,8 @@ import Link from 'next/link';
 import { LogOut, ChevronUp, ChevronDown, User } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { toast } from 'sonner';
-import { logout } from '@/service/authService';
 import { useState } from 'react';
 import { profileMenuItems } from '@/data/menuData';
-import { useLogoutUser } from '@/hooks/reactQuery/auth/useLogoutUser';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,31 +15,22 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
 import { useBoolean } from '@/hooks/use-boolean';
+import { useAuthMutations } from '@/hooks/auth/useAuth';
 
 const ProfileMenu = () => {
   const pathname = usePathname();
-  const logoutUser = useLogoutUser();
-  const [isLoggingOut, setIsLoggingOut] = useState(false);
-  const dropdownOpen = useBoolean(false);
 
-  const handleUserLogout = async () => {
-    setIsLoggingOut(true);
-    try {
-      const res = await logout();
-      if (res?.status === 201 || res?.status === 200) {
-        logoutUser().then(() => {
-          toast.success('خروج با موفقیت انجام شد');
-        });
-      }
-    } catch (err) {
-      toast.error('خروج با خطا مواجه شد');
-    } finally {
-      setIsLoggingOut(false);
-    }
+  const { logOut, logOutStatus } = useAuthMutations();
+
+  const dropdownOpen = useBoolean(false);
+  const isLogoutLoading = logOutStatus === 'pending';
+
+  const handleUserLogout = () => {
+    logOut();
   };
 
   return (
-    <DropdownMenu modal={false} onOpenChange={dropdownOpen.setValue}>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
@@ -82,10 +71,10 @@ const ProfileMenu = () => {
             className="w-full justify-start gap-2 py-1 text-red-500 hover:text-red-600 hover:bg-red-50 cursor-pointer transition-colors duration-200"
             onClick={handleUserLogout}
             aria-label="خروج از حساب کاربری"
-            disabled={isLoggingOut}
+            disabled={isLogoutLoading}
           >
             <LogOut className="h-5 w-5" />
-            <span>{isLoggingOut ? 'در حال خروج...' : 'خروج'}</span>
+            <span>{isLogoutLoading ? 'در حال خروج...' : 'خروج'}</span>
           </Button>
         </DropdownMenuItem>
       </DropdownMenuContent>

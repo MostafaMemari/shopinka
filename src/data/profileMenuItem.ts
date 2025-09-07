@@ -1,16 +1,13 @@
-import { TbSmartHome } from 'react-icons/tb';
-import { HiOutlineShoppingBag, HiOutlineHeart } from 'react-icons/hi';
-import { GrLocation } from 'react-icons/gr';
-import { RiAccountCircle2Line } from 'react-icons/ri';
+import { Home, ShoppingBag, Heart, MapPin, User } from 'lucide-react';
 
 export const profileMenuItem = [
-  { href: '/profile', icon: TbSmartHome, label: 'پیشخوان' },
-  { href: '/profile/orders', icon: HiOutlineShoppingBag, label: 'سفارش ها' },
-  { href: '/profile/favorite', icon: HiOutlineHeart, label: 'علاقه‌مندی ها' },
-  { href: '/profile/address', icon: GrLocation, label: 'آدرس ها' },
+  { href: '/profile', icon: Home, label: 'پیشخوان' },
+  { href: '/profile/orders', icon: ShoppingBag, label: 'سفارش ها' },
+  { href: '/profile/favorite', icon: Heart, label: 'علاقه‌مندی ها' },
+  { href: '/profile/address', icon: MapPin, label: 'آدرس ها' },
   {
     href: '/profile/personal-info',
-    icon: RiAccountCircle2Line,
+    icon: User,
     label: 'حساب کاربری',
   },
 ];

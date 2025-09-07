@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface OtpState {
-  phone: string | null;
+  mobile: string | null;
   otp: string | null;
   otpSentAt: number | null;
 }
 
 const initialState: OtpState = {
-  phone: null,
+  mobile: null,
   otp: null,
   otpSentAt: null,
 };
@@ -16,8 +16,8 @@ const otpSlice = createSlice({
   name: 'otp',
   initialState,
   reducers: {
-    setPhone(state, action: PayloadAction<string>) {
-      state.phone = action.payload;
+    setMobile(state, action: PayloadAction<string>) {
+      state.mobile = action.payload;
     },
     setOtp(state, action: PayloadAction<string>) {
       state.otp = action.payload;
@@ -28,10 +28,10 @@ const otpSlice = createSlice({
     clearOtp(state) {
       state.otp = null;
       state.otpSentAt = null;
-      state.phone = null;
+      state.mobile = null;
     },
   },
 });
 
-export const { setPhone, setOtp, setOtpSentAt, clearOtp } = otpSlice.actions;
+export const { setMobile, setOtp, setOtpSentAt, clearOtp } = otpSlice.actions;
 export default otpSlice.reducer;

@@ -1,7 +1,4 @@
-import { HiOutlineHeart, HiOutlineShoppingBag } from 'react-icons/hi';
-import { RiAccountCircle2Line } from 'react-icons/ri';
-import { TbSmartHome } from 'react-icons/tb';
-import { BookA, MessageCircle, PhoneCall, ShoppingBag } from 'lucide-react';
+import { BookA, MessageCircle, PhoneCall, ShoppingBag, Home, Heart, User } from 'lucide-react';
 
 export interface MenuItem {
   id: number;
@@ -27,12 +24,12 @@ export const navigationMenuItems = [
 ];
 
 export const profileMenuItems = [
-  { href: '/profile', icon: TbSmartHome, label: 'پیشخوان' },
-  { href: '/profile/orders', icon: HiOutlineShoppingBag, label: 'سفارش ها' },
-  { href: '/profile/favorite', icon: HiOutlineHeart, label: 'علاقه‌مندی ها' },
+  { href: '/profile', icon: Home, label: 'پیشخوان' },
+  { href: '/profile/orders', icon: ShoppingBag, label: 'سفارش ها' },
+  { href: '/profile/favorite', icon: Heart, label: 'علاقه‌مندی ها' },
   {
     href: '/profile/personal-info',
-    icon: RiAccountCircle2Line,
+    icon: User,
     label: 'حساب کاربری',
   },
 ];

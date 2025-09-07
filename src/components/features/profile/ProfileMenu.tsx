@@ -1,8 +1,6 @@
 'use client';
 
 import { profileMenuItem } from '@/data/profileMenuItem';
-import { useLogoutUser } from '@/hooks/reactQuery/auth/useLogoutUser';
-import { logout } from '@/service/authService';
 import { toast } from 'sonner';
 import { cn } from '@/utils/utils';
 import Link from 'next/link';
@@ -17,27 +15,11 @@ type ProfileMenuProps = {
 
 function ProfileMenu({ onClose }: ProfileMenuProps) {
   const pathname = usePathname();
-  const logoutUser = useLogoutUser();
   const router = useRouter();
 
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
-  const handleUserLogout = async () => {
-    setIsLoggingOut(true);
-    try {
-      const res = await logout();
-      if (res?.status === 201 || res?.status === 200) {
-        logoutUser().then(() => {
-          toast.success('خروج با موفقیت انجام شد');
-          router.push('/');
-        });
-      }
-    } catch (err) {
-      toast.error('خروج با خطا مواجه شد');
-    } finally {
-      setIsLoggingOut(false);
-    }
-  };
+  const handleUserLogout = () => {};
 
   return (
     <ScrollArea dir="ltr" className="h-80 rounded-md">

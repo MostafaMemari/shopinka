@@ -11,39 +11,30 @@ import InputOTPForm from './OtpForm2';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { closeDialog } from '@/store/slices/authDialogSlice';
+import { OTP_EXPIRE_SECONDS } from '@/constants';
 
 export function AuthDialogDrawer() {
-  const [mobile, setMobile] = useState('');
-  const [showOtp, setShowOtp] = useState(false);
-  const isDesktop = useMediaQuery('(min-width: 768px)');
-
-  const open = useSelector((state: RootState) => state.authDialog.open);
-  const { phone, otpSentAt } = useSelector((state: RootState) => state.otp);
+  const [otpStep, setOtpStep] = useState(false);
 
   const dispatch = useDispatch();
 
-  const title = showOtp ? 'تایید شماره موبایل' : 'ورود / ثبت‌نام';
-  const description = showOtp ? `کداعتبار سنجی با موفقیت به شماره ${mobile} ارسال شد` : 'لطفا شماره تلفن همراه خود را وارد کنید';
+  const isDesktop = useMediaQuery('(min-width: 768px)');
+
+  const open = useSelector((state: RootState) => state.authDialog.open);
+  const { mobile, otpSentAt } = useSelector((state: RootState) => state.otp);
+
+  useEffect(() => {
+    const stillValid = Boolean(mobile && otpSentAt && Date.now() - otpSentAt < OTP_EXPIRE_SECONDS * 1000);
+    setOtpStep(stillValid);
+  }, [mobile, otpSentAt]);
 
   const handleSuccess = () => {
+    setOtpStep(false);
     dispatch(closeDialog());
   };
 
-  useEffect(() => {
-    if (phone && otpSentAt) {
-      const diff = Date.now() - otpSentAt;
-      if (diff < 2 * 60 * 1000) {
-        setMobile(phone);
-        setShowOtp(true);
-      } else {
-        setMobile('');
-        setShowOtp(false);
-      }
-    } else {
-      setMobile('');
-      setShowOtp(false);
-    }
-  }, [phone, otpSentAt, open]);
+  const title = otpStep ? 'تایید شماره موبایل' : 'ورود / ثبت‌نام';
+  const description = otpStep ? `کد اعتبارسنجی با موفقیت به شماره ${mobile} ارسال شد` : 'لطفا شماره تلفن همراه خود را وارد کنید';
 
   if (isDesktop) {
     return (
@@ -59,11 +50,7 @@ export function AuthDialogDrawer() {
             <DialogDescription>{description}</DialogDescription>
           </DialogHeader>
 
-          {showOtp ? (
-            <InputOTPForm mobile={mobile} isDialog onSuccess={handleSuccess} />
-          ) : (
-            <PhoneInputForm mobile={mobile} isDialog setMobile={setMobile} />
-          )}
+          {!otpStep ? <PhoneInputForm isDialog /> : <InputOTPForm isDialog onSuccess={handleSuccess} />}
         </DialogContent>
       </Dialog>
     );
@@ -83,11 +70,7 @@ export function AuthDialogDrawer() {
           <DrawerDescription>{description}</DrawerDescription>
         </DrawerHeader>
 
-        {showOtp ? (
-          <InputOTPForm key="otp" mobile={mobile} onSuccess={handleSuccess} />
-        ) : (
-          <PhoneInputForm key="phone" mobile={mobile} setMobile={setMobile} className="px-4 pb-1" />
-        )}
+        {!otpStep ? <PhoneInputForm key="mobile" className="px-4 pb-1" /> : <InputOTPForm key="otp" onSuccess={handleSuccess} />}
       </DrawerContent>
     </Drawer>
   );

@@ -15,6 +15,7 @@ import PrimaryButton from '@/components/common/PrimaryButton';
 import { DialogClose } from '@radix-ui/react-dialog';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store';
+import { OTP_EXPIRE_SECONDS } from '@/constants';
 import { clearOtp, setOtpSentAt } from '@/store/slices/otpSlice';
 
 const FormSchema = Yup.object().shape({
@@ -24,20 +25,21 @@ const FormSchema = Yup.object().shape({
 });
 
 interface InputOTPFormProps {
-  mobile: string;
   onSuccess: () => void;
   isDialog?: boolean;
 }
 
 type OTPFormValues = { otp: string };
 
-function InputOTPForm({ mobile, onSuccess, isDialog }: InputOTPFormProps) {
-  const { verifyOtp, sendOtp, verifyOtpStatus, sendOtpStatus } = useAuthMutations();
+function InputOTPForm({ onSuccess, isDialog }: InputOTPFormProps) {
+  const { verifyOtp, resendOtp, verifyOtpStatus, resendOtpStatus } = useAuthMutations();
+
+  const mobile = useSelector((state: RootState) => state.otp.mobile)!;
 
   const { otpSentAt } = useSelector((state: RootState) => state.otp);
   const dispatch = useDispatch();
 
-  const { countdown, startCountdown, counting } = useCountdownSeconds(60 * 5);
+  const { countdown, startCountdown, counting } = useCountdownSeconds(OTP_EXPIRE_SECONDS);
   const isExpired = countdown === 0;
   const timeLeft = secondsToTime(countdown);
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -52,7 +54,7 @@ function InputOTPForm({ mobile, onSuccess, isDialog }: InputOTPFormProps) {
   useEffect(() => {
     if (otpSentAt) {
       const diff = Math.floor((Date.now() - otpSentAt) / 1000);
-      const left = 5 * 60 - diff;
+      const left = OTP_EXPIRE_SECONDS - diff;
       if (left > 0) {
         startCountdown(left);
       }
@@ -69,12 +71,11 @@ function InputOTPForm({ mobile, onSuccess, isDialog }: InputOTPFormProps) {
       { mobile, otp: values.otp },
       {
         onSuccess: () => {
+          dispatch(setOtpSentAt(Date.now()));
           dispatch(clearOtp());
           onSuccess();
-          toast.success('ورود شما با موفقیت انجام شد');
         },
-        onError: (error) => {
-          toast.error(error.message);
+        onError: () => {
           form.reset();
           setTimeout(() => inputRef.current?.focus(), 0);
         },
@@ -84,11 +85,9 @@ function InputOTPForm({ mobile, onSuccess, isDialog }: InputOTPFormProps) {
 
   const handleResendCode = () => {
     if (isExpired) {
-      sendOtp(mobile, {
+      resendOtp(mobile, {
         onSuccess: () => {
-          toast.success('کد اعتبار سنجی مجددا ارسال شد');
-          dispatch(setOtpSentAt(Date.now()));
-          startCountdown(60 * 5);
+          startCountdown(OTP_EXPIRE_SECONDS);
           form.reset();
         },
         onError: (error) => {
@@ -110,7 +109,7 @@ function InputOTPForm({ mobile, onSuccess, isDialog }: InputOTPFormProps) {
   return (
     <>
       <Form {...form}>
-        <form className="flex flex-col gap-4">
+        <form onSubmit={form.handleSubmit(handleSubmit)} className="flex flex-col gap-4">
           <FormField
             control={form.control}
             name="otp"
@@ -147,15 +146,15 @@ function InputOTPForm({ mobile, onSuccess, isDialog }: InputOTPFormProps) {
       <Button
         variant="ghost"
         onClick={handleResendCode}
-        className="mt-1 text-sm text-gray-500 dark:text-gray-400 text-center"
-        disabled={counting}
+        className="mt-1 text-sm text-gray-500 dark:text-gray-400 text-center cursor-pointer"
+        disabled={counting || resendOtpStatus === 'pending' || !isExpired}
       >
         {counting ? (
           <>
             ارسال مجدد کد ({String(timeLeft.minutes).padStart(2, '0')}:{String(timeLeft.seconds).padStart(2, '0')})
           </>
         ) : (
-          'ارسال مجدد کد'
+          <>{resendOtpStatus === 'pending' ? 'در حال ارسال...' : 'ارسال مجدد کد'}</>
         )}
       </Button>
 
@@ -198,7 +197,3 @@ function InputOTPForm({ mobile, onSuccess, isDialog }: InputOTPFormProps) {
 }
 
 export default InputOTPForm;
-
-// useImperativeHandle(formRef, () => ({
-//   submit: () => form.handleSubmit(handleSubmit)(),
-// }));

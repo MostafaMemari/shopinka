@@ -28,7 +28,7 @@ export const verifyOtp = async ({
 }: {
   mobile: string;
   otp: string;
-}): Promise<{ accessToekn: string; refreshToken: string; message: string; data: User }> => {
+}): Promise<{ accessToken: string; refreshToken: string; message: string; user: User }> => {
   const res = await shopApiFetch('/auth/verify-authenticate-otp', {
     method: 'POST',
     body: { mobile, otp },
@@ -52,10 +52,11 @@ export const verifyOtp = async ({
 
   return {
     ...res,
-    data: user,
+    user,
   };
 };
-export const logout = async (): Promise<{ status: number; data: any }> => {
+
+export const signout = async (): Promise<{ status: number; data: any }> => {
   const cookieStore = await cookies();
   const refreshToken = cookieStore.get(COOKIE_NAMES.REFRESH_TOKEN)?.value;
 
