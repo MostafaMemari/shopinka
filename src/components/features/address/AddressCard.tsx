@@ -5,32 +5,25 @@ import { Card, CardContent, DropdownMenu, DropdownMenuContent, DropdownMenuItem,
 import { EllipsisVertical, Pencil, Square, SquareCheckBig, Trash } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { UpdateAddressDialogDrawer } from './UpdateAddressDialogDrawer';
-import { RemoveDialog } from './RemoveDialog';
 import { useBoolean } from '@/hooks/use-boolean';
+import ConfirmDialog from '../cart/ConfirmDialog';
+import { formatFullAddress } from '@/utils/address';
 
 interface AddressCardProps {
   item: AddressItem;
 }
 
 const AddressCard: React.FC<AddressCardProps> = ({ item }) => {
-  const { setDefaultAddress, isSetDefaultAddressLoading } = useAddress({});
-  const updateDrawerDialogControl = useBoolean(false);
-  const removeDialogControl = useBoolean(false);
+  const { setDefaultAddress, deleteAddress, isDeleteAddressLoading, isSetDefaultAddressLoading } = useAddress({});
+  const updateAddressDialog = useBoolean(false);
+  const deleteAddressDialog = useBoolean(false);
 
   const handleSetDefaultAddress = () => {
     if (item.isDefault || isSetDefaultAddressLoading) return;
     setDefaultAddress(item.id);
   };
 
-  const fullAddress = [
-    `استان ${item.province}`,
-    `شهر ${item.city}`,
-    item.postalAddress,
-    item.buildingNumber ? `پلاک ${item.buildingNumber}` : null,
-    item.unit ? `واحد ${item.unit}` : null,
-  ]
-    .filter(Boolean)
-    .join('، ');
+  const fullAddress = formatFullAddress(item);
 
   return (
     <>
@@ -72,7 +65,7 @@ const AddressCard: React.FC<AddressCardProps> = ({ item }) => {
               <DropdownMenuItem
                 onClick={(e) => {
                   e.stopPropagation();
-                  updateDrawerDialogControl.onToggle();
+                  updateAddressDialog.onToggle();
                 }}
               >
                 <Pencil className="w-4 h-4 ml-2" /> ویرایش
@@ -81,7 +74,7 @@ const AddressCard: React.FC<AddressCardProps> = ({ item }) => {
                 className="text-red-600"
                 onClick={(e) => {
                   e.stopPropagation();
-                  removeDialogControl.onToggle();
+                  deleteAddressDialog.onToggle();
                 }}
               >
                 <Trash className="w-4 h-4 ml-2" /> حذف
@@ -91,8 +84,16 @@ const AddressCard: React.FC<AddressCardProps> = ({ item }) => {
         </CardContent>
       </Card>
 
-      <UpdateAddressDialogDrawer open={updateDrawerDialogControl.value} onOpenChange={updateDrawerDialogControl.onToggle} item={item} />
-      <RemoveDialog open={removeDialogControl.value} onOpenChange={removeDialogControl.onToggle} addressId={item.id} />
+      <UpdateAddressDialogDrawer open={updateAddressDialog.value} onOpenChange={updateAddressDialog.onToggle} item={item} />
+
+      <ConfirmDialog
+        open={deleteAddressDialog.value}
+        isLoadingConfirm={isDeleteAddressLoading}
+        onOpenChange={deleteAddressDialog.onToggle}
+        title="حذف آدرس"
+        text="آیا مطمئن هستید که می‌خواهید این آدرس را حذف کنید؟"
+        onConfirm={() => deleteAddress(item.id)}
+      />
     </>
   );
 };
