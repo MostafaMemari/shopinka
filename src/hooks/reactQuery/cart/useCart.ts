@@ -97,6 +97,7 @@ export const useCart = () => {
     clearAllCartItems: handleClearAll,
     refetchCart: refetch,
 
+    isClearOnCart: clearCartMutation.isPending,
     isAddingToCart: addToCartMutation.isPending,
     isUpdatingQuantity: updateQuantityMutation.isPending,
     isRemovingItem: removeItemMutation.isPending,

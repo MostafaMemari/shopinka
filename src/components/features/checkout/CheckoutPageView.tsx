@@ -17,9 +17,9 @@ function CheckoutPageView() {
   const [selectedAddressId, setSelectedAddressId] = useState<number | null>(null);
   const [selectedShippingItem, setSelectedShippingItem] = useState<ShippingItem | null>(null);
 
-  const { isLogin } = useAppSelector((state) => state.auth);
-
   const { cart, isLoading: isLoadingCart } = useCart();
+  const cartItems = cart?.items || [];
+
   const isMounted = useIsMounted();
 
   if (!isMounted || isLoadingCart) {
@@ -32,7 +32,7 @@ function CheckoutPageView() {
     );
   }
 
-  if (!cart || cart?.items) {
+  if (!cart || cartItems.length === 0) {
     return (
       <div className="col-span-12">
         <div className="rounded-lg bg-muted p-6 min-h-[300px] flex flex-col items-center justify-center gap-4">

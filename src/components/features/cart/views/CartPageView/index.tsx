@@ -1,11 +1,11 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { PiBasketFill } from 'react-icons/pi';
 import { HiOutlineTrash } from 'react-icons/hi';
 
 import CartPageItem from '@/components/features/cart/views/CartPageView/CartPageItem';
-import showConfirmDialog from '@/components/features/cart/showConfirmDialog';
+import showConfirmDialog from '@/components/features/cart/ConfirmDialog';
 import CartSummary from '@/components/features/cart/CartSummary';
 import PrimaryButton from '@/components/common/PrimaryButton';
 import { useCart } from '@/hooks/reactQuery/cart/useCart';
@@ -20,30 +20,22 @@ import { useIsMounted } from '@/hooks/useIsMounted';
 import Link from 'next/link';
 import { useDispatch } from 'react-redux';
 import { openDialog } from '@/store/slices/authDialogSlice';
+import ConfirmDialog from '@/components/features/cart/ConfirmDialog';
+import { useBoolean } from '@/hooks/use-boolean';
 
 function CartPageView() {
   const router = useRouter();
   const dispatch = useDispatch();
+  const confirmDialogDrawer = useBoolean(false);
 
   const { isLogin } = useAppSelector((state) => state.auth);
 
-  const { cart, isLoading, error, clearAllCartItems } = useCart();
+  const { cart, isLoading, error, clearAllCartItems, isClearOnCart } = useCart();
+  const cartItems = cart?.items || [];
 
   const isMounted = useIsMounted();
 
-  const totalQuantity = cart?.items?.reduce((sum, item) => sum + item.count, 0) || 0;
-
-  const handleDeleteAll = async () => {
-    const result = await showConfirmDialog({
-      title: 'آیا مطمئن هستید؟',
-      text: 'همه اقلام سبد خرید حذف خواهند شد!',
-      confirmButtonText: 'بله، حذف کن',
-      cancelButtonText: 'خیر',
-    });
-    if (result.isConfirmed) {
-      clearAllCartItems();
-    }
-  };
+  const totalQuantity = cartItems.reduce((sum, item) => sum + item.count, 0);
 
   const handleNextCartShipping = async () => {
     if (isLogin) router.push('/checkout/shipping');
@@ -70,7 +62,7 @@ function CartPageView() {
     );
   }
 
-  if (!cart || cart?.items?.length) {
+  if (!cart || cartItems?.length === 0) {
     return (
       <div className="col-span-12">
         <div className="rounded-lg bg-muted p-6 min-h-[300px] flex flex-col items-center justify-center gap-4">
@@ -118,7 +110,7 @@ function CartPageView() {
             <button
               type="button"
               className="btn-red-nobg px-3 py-2 text-sm cursor-pointer flex items-center gap-2"
-              onClick={handleDeleteAll}
+              onClick={confirmDialogDrawer.onTrue}
             >
               <HiOutlineTrash className="h-6 w-6" />
               <span>حذف همه</span>
@@ -144,6 +136,15 @@ function CartPageView() {
           ادامه فرایند خرید
         </PrimaryButton>
       </CartSummary>
+
+      <ConfirmDialog
+        open={confirmDialogDrawer.value}
+        isLoadingConfirm={isClearOnCart}
+        onOpenChange={confirmDialogDrawer.onToggle}
+        title="حذف محصول"
+        text="آیا مطمئن هستید که می‌خواهید این محصول را حذف کنید؟"
+        onConfirm={() => clearAllCartItems()}
+      />
     </>
   );
 }
