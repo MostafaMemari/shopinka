@@ -5,9 +5,10 @@ import { createCart, getCart, updateQuantityItemCart, removeItemCart, clearCart 
 import { CartData, CartItemState, CartState } from '@/types/cartType';
 import { QueryOptions } from '@/types/queryOptions';
 import { QueryKeys } from '@/types/query-keys';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { openDialog } from '@/store/slices/authDialogSlice';
 import { useAppSelector } from '@/store/hooks';
+import { setAddToCart } from '@/store/slices/pendingActionSlice';
 
 const useCartData = ({ enabled = true, staleTime = 60_000 }: QueryOptions) => {
   const query = useQuery<CartState>({
@@ -59,6 +60,7 @@ export const useCart = () => {
         productVariantId: item.type === 'VARIABLE' ? item.id : null,
       });
     } else {
+      dispatch(setAddToCart(item));
       dispatch(openDialog());
     }
   };

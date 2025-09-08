@@ -8,7 +8,6 @@ import { Suspense } from 'react';
 import Loading from './loading';
 import ScrollToTop from '@/components/common/ScrollToTop';
 import { Toaster } from '@/components/ui';
-import { AuthDialogDrawer } from '@/components/layout/header/ProfileDropdown/AuthDialogDrawer';
 
 export const metadata = {
   title: {
@@ -38,7 +37,6 @@ export default function RootLayout({
           <ScrollToTop />
         </Suspense>
         <ClientProvider>
-          <AuthDialogDrawer />
           <div className="flex min-h-screen flex-col" style={{ height: 'var(--app-height)' }}>
             <NuqsAdapter>
               <Suspense fallback={<Loading />}>{children}</Suspense>

@@ -13,10 +13,9 @@ import { useAuthMutations } from '@/hooks/auth/useAuth';
 import { Button, DialogFooter, DrawerClose, DrawerFooter } from '@/components/ui';
 import PrimaryButton from '@/components/common/PrimaryButton';
 import { DialogClose } from '@radix-ui/react-dialog';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { OTP_EXPIRE_SECONDS } from '@/constants';
-import { clearOtp, setOtpSentAt } from '@/store/slices/otpSlice';
 
 const FormSchema = Yup.object().shape({
   otp: Yup.string()
@@ -25,19 +24,17 @@ const FormSchema = Yup.object().shape({
 });
 
 interface InputOTPFormProps {
-  onSuccess: () => void;
   isDialog?: boolean;
 }
 
 type OTPFormValues = { otp: string };
 
-function InputOTPForm({ onSuccess, isDialog }: InputOTPFormProps) {
+function InputOTPForm({ isDialog }: InputOTPFormProps) {
   const { verifyOtp, resendOtp, verifyOtpStatus, resendOtpStatus } = useAuthMutations();
 
   const mobile = useSelector((state: RootState) => state.otp.mobile)!;
 
   const { otpSentAt } = useSelector((state: RootState) => state.otp);
-  const dispatch = useDispatch();
 
   const { countdown, startCountdown, counting } = useCountdownSeconds(OTP_EXPIRE_SECONDS);
   const isExpired = countdown === 0;
@@ -70,11 +67,6 @@ function InputOTPForm({ onSuccess, isDialog }: InputOTPFormProps) {
     verifyOtp(
       { mobile, otp: values.otp },
       {
-        onSuccess: () => {
-          dispatch(setOtpSentAt(Date.now()));
-          dispatch(clearOtp());
-          onSuccess();
-        },
         onError: () => {
           form.reset();
           setTimeout(() => inputRef.current?.focus(), 0);

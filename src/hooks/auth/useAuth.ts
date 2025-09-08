@@ -4,6 +4,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { loginFailure, loginSuccess, logout } from '@/store/slices/authSlice';
 import { signout, sendOtp, verifyOtp } from '@/service/authService';
 import { toast } from 'sonner';
+import { clearOtp } from '@/store/slices/otpSlice';
+import { closeDialog } from '@/store/slices/authDialogSlice';
 
 export const useAuthMutations = () => {
   const queryClient = useQueryClient();
@@ -43,6 +45,8 @@ export const useAuthMutations = () => {
     mutationFn: verifyOtp,
     onSuccess: (response) => {
       dispatch(loginSuccess({ full_name: response.user.fullName ?? '', mobile: response.user.mobile, role: response.user.role }));
+      dispatch(clearOtp());
+      dispatch(closeDialog());
       toast.success('ورود شما با موفقیت انجام شد');
 
       queryClient.invalidateQueries({ queryKey: [QueryKeys.User] });

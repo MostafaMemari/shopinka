@@ -4,6 +4,8 @@ import { CartData, CartResponse, CartState } from '@/types/cartType';
 
 export const createCart = async ({ cartData }: { cartData?: CartData }): Promise<void> => {
   if (cartData) {
+    console.log(cartData);
+
     const res = await shopApiFetch('/cart/item', {
       method: 'POST',
       body: {
