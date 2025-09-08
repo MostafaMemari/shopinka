@@ -1,7 +1,6 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { QueryKeys } from '@/types/query-keys';
-import { getMe, updateFullName } from '@/service/userService';
-import { User } from '@/types/userType';
+import { updateFullName } from '@/service/userService';
 
 export function useChangeFullName() {
   const queryClient = useQueryClient();
@@ -23,8 +22,4 @@ export function useChangeFullName() {
 
     isChangeFullNameLoading: createMutation.isPending,
   };
-}
-
-export function useGetMe() {
-  return useQuery<{ status: number; data: User | null }>({ queryKey: [QueryKeys.User], queryFn: getMe });
 }

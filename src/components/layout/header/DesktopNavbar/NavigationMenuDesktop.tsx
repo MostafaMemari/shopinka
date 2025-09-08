@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '../../../ui';
 
 import { useMemo, useState } from 'react';
-import { Category } from '@/types/categoryType';
+import { Category } from '@/features/categories/types';
 import SubCategoryList from './SubCategoryList';
 import { navigationMenuItems } from '@/data/menuData';
 

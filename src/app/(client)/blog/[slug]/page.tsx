@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
-import { getBlogBySlug } from '@/service/blogService';
-import Sidebar from '@/components/features/blog/Sidebar';
-import { Category } from '@/types/categoryType';
+import { getBlogBySlug } from '@/features/blogs/api';
+import Sidebar from '@/features/blogs/components/Sidebar';
+import { Category } from '@/features/categories/types';
 import type { Metadata } from 'next';
 import { generateBlogMetadata } from './metadata';
 import Image from 'next/image';
@@ -10,7 +10,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { Calendar, Book } from 'lucide-react';
-import ShareButton from '@/components/features/blog/ShareButton';
+import ShareButton from '@/features/blogs/components/ShareButton';
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -97,7 +97,7 @@ export default async function Page({ params }: Props) {
           </CardContent>
         </Card>
       </div>
-      
+
       <Sidebar categoryIds={blog.categories?.map((category: Category) => category.id) || []} />
     </div>
   );

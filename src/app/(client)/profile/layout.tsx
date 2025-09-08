@@ -1,6 +1,6 @@
-import ProfileMenuDrawer from '@/components/features/profile/MobileMenu/ProfileMenuCard';
-import ProfileHeader from '@/components/features/profile/ProfileHeader';
-import ProfileMenu from '@/components/features/profile/ProfileMenu';
+import ProfileMenuDrawer from '@/features/profile/MobileMenu/ProfileMenuCard';
+import ProfileHeader from '@/features/profile/ProfileHeader';
+import ProfileMenu from '@/features/profile/ProfileMenu';
 
 export default function Layout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (

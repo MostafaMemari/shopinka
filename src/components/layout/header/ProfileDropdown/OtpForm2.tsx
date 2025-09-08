@@ -9,7 +9,7 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from '@/component
 import { useEffect, useRef } from 'react';
 import { useCountdownSeconds } from '@/hooks/use-countdown';
 import { secondsToTime } from '@/utils/utils';
-import { useAuthMutations } from '@/hooks/auth/useAuth';
+import { useAuth } from '@/features/auth/hooks/useAuth';
 import { Button, DialogFooter, DrawerClose, DrawerFooter } from '@/components/ui';
 import PrimaryButton from '@/components/common/PrimaryButton';
 import { DialogClose } from '@radix-ui/react-dialog';
@@ -30,7 +30,7 @@ interface InputOTPFormProps {
 type OTPFormValues = { otp: string };
 
 function InputOTPForm({ isDialog }: InputOTPFormProps) {
-  const { verifyOtp, resendOtp, verifyOtpStatus, resendOtpStatus } = useAuthMutations();
+  const { verifyOtp, resendOtp, verifyOtpStatus, resendOtpStatus } = useAuth();
 
   const mobile = useSelector((state: RootState) => state.otp.mobile)!;
 

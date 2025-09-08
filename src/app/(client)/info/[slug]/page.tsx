@@ -1,4 +1,4 @@
-import { getPageBySlug } from '@/service/pageService';
+import { getPageBySlug } from '@/features/page/api';
 import { notFound } from 'next/navigation';
 
 interface PageProps {

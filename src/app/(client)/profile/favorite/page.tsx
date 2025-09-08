@@ -1,5 +1,5 @@
-import DashboardHeader from '@/components/features/profile/DashboardHeader';
-import FavoriteActions from '@/components/features/profile/Favorite/FavoriteActions';
+import DashboardHeader from '@/features/profile/DashboardHeader';
+import FavoriteActions from '@/features/profile/Favorite/FavoriteActions';
 
 export default function Page() {
   return (

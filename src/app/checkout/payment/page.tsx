@@ -1,10 +1,10 @@
-import CheckoutProgress from '@/components/features/checkout/CheckoutProgress';
-import OrderNotFound from '@/components/features/payment/OrderNotFound';
-import PaymentActions from '@/components/features/payment/PaymentActions';
-import PaymentDetails from '@/components/features/payment/PaymentDetails';
-import PaymentStatus from '@/components/features/payment/PaymentStatus';
-import PaymentWarnings from '@/components/features/payment/PaymentWarnings';
-import { getOrderById } from '@/service/orderService';
+import CheckoutProgress from '@/features/checkout/components/CheckoutProgress';
+import OrderNotFound from '@/features/payment/components/OrderNotFound';
+import PaymentActions from '@/features/payment/components/PaymentActions';
+import PaymentDetails from '@/features/payment/components/PaymentDetails';
+import PaymentStatus from '@/features/payment/components/PaymentStatus';
+import PaymentWarnings from '@/features/payment/components/PaymentWarnings';
+import { getOrderById } from '@/features/orders/api';
 import { formatAmount, formatDate, getRemainingTime } from '@/utils/formatter';
 
 type PageProps = {

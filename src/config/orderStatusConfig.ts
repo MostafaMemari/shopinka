@@ -1,4 +1,4 @@
-import { OrderStatus } from '@/types/orderType';
+import { OrderStatus } from '@/features/orders/types';
 import { TransactionStatus } from '@/types/transactionType';
 import React from 'react';
 import { FaExclamationTriangle, FaCheckCircle, FaTruck, FaBoxOpen, FaClock, FaTimes } from 'react-icons/fa';

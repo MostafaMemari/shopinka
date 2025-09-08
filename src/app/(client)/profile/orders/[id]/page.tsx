@@ -1,10 +1,10 @@
-import DashboardHeader from '@/components/features/profile/DashboardHeader';
-import OrderCardDetails from '@/components/features/profile/Order/OrderCardDetails';
-import OrderItems from '@/components/features/profile/Order/OrderItems';
-import { getOrderById } from '@/service/orderService';
+import DashboardHeader from '@/features/profile/DashboardHeader';
+import OrderCardDetails from '@/features/profile/Order/OrderCardDetails';
+import OrderItems from '@/features/profile/Order/OrderItems';
+import { getOrderById } from '@/features/orders/api';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
-import DeliveryAddress from '@/components/features/address/DeliveryAddress';
+import DeliveryAddress from '@/features/address/components/DeliveryAddress';
 import { Button } from '@/components/ui';
 import { ChevronLeft } from 'lucide-react';
 

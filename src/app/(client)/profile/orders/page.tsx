@@ -1,9 +1,9 @@
 'use client';
 
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import DashboardHeader from '@/components/features/profile/DashboardHeader';
-import TabContent from '@/components/features/profile/Order/TabContent';
-import { getCountOrders } from '@/service/orderService';
+import DashboardHeader from '@/features/profile/DashboardHeader';
+import TabContent from '@/features/profile/Order/TabContent';
+import { getCountOrders } from '@/features/orders/api';
 import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 

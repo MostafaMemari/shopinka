@@ -2,9 +2,9 @@
 import DesktopLogo from '../../common/Logo/DesktopLogo';
 import ProfileDropdown from './ProfileDropdown';
 import SearchBarBase from './Search/SearchBar';
-import BasketDropdown from '../../features/cart/views/BasketDropdown';
+import BasketDropdown from '../../../features/cart/components/views/BasketDropdown';
 import DesktopNavbar from './DesktopNavbar';
-import { getCategoriesCatch } from '@/service/categoryService';
+import { getCategoriesCatch } from '@/features/categories/api';
 import { cn } from '@/lib/utils';
 
 async function Header() {

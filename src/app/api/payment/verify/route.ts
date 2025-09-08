@@ -1,4 +1,4 @@
-import { verifyPayment } from '@/service/paymentService';
+import { verifyPayment } from '@/features/payment/api';
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 

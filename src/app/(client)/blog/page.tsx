@@ -1,14 +1,14 @@
 import { Suspense } from 'react';
 import { loadSearchParams } from '@/utils/loadSearchParams';
 import { SearchParams } from 'nuqs';
-import { getBlogs } from '@/service/blogService';
-import { BLOG_SORT_OPTIONS, BlogParams } from '@/types/blogType';
-import SearchInput from '@/components/features/filter/SearchInput';
-import SortBar from '@/components/features/filter/SortBar';
-import MobileFilter from '@/components/features/filter/MobileFilter';
-import MobileSort from '@/components/features/filter/MobileSort';
-import BlogListBlogClient from '@/components/features/blog/BlogListClient';
-import MobileSortDrawer from '@/components/features/filter/MobileSortDrawer';
+import { getBlogs } from '@/features/blogs/api';
+import { BLOG_SORT_OPTIONS, BlogParams } from '@/features/blogs/types';
+import SearchInput from '@/features/filter/SearchInput';
+import SortBar from '@/features/filter/SortBar';
+import MobileFilter from '@/features/filter/MobileFilter';
+import MobileSort from '@/features/filter/MobileSort';
+import BlogListBlogClient from '@/features/blogs/components/BlogListClient';
+import MobileSortDrawer from '@/features/filter/MobileSortDrawer';
 
 type PageProps = {
   searchParams: Promise<SearchParams>;

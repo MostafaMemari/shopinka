@@ -1,4 +1,4 @@
-import { Category } from '@/types/categoryType';
+import { Category } from '@/features/categories/types';
 
 export function flattenCategories(categories: Category[], depth: number = 0): { category: Category; depth: number }[] {
   let result: { category: Category; depth: number }[] = [];

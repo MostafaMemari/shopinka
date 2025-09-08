@@ -5,7 +5,7 @@ import { openDialog } from '@/store/slices/authDialogSlice';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useMemo } from 'react';
 import { useDispatch } from 'react-redux';
-import CartIconTotalQuantity from '../../features/cart/CartIconTotalQuantity';
+import CartIconTotalQuantity from '../../../features/cart/components/CartIconTotalQuantity';
 
 import { House, List } from 'lucide-react';
 

@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { HiOutlineChevronLeft } from 'react-icons/hi';
-import { Category } from '@/types/categoryType';
+import { Category } from '@/features/categories/types';
 
 interface SubCategoryListProps {
   category: Category;

@@ -4,7 +4,7 @@ import TextInput from '@/components/common/TextInput';
 import { shopInfo } from '@/data/shopInfo';
 import Link from 'next/link';
 import PrimaryButton from '@/components/common/PrimaryButton';
-import { useContactForm } from '@/hooks/contact/useContactForm';
+import { useContactForm } from '@/features/contact/hooks/useContactForm';
 
 export default function ContactPage() {
   const { formik, isCreateContactLoading } = useContactForm();

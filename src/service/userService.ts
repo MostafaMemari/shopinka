@@ -4,7 +4,7 @@ import { shopApiFetch } from '@/service/api';
 import { User } from '../types/userType';
 import { cookies } from 'next/headers';
 import { COOKIE_NAMES } from '@/types/constants';
-import { FavoriteResponse } from '@/types/favoriteType';
+import { FavoriteResponse } from '@/features/favorite/type';
 
 export const getMe = async (): Promise<User> => {
   const cookieStore = await cookies();

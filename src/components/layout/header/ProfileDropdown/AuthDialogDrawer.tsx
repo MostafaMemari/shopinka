@@ -4,7 +4,7 @@ import { useMediaQuery } from '@/hooks/use-media-query';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle } from '@/components/ui/drawer';
 
-import PhoneInputForm from '@/components/features/auth/PhoneInputForm';
+import PhoneInputForm from '@/features/auth/components/PhoneInputForm';
 import InputOTPForm from './OtpForm2';
 
 import { useDispatch, useSelector } from 'react-redux';

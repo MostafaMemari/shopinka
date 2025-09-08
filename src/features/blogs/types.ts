@@ -1,0 +1,51 @@
+import { Category } from '../categories/types';
+import { Image } from '../../types/imageType';
+import { Pager } from '../../types/pagerType';
+import { SeoMeta } from '../../types/seoMetaType';
+import { User } from '../../types/userType';
+
+export interface BlogItem {
+  id: number;
+  userId: number;
+  mainImageId: number;
+  slug: string;
+  title: string;
+  content: string | null;
+  status: 'PUBLISHED' | 'DRAFT';
+  readingTime: 20;
+  createdAt: string;
+  updatedAt: string;
+  categories: Category[];
+  tags: string[];
+  seoMeta: SeoMeta | null;
+  user: User;
+  mainImage: Image | undefined;
+}
+
+export interface BlogParams {
+  page?: number;
+  take?: number;
+  search?: string;
+  startDate?: string;
+  endDate?: string;
+  sortBy?: 'createdAt' | 'updatedAt';
+  sortDirection?: 'desc' | 'asc';
+  categoryIds?: number[];
+  tagIds?: number[];
+
+  includeCategories?: boolean;
+  includeTags?: boolean;
+  includeUser?: boolean;
+  includeSeoMeta?: boolean;
+  includeMainImage?: boolean;
+}
+
+export interface BlogResponse {
+  pager: Pager;
+  items: BlogItem[];
+}
+
+export const BLOG_SORT_OPTIONS = {
+  default: { label: 'پیش‌فرض', value: '' },
+  newest: { label: 'جدیدترین', value: 'updatedAt' },
+};

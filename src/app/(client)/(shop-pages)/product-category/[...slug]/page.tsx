@@ -1,17 +1,17 @@
-import { getProducts } from '@/service/productService';
+import { getProducts } from '@/features/products/api';
 import { loadSearchParams } from '@/utils/loadSearchParams';
 import { parseArrayParam } from '@/utils/parseArrayParam';
-import { PRODUCT_SORT_OPTIONS, ProductParams } from '@/types/productType';
+import { PRODUCT_SORT_OPTIONS, ProductParams } from '@/features/products/productType';
 import { SearchParams } from 'nuqs';
-import SortBar from '@/components/features/filter/SortBar';
-import MobileFilter from '@/components/features/filter/MobileFilter';
-import MobileSortDrawer from '@/components/features/filter/MobileSortDrawer';
-import { getCategories } from '@/service/categoryService';
-import CategoryChildrenGrid from '@/components/features/category/CategoryChildrenGrid';
-import CategoryHeaderSection from '@/components/features/category/CategoryHeaderSection';
-import ProductListShop from '@/components/features/shopPage/ProductListShop';
-import SidebarFilters from '@/components/features/filter/SidebarFilters';
-import SearchInput from '@/components/features/filter/SearchInput';
+import SortBar from '@/features/filter/SortBar';
+import MobileFilter from '@/features/filter/MobileFilter';
+import MobileSortDrawer from '@/features/filter/MobileSortDrawer';
+import { getCategories } from '@/features/categories/api';
+import CategoryChildrenGrid from '@/features/categories/components/CategoryChildrenGrid';
+import CategoryHeaderSection from '@/features/categories/components/CategoryHeaderSection';
+import ProductListShop from '@/features/shopPage/ProductListShop';
+import SidebarFilters from '@/features/filter/SidebarFilters';
+import SearchInput from '@/features/filter/SearchInput';
 
 type PageProps = {
   searchParams: Promise<SearchParams>;

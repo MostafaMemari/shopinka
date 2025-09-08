@@ -1,11 +1,11 @@
-import { fetchProductBySlug, getProducts } from '@/service/productService';
-import ProductDetailsView from '@/components/features/productDetails/views/ProductDetailsView';
+import { fetchProductBySlug, getProducts } from '@/features/products/api';
+import ProductDetailsView from '@/features/productDetails/views/ProductDetailsView';
 import { notFound } from 'next/navigation';
-import ProductTabs from '@/components/features/product/ProductTabs';
-import MobileHeader from '@/components/features/productDetails/MobileProductHeader';
-import CarouselProduct from '@/components/features/product/ProductCarousel';
+import MobileHeader from '@/features/productDetails/MobileProductHeader';
 import { Metadata } from 'next';
 import { generateProductMetadata } from './metadata';
+import CarouselProduct from '@/features/products/components/ProductCarousel';
+import ProductTabs from '@/features/products/components/ProductTabs';
 
 type Props = {
   params: Promise<{ slug: string }>;

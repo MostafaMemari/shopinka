@@ -15,12 +15,12 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
 import { useBoolean } from '@/hooks/use-boolean';
-import { useAuthMutations } from '@/hooks/auth/useAuth';
+import { useAuth } from '@/features/auth/hooks/useAuth';
 
 const ProfileMenu = () => {
   const pathname = usePathname();
 
-  const { logOut, logOutStatus } = useAuthMutations();
+  const { logOut, logOutStatus } = useAuth();
 
   const dropdownOpen = useBoolean(false);
   const isLogoutLoading = logOutStatus === 'pending';

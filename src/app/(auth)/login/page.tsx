@@ -1,4 +1,4 @@
-import AuthPage from '@/components/features/auth/AuthPage';
+import AuthPage from '@/features/auth/components/AuthPage';
 
 export default function Page() {
   return <AuthPage />;

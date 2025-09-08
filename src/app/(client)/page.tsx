@@ -1,12 +1,12 @@
-import { getProducts } from '@/service/productService';
-import CarouselProduct from '@/components/features/product/ProductCarousel';
-import { getBlogs } from '@/service/blogService';
+import { getProducts } from '@/features/products/api';
+import { getBlogs } from '@/features/blogs/api';
 
-import { getCategoryBySlug } from '@/service/categoryService';
-import CategoryCirclesBanners from '@/components/features/CategoryBanners';
-import BannerSlider from '@/components/features/carousel/BannerSlider';
-import CarouselBlog from '@/components/features/blog/CarouselBlog';
-import { getBanners } from '@/service/bannerService';
+import { getCategoryBySlug } from '@/features/categories/api';
+import CategoryCirclesBanners from '@/features/categoryBanners';
+import BannerSlider from '@/features/carousel/BannerSlider';
+import CarouselBlog from '@/features/blogs/components/CarouselBlog';
+import { getBanners } from '@/features/banners/api';
+import CarouselProduct from '@/features/products/components/ProductCarousel';
 
 export default async function Home() {
   const [bannerts, discountProducts, newestProducts, blogs, categories] = await Promise.all([

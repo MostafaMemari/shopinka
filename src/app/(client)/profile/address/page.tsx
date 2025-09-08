@@ -1,6 +1,6 @@
-import AddressesActions from '@/components/features/profile/Address/AddressesActions';
-import { CreateAddressDialogDrawer } from '@/components/features/address/CreateAddressDialogDrawer';
-import DashboardHeader from '@/components/features/profile/DashboardHeader';
+import AddressesActions from '@/features/profile/Address/AddressesActions';
+import { CreateAddressDialogDrawer } from '@/features/address/components/CreateAddressDialogDrawer';
+import DashboardHeader from '@/features/profile/DashboardHeader';
 
 export default function Page() {
   return (

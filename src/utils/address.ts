@@ -1,4 +1,4 @@
-import { AddressItem } from '@/types/addressType';
+import { AddressItem } from '@/features/address/types';
 
 export const formatFullAddress = (address: AddressItem) => {
   return [

@@ -3,8 +3,8 @@
 import { Search } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { useDebounce } from 'use-debounce';
-import { Product } from '@/types/productType';
-import { useProducts } from '@/hooks/reactQuery/product/useProduct';
+import { Product } from '@/features/products/productType';
+import { useProducts } from '@/features/products/hooks/useProduct';
 import SearchItem from './SearchItem';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';

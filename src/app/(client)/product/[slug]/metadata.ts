@@ -1,4 +1,4 @@
-import { fetchProductBySlug } from '@/service/productService';
+import { fetchProductBySlug } from '@/features/products/api';
 import type { Metadata } from 'next';
 
 type Params = {
