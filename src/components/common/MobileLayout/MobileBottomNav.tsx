@@ -10,6 +10,7 @@ import CartIconTotalQuantity from '../../../features/cart/components/CartIconTot
 import { House, List } from 'lucide-react';
 
 import UserIconMobile from './UserIconMobile';
+import MobileCartSticky from '../MobileCartSticky';
 
 function MobileBottomNav() {
   const { isLogin } = useAppSelector((state) => state.auth);
@@ -53,23 +54,25 @@ function MobileBottomNav() {
   }, [isLogin, pathname, router, dispatch]);
 
   return (
-    <nav className="fixed bottom-3 right-3 left-3 z-50 bg-white shadow-md rounded-2xl">
-      <ul className="flex justify-between items-center text-xs flex-row-reverse h-[60px]">
-        {navItems.map(({ label, icon, onClick, isActive }) => (
-          <li key={label} className="flex-1">
-            <button
-              onClick={onClick}
-              className={`flex flex-col items-center justify-center py-2 w-full h-full transition-all cursor-pointer ${
-                isActive ? 'text-primary font-bold' : 'text-gray-500'
-              }`}
-            >
-              {icon}
-              <span className="mt-1">{label}</span>
-            </button>
-          </li>
-        ))}
-      </ul>
-    </nav>
+    <MobileCartSticky position="bottom">
+      <nav>
+        <ul className="flex justify-between items-center text-xs flex-row-reverse h-[60px]">
+          {navItems.map(({ label, icon, onClick, isActive }) => (
+            <li key={label} className="flex-1">
+              <button
+                onClick={onClick}
+                className={`flex flex-col items-center justify-center py-2 w-full h-full transition-all cursor-pointer ${
+                  isActive ? 'text-primary font-bold' : 'text-gray-500'
+                }`}
+              >
+                {icon}
+                <span className="mt-1">{label}</span>
+              </button>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </MobileCartSticky>
   );
 }
 

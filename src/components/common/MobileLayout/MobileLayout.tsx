@@ -12,6 +12,7 @@ import { Button } from '../../ui/button';
 import MobileBottomNav from './MobileBottomNav';
 import MobileLogo from '../Logo/MobileLogo';
 import MobileMenu from '@/components/layout/mobileLayout/MobileMenu';
+import MobileCartSticky from '../MobileCartSticky';
 
 interface MobileLayoutProps {
   showHeader?: boolean;
@@ -42,18 +43,20 @@ const MobileLayout = ({ showHeader = true, showNav = true }: MobileLayoutProps) 
       </Transition>
 
       {showHeader && (
-        <header className="fixed top-3 right-3 left-3 z-50 bg-white shadow-md rounded-2xl">
-          <div className="flex items-center justify-between py-2 px-4 h-[60px]">
-            <button onClick={toggleMenu} className="cursor-pointer">
-              {isMenuOpen ? <HiOutlineXMark className="h-6 w-6" /> : <HiOutlineMenu className="h-6 w-6" />}
-            </button>
-            <MobileLogo />
+        <MobileCartSticky position="top">
+          <header>
+            <div className="flex items-center justify-between py-2 px-4 h-[60px]">
+              <button onClick={toggleMenu} className="cursor-pointer">
+                {isMenuOpen ? <HiOutlineXMark className="h-6 w-6" /> : <HiOutlineMenu className="h-6 w-6" />}
+              </button>
+              <MobileLogo />
 
-            <Button asChild variant="ghost" size="sm" className="size-12 cursor-pointer">
-              <Phone />
-            </Button>
-          </div>
-        </header>
+              <Button asChild variant="ghost" size="sm" className="size-12 cursor-pointer">
+                <Phone />
+              </Button>
+            </div>
+          </header>
+        </MobileCartSticky>
       )}
 
       <MobileMenu isMenuOpen={isMenuOpen} onToggleMenu={setIsMenuOpen} />

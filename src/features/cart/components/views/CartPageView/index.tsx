@@ -10,7 +10,7 @@ import PrimaryButton from '@/components/common/PrimaryButton';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 import ErrorState from '@/features/profile/ErrorState';
 import EmptyState from '@/features/profile/EmptyState';
-import CartMobileFixContainer from '@/components/common/CartMobileFixContainer';
+import MobileCartSticky from '@/components/common/MobileCartSticky';
 import { formatPrice } from '@/utils/formatter';
 import { useRouter } from 'next/navigation';
 import { useAppSelector } from '@/store/hooks';
@@ -83,7 +83,7 @@ function CartPageView() {
 
   return (
     <>
-      <CartMobileFixContainer>
+      <MobileCartSticky position="bottom">
         <div className="flex justify-between items-center w-full">
           <div className="w-1/2 p-3">
             <PrimaryButton onClick={handleNextCartShipping} type="submit">
@@ -98,7 +98,7 @@ function CartPageView() {
             </div>
           </div>
         </div>
-      </CartMobileFixContainer>
+      </MobileCartSticky>
       <div className="col-span-12 md:col-span-8">
         <div className="rounded-lg bg-muted p-4 min-h-[300px]">
           <div className="flex items-center justify-between gap-x-2 pb-4">

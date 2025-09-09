@@ -15,7 +15,7 @@ import ProductGuaranteeBadge from '../ProductGuaranteeBadge';
 
 import FavoriteProductAction from '../ActionButtons/FavoriteProductAction';
 import ShareProductAction from '../ActionButtons/ShareProductAction';
-import CartMobileFixContainer from '@/components/common/CartMobileFixContainer';
+import CartMobileFixContainer from '@/components/common/MobileCartSticky';
 import { Card } from '@/components/ui/card';
 import { ProductDetails } from '@/features/products/types';
 
