@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { CartItemState } from '@/types/cartType';
 import CartItemAttributes from '@/features/cart/components/CartItemAttributes';
 import CartControls from '@/features/cart/components/CartControls';
-import ProductPrice from '@/features/productDetails/PriceDisplay';
+import ProductPrice from '@/features/productDetails/ProductDetailsPrice';
 import Image from 'next/image';
 import ProductCartPrice from '../../ProductCartPrice';
 

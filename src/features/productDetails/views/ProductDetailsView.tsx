@@ -7,7 +7,6 @@ import ProductVariants from '../VariantSelector';
 import AddToCartButtonMobile from '@/features/cart/components/AddToCartButton/AddToCartButtonMobile';
 import ProductProperties from '../ProductProperties';
 import AddToCartButtonDesktop from '@/features/cart/components/AddToCartButton/AddToCartButtonDesktop';
-import PriceDisplay from '../PriceDisplay';
 import { FC } from 'react';
 import ProductSku from '../ProductSku';
 import ProductCommentCount from '../../comments/components/ProductComments/ProductCommentCount';
@@ -18,6 +17,7 @@ import ShareProductAction from '../ActionButtons/ShareProductAction';
 import CartMobileFixContainer from '@/components/common/MobileCartSticky';
 import { Card } from '@/components/ui/card';
 import { ProductDetails } from '@/features/products/types';
+import { ProductDesktopDetailsPrice, ProductMobileDetailsPrice } from '../ProductDetailsPrice';
 
 interface ProductDetailsViewProps {
   product: ProductDetails;
@@ -95,7 +95,9 @@ const ProductDetailsView: FC<ProductDetailsViewProps> = ({ product }) => {
 
                       {isValidProduct ? (
                         <div className="text-left">
-                          <PriceDisplay product={{ type: product.type, basePrice: product.basePrice ?? 0, salePrice: product.salePrice }} />
+                          <ProductDesktopDetailsPrice
+                            product={{ type: product.type, basePrice: product.basePrice ?? 0, salePrice: product.salePrice }}
+                          />
                         </div>
                       ) : (
                         ''
@@ -189,7 +191,7 @@ const ProductDetailsView: FC<ProductDetailsViewProps> = ({ product }) => {
 
                       {isValidProduct ? (
                         <div className="p-2">
-                          <PriceDisplay
+                          <ProductMobileDetailsPrice
                             product={{
                               type: product.type,
                               basePrice: product.basePrice ?? 0,

@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { CartItemState } from '@/types/cartType';
 import CartControls from '@/features/cart/components/CartControls';
 import CartItemAttributes from '@/features/cart/components/CartItemAttributes';
-import ProductPrice from '@/features/productDetails/PriceDisplay';
+import ProductPrice from '@/features/productDetails/ProductDetailsPrice';
 import Image from 'next/image';
 
 interface MobileBasketItemProp {
