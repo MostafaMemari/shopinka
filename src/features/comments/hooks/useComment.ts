@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { QueryKeys } from '@/types/query-keys';
 import { CommentParams, CommentResponse } from '@/types/commentType';
-import { getComments } from '@/features/comments/api';
+import { getComments } from '@/features/comments/services/commentService';
 
 export interface QueryOptions {
   enabled?: boolean;

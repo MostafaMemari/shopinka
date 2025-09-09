@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import MobileDrawer from '@/components/common/MobileDrawer';
+import MobileDrawer from '@/components/common/Drawer';
 import { IoChevronBack } from 'react-icons/io5';
 
 interface Props {
@@ -56,13 +56,7 @@ export default function ProductDescription({ description }: Props) {
         </div>
       )}
 
-      <MobileDrawer
-        isOpen={isOpenDrawer}
-        triggerButton={null}
-        onOpen={() => setIsOpenDrawer(true)}
-        onClose={() => setIsOpenDrawer(false)}
-        title="توضیحات محصول"
-      >
+      <MobileDrawer open={isOpenDrawer} onOpenChange={setIsOpenDrawer} title="توضیحات محصول">
         <div>
           {description && <div className="prose prose-sm max-w-none text-text/80 p-4" dangerouslySetInnerHTML={{ __html: description }} />}
         </div>

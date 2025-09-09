@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { BiSort } from 'react-icons/bi';
 import { useQueryState } from 'nuqs';
 
-import MobileDrawer from '@/components/common/MobileDrawer';
+import MobileDrawer from '@/components/common/Drawer';
 
 type SortOption = {
   label: string;

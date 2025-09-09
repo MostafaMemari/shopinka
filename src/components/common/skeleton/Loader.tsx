@@ -1,6 +1,7 @@
-import { Ellipsis } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import React from 'react';
 
-export default function Loader({ className }: { className?: string }) {
-  return <Ellipsis className={cn('h-12 w-12 text-primary animate-pulse', className)} />;
+function Loader() {
+  return <div>Loader</div>;
 }
+
+export default Loader;

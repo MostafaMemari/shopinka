@@ -3,7 +3,7 @@
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { forwardRef } from 'react';
-import TextInput from '@/components/common/TextInput';
+import TextInput from '@/components/form/TextInput';
 
 interface FullNameFormType {
   fullName: string;

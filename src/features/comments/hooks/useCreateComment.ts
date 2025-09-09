@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { QueryKeys } from '@/types/query-keys';
 import { CommentFormType } from '@/types/commentType';
-import { createComment } from '@/features/comments/api';
+import { createComment } from '@/features/comments/services/commentService';
 import { toast } from 'sonner';
 
 export function useCreateComment() {

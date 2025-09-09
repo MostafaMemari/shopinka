@@ -14,7 +14,7 @@ import Dialog from '@/components/common/Dialog';
 import PrimaryButton from '@/components/common/PrimaryButton';
 import { useRef } from 'react';
 import { useAuth } from '../hooks/useAuth';
-import MobileDrawer from '@/components/common/MobileDrawer';
+import MobileDrawer from '@/components/common/Drawer';
 
 export function AuthDialogDrawer() {
   const dispatch = useDispatch();

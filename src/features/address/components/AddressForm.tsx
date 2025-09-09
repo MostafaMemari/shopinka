@@ -1,8 +1,8 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-import TextInput from '@/components/common/TextInput';
-import SelectInput from '@/components/common/SelectInput';
+import TextInput from '@/components/form/TextInput';
+import SelectInput from '@/components/form/SelectInput';
 import { AddressItem } from '@/features/address/types';
 import { provinces } from '@/data/provinces';
 import { cities } from '@/data/cities';

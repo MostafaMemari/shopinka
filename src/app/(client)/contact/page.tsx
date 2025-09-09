@@ -1,6 +1,6 @@
 'use client';
 
-import TextInput from '@/components/common/TextInput';
+import TextInput from '@/components/form/TextInput';
 import { shopInfo } from '@/data/shopInfo';
 import Link from 'next/link';
 import PrimaryButton from '@/components/common/PrimaryButton';

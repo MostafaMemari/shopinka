@@ -10,7 +10,7 @@ import AddToCartButtonDesktop from '@/features/cart/components/AddToCartButton/A
 import PriceDisplay from '../PriceDisplay';
 import { FC } from 'react';
 import ProductSku from '../ProductSku';
-import ProductCommentCount from '../Comment/ProductComments/ProductCommentCount';
+import ProductCommentCount from '../../comments/components/ProductComments/ProductCommentCount';
 import ProductGuaranteeBadge from '../ProductGuaranteeBadge';
 
 import FavoriteProductAction from '../ActionButtons/FavoriteProductAction';

@@ -12,10 +12,12 @@ import {
 } from '@/components/ui/dialog';
 import { cn } from '@/lib/utils';
 import { Button } from '../ui';
+import { DialogTrigger } from '@radix-ui/react-dialog';
 
 interface DialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  trigger?: ReactNode;
   title: string;
   description?: string;
   children?: ReactNode;
@@ -23,9 +25,10 @@ interface DialogProps {
   className?: string;
 }
 
-const Dialog: FC<DialogProps> = ({ open, onOpenChange, title, description, children, actions, className }) => {
+const Dialog: FC<DialogProps> = ({ open, onOpenChange, title, description, children, actions, trigger, className }) => {
   return (
     <ShadcnDialog open={open} onOpenChange={onOpenChange}>
+      {trigger && <DialogTrigger asChild>{trigger}</DialogTrigger>}
       <DialogContent className={cn('max-w-md max-h-[90vh] p-5', className)} aria-describedby="dialog-description">
         <DialogHeader className="border-b pb-5">
           <DialogTitle>{title}</DialogTitle>

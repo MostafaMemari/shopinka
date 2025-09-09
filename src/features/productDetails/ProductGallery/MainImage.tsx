@@ -1,6 +1,6 @@
 'use client';
 
-import ImageLoader from '@/components/common/ImageLoader';
+import ImageLoader from '@/features/productDetails/ProductGallery/ImageLoader';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 

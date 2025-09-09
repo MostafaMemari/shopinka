@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import ProductDescription from './ProductDescription';
 import ProductSpecifications from './ProductSpecifications';
-import ProductComments from '@/features/productDetails/Comment/ProductComments';
+import ProductComments from '@/features/comments/components/ProductComments';
 import { useComment } from '@/features/comments/hooks/useComment';
 import { Card, Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui';
 

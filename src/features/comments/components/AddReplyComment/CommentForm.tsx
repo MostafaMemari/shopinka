@@ -1,14 +1,9 @@
 'use client';
 
 import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import { forwardRef, useEffect, useRef } from 'react';
-import TextInput from '@/components/common/TextInput';
+import TextInput from '@/components/form/TextInput';
 import SuggestionRadio from './SuggestionRadio';
 import { validationCommentSchema } from '@/validation/validationCommentSchema';
-import { CommentItem } from '@/types/commentType';
-import { useCreateComment } from '@/features/comments/hooks/useCreateComment';
-import PrimaryButton from '@/components/common/PrimaryButton';
 import { cn } from '@/lib/utils';
 
 export interface CommentFormikType {
@@ -22,11 +17,11 @@ interface CommentFormProps {
   parentId?: number;
   className?: string;
   onSuccess?: () => void;
+  createComment?: any;
+  ref?: React.Ref<HTMLFormElement>;
 }
 
-function CommentForm({ productId, className = '', parentId, onSuccess }: CommentFormProps) {
-  const { createComment, isCreateCommentLoading } = useCreateComment();
-
+function CommentForm({ productId, className = '', parentId, onSuccess, createComment, ref }: CommentFormProps) {
   const formik = useFormik({
     initialValues: {
       title: '',
@@ -45,7 +40,7 @@ function CommentForm({ productId, className = '', parentId, onSuccess }: Comment
   });
 
   return (
-    <form onSubmit={formik.handleSubmit} className={cn('space-y-1 text-right', className)} dir="rtl">
+    <form onSubmit={formik.handleSubmit} ref={ref} className={cn('space-y-1 text-right', className)} dir="rtl">
       <div className="grid grid-cols-2 gap-4">
         <TextInput id="title" name="title" isRequired label="عنوان دیدگاه" formik={formik} className="col-span-2 mb-1" />
       </div>
@@ -73,10 +68,6 @@ function CommentForm({ productId, className = '', parentId, onSuccess }: Comment
           />
         </div>
       </div>
-
-      <PrimaryButton isLoading={isCreateCommentLoading} className="w-full mt-6" type="submit">
-        {parentId ? 'پاسخ به دیدگاه' : 'ثبت دیدگاه'}
-      </PrimaryButton>
     </form>
   );
 }

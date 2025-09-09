@@ -44,7 +44,7 @@ const SelectInput: React.FC<SelectInputProps> = ({
           if (onChange) onChange(selectedOption);
         }}
         onOpenChange={(open) => {
-          if (!open) formik.setFieldTouched(name, true); // فقط موقع بستن منو touched بشه
+          if (!open) formik.setFieldTouched(name, true);
         }}
         disabled={isDisabled}
       >

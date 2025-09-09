@@ -1,6 +1,6 @@
 'use client';
 
-import MobileDrawer from '@/components/common/MobileDrawer';
+import MobileDrawer from '@/components/common/Drawer';
 import React, { useEffect, useState } from 'react';
 import { FaUserCircle } from 'react-icons/fa';
 import ProfileMenu from '../ProfileMenu';
