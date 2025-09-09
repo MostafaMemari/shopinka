@@ -34,7 +34,7 @@ function MobileBottomNav() {
       {
         label: 'سبد خرید',
         onClick: () => router.push('/checkout/cart'),
-        icon: <CartIconTotalQuantity isLogin={isLogin} />,
+        icon: <CartIconTotalQuantity />,
         isActive: pathname === '/checkout/cart',
       },
       {

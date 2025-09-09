@@ -37,7 +37,7 @@ export default function RootLayout({
           <ScrollToTop />
         </Suspense>
         <ClientProvider>
-          <div className="flex min-h-screen flex-col" style={{ height: 'var(--app-height)' }}>
+          <div className="flex min-h-screen flex-col">
             <NuqsAdapter>
               <Suspense fallback={<Loading />}>{children}</Suspense>
             </NuqsAdapter>

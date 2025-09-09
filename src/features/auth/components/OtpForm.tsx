@@ -24,13 +24,14 @@ const FormSchema = Yup.object().shape({
 });
 
 interface InputOTPFormProps {
-  isDialog?: boolean;
+  verifyOtp?: any;
+  ref: React.Ref<HTMLFormElement>;
 }
 
 type OTPFormValues = { otp: string };
 
-function InputOTPForm({ isDialog }: InputOTPFormProps) {
-  const { verifyOtp, resendOtp, verifyOtpStatus, resendOtpStatus } = useAuth();
+function InputOTPForm({ verifyOtp, ref }: InputOTPFormProps) {
+  const { resendOtp, resendOtpStatus } = useAuth();
 
   const mobile = useSelector((state: RootState) => state.otp.mobile)!;
 
@@ -101,7 +102,7 @@ function InputOTPForm({ isDialog }: InputOTPFormProps) {
   return (
     <>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(handleSubmit)} className="flex flex-col gap-4">
+        <form onSubmit={form.handleSubmit(handleSubmit)} ref={ref} className="flex flex-col gap-4 mt-1">
           <FormField
             control={form.control}
             name="otp"
@@ -149,41 +150,6 @@ function InputOTPForm({ isDialog }: InputOTPFormProps) {
           <>{resendOtpStatus === 'pending' ? 'در حال ارسال...' : 'ارسال مجدد کد'}</>
         )}
       </Button>
-
-      {isDialog ? (
-        <DialogFooter>
-          <PrimaryButton
-            isLoading={verifyOtpStatus === 'pending'}
-            disabled={form.formState.isSubmitting || isExpired}
-            onClick={form.handleSubmit(handleSubmit)}
-            className="flex-1"
-          >
-            ارسال کد ورود
-          </PrimaryButton>
-          <DialogClose asChild>
-            <Button variant="secondary" className="w-24">
-              بستن
-            </Button>
-          </DialogClose>
-        </DialogFooter>
-      ) : (
-        <DrawerFooter className="h-auto flex-shrink-0">
-          <PrimaryButton
-            isLoading={verifyOtpStatus === 'pending'}
-            disabled={form.formState.isSubmitting || isExpired}
-            onClick={form.handleSubmit(handleSubmit)}
-            className="flex-1"
-          >
-            ارسال کد ورود
-          </PrimaryButton>
-
-          <DrawerClose asChild>
-            <Button variant="secondary" className="w-24">
-              بستن
-            </Button>
-          </DrawerClose>
-        </DrawerFooter>
-      )}
     </>
   );
 }

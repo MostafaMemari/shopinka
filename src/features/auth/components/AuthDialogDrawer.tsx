@@ -1,8 +1,6 @@
 'use client';
 
 import { useMediaQuery } from '@/hooks/use-media-query';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle } from '@/components/ui/drawer';
 
 import PhoneInputForm from '@/features/auth/components/PhoneInputForm';
 
@@ -12,6 +10,11 @@ import { closeDialog } from '@/store/slices/authDialogSlice';
 import { OTP_EXPIRE_SECONDS } from '@/constants';
 import { useAppSelector } from '@/store/hooks';
 import InputOTPForm from './OtpForm';
+import Dialog from '@/components/common/Dialog';
+import PrimaryButton from '@/components/common/PrimaryButton';
+import { useRef } from 'react';
+import { useAuth } from '../hooks/useAuth';
+import MobileDrawer from '@/components/common/MobileDrawer';
 
 export function AuthDialogDrawer() {
   const dispatch = useDispatch();
@@ -21,7 +24,7 @@ export function AuthDialogDrawer() {
   const open = useSelector((state: RootState) => state.authDialog.open);
   const { mobile, otpSentAt } = useSelector((state: RootState) => state.otp);
 
-  if (isLogin) return null;
+  const { sendOtp, sendOtpStatus, verifyOtp, verifyOtpStatus } = useAuth();
 
   const otpStep = Boolean(mobile && otpSentAt && Date.now() - otpSentAt < OTP_EXPIRE_SECONDS * 1000);
 
@@ -32,25 +35,58 @@ export function AuthDialogDrawer() {
     if (!val) dispatch(closeDialog());
   };
 
+  const phoneInputFormRef = useRef<HTMLFormElement>(null);
+  const otpFormRef = useRef<HTMLFormElement>(null);
+
+  const handleSubmitPhone = () => {
+    phoneInputFormRef.current?.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+  };
+  const handleSubmitOtp = () => {
+    otpFormRef.current?.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+  };
+
+  const handleSubmit = otpStep ? handleSubmitOtp : handleSubmitPhone;
+  const isLoadingSubmit = otpStep ? verifyOtpStatus === 'pending' : sendOtpStatus === 'pending';
+
+  if (isLogin) return null;
+
   return isDesktop ? (
-    <Dialog open={open} onOpenChange={handleClose}>
-      <DialogContent className="sm:max-w-[425px]" onEscapeKeyDown={(e) => e.preventDefault()}>
-        <DialogHeader>
-          <DialogTitle>{title}</DialogTitle>
-          <DialogDescription>{description}</DialogDescription>
-        </DialogHeader>
-        {!otpStep ? <PhoneInputForm isDialog /> : <InputOTPForm isDialog />}
-      </DialogContent>
+    <Dialog
+      open={open}
+      onOpenChange={handleClose}
+      title={title}
+      description={description}
+      actions={
+        <PrimaryButton onClick={handleSubmit} disabled={isLoadingSubmit} isLoading={isLoadingSubmit} className="flex-1">
+          {!otpStep ? 'ارسال کد' : 'ورود و ادامه'}
+        </PrimaryButton>
+      }
+    >
+      {!otpStep ? <PhoneInputForm ref={phoneInputFormRef} sendOtp={sendOtp} /> : <InputOTPForm verifyOtp={verifyOtp} ref={otpFormRef} />}
     </Dialog>
   ) : (
-    <Drawer open={open} modal={false} onOpenChange={handleClose}>
-      <DrawerContent className="fixed inset-x-0 bottom-0 !mt-0 !mb-0 !h-auto" onEscapeKeyDown={(e) => e.preventDefault()}>
-        <DrawerHeader className="text-left pb-3">
-          <DrawerTitle>{title}</DrawerTitle>
-          <DrawerDescription>{description}</DrawerDescription>
-        </DrawerHeader>
-        {!otpStep ? <PhoneInputForm key="mobile" className="px-4 pb-1" /> : <InputOTPForm key="otp" />}
-      </DrawerContent>
-    </Drawer>
+    <MobileDrawer
+      open={open}
+      onOpenChange={handleClose}
+      title={title}
+      description={description}
+      actions={
+        <PrimaryButton onClick={handleSubmit} disabled={isLoadingSubmit} isLoading={isLoadingSubmit} className="flex-1">
+          {!otpStep ? 'ارسال کد' : 'ورود و ادامه'}
+        </PrimaryButton>
+      }
+    >
+      {!otpStep ? <PhoneInputForm ref={phoneInputFormRef} sendOtp={sendOtp} /> : <InputOTPForm verifyOtp={verifyOtp} ref={otpFormRef} />}
+    </MobileDrawer>
   );
 }
+
+// <Drawer open={open} modal={false} onOpenChange={handleClose}>
+//   <DrawerContent className="fixed inset-x-0 bottom-0 !mt-0 !mb-0 !h-auto" onEscapeKeyDown={(e) => e.preventDefault()}>
+//     <DrawerHeader className="text-left pb-3">
+//       <DrawerTitle>{title}</DrawerTitle>
+//       <DrawerDescription>{description}</DrawerDescription>
+//     </DrawerHeader>
+//     {!otpStep ? <PhoneInputForm key="mobile" className="px-4 pb-1" /> : <InputOTPForm key="otp" />}
+//   </DrawerContent>
+// </Drawer>

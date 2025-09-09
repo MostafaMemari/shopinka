@@ -8,17 +8,15 @@ import { validateIranPhoneNumber } from '@/validation/validateIranPhoneNumber';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/features/auth/hooks/useAuth';
 import React from 'react';
-import { Button, DialogFooter, DrawerClose, DrawerFooter } from '@/components/ui';
-import PrimaryButton from '@/components/common/PrimaryButton';
 import Link from 'next/link';
-import { DialogClose } from '@radix-ui/react-dialog';
 import { useDispatch, useSelector } from 'react-redux';
 import { setOtpSentAt, setMobile } from '@/store/slices/otpSlice';
 import { RootState } from '@/store';
 
 interface PhoneInputFormProps {
   className?: string;
-  isDialog?: boolean;
+  ref?: React.Ref<HTMLFormElement>;
+  sendOtp: any;
 }
 
 const phoneValidationSchema = Yup.object({
@@ -29,8 +27,7 @@ const phoneValidationSchema = Yup.object({
 
 type PhoneFormValues = { mobile: string };
 
-function PhoneInputForm({ className, isDialog }: PhoneInputFormProps) {
-  const { sendOtp, sendOtpStatus } = useAuth();
+function PhoneInputForm({ className, ref, sendOtp }: PhoneInputFormProps) {
   const mobile = useSelector((state: RootState) => state.otp.mobile)!;
 
   const dispatch = useDispatch();
@@ -48,7 +45,7 @@ function PhoneInputForm({ className, isDialog }: PhoneInputFormProps) {
         dispatch(setMobile(values.mobile));
         dispatch(setOtpSentAt(Date.now()));
       },
-      onError: (error) => {
+      onError: (error: Error) => {
         form.reset();
         toast.error(error.message);
       },
@@ -58,7 +55,7 @@ function PhoneInputForm({ className, isDialog }: PhoneInputFormProps) {
   return (
     <>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(handleSubmit)} className={cn('flex flex-col gap-4', className)}>
+        <form onSubmit={form.handleSubmit(handleSubmit)} ref={ref} className={cn('flex flex-col gap-4', className)}>
           <FormField
             control={form.control}
             name="mobile"
@@ -95,36 +92,6 @@ function PhoneInputForm({ className, isDialog }: PhoneInputFormProps) {
         </Link>{' '}
         را می‌پذیرم
       </p>
-
-      {isDialog ? (
-        <DialogFooter className="h-auto flex-shrink-0">
-          <div className="flex justify-between gap-2 w-full">
-            <PrimaryButton onClick={form.handleSubmit(handleSubmit)} isLoading={sendOtpStatus === 'pending'} className="flex-1">
-              ارسال کد ورود
-            </PrimaryButton>
-
-            <DialogClose asChild>
-              <Button variant="secondary" className="w-24">
-                بستن
-              </Button>
-            </DialogClose>
-          </div>
-        </DialogFooter>
-      ) : (
-        <DrawerFooter className="h-auto flex-shrink-0">
-          <div className="flex justify-between gap-2 w-full">
-            <PrimaryButton onClick={form.handleSubmit(handleSubmit)} isLoading={sendOtpStatus === 'pending'} className="flex-1">
-              ارسال کد ورود
-            </PrimaryButton>
-
-            <DrawerClose asChild>
-              <Button variant="secondary" className="w-24">
-                بستن
-              </Button>
-            </DrawerClose>
-          </div>
-        </DrawerFooter>
-      )}
     </>
   );
 }

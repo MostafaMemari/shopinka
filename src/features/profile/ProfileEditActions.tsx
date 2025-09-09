@@ -12,6 +12,7 @@ import ErrorState from './ErrorState';
 import { useAppSelector } from '@/store/hooks';
 import { useIsMounted } from '@/hooks/useIsMounted';
 import { useLoginUser } from '@/features/auth/hooks/useLoginUser';
+import PrimaryButton from '@/components/common/PrimaryButton';
 
 interface ProfileFieldType {
   label: string;
@@ -84,38 +85,38 @@ const ProfileEditActions = () => {
 
             {isMdUp ? (
               <Dialog
-                isOpen={modalState.isOpen && modalState.type === 'fullName'}
-                onClose={() => setModalState({ type: null, isOpen: false })}
+                open={modalState.isOpen && modalState.type === 'fullName'}
+                onOpenChange={(open) => setModalState({ type: 'fullName', isOpen: open })}
                 title="تغییر نام و نام خانوادگی"
                 actions={
-                  <button
-                    className="btn-primary w-full py-3 text-sm"
+                  <PrimaryButton
                     type="button"
                     onClick={handleSubmit}
+                    className="flex-1"
                     disabled={isChangeFullNameLoading}
+                    isLoading={isChangeFullNameLoading}
                   >
-                    {isChangeFullNameLoading ? 'در حال ثبت' : 'ثبت نام و نام خانوادگی'}
-                  </button>
+                    {isChangeFullNameLoading ? '' : 'ثبت نام و نام خانوادگی'}
+                  </PrimaryButton>
                 }
-                size="sm"
               >
                 {renderFormContent()}
               </Dialog>
             ) : (
               <MobileDrawer
-                isOpen={modalState.isOpen}
-                onOpen={() => setModalState({ type: 'fullName', isOpen: true })}
-                onClose={() => setModalState({ type: null, isOpen: false })}
+                open={modalState.isOpen}
+                onOpenChange={(open) => setModalState({ type: 'fullName', isOpen: open })}
                 title="تغییر نام و نام خانوادگی"
-                footerActions={
-                  <button
-                    className="btn-primary w-full py-3 text-sm"
+                actions={
+                  <PrimaryButton
                     type="button"
+                    className="flex-1"
                     onClick={handleSubmit}
+                    isLoading={isChangeFullNameLoading}
                     disabled={isChangeFullNameLoading}
                   >
-                    {isChangeFullNameLoading ? 'در حال ثبت' : 'ثبت نام و نام خانوادگی'}
-                  </button>
+                    {isChangeFullNameLoading ? '' : 'ثبت نام و نام خانوادگی'}
+                  </PrimaryButton>
                 }
               >
                 {renderFormContent()}
