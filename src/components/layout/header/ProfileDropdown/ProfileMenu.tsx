@@ -3,8 +3,6 @@
 import Link from 'next/link';
 import { LogOut, ChevronUp, ChevronDown, User } from 'lucide-react';
 import { usePathname } from 'next/navigation';
-import { toast } from 'sonner';
-import { useState } from 'react';
 import { profileMenuItems } from '@/data/menuData';
 import {
   DropdownMenu,

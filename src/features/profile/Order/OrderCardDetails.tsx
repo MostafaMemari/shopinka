@@ -4,7 +4,7 @@ import React from 'react';
 import RetryPaymentButton from '../../payment/components/RetryPaymentButton';
 import { RemainingTimeItem } from './RemainingTimeItem';
 import { formatPrice } from '@/utils/formatter';
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui';
+import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 
 interface OrderCardDetailsProps {
   order: OrderItem;

@@ -7,6 +7,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { HiOutlineLogout } from 'react-icons/hi';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { useAuth } from '../auth/hooks/useAuth';
 
 type ProfileMenuProps = {
   onClose?: () => void;
@@ -16,9 +17,18 @@ function ProfileMenu({ onClose }: ProfileMenuProps) {
   const pathname = usePathname();
   const router = useRouter();
 
-  const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const { logOut, logOutStatus } = useAuth();
 
-  const handleUserLogout = () => {};
+  const handleUserLogout = () => {
+    logOut(undefined, {
+      onSuccess: () => {
+        router.push('/');
+        onClose?.();
+      },
+    });
+  };
+
+  const isLogoutLoading = logOutStatus === 'pending';
 
   return (
     <ScrollArea dir="ltr" className="h-80 rounded-md">
@@ -45,10 +55,9 @@ function ProfileMenu({ onClose }: ProfileMenuProps) {
             onClick={handleUserLogout}
             className="w-full flex items-center gap-x-2 rounded-lg px-1 py-3 text-red-500 hover:bg-red-100 dark:text-red-400 dark:hover:bg-red-900/20 transition group cursor-pointer"
             aria-label="خروج از حساب کاربری"
-            disabled={isLoggingOut}
           >
             <HiOutlineLogout className="h-6 w-6 group-hover:text-red-600 dark:group-hover:text-red-300" />
-            <span className="group-hover:text-red-600 dark:group-hover:text-red-300">{isLoggingOut ? 'در حال خروج...' : 'خروج'}</span>
+            <span className="group-hover:text-red-600 dark:group-hover:text-red-300">{isLogoutLoading ? 'در حال خروج...' : 'خروج'}</span>
           </button>
         </li>
       </ul>

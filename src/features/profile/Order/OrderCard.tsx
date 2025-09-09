@@ -8,7 +8,7 @@ import { getStatusConfig } from '@/config/orderStatusConfig';
 import ProductSlider from '../ProductSlider';
 import { OrderItem } from '@/features/orders/types';
 import RetryPaymentButton from '../../payment/components/RetryPaymentButton';
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui';
+import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { ChevronLeft } from 'lucide-react';
 import { RemainingTimeItem } from './RemainingTimeItem';
