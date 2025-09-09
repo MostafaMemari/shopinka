@@ -3,7 +3,8 @@
 import Image from 'next/image';
 import { PlaceholderImageEnum } from '@/types/enums/PlaceholderImageEnum';
 import { ReactNode } from 'react';
-import { cn } from '@/utils/utils';
+import { cn } from '@/lib/utils';
+import { Card } from '@/components/ui';
 
 interface CategoryItemShopProps {
   name: string;
@@ -17,14 +18,14 @@ interface CategoryItemShopProps {
 
 export default function CategoryItemShop({ name, imageUrl, href, onClick, icon, isButton = false, className }: CategoryItemShopProps) {
   const content = (
-    <div
+    <Card
       className={cn(
-        'flex flex-col items-center justify-center p-4 rounded-lg bg-white shadow-sm hover:shadow-md transition-shadow duration-200',
+        'flex flex-col items-center justify-center p-4 hover:shadow-md transition-shadow duration-200 mb-1 cursor-pointer',
         className,
       )}
       tabIndex={0}
     >
-      <div className="w-20 h-20 rounded-lg overflow-hidden flex items-center justify-center bg-gray-50 mb-2">
+      <div className="w-20 h-20 rounded-lg overflow-hidden flex items-center justify-center mb-2">
         {icon ? (
           icon
         ) : (
@@ -40,7 +41,7 @@ export default function CategoryItemShop({ name, imageUrl, href, onClick, icon, 
         )}
       </div>
       <span className="text-sm font-medium text-center text-gray-800">{name}</span>
-    </div>
+    </Card>
   );
 
   if (isButton) {

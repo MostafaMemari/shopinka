@@ -1,7 +1,6 @@
 import { getProducts } from '@/features/products/api';
 import { loadSearchParams } from '@/utils/loadSearchParams';
 import { parseArrayParam } from '@/utils/parseArrayParam';
-import { PRODUCT_SORT_OPTIONS, ProductParams } from '@/features/products/productType';
 import { SearchParams } from 'nuqs';
 import SearchInput from '@/features/filter/SearchInput';
 import SortBar from '@/features/filter/SortBar';
@@ -12,6 +11,7 @@ import CategoryChildrenGrid from '@/features/categories/components/CategoryChild
 import ProductListShop from '@/features/shopPage/ProductListShop';
 import SidebarFilters from '@/features/filter/SidebarFilters';
 import { Category } from '@/features/categories/types';
+import { PRODUCT_SORT_OPTIONS, ProductParams } from '@/features/products/types';
 
 type PageProps = {
   searchParams: Promise<SearchParams>;

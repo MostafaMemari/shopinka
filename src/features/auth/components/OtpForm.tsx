@@ -1,165 +1,191 @@
 'use client';
 
-import { toast } from 'sonner';
-import { Formik, Form, ErrorMessage, Field } from 'formik';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
-import { useRouter } from 'next/navigation';
-import { verifyOtp, sendOtp } from '@/features/auth/api';
-import { handleApiError } from '@/utils/handleApiError';
-import { extractTimeFromText } from '@/utils/utils';
-import { useLoginUser } from '@/features/auth/hooks/useLoginUser';
-import { useSyncCart } from '@/hooks/reactQuery/cart/useSyncCart';
-import { useOtpTimer } from '@/hooks/useOtpTimer';
+import { toast } from 'sonner';
+import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
+import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
+import { useEffect, useRef } from 'react';
+import { useCountdownSeconds } from '@/hooks/use-countdown';
+import { secondsToTime } from '@/utils/utils';
+import { useAuth } from '@/features/auth/hooks/useAuth';
+import { Button, DialogFooter, DrawerClose, DrawerFooter } from '@/components/ui';
 import PrimaryButton from '@/components/common/PrimaryButton';
+import { DialogClose } from '@radix-ui/react-dialog';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store';
+import { OTP_EXPIRE_SECONDS } from '@/constants';
 
-export const errorOtpStepMessages: Record<number, string> = {
-  400: 'کد وارد شده نادرست است.',
-  403: 'درخواست بیش‌از‌حد. لطفاً {time} بعد دوباره تلاش کنید',
-  409: 'کد قبلاً ارسال شده، {time} بعد امتحان کنید',
-  429: 'درخواست زیاد بود. بعداً تلاش کنید.',
-  500: 'خطای سرور. دوباره امتحان کنید.',
-};
-
-interface OtpFormProps {
-  mobile: string;
-}
-
-const otpValidationSchema = Yup.object({
+const FormSchema = Yup.object().shape({
   otp: Yup.string()
-    .required('لطفاً کد ۶ رقمی را وارد کنید')
-    .matches(/^\d{6}$/, 'لطفاً کد ۶ رقمی را وارد کنید'),
+    .matches(/^\d{6}$/, 'کد یک‌بارمصرف باید دقیقاً ۶ رقم عددی باشد')
+    .required('کد یک‌بارمصرف الزامی است'),
 });
 
-export default function OtpForm({ mobile }: OtpFormProps) {
-  const router = useRouter();
-  const loginUser = useLoginUser();
-  const syncCart = useSyncCart();
-  const { timeLeft, isExpired, formatTime, resetTimer } = useOtpTimer(300);
+interface InputOTPFormProps {
+  isDialog?: boolean;
+}
 
-  const handleSubmit = async (
-    values: { otp: string },
-    {
-      setSubmitting,
-      setErrors,
-      resetForm,
-    }: { setSubmitting: (isSubmitting: boolean) => void; setErrors: (errors: any) => void; resetForm: () => void },
-  ) => {
+type OTPFormValues = { otp: string };
+
+function InputOTPForm({ isDialog }: InputOTPFormProps) {
+  const { verifyOtp, resendOtp, verifyOtpStatus, resendOtpStatus } = useAuth();
+
+  const mobile = useSelector((state: RootState) => state.otp.mobile)!;
+
+  const { otpSentAt } = useSelector((state: RootState) => state.otp);
+
+  const { countdown, startCountdown, counting } = useCountdownSeconds(OTP_EXPIRE_SECONDS);
+  const isExpired = countdown === 0;
+  const timeLeft = secondsToTime(countdown);
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
+  const form = useForm<OTPFormValues>({
+    resolver: yupResolver(FormSchema),
+    defaultValues: {
+      otp: '',
+    },
+  });
+
+  useEffect(() => {
+    if (otpSentAt) {
+      const diff = Math.floor((Date.now() - otpSentAt) / 1000);
+      const left = OTP_EXPIRE_SECONDS - diff;
+      if (left > 0) {
+        startCountdown(left);
+      }
+    }
+  }, [otpSentAt, startCountdown]);
+
+  const handleSubmit = async (values: { otp: string }) => {
     if (isExpired) {
-      setErrors({ otp: 'زمان شما به اتمام رسیده' });
-      resetForm();
+      toast.error('کد یک‌بارمصرف منقضی شده است. لطفا مجددا تلاش کنید.');
       return;
     }
 
-    try {
-      const res = await verifyOtp({ mobile, otp: values.otp });
-      let errorMessage = handleApiError(res.status, errorOtpStepMessages);
+    verifyOtp(
+      { mobile, otp: values.otp },
+      {
+        onError: () => {
+          form.reset();
+          setTimeout(() => inputRef.current?.focus(), 0);
+        },
+      },
+    );
+  };
 
-      if (errorMessage) {
-        if (res.status === 403 || res.status === 409) {
-          errorMessage = errorMessage.replace('{time}', extractTimeFromText(res?.data?.message) ?? 'بعدا');
-        }
-
-        toast.error(errorMessage);
-        resetForm();
-        return;
-      }
-
-      if (res.status === 200 || res.status === 201) {
-        await loginUser({ mobile, role: 'CUSTOMER', full_name: '' });
-        await syncCart();
-        resetTimer();
-        toast.success('ورود شما با موفقیت انجام شد');
-      }
-    } catch (error) {
-      setErrors({ otp: 'کد تأیید نامعتبر است' });
-      resetForm();
-    } finally {
-      setSubmitting(false);
+  const handleResendCode = () => {
+    if (isExpired) {
+      resendOtp(mobile, {
+        onSuccess: () => {
+          startCountdown(OTP_EXPIRE_SECONDS);
+          form.reset();
+        },
+        onError: (error) => {
+          toast.error(error.message);
+          form.reset();
+        },
+      });
     }
   };
 
-  const handleResendOtp = async (setSubmitting: (isSubmitting: boolean) => void) => {
-    try {
-      const res = await sendOtp(mobile);
-      // let errorMessage = handleApiError(res.status, errorPhoneNumberStepMessages);
-
-      // if (errorMessage) {
-      //   if (res.status === 403 || res.status === 409) {
-      //     errorMessage = errorMessage.replace('{time}', extractTimeFromText(res?.data?.message) ?? 'بعدا');
-      //   }
-
-      //   toast.error(errorMessage);
-      //   return;
-      // }
-
-      if (res.status === 200 || res.status === 201) {
-        toast.success('کد تأیید مجدداً ارسال شد');
-        resetTimer();
-      }
-    } catch (error) {
-      toast.error('خطا در ارسال کد تأیید. لطفاً دوباره تلاش کنید');
-    } finally {
-      setSubmitting(false);
-    }
-  };
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const firstOtpInput = document.querySelector<HTMLInputElement>('input[autocomplete="one-time-code"]');
+      firstOtpInput?.focus();
+    }, 300);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
-    <Formik initialValues={{ otp: '' }} validationSchema={otpValidationSchema} onSubmit={handleSubmit}>
-      {({ isSubmitting, setSubmitting, setFieldValue, values, submitForm, validateForm }) => (
-        <Form className="space-y-4">
-          <div dir="ltr" className="flex justify-center">
-            <Field name="otp">
-              {({ field }: any) => (
-                <div className="relative">
-                  <input
-                    {...field}
-                    dir="ltr"
-                    autoFocus
-                    inputMode="numeric"
-                    pattern="[0-9]*"
-                    placeholder="------"
-                    className={`w-full text-center tracking-[0.5em] text-xl sm:text-2xl md:text-3xl py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-primary bg-muted transition-all duration-150 ${
-                      values.otp.length === 6 ? 'ring-2 ring-primary' : ''
-                    }`}
-                    maxLength={6}
-                    value={values.otp}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      const value = e.target.value.replace(/\D/g, '').slice(0, 6);
-                      setFieldValue('otp', value);
-
-                      if (value.length === 6 && !isExpired) {
-                        setTimeout(() => submitForm(), 0);
-                      }
+    <>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(handleSubmit)} className="flex flex-col gap-4">
+          <FormField
+            control={form.control}
+            name="otp"
+            render={({ field }) => (
+              <FormItem className="flex flex-col items-center justify-center">
+                <FormControl>
+                  <InputOTP
+                    disabled={isExpired}
+                    ref={(e) => {
+                      field.ref(e);
+                      inputRef.current = e;
                     }}
-                  />
-                  <ErrorMessage name="otp" component="p" className="text-sm text-red-500 mt-2 text-center" />
-                </div>
-              )}
-            </Field>
-          </div>
+                    inputMode="numeric"
+                    maxLength={6}
+                    value={field.value}
+                    onChange={(value) => field.onChange(value)}
+                    className="w-full"
+                  >
+                    <InputOTPGroup className="flex gap-1 sm:gap-2 flex-row-reverse [direction:ltr] justify-center">
+                      {Array.from({ length: 6 }).map((_, index) => (
+                        <InputOTPSlot key={index} index={index} className="w-12 h-12 text-base sm:text-lg ..." />
+                      ))}
+                    </InputOTPGroup>
+                  </InputOTP>
+                </FormControl>
 
-          <div className="flex flex-col sm:justify-between gap-3">
-            <PrimaryButton type="submit" isLoading={isSubmitting} disabled={isSubmitting || isExpired}>
-              تایید
-            </PrimaryButton>
-
-            {isExpired ? (
-              <button
-                type="button"
-                onClick={() => handleResendOtp(setSubmitting)}
-                disabled={isSubmitting}
-                className="text-sm text-primary hover:underline disabled:text-gray-400 disabled:cursor-not-allowed text-center"
-              >
-                ارسال مجدد کد
-              </button>
-            ) : (
-              <p className="text-primary text-sm text-center mt-4">
-                <span className="font-bold">{formatTime(timeLeft)}</span> مانده تا دریافت مجدد کد
-              </p>
+                <FormMessage className="block h-4 text-xs text-red-500 dark:text-red-400" />
+              </FormItem>
             )}
-          </div>
-        </Form>
+          />
+        </form>
+      </Form>
+
+      <Button
+        variant="ghost"
+        onClick={handleResendCode}
+        className="mt-1 text-sm text-gray-500 dark:text-gray-400 text-center cursor-pointer"
+        disabled={counting || resendOtpStatus === 'pending' || !isExpired}
+      >
+        {counting ? (
+          <>
+            ارسال مجدد کد ({String(timeLeft.minutes).padStart(2, '0')}:{String(timeLeft.seconds).padStart(2, '0')})
+          </>
+        ) : (
+          <>{resendOtpStatus === 'pending' ? 'در حال ارسال...' : 'ارسال مجدد کد'}</>
+        )}
+      </Button>
+
+      {isDialog ? (
+        <DialogFooter>
+          <PrimaryButton
+            isLoading={verifyOtpStatus === 'pending'}
+            disabled={form.formState.isSubmitting || isExpired}
+            onClick={form.handleSubmit(handleSubmit)}
+            className="flex-1"
+          >
+            ارسال کد ورود
+          </PrimaryButton>
+          <DialogClose asChild>
+            <Button variant="secondary" className="w-24">
+              بستن
+            </Button>
+          </DialogClose>
+        </DialogFooter>
+      ) : (
+        <DrawerFooter className="h-auto flex-shrink-0">
+          <PrimaryButton
+            isLoading={verifyOtpStatus === 'pending'}
+            disabled={form.formState.isSubmitting || isExpired}
+            onClick={form.handleSubmit(handleSubmit)}
+            className="flex-1"
+          >
+            ارسال کد ورود
+          </PrimaryButton>
+
+          <DrawerClose asChild>
+            <Button variant="secondary" className="w-24">
+              بستن
+            </Button>
+          </DrawerClose>
+        </DrawerFooter>
       )}
-    </Formik>
+    </>
   );
 }
+
+export default InputOTPForm;

@@ -2,13 +2,13 @@
 
 import { useEffect, useState, useCallback } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import ProductCard from '@/components/features/product/ProductCard';
 import { getProducts } from '@/features/products/api';
 import LoadingDots from '@/features/shopPage/LoadingDots';
 import Pagination from '@/features/shopPage/shop/Pagination';
 import { Pager } from '@/types/pagerType';
-import { Product, ProductParams } from '@/features/products/productType';
 import { useSearchParams } from 'next/navigation';
+import ProductCard from '../products/components/ProductCard';
+import { Product, ProductParams } from '../products/types';
 
 interface ProductListShopProps {
   initialProducts: Product[];

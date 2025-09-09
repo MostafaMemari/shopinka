@@ -1,4 +1,4 @@
-import { Product } from '@/features/products/productType';
+import { Product } from '@/features/products/types';
 import { formatPrice } from '@/utils/formatter';
 import Image from 'next/image';
 import Link from 'next/link';

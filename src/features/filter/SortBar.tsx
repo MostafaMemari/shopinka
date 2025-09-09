@@ -1,7 +1,8 @@
 'use client';
 
+import { Card } from '@/components/ui';
+import { ArrowDownWideNarrow } from 'lucide-react';
 import { useQueryState } from 'nuqs';
-import { BsSortDown } from 'react-icons/bs';
 
 type SortOption = {
   label: string;
@@ -33,10 +34,10 @@ const SortBar = ({ options, queryKey = 'sortBy', title = 'مرتب‌سازی ب
   };
 
   return (
-    <div className={`hidden md:block ${className}`}>
-      <div className="flex h-14 items-center gap-x-2 rounded-lg bg-muted px-2 text-text/90 shadow-base lg:px-4">
+    <Card className={`hidden md:block p-2 ${className}`}>
+      <div className="flex items-center gap-x-2 text-text/90">
         <div className="flex items-center gap-x-2 text-sm lg:text-base">
-          <BsSortDown className="h-6 w-6" />
+          <ArrowDownWideNarrow className="h-6 w-6" />
           <p>{title}</p>
         </div>
         {Object.entries(options).map(([key, { label }]) => (
@@ -51,7 +52,7 @@ const SortBar = ({ options, queryKey = 'sortBy', title = 'مرتب‌سازی ب
           </button>
         ))}
       </div>
-    </div>
+    </Card>
   );
 };
 

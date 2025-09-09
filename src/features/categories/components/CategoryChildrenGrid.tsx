@@ -2,8 +2,10 @@
 
 import { useEffect, useState } from 'react';
 import { Category } from '@/features/categories/types';
-import { HiPlus } from 'react-icons/hi';
 import CategoryItemShop from './CategoryItemShop';
+import { Plus } from 'lucide-react';
+import { useIsMounted } from '@/hooks/useIsMounted';
+import { Skeleton } from '@/components/ui';
 
 interface CategoryChildrenGridProps {
   name: string;
@@ -42,6 +44,19 @@ function useResponsiveVisibleCount() {
 export default function CategoryChildrenGrid({ name, categories, basePath }: CategoryChildrenGridProps) {
   const [showAll, setShowAll] = useState(false);
   const visibleCount = useResponsiveVisibleCount();
+  const isMounted = useIsMounted();
+
+  if (!isMounted)
+    return (
+      <section className="mb-6">
+        <Skeleton className="h-8 w-48 mb-4" />
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8 gap-4">
+          {Array.from({ length: 2 }).map((_, index) => (
+            <Skeleton key={index} className="h-32 w-full rounded-lg" />
+          ))}
+        </div>
+      </section>
+    );
 
   if (!categories?.length || visibleCount === null) return null;
 
@@ -78,17 +93,7 @@ export default function CategoryChildrenGrid({ name, categories, basePath }: Cat
           </div>
         ))}
 
-        {shouldShowMore && (
-          <div>
-            <CategoryItemShop
-              name="مشاهده بیشتر"
-              onClick={() => setShowAll(true)}
-              icon={<HiPlus className="text-gray-500" size={36} />}
-              isButton
-              className="cursor-pointer"
-            />
-          </div>
-        )}
+        {shouldShowMore && <CategoryItemShop name="مشاهده بیشتر" onClick={() => setShowAll(true)} icon={<Plus size={36} />} isButton />}
       </div>
     </section>
   );

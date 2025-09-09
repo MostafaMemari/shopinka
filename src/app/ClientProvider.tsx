@@ -8,7 +8,7 @@ import { store } from '@/store';
 import { DirectionProvider } from '@radix-ui/react-direction';
 import { useFixedAppHeight } from '@/hooks/useFixedAppHeight';
 import AuthInitializer from '@/features/auth/components/AuthInitializer';
-import { AuthDialogDrawer } from '@/components/layout/header/ProfileDropdown/AuthDialogDrawer';
+import { AuthDialogDrawer } from '@/features/auth/components/AuthDialogDrawer';
 
 interface Props {
   children: React.ReactNode;

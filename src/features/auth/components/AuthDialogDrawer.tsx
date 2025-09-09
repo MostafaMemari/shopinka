@@ -5,13 +5,13 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle } from '@/components/ui/drawer';
 
 import PhoneInputForm from '@/features/auth/components/PhoneInputForm';
-import InputOTPForm from './OtpForm2';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { closeDialog } from '@/store/slices/authDialogSlice';
 import { OTP_EXPIRE_SECONDS } from '@/constants';
 import { useAppSelector } from '@/store/hooks';
+import InputOTPForm from './OtpForm';
 
 export function AuthDialogDrawer() {
   const dispatch = useDispatch();

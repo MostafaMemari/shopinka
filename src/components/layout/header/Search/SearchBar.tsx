@@ -3,11 +3,11 @@
 import { Search } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { useDebounce } from 'use-debounce';
-import { Product } from '@/features/products/productType';
 import { useProducts } from '@/features/products/hooks/useProduct';
 import SearchItem from './SearchItem';
-import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
+import { Product } from '@/features/products/types';
+import { ScrollArea } from '@/components/ui';
 
 const SearchBar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -65,7 +65,7 @@ const SearchBar = () => {
             'absolute inset-x-0 top-full z-50 w-full overflow-hidden rounded-b-lg border border-t-transparent bg-background shadow-lg',
           )}
         >
-          <div className="max-h-[400px] overflow-y-auto p-4">
+          <ScrollArea className="h-[400px] rounded-md border overflow-y-auto p-4">
             {isFetching && isLoading ? (
               <p className="text-center text-muted-foreground">در حال بارگذاری...</p>
             ) : productItems.length === 0 ? (
@@ -77,7 +77,7 @@ const SearchBar = () => {
                 ))}
               </ul>
             )}
-          </div>
+          </ScrollArea>
         </div>
       )}
     </div>

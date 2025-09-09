@@ -1,7 +1,6 @@
 import { getProducts } from '@/features/products/api';
 import { loadSearchParams } from '@/utils/loadSearchParams';
 import { parseArrayParam } from '@/utils/parseArrayParam';
-import { PRODUCT_SORT_OPTIONS, ProductParams } from '@/features/products/productType';
 import { SearchParams } from 'nuqs';
 import SortBar from '@/features/filter/SortBar';
 import MobileFilter from '@/features/filter/MobileFilter';
@@ -12,6 +11,7 @@ import CategoryHeaderSection from '@/features/categories/components/CategoryHead
 import ProductListShop from '@/features/shopPage/ProductListShop';
 import SidebarFilters from '@/features/filter/SidebarFilters';
 import SearchInput from '@/features/filter/SearchInput';
+import { PRODUCT_SORT_OPTIONS, ProductParams } from '@/features/products/types';
 
 type PageProps = {
   searchParams: Promise<SearchParams>;
@@ -67,7 +67,7 @@ export default async function ShopPage({ searchParams, params }: PageProps) {
         </div>
         <div className="flex items-center justify-center gap-x-4">
           <MobileFilter totalCount={pager.totalCount} categories={category.children} type="SHOP" />
-          <MobileSortDrawer />
+          <MobileSortDrawer options={PRODUCT_SORT_OPTIONS} />
         </div>
       </div>
       <div className="grid grid-cols-12 grid-rows-[60px_min(500px,_1fr)] gap-4">
