@@ -18,9 +18,9 @@ import { useIsMounted } from '@/hooks/useIsMounted';
 import Link from 'next/link';
 import { useDispatch } from 'react-redux';
 import { openDialog } from '@/store/slices/authDialogSlice';
-import ConfirmDialog from '@/features/cart/components/ConfirmDialog';
 import { useBoolean } from '@/hooks/use-boolean';
 import { useCart } from '@/features/cart/hooks/useCart';
+import ConfirmDialog from '@/components/common/ConfirmDialog';
 
 function CartPageView() {
   const router = useRouter();
@@ -138,10 +138,10 @@ function CartPageView() {
 
       <ConfirmDialog
         open={confirmDialogDrawer.value}
-        isLoadingConfirm={isClearOnCart}
+        isConfirmLoading={isClearOnCart}
         onOpenChange={confirmDialogDrawer.onToggle}
         title="حذف محصول"
-        text="آیا مطمئن هستید که می‌خواهید این محصول را حذف کنید؟"
+        description="آیا مطمئن هستید که می‌خواهید این محصول را حذف کنید؟"
         onConfirm={() => clearAllCartItems()}
       />
     </>

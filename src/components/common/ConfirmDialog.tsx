@@ -12,16 +12,19 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import PrimaryButton from './PrimaryButton';
 
 interface ConfirmDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   title: string;
   description?: string;
-  confirmText?: string;
-  cancelText?: string;
+  confirmLabel?: string;
+  cancelLabel?: string;
   onConfirm: () => void;
   className?: string;
+  trigger?: React.ReactNode;
+  isConfirmLoading?: boolean;
 }
 
 const ConfirmDialog: FC<ConfirmDialogProps> = ({
@@ -29,24 +32,29 @@ const ConfirmDialog: FC<ConfirmDialogProps> = ({
   onOpenChange,
   title,
   description,
-  confirmText = 'تأیید',
-  cancelText = 'انصراف',
+  confirmLabel = 'تأیید',
+  cancelLabel = 'انصراف',
   onConfirm,
   className,
+  trigger,
+  isConfirmLoading = false,
 }) => {
   return (
     <ShadcnDialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className={cn('max-w-sm p-5', className)} aria-describedby="confirm-dialog-description">
-        <DialogHeader className="border-b pb-3">
+      {trigger && <DialogClose asChild>{trigger}</DialogClose>}
+      <DialogContent className={cn('max-w-sm p-5', className)}>
+        <DialogHeader className="pb-3">
           <DialogTitle>{title}</DialogTitle>
           {description && <DialogDescription>{description}</DialogDescription>}
         </DialogHeader>
 
-        <DialogFooter className="pt-4 border-t flex gap-2 items-center justify-end">
+        <DialogFooter className="flex gap-2 items-center justify-end">
           <DialogClose asChild>
-            <Button variant="secondary">{cancelText}</Button>
+            <Button variant="secondary">{cancelLabel}</Button>
           </DialogClose>
-          <Button onClick={onConfirm}>{confirmText}</Button>
+          <PrimaryButton onClick={onConfirm} isLoading={isConfirmLoading}>
+            {confirmLabel}
+          </PrimaryButton>
         </DialogFooter>
       </DialogContent>
     </ShadcnDialog>

@@ -6,7 +6,7 @@ import StockStatusFilter from '../shopPage/FilterDesktop/StockStatusFilter';
 import DiscountFilter from '../shopPage/FilterDesktop/DiscountFilter';
 import CategorySelector from '../categories/components/CategorySelector';
 import { Category } from '@/features/categories/types';
-import { Button } from '@/components/ui';
+import { Button } from '@/components/ui/button';
 import { Funnel } from 'lucide-react';
 
 interface MobileFilterProps {

@@ -1,21 +1,31 @@
 'use client';
 
 import { FC, ReactNode } from 'react';
-import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerFooter, DrawerClose, DrawerTrigger } from '@/components/ui/drawer';
+import {
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerFooter,
+  DrawerClose,
+  DrawerTrigger,
+  DrawerDescription,
+} from '@/components/ui/drawer';
 import { cn } from '@/lib/utils';
-import { Button } from '../ui/button';
+import { Button } from '@/components/ui/button';
+import PrimaryButton from './PrimaryButton';
 
 interface ConfirmDrawerProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  title?: string;
+  title: string;
   description?: string;
   confirmLabel?: string;
   cancelLabel?: string;
   onConfirm: () => void;
   trigger?: ReactNode;
   className?: string;
-  confirmLoading?: boolean;
+  isConfirmLoading?: boolean;
 }
 
 const ConfirmDrawer: FC<ConfirmDrawerProps> = ({
@@ -28,26 +38,26 @@ const ConfirmDrawer: FC<ConfirmDrawerProps> = ({
   onConfirm,
   trigger,
   className,
-  confirmLoading = false,
+  isConfirmLoading = false,
 }) => {
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
       {trigger && <DrawerTrigger asChild>{trigger}</DrawerTrigger>}
-      <DrawerContent className={cn('fixed inset-x-0 bottom-0 h-auto mt-0 mb-0', className)} aria-labelledby="confirm-drawer-title">
-        <DrawerHeader className="text-left pb-3 border-b mb-3">
-          <DrawerTitle id="confirm-drawer-title">{title}</DrawerTitle>
-          {description && <p className="text-sm text-muted-foreground">{description}</p>}
+      <DrawerContent className={cn('fixed inset-x-0 bottom-0 h-auto mt-0 mb-0', className)}>
+        <DrawerHeader className="text-left pb-3 mb-3">
+          <DrawerTitle>{title}</DrawerTitle>
+          {description && <DrawerDescription className="text-sm text-muted-foreground">{description}</DrawerDescription>}
         </DrawerHeader>
 
-        <DrawerFooter className="border-t mt-3 flex items-center justify-between gap-2">
+        <DrawerFooter className="flex items-center justify-between gap-2">
+          <PrimaryButton onClick={onConfirm} disabled={isConfirmLoading} className="w-full">
+            {isConfirmLoading ? '' : confirmLabel}
+          </PrimaryButton>
           <DrawerClose asChild>
-            <Button variant="secondary" className="w-24">
+            <Button variant="secondary" className="w-full">
               {cancelLabel}
             </Button>
           </DrawerClose>
-          <Button onClick={onConfirm} disabled={confirmLoading} className="w-24">
-            {confirmLoading ? 'در حال انجام...' : confirmLabel}
-          </Button>
         </DrawerFooter>
       </DrawerContent>
     </Drawer>

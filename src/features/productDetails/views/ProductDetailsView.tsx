@@ -16,7 +16,7 @@ import ProductGuaranteeBadge from '../ProductGuaranteeBadge';
 import FavoriteProductAction from '../ActionButtons/FavoriteProductAction';
 import ShareProductAction from '../ActionButtons/ShareProductAction';
 import CartMobileFixContainer from '@/components/common/CartMobileFixContainer';
-import { Card } from '@/components/ui';
+import { Card } from '@/components/ui/card';
 import { ProductDetails } from '@/features/products/types';
 
 interface ProductDetailsViewProps {

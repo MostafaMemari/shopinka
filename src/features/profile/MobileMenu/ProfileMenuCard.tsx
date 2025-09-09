@@ -1,12 +1,12 @@
 'use client';
 
-import MobileDrawer from '@/components/common/Drawer';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { FaUserCircle } from 'react-icons/fa';
 import ProfileMenu from '../ProfileMenu';
 import { useIsMounted } from '@/hooks/useIsMounted';
 import { useAppSelector } from '@/store/hooks';
-import { Button, Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from '@/components/ui';
+import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from '@/components/ui/drawer';
+import { Button } from '@/components/ui/button';
 import { useBoolean } from '@/hooks/use-boolean';
 import { Menu } from 'lucide-react';
 import { useMediaQuery } from '@/hooks/use-media-query';

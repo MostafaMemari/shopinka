@@ -1,13 +1,12 @@
 'use client';
 
 import { profileMenuItem } from '@/data/profileMenuItem';
-import { toast } from 'sonner';
 import { cn } from '@/utils/utils';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { HiOutlineLogout } from 'react-icons/hi';
-import { ScrollArea } from '@/components/ui';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 type ProfileMenuProps = {
   onClose?: () => void;

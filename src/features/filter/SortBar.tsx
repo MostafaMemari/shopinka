@@ -1,6 +1,6 @@
 'use client';
 
-import { Card } from '@/components/ui';
+import { Card } from '@/components/ui/card';
 import { ArrowDownWideNarrow } from 'lucide-react';
 import { useQueryState } from 'nuqs';
 

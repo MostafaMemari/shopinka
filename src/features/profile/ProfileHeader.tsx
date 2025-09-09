@@ -3,7 +3,7 @@
 import { FaUserCircle } from 'react-icons/fa';
 import { useIsMounted } from '@/hooks/useIsMounted';
 import { useAppSelector } from '@/store/hooks';
-import { Skeleton } from '@/components/ui';
+import { Skeleton } from '@/components/ui/skeleton';
 
 function ProfileHeader() {
   const { user, isLoading } = useAppSelector((state) => state.auth);

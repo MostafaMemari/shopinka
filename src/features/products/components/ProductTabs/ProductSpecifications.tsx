@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import MobileDrawer from '@/components/common/Drawer';
 import { IoChevronBack } from 'react-icons/io5';
-import { Drawer, DrawerContent, DrawerHeader } from '@/components/ui';
+import { Drawer, DrawerContent, DrawerHeader } from '@/components/ui/drawer';
 
 interface ProductSpecificationsProps {
   specifications: Array<{

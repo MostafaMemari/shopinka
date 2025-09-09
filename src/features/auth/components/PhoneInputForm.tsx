@@ -55,7 +55,7 @@ function PhoneInputForm({ className, ref, sendOtp }: PhoneInputFormProps) {
   return (
     <>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(handleSubmit)} ref={ref} className={cn('flex flex-col gap-4', className)}>
+        <form onSubmit={form.handleSubmit(handleSubmit)} ref={ref} className={cn('flex flex-col gap-4 mt-1', className)}>
           <FormField
             control={form.control}
             name="mobile"
@@ -84,7 +84,7 @@ function PhoneInputForm({ className, ref, sendOtp }: PhoneInputFormProps) {
         </form>
       </Form>
 
-      <p className="text-center text-sm text-text/90 pb-1">
+      <p className="text-center text-sm text-text/90 pt-3">
         با ورود به فروشگاه،
         <Link href="/info/terms-of-service" className="text-primary">
           {' '}

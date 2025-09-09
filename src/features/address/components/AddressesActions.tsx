@@ -10,7 +10,7 @@ import EmptyState from '../../profile/EmptyState';
 export default function AddressSection() {
   const { data, isLoading, error } = useAddress({});
 
-  const addresses = data?.data.items || [];
+  const addresses = data?.items || [];
 
   return (
     <>

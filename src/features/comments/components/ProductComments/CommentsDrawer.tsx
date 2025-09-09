@@ -6,7 +6,8 @@ import Recommendation from './Recommendation';
 import { useComment } from '@/features/comments/hooks/useComment';
 import { FaUserCircle } from 'react-icons/fa';
 import ReplyComment from '../AddReplyComment/ReplyComment';
-import { Card, CardContent, CardHeader, CardTitle, Drawer, DrawerContent, DrawerHeader, DrawerTitle } from '@/components/ui';
+import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from '@/components/ui/drawer';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useBoolean } from '@/hooks/use-boolean';
 
 interface CommentsDrawerProps {

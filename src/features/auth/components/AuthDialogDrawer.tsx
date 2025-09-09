@@ -80,13 +80,3 @@ export function AuthDialogDrawer() {
     </MobileDrawer>
   );
 }
-
-// <Drawer open={open} modal={false} onOpenChange={handleClose}>
-//   <DrawerContent className="fixed inset-x-0 bottom-0 !mt-0 !mb-0 !h-auto" onEscapeKeyDown={(e) => e.preventDefault()}>
-//     <DrawerHeader className="text-left pb-3">
-//       <DrawerTitle>{title}</DrawerTitle>
-//       <DrawerDescription>{description}</DrawerDescription>
-//     </DrawerHeader>
-//     {!otpStep ? <PhoneInputForm key="mobile" className="px-4 pb-1" /> : <InputOTPForm key="otp" />}
-//   </DrawerContent>
-// </Drawer>

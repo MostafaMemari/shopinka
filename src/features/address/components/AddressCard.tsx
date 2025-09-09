@@ -1,20 +1,21 @@
 import React from 'react';
 import { type AddressItem } from '@/features/address/types';
 import { useAddress } from '@/features/address/hooks';
-import { Card, CardContent, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { Card, CardContent } from '@/components/ui/card';
 import { EllipsisVertical, Pencil, Square, SquareCheckBig, Trash } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { UpdateAddressDialogDrawer } from './UpdateAddressDialogDrawer';
 import { useBoolean } from '@/hooks/use-boolean';
-import ConfirmDialog from '../../cart/components/ConfirmDialog';
 import { formatFullAddress } from '@/utils/address';
+import RemoveAddressConfirm from './RemoveAddressConfirm';
 
 interface AddressCardProps {
   item: AddressItem;
 }
 
 const AddressCard: React.FC<AddressCardProps> = ({ item }) => {
-  const { setDefaultAddress, deleteAddress, isDeleteAddressLoading, isSetDefaultAddressLoading } = useAddress({});
+  const { setDefaultAddress, isSetDefaultAddressLoading } = useAddress({});
   const updateAddressDialog = useBoolean(false);
   const deleteAddressDialog = useBoolean(false);
 
@@ -85,15 +86,7 @@ const AddressCard: React.FC<AddressCardProps> = ({ item }) => {
       </Card>
 
       <UpdateAddressDialogDrawer open={updateAddressDialog.value} onOpenChange={updateAddressDialog.onToggle} item={item} />
-
-      <ConfirmDialog
-        open={deleteAddressDialog.value}
-        isLoadingConfirm={isDeleteAddressLoading}
-        onOpenChange={deleteAddressDialog.onToggle}
-        title="حذف آدرس"
-        text="آیا مطمئن هستید که می‌خواهید این آدرس را حذف کنید؟"
-        onConfirm={() => deleteAddress(item.id)}
-      />
+      <RemoveAddressConfirm key={item.id} addressId={item.id} control={deleteAddressDialog} />
     </>
   );
 };

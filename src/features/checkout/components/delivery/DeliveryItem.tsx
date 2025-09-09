@@ -1,4 +1,4 @@
-import { Card, CardContent, CardTitle } from '@/components/ui';
+import { Card, CardContent, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { ShippingItem } from '@/features/shippings/types';
 import { formatPrice } from '@/utils/formatter';

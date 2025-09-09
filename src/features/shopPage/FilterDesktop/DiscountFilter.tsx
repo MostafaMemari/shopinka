@@ -1,6 +1,6 @@
 'use client';
 
-import { Label } from '@/components/ui';
+import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { useResetPageOnQueryChange } from '@/hooks/useResetPageOnQueryChange';
 import { useQueryState } from 'nuqs';

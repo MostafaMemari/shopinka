@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { PlaceholderImageEnum } from '@/types/enums/PlaceholderImageEnum';
 import { ReactNode } from 'react';
 import { cn } from '@/lib/utils';
-import { Card } from '@/components/ui';
+import { Card } from '@/components/ui/card';
 
 interface CategoryListGridItemProps {
   name: string;

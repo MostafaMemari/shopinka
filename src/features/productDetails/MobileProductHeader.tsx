@@ -8,7 +8,7 @@ import FavoriteProductAction from './ActionButtons/FavoriteProductAction';
 import CartIconTotalQuantity from '../cart/components/CartIconTotalQuantity';
 import { useIsMounted } from '@/hooks/useIsMounted';
 import ShareProductAction from './ActionButtons/ShareProductAction';
-import { Skeleton } from '@/components/ui';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface MobileHeaderProps {
   productId: number;
