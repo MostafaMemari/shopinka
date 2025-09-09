@@ -1,17 +1,20 @@
-import React, { ReactNode } from 'react';
+'use client';
 
-interface CartMobileContainerProps {
+import { ReactNode } from 'react';
+import { Card } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
+
+interface MobileCartStickyFooterProps {
   children: ReactNode;
+  className?: string;
 }
 
-function CartMobileFixContainer({ children }: CartMobileContainerProps) {
+export default function MobileCartStickyFooter({ children, className }: MobileCartStickyFooterProps) {
   return (
     <div className="md:hidden">
-      <div className="fixed bottom-3 right-3 left-3 rounded-2xl z-50 bg-white shadow-md">
-        <div className="flex justify-between items-center text-xs rtl flex-row-reverse h-[60px]">{children}</div>
-      </div>
+      <Card className={cn('fixed bottom-3 right-3 left-3 z-50 p-0', className)} role="region" aria-label="سبد خرید موبایل">
+        <div className="flex justify-between items-center text-xs h-14 rtl:flex-row-reverse">{children}</div>
+      </Card>
     </div>
   );
 }
-
-export default CartMobileFixContainer;

@@ -43,7 +43,7 @@ export function AuthDialogDrawer() {
       </DialogContent>
     </Dialog>
   ) : (
-    <Drawer open={open} modal onOpenChange={handleClose}>
+    <Drawer open={open} modal={false} onOpenChange={handleClose}>
       <DrawerContent className="fixed inset-x-0 bottom-0 !mt-0 !mb-0 !h-auto" onEscapeKeyDown={(e) => e.preventDefault()}>
         <DrawerHeader className="text-left pb-3">
           <DrawerTitle>{title}</DrawerTitle>

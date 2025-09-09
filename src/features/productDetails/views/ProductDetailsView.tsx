@@ -1,5 +1,3 @@
-import { type ProductDetails } from '@/features/products/productType';
-
 import BreadcrumbContainer from '../BreadcrumbContainer';
 import ProductGallery from '../ProductGallery/ProductGallery';
 import ProductGuarantees from '../ProductGuarantees';
@@ -19,6 +17,7 @@ import FavoriteProductAction from '../ActionButtons/FavoriteProductAction';
 import ShareProductAction from '../ActionButtons/ShareProductAction';
 import CartMobileFixContainer from '@/components/common/CartMobileFixContainer';
 import { Card } from '@/components/ui';
+import { ProductDetails } from '@/features/products/types';
 
 interface ProductDetailsViewProps {
   product: ProductDetails;

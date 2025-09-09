@@ -9,7 +9,6 @@ const Profile = ({}) => (
       <DashboardHeader title="پیشخوان" />
     </div>
     <UserAccountSection />
-    {/* <OrderStatusSection /> */}
   </>
 );
 

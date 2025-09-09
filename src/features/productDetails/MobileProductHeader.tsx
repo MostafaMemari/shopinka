@@ -4,12 +4,9 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 import { IoIosArrowBack } from 'react-icons/io';
 import { RiHome3Line } from 'react-icons/ri';
-import { HiOutlineShare } from 'react-icons/hi';
 import FavoriteProductAction from './ActionButtons/FavoriteProductAction';
-import SkeletonLoader from '../../components/common/SkeletonLoader';
 import CartIconTotalQuantity from '../cart/components/CartIconTotalQuantity';
 import { useIsMounted } from '@/hooks/useIsMounted';
-import { useAppSelector } from '@/store/hooks';
 import ShareProductAction from './ActionButtons/ShareProductAction';
 import { Skeleton } from '@/components/ui';
 
@@ -18,7 +15,6 @@ interface MobileHeaderProps {
 }
 
 const MobileHeader = ({ productId }: MobileHeaderProps) => {
-  const { isLogin } = useAppSelector((state) => state.auth);
   const router = useRouter();
   const isMounted = useIsMounted();
 
@@ -63,7 +59,7 @@ const MobileHeader = ({ productId }: MobileHeaderProps) => {
               <FavoriteProductAction productId={productId} className="p-3 cursor-pointer" />
 
               <button onClick={handleCart} className="p-3 cursor-pointer" aria-label="Add to Cart">
-                <CartIconTotalQuantity isLogin={isLogin} />
+                <CartIconTotalQuantity />
               </button>
             </div>
           </>

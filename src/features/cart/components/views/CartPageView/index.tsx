@@ -5,10 +5,8 @@ import { PiBasketFill } from 'react-icons/pi';
 import { HiOutlineTrash } from 'react-icons/hi';
 
 import CartPageItem from '@/features/cart/components/views/CartPageView/CartPageItem';
-import showConfirmDialog from '@/features/cart/components/ConfirmDialog';
 import CartSummary from '@/features/cart/components/CartSummary';
 import PrimaryButton from '@/components/common/PrimaryButton';
-import { useCart } from '@/hooks/reactQuery/cart/useCart';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 import ErrorState from '@/features/profile/ErrorState';
 import EmptyState from '@/features/profile/EmptyState';
@@ -22,6 +20,7 @@ import { useDispatch } from 'react-redux';
 import { openDialog } from '@/store/slices/authDialogSlice';
 import ConfirmDialog from '@/features/cart/components/ConfirmDialog';
 import { useBoolean } from '@/hooks/use-boolean';
+import { useCart } from '@/features/cart/hooks/useCart';
 
 function CartPageView() {
   const router = useRouter();
