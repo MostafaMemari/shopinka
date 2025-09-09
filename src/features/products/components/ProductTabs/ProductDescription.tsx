@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import MobileDrawer from '@/components/common/Drawer';
-import { IoChevronBack } from 'react-icons/io5';
+import { ChevronLeft } from 'lucide-react';
 
 interface Props {
   description: string;
@@ -46,12 +46,12 @@ export default function ProductDescription({ description }: Props) {
         <div className="flex justify-center">
           <button className="btn-secondary-nobg hidden md:flex" onClick={handleDesktopToggle}>
             {isExpanded ? 'بستن' : 'مشاهده بیشتر'}
-            <IoChevronBack className="h-5 w-5" />
+            <ChevronLeft className="h-5 w-5" />
           </button>
 
           <button type="button" onClick={() => setIsOpenDrawer(true)} className="btn-secondary-nobg md:hidden">
             مشاهده بیشتر
-            <IoChevronBack className="h-5 w-5" />
+            <ChevronLeft className="h-5 w-5" />
           </button>
         </div>
       )}

@@ -1,12 +1,13 @@
 'use client';
 
 import ProfileMenu from './ProfileMenu';
-import { Button, Skeleton } from '@/components/ui';
 import { useIsMounted } from '@/hooks/useIsMounted';
 import { LogIn } from 'lucide-react';
 import { useDispatch } from 'react-redux';
 import { openDialog } from '@/store/slices/authDialogSlice';
 import { useAppSelector } from '@/store/hooks';
+import { Button } from '@/components/ui/button';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const ProfileDropdown = () => {
   const { isLogin } = useAppSelector((state) => state.auth);

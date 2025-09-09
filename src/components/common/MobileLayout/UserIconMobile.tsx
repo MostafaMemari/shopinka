@@ -1,8 +1,9 @@
-import { Skeleton } from '@/components/ui';
 import { useIsMounted } from '@/hooks/useIsMounted';
 import { cn } from '@/lib/utils';
 import { Check, User } from 'lucide-react';
 import React from 'react';
+
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface UserIconMobileProps {
   isLogin: boolean;

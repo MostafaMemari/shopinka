@@ -6,15 +6,15 @@ import { Button } from '../ui/button';
 interface PrimaryButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
   isLoading?: boolean;
-  disabled?: boolean;
-  onClick?: () => void;
   className?: string;
+  disabled?: boolean;
 }
 
-export default function PrimaryButton({ children, isLoading = false, disabled, onClick, className, ...props }: PrimaryButtonProps) {
+export default function PrimaryButton({ children, isLoading = false, className, disabled, ...props }: PrimaryButtonProps) {
   return (
-    <Button className={cn(className)} onClick={onClick} disabled={disabled || isLoading} {...props}>
-      {isLoading ? <Loader2Icon className="animate-spin" /> : children}
+    <Button className={cn('relative', className)} disabled={disabled || isLoading} {...props}>
+      {isLoading && <Loader2Icon className="absolute left-2 h-4 w-4 animate-spin" />}
+      <span className={cn(isLoading && 'opacity-0')}>{children}</span>
     </Button>
   );
 }

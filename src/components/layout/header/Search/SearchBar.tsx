@@ -7,7 +7,8 @@ import { useProducts } from '@/features/products/hooks/useProduct';
 import SearchItem from './SearchItem';
 import { cn } from '@/lib/utils';
 import { Product } from '@/features/products/types';
-import { ScrollArea } from '@/components/ui';
+
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 const SearchBar = () => {
   const [isOpen, setIsOpen] = useState(false);

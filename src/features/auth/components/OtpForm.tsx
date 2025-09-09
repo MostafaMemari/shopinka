@@ -10,12 +10,10 @@ import { useEffect, useRef } from 'react';
 import { useCountdownSeconds } from '@/hooks/use-countdown';
 import { secondsToTime } from '@/utils/utils';
 import { useAuth } from '@/features/auth/hooks/useAuth';
-import { Button, DialogFooter, DrawerClose, DrawerFooter } from '@/components/ui';
-import PrimaryButton from '@/components/common/PrimaryButton';
-import { DialogClose } from '@radix-ui/react-dialog';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { OTP_EXPIRE_SECONDS } from '@/constants';
+import { Button } from '@/components/ui/button';
 
 const FormSchema = Yup.object().shape({
   otp: Yup.string()

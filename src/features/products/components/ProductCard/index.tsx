@@ -4,8 +4,8 @@ import { FC } from 'react';
 import ProductPrice from './ProductPrice';
 import Link from 'next/link';
 import ProductImage from './ProductImage';
-import { Product } from '@/features/products/productType';
-import { Card } from '@/components/ui';
+import { Product } from '../../types';
+import { Card } from '@/components/ui/card';
 
 interface Props {
   product: Product;

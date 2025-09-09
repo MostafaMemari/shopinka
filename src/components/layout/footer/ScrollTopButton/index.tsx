@@ -1,8 +1,9 @@
 'use client';
 
-import { Button } from '@/components/ui';
 import { ChevronUp } from 'lucide-react';
 import { FC, useEffect } from 'react';
+
+import { Button } from '@/components/ui/button';
 
 const ScrollTopButton: FC = () => {
   useEffect(() => {

@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import { ScrollArea, Button, HoverCard, HoverCardTrigger, HoverCardContent } from '@/components/ui';
 import { cn } from '@/lib/utils';
 import DesktopBasketItem from './DesktopBasketItem';
 import { formatPrice } from '@/utils/formatter';
@@ -9,6 +8,10 @@ import CartIconTotalQuantity from '../CartIconTotalQuantity';
 import { useRouter } from 'next/navigation';
 import { ChevronLeft, ShoppingCart } from 'lucide-react';
 import { useCart } from '../../hooks/useCart';
+
+import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Button } from '@/components/ui/button';
 
 export default function BasketDropdown() {
   const { cart } = useCart();

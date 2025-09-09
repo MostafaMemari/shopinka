@@ -7,7 +7,7 @@ import NextTopLoader from 'nextjs-toploader';
 import { Suspense } from 'react';
 import Loading from './loading';
 import ScrollToTop from '@/components/common/ScrollToTop';
-import { Toaster } from '@/components/ui';
+import { Toaster } from '@/components/ui/sonner';
 
 export const metadata = {
   title: {

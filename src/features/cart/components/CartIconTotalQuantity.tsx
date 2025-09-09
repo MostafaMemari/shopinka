@@ -1,10 +1,11 @@
 'use client';
 
-import { Skeleton } from '@/components/ui';
 import { useIsMounted } from '@/hooks/useIsMounted';
 import { cn } from '@/lib/utils';
 import { ShoppingCart } from 'lucide-react';
 import { useCart } from '../hooks/useCart';
+
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface CartIconTotalQuantityProps {
   className?: string;
@@ -21,9 +22,7 @@ function CartIconTotalQuantity({ className }: CartIconTotalQuantityProps) {
       <ShoppingCart size={22} className="text-gray-700 dark:text-gray-200 transition-colors duration-200" />
 
       {!isMounted ? (
-        <>
-          <Skeleton className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-md" />
-        </>
+        <Skeleton className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-md" />
       ) : (
         totalQuantity > 0 && (
           <span

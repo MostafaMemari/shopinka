@@ -2,7 +2,7 @@ import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuL
 import { cn } from '@/lib/utils';
 import { ShoppingBag } from 'lucide-react';
 import Link from 'next/link';
-import { HoverCard, HoverCardContent, HoverCardTrigger } from '../../../ui';
+import { HoverCard, HoverCardContent, HoverCardTrigger } from '../../../ui/hover-card';
 
 import { useMemo, useState } from 'react';
 import { Category } from '@/features/categories/types';

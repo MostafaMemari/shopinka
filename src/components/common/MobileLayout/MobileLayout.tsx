@@ -7,7 +7,7 @@ import { Transition } from '@headlessui/react';
 import { HiOutlineXMark } from 'react-icons/hi2';
 import { HiOutlineMenu } from 'react-icons/hi';
 import { Phone } from 'lucide-react';
-import { Button } from '../../ui';
+import { Button } from '../../ui/button';
 
 import MobileBottomNav from './MobileBottomNav';
 import MobileLogo from '../Logo/MobileLogo';
