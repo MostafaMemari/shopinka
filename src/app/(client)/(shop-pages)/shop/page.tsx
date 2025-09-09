@@ -7,7 +7,7 @@ import SortBar from '@/features/filter/SortBar';
 import MobileFilter from '@/features/filter/MobileFilter';
 import MobileSortDrawer from '@/features/filter/MobileSortDrawer';
 import { getCategories } from '@/features/categories/api';
-import CategoryChildrenGrid from '@/features/categories/components/CategoryChildrenGrid';
+import CategoryChildrenGrid from '@/features/categories/components/CategoryListGrid';
 import ProductListShop from '@/features/shopPage/ProductListShop';
 import SidebarFilters from '@/features/filter/SidebarFilters';
 import { Category } from '@/features/categories/types';

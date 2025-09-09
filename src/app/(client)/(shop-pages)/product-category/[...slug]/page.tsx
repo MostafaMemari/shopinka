@@ -6,12 +6,12 @@ import SortBar from '@/features/filter/SortBar';
 import MobileFilter from '@/features/filter/MobileFilter';
 import MobileSortDrawer from '@/features/filter/MobileSortDrawer';
 import { getCategories } from '@/features/categories/api';
-import CategoryChildrenGrid from '@/features/categories/components/CategoryChildrenGrid';
-import CategoryHeaderSection from '@/features/categories/components/CategoryHeaderSection';
+import CategoryChildrenGrid from '@/features/categories/components/CategoryListGrid';
 import ProductListShop from '@/features/shopPage/ProductListShop';
 import SidebarFilters from '@/features/filter/SidebarFilters';
 import SearchInput from '@/features/filter/SearchInput';
 import { PRODUCT_SORT_OPTIONS, ProductParams } from '@/features/products/types';
+import CategoryOverview from '@/features/categories/components/CategoryOverview';
 
 type PageProps = {
   searchParams: Promise<SearchParams>;
@@ -85,7 +85,7 @@ export default async function ShopPage({ searchParams, params }: PageProps) {
         </div>
       </div>
 
-      <CategoryHeaderSection name={category.name} description={category.description || ''} thumbnailImage={category.thumbnailImage} />
+      <CategoryOverview name={category.name} description={category.description || ''} thumbnailImage={category.thumbnailImage} />
     </>
   );
 }

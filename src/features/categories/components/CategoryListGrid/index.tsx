@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Category } from '@/features/categories/types';
-import CategoryItemShop from './CategoryItemShop';
+import CategoryItemShop from './CategoryListGridItem';
 import { Plus } from 'lucide-react';
 import { useIsMounted } from '@/hooks/useIsMounted';
 import { Skeleton } from '@/components/ui';

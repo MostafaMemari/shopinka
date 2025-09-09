@@ -6,7 +6,7 @@ import { ReactNode } from 'react';
 import { cn } from '@/lib/utils';
 import { Card } from '@/components/ui';
 
-interface CategoryItemShopProps {
+interface CategoryListGridItemProps {
   name: string;
   imageUrl?: string;
   href?: string;
@@ -16,7 +16,15 @@ interface CategoryItemShopProps {
   className?: string;
 }
 
-export default function CategoryItemShop({ name, imageUrl, href, onClick, icon, isButton = false, className }: CategoryItemShopProps) {
+export default function CategoryListGridItem({
+  name,
+  imageUrl,
+  href,
+  onClick,
+  icon,
+  isButton = false,
+  className,
+}: CategoryListGridItemProps) {
   const content = (
     <Card
       className={cn(
