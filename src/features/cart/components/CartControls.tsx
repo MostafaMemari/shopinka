@@ -2,9 +2,9 @@
 
 import { Plus, Minus, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { cn } from '@/utils/utils';
 import { CartItemState } from '@/types/cartType';
 import { useCart } from '../hooks/useCart';
+import { cn } from '@/lib/utils';
 
 interface CartControlsProps {
   product: CartItemState;
@@ -19,7 +19,7 @@ export function CartControls({ product, className }: CartControlsProps) {
   return (
     <div
       className={cn(
-        'flex h-12 w-full items-center justify-between rounded-lg border border-gray-200 bg-white px-2 py-1 shadow-sm transition-all dark:border-gray-700 dark:bg-gray-800',
+        'flex h-9 w-full items-center justify-between rounded-lg border border-gray-200 bg-white px-2 py-1 shadow-sm transition-all dark:border-gray-700 dark:bg-gray-800',
         className,
       )}
     >

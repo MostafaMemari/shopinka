@@ -108,3 +108,44 @@ export function ProductMobileDetailsPrice({ product }: ProductPriceProps) {
     </div>
   );
 }
+
+export function ProductStickyMobilePrice({ product }: ProductPriceProps) {
+  const { selectedVariant } = useSelector((state: RootState) => state.product);
+  const isVariable = product.type === 'VARIABLE';
+
+  const salePrice = isVariable ? (selectedVariant?.salePrice ?? null) : product.salePrice;
+  const basePrice = isVariable ? (selectedVariant?.basePrice ?? null) : product.basePrice;
+
+  const discount = useMemo(() => {
+    if (salePrice && basePrice && basePrice > 0) {
+      return Math.round(((basePrice - salePrice) / basePrice) * 100);
+    }
+    return 0;
+  }, [salePrice, basePrice]);
+
+  if (isVariable && !selectedVariant) return null;
+
+  return (
+    <div className="flex flex-col items-start text-xs">
+      {discount > 0 && salePrice ? (
+        <>
+          <div className="flex items-center gap-1">
+            <span className="line-through text-gray-400">{formatPrice(basePrice)}</span>
+            <Badge variant="destructive" className="px-1 py-0 text-[10px]">
+              %{discount}
+            </Badge>
+          </div>
+          <div className="flex items-center gap-1">
+            <span className="font-bold text-base">{formatPrice(salePrice)}</span>
+            <span className="text-gray-500">تومان</span>
+          </div>
+        </>
+      ) : (
+        <div className="flex items-center gap-1">
+          <span className="font-bold text-base">{formatPrice(basePrice ?? 0)}</span>
+          <span className="text-gray-500">تومان</span>
+        </div>
+      )}
+    </div>
+  );
+}

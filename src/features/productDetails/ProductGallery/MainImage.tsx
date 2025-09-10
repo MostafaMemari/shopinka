@@ -1,6 +1,5 @@
 'use client';
 
-import ImageLoader from '@/features/productDetails/ProductGallery/ImageLoader';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 
@@ -22,7 +21,7 @@ export default function MainImage({ src, alt }: MainImageProps) {
 
   return (
     <div className="relative overflow-hidden rounded-lg">
-      {!isLoaded && <ImageLoader />}
+      {!isLoaded && <div className="absolute inset-0 z-0 animate-pulse bg-neutral-200 dark:bg-neutral-700 rounded-lg" />}
 
       <Image
         src={imgSrc}

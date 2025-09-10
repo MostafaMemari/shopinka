@@ -71,7 +71,7 @@ export default function CarouselWithThumbs({ images }: CarouselWithThumbsProps) 
               )}
               onClick={() => handleThumbClick(index)}
             >
-              <Card className="p-0">
+              <Card className="p-0 mb-0.5">
                 <CardContent className="p-0 flex aspect-square items-center justify-center relative overflow-hidden rounded-lg">
                   <Image src={img.fileUrl} alt={img.title ? img.title : `تصویر ${index + 1}`} fill className="object-cover" />
                 </CardContent>

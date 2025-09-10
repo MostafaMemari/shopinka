@@ -17,7 +17,7 @@ import ShareProductAction from '../ActionButtons/ShareProductAction';
 import CartMobileFixContainer from '@/components/common/MobileCartSticky';
 import { Card } from '@/components/ui/card';
 import { ProductDetails } from '@/features/products/types';
-import { ProductDesktopDetailsPrice, ProductMobileDetailsPrice } from '../ProductDetailsPrice';
+import { ProductDesktopDetailsPrice, ProductMobileDetailsPrice, ProductStickyMobilePrice } from '../ProductDetailsPrice';
 
 interface ProductDetailsViewProps {
   product: ProductDetails;
@@ -191,7 +191,7 @@ const ProductDetailsView: FC<ProductDetailsViewProps> = ({ product }) => {
 
                       {isValidProduct ? (
                         <div className="p-2">
-                          <ProductMobileDetailsPrice
+                          <ProductStickyMobilePrice
                             product={{
                               type: product.type,
                               basePrice: product.basePrice ?? 0,
