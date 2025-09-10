@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { createAddress, deleteAddress, getAddress, setDefaultAddress, updateAddress } from '@/features/address/api';
-import { AddressFormType, AddressItem } from '@/features/address/types';
+import { AddressFormValues, AddressItem } from '@/features/address/types';
 import { QueryOptions } from '@/types/queryOptions';
 import { QueryKeys } from '@/types/query-keys';
 import { toast } from 'sonner';
@@ -22,7 +22,7 @@ export function useAddress({ enabled = true, staleTime = 60_000 }: QueryOptions)
   });
 
   const updateMutation = useMutation({
-    mutationFn: ({ id, data }: { id: number; data: AddressFormType }) => updateAddress(id, data),
+    mutationFn: ({ id, data }: { id: number; data: AddressFormValues }) => updateAddress(id, data),
   });
 
   const deleteMutation = useMutation({
@@ -39,7 +39,7 @@ export function useAddress({ enabled = true, staleTime = 60_000 }: QueryOptions)
     error,
     refetch,
 
-    createAddress: (data: AddressFormType, onSuccess?: (created: AddressItem) => void, onError?: (error: any) => void) => {
+    createAddress: (data: AddressFormValues, onSuccess?: (created: AddressItem) => void, onError?: (error: any) => void) => {
       createMutation.mutate(data, {
         onSuccess: (response) => {
           invalidate();
@@ -53,7 +53,7 @@ export function useAddress({ enabled = true, staleTime = 60_000 }: QueryOptions)
       });
     },
 
-    updateAddress: (id: number, data: AddressFormType, onSuccess?: () => void, onError?: (error: any) => void) => {
+    updateAddress: (id: number, data: AddressFormValues, onSuccess?: () => void, onError?: (error: any) => void) => {
       updateMutation.mutate(
         { id, data },
         {

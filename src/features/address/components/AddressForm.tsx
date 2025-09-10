@@ -1,16 +1,19 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-import TextInput from '@/components/form/TextInput';
-import SelectInput from '@/components/form/SelectInput';
-import { AddressItem } from '@/features/address/types';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
+import { Button } from '@/components/ui/button';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { AddressFormValues, AddressItem } from '@/features/address/types';
 import { provinces } from '@/data/provinces';
 import { cities } from '@/data/cities';
-import { useFormik } from 'formik';
-import { validationAddressSchema } from '@/validation/validationAddressSchema';
 import { useAddress } from '@/features/address/hooks';
-import PrimaryButton from '@/components/common/PrimaryButton';
 import { cn } from '@/lib/utils';
+import { validationAddressSchema } from '@/validation/validationAddressSchema';
 
 interface AddressFormProps {
   initialValues?: AddressItem;
@@ -18,12 +21,32 @@ interface AddressFormProps {
   onSuccess?: () => void;
 }
 
-function AddressForm({ initialValues, className = '', onSuccess }: AddressFormProps) {
+export default function AddressForm({ initialValues, className = '', onSuccess }: AddressFormProps) {
   const [selectedProvinceId, setSelectedProvinceId] = useState<number | null>(null);
-
   const { createAddress, updateAddress, isCreateAddressLoading, isUpdateAddressLoading } = useAddress({});
-
   const isLoadingSubmit = isCreateAddressLoading || isUpdateAddressLoading;
+
+  const filteredCities = useMemo(() => {
+    if (selectedProvinceId === null) return [];
+    return cities.filter((city) => city.province === selectedProvinceId);
+  }, [selectedProvinceId]);
+
+  const defaultValues: AddressFormValues = {
+    fullName: initialValues?.fullName ?? '',
+    province: initialValues?.province ?? '',
+    city: initialValues?.city ?? '',
+    postalAddress: initialValues?.postalAddress ?? '',
+    buildingNumber: initialValues?.buildingNumber ?? 0,
+    unit: initialValues?.unit ?? null,
+    postalCode: initialValues?.postalCode ?? '',
+  };
+
+  const form = useForm<AddressFormValues>({
+    // @ts-ignore
+    resolver: zodResolver(validationAddressSchema),
+    defaultValues,
+    mode: 'onBlur',
+  });
 
   useEffect(() => {
     if (initialValues?.province) {
@@ -32,108 +55,111 @@ function AddressForm({ initialValues, className = '', onSuccess }: AddressFormPr
     }
   }, [initialValues?.province]);
 
-  const filteredCities = useMemo(() => {
-    if (selectedProvinceId === null) return [];
-    return cities.filter((city) => city.province === selectedProvinceId);
-  }, [selectedProvinceId]);
+  const onSubmit: SubmitHandler<any> = (values: AddressItem) => {
+    const payload = {
+      ...values,
+      buildingNumber: Number(values.buildingNumber),
+      unit: values.unit !== null ? Number(values.unit) : null,
+    } as AddressFormValues;
 
-  const formik = useFormik({
-    initialValues: initialValues ?? {
-      fullName: '',
-      province: '',
-      city: '',
-      postalAddress: '',
-      buildingNumber: '',
-      unit: '',
-      postalCode: '',
-    },
-    validationSchema: validationAddressSchema,
-    onSubmit: async (values) => {
-      const payload = {
-        ...values,
-        buildingNumber: Number(values.buildingNumber),
-        unit: values.unit ? Number(values.unit) : undefined,
-      };
-
-      if (initialValues) {
-        updateAddress(initialValues.id, payload, () => {
-          formik.resetForm();
-          setSelectedProvinceId(null);
-          onSuccess?.();
-        });
-      } else {
-        createAddress(payload, () => {
-          formik.resetForm();
-          setSelectedProvinceId(null);
-          onSuccess?.();
-        });
-      }
-    },
-    validateOnChange: true,
-    validateOnBlur: true,
-  });
+    if (initialValues?.id) {
+      updateAddress(initialValues.id, payload, () => {
+        form.reset();
+        setSelectedProvinceId(null);
+        onSuccess?.();
+      });
+    } else {
+      createAddress(payload, () => {
+        form.reset();
+        setSelectedProvinceId(null);
+        onSuccess?.();
+      });
+    }
+  };
 
   return (
-    <form onSubmit={formik.handleSubmit} className={cn('space-y-1 text-right', className)} dir="rtl">
+    <form onSubmit={form.handleSubmit(onSubmit)} className={cn('space-y-4 text-right', className)} dir="rtl">
       <div className="grid grid-cols-2 gap-4">
-        <TextInput id="fullName" name="fullName" isRequired label="نام تحویل گیرنده" formik={formik} />
-        <TextInput id="postalCode" name="postalCode" label="کدپستی" formik={formik} isRequired />
-      </div>
+        <div>
+          <Label htmlFor="fullName">نام تحویل گیرنده</Label>
+          <Input {...form.register('fullName')} id="fullName" />
+          {form.formState.errors.fullName && <p className="text-red-500 text-sm">{form.formState.errors.fullName.message}</p>}
+        </div>
 
-      <div className="grid grid-cols-2 gap-4">
-        <SelectInput
-          id="province"
-          name="province"
-          label="استان"
-          formik={formik}
-          options={provinces.map((p) => ({ value: p.name, label: p.name }))}
-          placeholder="انتخاب کنید"
-          isRequired
-          onChange={(selected) => {
-            const value = selected?.value || '';
-            const provinceId = provinces.find((p) => p.name === value)?.id || null;
-            setSelectedProvinceId(provinceId);
-            formik.setFieldValue('province', value);
-            formik.setFieldValue('city', '');
-            formik.setFieldTouched('city', false);
-          }}
-        />
-
-        <SelectInput
-          key={`city-${selectedProvinceId}`}
-          id="city"
-          name="city"
-          label="شهر"
-          formik={formik}
-          options={filteredCities.map((c) => ({ value: c.name, label: c.name }))}
-          placeholder="انتخاب کنید"
-          isRequired
-          isDisabled={!selectedProvinceId}
-          onChange={(selected) => {
-            const value = selected?.value || '';
-            formik.setFieldValue('city', value);
-          }}
-        />
+        <div>
+          <Label htmlFor="postalCode">کدپستی</Label>
+          <Input {...form.register('postalCode')} id="postalCode" />
+          {form.formState.errors.postalCode && <p className="text-red-500 text-sm">{form.formState.errors.postalCode.message}</p>}
+        </div>
       </div>
 
       <div className="grid grid-cols-2 gap-4">
-        <TextInput id="buildingNumber" name="buildingNumber" label="پلاک" isRequired formik={formik} />
-        <TextInput id="unit" name="unit" label="واحد" formik={formik} />
+        <div>
+          <Label htmlFor="province">استان</Label>
+          <Select
+            onValueChange={(value) => {
+              const provinceId = provinces.find((p) => p.name === value)?.id || null;
+              setSelectedProvinceId(provinceId);
+              form.setValue('province', value);
+              form.setValue('city', '');
+            }}
+            value={form.watch('province')}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="انتخاب کنید" />
+            </SelectTrigger>
+            <SelectContent>
+              {provinces.map((p) => (
+                <SelectItem key={p.id} value={p.name}>
+                  {p.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          {form.formState.errors.province && <p className="text-red-500 text-sm">{form.formState.errors.province.message}</p>}
+        </div>
+
+        <div>
+          <Label htmlFor="city">شهر</Label>
+          <Select onValueChange={(value) => form.setValue('city', value)} value={form.watch('city')} disabled={!selectedProvinceId}>
+            <SelectTrigger>
+              <SelectValue placeholder="انتخاب کنید" />
+            </SelectTrigger>
+            <SelectContent>
+              {filteredCities.map((c) => (
+                <SelectItem key={c.id} value={c.name}>
+                  {c.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          {form.formState.errors.city && <p className="text-red-500 text-sm">{form.formState.errors.city.message}</p>}
+        </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-4"></div>
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <Label htmlFor="buildingNumber">پلاک</Label>
+          <Input type="number" {...form.register('buildingNumber', { valueAsNumber: true })} id="buildingNumber" />
+          {form.formState.errors.buildingNumber && <p className="text-red-500 text-sm">{form.formState.errors.buildingNumber.message}</p>}
+        </div>
 
-      <div className="grid grid-cols-1 gap-4">
-        <TextInput id="postalAddress" name="postalAddress" type="textarea" isRequired label="آدرس پستی" formik={formik} />
+        <div>
+          <Label htmlFor="unit">واحد</Label>
+          <Input type="number" {...form.register('unit', { valueAsNumber: true })} id="unit" />
+          {form.formState.errors.unit && <p className="text-red-500 text-sm">{form.formState.errors.unit.message}</p>}
+        </div>
       </div>
 
-      <PrimaryButton isLoading={isLoadingSubmit} className="w-full mt-6" type="submit">
+      <div>
+        <Label htmlFor="postalAddress">آدرس پستی</Label>
+        <Textarea {...form.register('postalAddress')} id="postalAddress" />
+        {form.formState.errors.postalAddress && <p className="text-red-500 text-sm">{form.formState.errors.postalAddress.message}</p>}
+      </div>
+
+      <Button type="submit" className="w-full" disabled={isLoadingSubmit}>
         {initialValues ? 'ویرایش' : 'ثبت'} آدرس
-      </PrimaryButton>
+      </Button>
     </form>
   );
 }
-
-AddressForm.displayName = 'AddressForm';
-
-export default AddressForm;

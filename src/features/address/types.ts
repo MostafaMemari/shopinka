@@ -1,7 +1,7 @@
 import { validationAddressSchema } from '@/validation/validationAddressSchema';
 import { z } from 'zod';
 
-export type AddressFormType = z.infer<typeof validationAddressSchema>;
+export type AddressFormValues = z.infer<typeof validationAddressSchema>;
 
 export type AddressItem = {
   id: number;
