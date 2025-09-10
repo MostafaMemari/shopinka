@@ -30,10 +30,7 @@ const ProfileMenu = () => {
   return (
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
-        <Button
-          variant="outline"
-          className="flex items-center justify-center gap-2 focus:outline-none focus:ring-0 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-        >
+        <Button variant="outline" className="flex items-center justify-center gap-2 h-10">
           <User className="h-5 w-5" />
           کاربر گرامی
           {dropdownOpen.value ? (

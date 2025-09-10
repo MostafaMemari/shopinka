@@ -33,7 +33,7 @@ const ProfileDropdown = () => {
       {isLogin ? (
         <ProfileMenu />
       ) : (
-        <Button onClick={handleClick} variant="outline" className="flex items-center justify-center gap-2 focus:outline-none focus:ring-0">
+        <Button onClick={handleClick} variant="outline" className="flex items-center justify-center gap-2 h-10">
           <LogIn />
           <span>ورود | ثبت‌نام</span>
         </Button>
