@@ -1,6 +1,8 @@
 'use client';
 
-import React from 'react';
+import * as React from 'react';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Label } from '@/components/ui/label';
 
 interface ButtonOption {
   slug: string;
@@ -18,45 +20,26 @@ interface Props {
 export default function ButtonSelector({ options, selectedOption, onOptionChange, title }: Props) {
   if (!options?.length) return null;
 
-  const handleOptionChange = (slug: string): void => {
-    if (slug !== selectedOption) {
-      onOptionChange(slug);
-    }
-  };
-
   return (
     <div>
-      {title && <div className="mb-4 text-text">{title}</div>}
-      <fieldset className="flex flex-wrap items-center gap-1">
-        <legend className="sr-only">Options</legend>
+      {title && <div className="mb-4 text-sm font-medium text-muted-foreground">{title}</div>}
+
+      <RadioGroup value={selectedOption ?? ''} onValueChange={onOptionChange} className="flex flex-wrap gap-2">
         {options.map((option) => (
-          <div key={option.slug}>
-            <input
-              type="radio"
-              name="option-selector"
-              value={option.slug}
-              id={option.slug}
-              checked={selectedOption === option.slug}
-              onChange={() => handleOptionChange(option.slug)}
-              disabled={option.isDisabled}
-              className="peer hidden"
-              aria-label={option.label}
-            />
-            <label
+          <div key={option.slug} className="flex items-center space-x-2">
+            <RadioGroupItem value={option.slug} id={option.slug} disabled={option.isDisabled} className="peer sr-only" />
+            <Label
               htmlFor={option.slug}
-              className={`block cursor-pointer rounded-full border-2 p-2 shadow-base transition-border duration-150 ease-in-out ${
-                option.isDisabled
-                  ? 'opacity-50 cursor-not-allowed'
-                  : selectedOption === option.slug
-                    ? 'border-[var(--primary)]'
-                    : 'border-[var(--border)]'
-              }`}
+              className={`cursor-pointer rounded-full border px-4 py-2 text-sm shadow-sm transition-colors
+                ${option.isDisabled ? 'opacity-50 cursor-not-allowed' : ''}
+                ${selectedOption === option.slug ? 'border-primary text-primary' : 'border-border'}
+              `}
             >
-              <p className="text-text/90">{option.label}</p>
-            </label>
+              {option.label}
+            </Label>
           </div>
         ))}
-      </fieldset>
+      </RadioGroup>
     </div>
   );
 }

@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { CartItemState } from '@/types/cartType';
 import CartItemAttributes from '@/features/cart/components/CartItemAttributes';
 import CartControls from '@/features/cart/components/CartControls';
-import ProductPrice from '@/features/productDetails/ProductDetailsPrice';
 import Image from 'next/image';
 import ProductCartPrice from '../../ProductCartPrice';
 
@@ -14,7 +13,6 @@ interface CartPageItemProps {
 
 function CartPageItem({ cartItem, isLast = false }: CartPageItemProps) {
   const attributes = cartItem.type === 'VARIABLE' && cartItem.attributeValues ? cartItem.attributeValues : [];
-  const cosnt = cartItem.count;
   const productUrl = `/product/${cartItem.slug}`;
 
   return (

@@ -1,3 +1,4 @@
+import { Badge } from '@/components/ui/badge';
 import { calculateDiscount } from '@/utils/calculateDiscount';
 import { formatPrice } from '@/utils/formatter';
 import { FC } from 'react';
@@ -20,7 +21,9 @@ const ProductPrice: FC<Props> = ({ basePrice, salePrice }) => {
           </div>
           <div className="flex items-center justify-between">
             <div>
-              <p className="w-9 rounded-full bg-accent-foreground py-px text-center text-sm text-white">{discount}%</p>
+              <Badge variant="destructive" className="w-9 rounded-full bg-accent-foreground py-px text-center text-sm text-white">
+                %{discount}
+              </Badge>
             </div>
             <div className="text-sm font-bold text-primary md:text-base">
               {salePrice && formatPrice(salePrice)}
