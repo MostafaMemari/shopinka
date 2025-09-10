@@ -1,7 +1,7 @@
 'use client';
 
 import { FC } from 'react';
-import ProductPrice from './ProductPrice';
+import ProductPrice from './ProductPriceCard';
 import Link from 'next/link';
 import ProductImage from './ProductImage';
 import { Product } from '../../types';

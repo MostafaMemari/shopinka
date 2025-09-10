@@ -1,5 +1,5 @@
+import { ProductVariant } from '@/features/products/types';
 import { Attribute, AttributeValues } from '@/types/attributeType';
-import { ProductVariant } from '@/features/products/productType';
 
 export interface IColor {
   id: string;
