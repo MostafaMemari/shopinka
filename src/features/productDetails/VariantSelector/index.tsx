@@ -36,7 +36,14 @@ export default function ProductVariants({ variants, attributes, productType, def
 
   useEffect(() => {
     if (productType === 'VARIABLE') {
+      if (!selectedColor && !selectedButton) {
+        dispatch(setSelectedVariant(null));
+        return;
+      }
       const matchingVariant = findMatchingVariant(variants, selectedColor, selectedButton, attributes);
+
+      console.log(matchingVariant);
+
       if (matchingVariant && matchingVariant.id !== selectedVariant?.id) {
         dispatch(setSelectedVariant(matchingVariant));
       }
@@ -90,9 +97,9 @@ export default function ProductVariants({ variants, attributes, productType, def
   }, [selectedColor, validButtons, selectedButton, dispatch]);
 
   const handleReset = () => {
+    dispatch(setSelectedVariant(null));
     dispatch(setSelectedColor(null));
     dispatch(setSelectedButton(null));
-    dispatch(setSelectedVariant(null));
   };
 
   const colorLabel = attributes.find((attr) => attr.type === 'COLOR')?.name || 'انتخاب رنگ';

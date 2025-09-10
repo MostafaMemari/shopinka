@@ -68,47 +68,6 @@ interface ProductPriceProps {
   };
 }
 
-export function ProductMobileDetailsPrice({ product }: ProductPriceProps) {
-  const { selectedVariant } = useSelector((state: RootState) => state.product);
-  const isVariable = product.type === 'VARIABLE';
-
-  const salePrice = isVariable ? (selectedVariant?.salePrice ?? null) : product.salePrice;
-  const basePrice = isVariable ? (selectedVariant?.basePrice ?? null) : product.basePrice;
-
-  const discount = useMemo(() => {
-    if (typeof salePrice === 'number' && typeof basePrice === 'number' && basePrice > 0) {
-      return Math.round(((basePrice - salePrice) / basePrice) * 100);
-    }
-    return 0;
-  }, [salePrice, basePrice]);
-
-  if (isVariable && !selectedVariant) {
-    return null;
-  }
-  if (salePrice == null && basePrice == null) {
-    return null;
-  }
-
-  return (
-    <div className="flex items-center gap-x-2">
-      {discount > 0 && salePrice ? (
-        <>
-          <span className="text-base font-bold text-primary">{formatPrice(salePrice)}</span>
-          <span className="text-xs font-light text-muted-foreground">تومان</span>
-          <Badge variant="destructive" className="mr-2">
-            {discount}%
-          </Badge>
-        </>
-      ) : (
-        <>
-          <span className="text-base font-bold text-primary">{formatPrice(basePrice ?? 0)}</span>
-          <span className="text-xs font-light text-muted-foreground">تومان</span>
-        </>
-      )}
-    </div>
-  );
-}
-
 export function ProductStickyMobilePrice({ product }: ProductPriceProps) {
   const { selectedVariant } = useSelector((state: RootState) => state.product);
   const isVariable = product.type === 'VARIABLE';
@@ -130,7 +89,7 @@ export function ProductStickyMobilePrice({ product }: ProductPriceProps) {
       {discount > 0 && salePrice ? (
         <>
           <div className="flex items-center gap-1">
-            <span className="line-through text-gray-400">{formatPrice(basePrice)}</span>
+            <span className="line-through text-gray-400">{formatPrice(basePrice ?? 0)}</span>
             <Badge variant="destructive" className="px-1 py-0 text-[10px]">
               %{discount}
             </Badge>

@@ -26,6 +26,7 @@ function CartPageView() {
   const router = useRouter();
   const dispatch = useDispatch();
   const confirmDialogDrawer = useBoolean(false);
+  const [isLoadingContinue, setIsLoadingContinue] = useState(false);
 
   const { isLogin } = useAppSelector((state) => state.auth);
 
@@ -37,6 +38,8 @@ function CartPageView() {
   const totalQuantity = cartItems.reduce((sum, item) => sum + item.count, 0);
 
   const handleNextCartShipping = async () => {
+    if (isLoadingContinue) return;
+    setIsLoadingContinue(true);
     if (isLogin) router.push('/checkout/shipping');
     else dispatch(openDialog());
   };
@@ -85,20 +88,22 @@ function CartPageView() {
     <>
       <MobileCartSticky position="bottom">
         <div className="flex justify-between items-center w-full">
-          <div className="w-1/2 p-3">
-            <PrimaryButton onClick={handleNextCartShipping} type="submit">
+          <div className="w-1/2">
+            <PrimaryButton onClick={handleNextCartShipping} type="submit" isLoading={isLoadingContinue} className="w-full">
               ادامه فرایند خرید
             </PrimaryButton>
           </div>
-          <div className="p-2 flex flex-col justify-between items-center">
+
+          <div className="w-1/2 p-2 flex flex-col justify-between items-end">
             <div className="text-xs font-light text-text/70 lg:text-base">جمع سبد خرید</div>
             <div className="text-primary">
               <span className="text-base font-semibold lg:text-lg lg:font-bold">{formatPrice(cart.payablePrice)}</span>
-              <span className="text-xs font-light lg:text-sm lg:font-medium"> تومان</span>
+              <span className="text-xs font-light lg:text-sm lg:font-medium">تومان</span>
             </div>
           </div>
         </div>
       </MobileCartSticky>
+
       <div className="col-span-12 md:col-span-8">
         <div className="rounded-lg bg-muted p-4 min-h-[300px]">
           <div className="flex items-center justify-between gap-x-2 pb-4">
@@ -131,7 +136,7 @@ function CartPageView() {
         totalDiscountPrice={cart.totalDiscountPrice}
         totalPrice={cart.totalPrice}
       >
-        <PrimaryButton onClick={handleNextCartShipping} type="submit">
+        <PrimaryButton onClick={handleNextCartShipping} className="w-full" isLoading={isLoadingContinue}>
           ادامه فرایند خرید
         </PrimaryButton>
       </CartSummary>

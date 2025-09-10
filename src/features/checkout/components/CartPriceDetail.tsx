@@ -62,11 +62,15 @@ export default function CartPriceDetail({ selectedAddressId, selectedShippingIte
           shippingCost={shippingPrice}
           totalPrice={totalPrice}
         >
-          <div>
-            <PrimaryButton type="submit" disabled={isCheckoutDisabled} isLoading={isCreatePaymentLoading} onClick={handleCreatePayment}>
-              {isCheckoutDisabled ? 'لطفاً آدرس را انتخاب کنید' : 'پرداخت'}
-            </PrimaryButton>
-          </div>
+          <PrimaryButton
+            type="submit"
+            className="w-full"
+            disabled={isCheckoutDisabled}
+            isLoading={isCreatePaymentLoading}
+            onClick={handleCreatePayment}
+          >
+            {isCheckoutDisabled ? 'لطفاً آدرس را انتخاب کنید' : 'پرداخت'}
+          </PrimaryButton>
         </CartSummary>
       </>
     </div>
