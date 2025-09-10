@@ -35,7 +35,7 @@ export function AddToCartButtonDesktop({ product }: AddToCartButtonDesktopProps)
           onClick={addToCart}
           aria-label={isVariableProduct && !isVariantSelected ? 'لطفاً گزینه‌های محصول را انتخاب کنید' : 'افزودن به سبد خرید'}
           disabled={(isVariableProduct && !isVariantSelected) || isAddingToCart}
-          className="flex items-center justify-center gap-2"
+          className="flex items-center justify-center gap-2 w-full"
         >
           {isAddingToCart ? (
             <div className="animate-pulse rounded-full bg-white/30 h-5 w-5" aria-label="در حال بارگذاری" />

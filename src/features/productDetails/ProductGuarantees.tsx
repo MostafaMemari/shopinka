@@ -1,35 +1,38 @@
-import { HiOutlineClock, HiOutlineShieldCheck, HiOutlinePhone, HiOutlineLightningBolt } from 'react-icons/hi';
+'use client';
+
+import { ShieldCheck, Clock, Phone, Zap } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
 
 const guarantees = [
   {
-    icon: HiOutlineClock,
+    icon: Clock,
     text: 'هفت روز ضمانت بازگشت کالا',
   },
   {
-    icon: HiOutlineShieldCheck,
+    icon: ShieldCheck,
     text: 'تضمین اصالت کالا',
   },
   {
-    icon: HiOutlinePhone,
+    icon: Phone,
     text: 'هفت روز هفته',
   },
   {
-    icon: HiOutlineLightningBolt,
-    text: 'تحویل اکسپرس در تهران, کرج',
+    icon: Zap,
+    text: 'تحویل اکسپرس در تهران، کرج',
   },
 ];
 
 export default function ProductGuarantees() {
   return (
-    <>
+    <div className="grid grid-cols-1 md:grid-cols-4 gap-3 w-full">
       {guarantees.map((item, index) => (
-        <div key={index} className="flex w-full items-center gap-x-2 rounded-lg border px-2 py-4 text-sm text-text/60">
-          <span className="h-6 w-6">
-            <item.icon className="h-full w-full" />
-          </span>
-          {item.text}
-        </div>
+        <Card key={index} className="border rounded-xl py-2">
+          <CardContent className="flex items-center gap-x-3 p-2 text-sm text-muted-foreground">
+            <item.icon className="h-6 w-6 text-primary" />
+            <span>{item.text}</span>
+          </CardContent>
+        </Card>
       ))}
-    </>
+    </div>
   );
 }

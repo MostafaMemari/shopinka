@@ -17,7 +17,7 @@ import ShareProductAction from '../ActionButtons/ShareProductAction';
 import CartMobileFixContainer from '@/components/common/MobileCartSticky';
 import { Card } from '@/components/ui/card';
 import { ProductDetails } from '@/features/products/types';
-import { ProductDesktopDetailsPrice, ProductMobileDetailsPrice, ProductStickyMobilePrice } from '../ProductDetailsPrice';
+import { ProductDesktopDetailsPrice, ProductStickyMobilePrice } from '../ProductDetailsPrice';
 
 interface ProductDetailsViewProps {
   product: ProductDetails;
@@ -44,7 +44,7 @@ const ProductDetailsView: FC<ProductDetailsViewProps> = ({ product }) => {
     <>
       <div className="hidden lg:block">
         <BreadcrumbContainer variant="boxed" items={[{ name: 'خانه', href: '/' }, ...breadcrumbItems]} />
-        <Card className="mb-6 p-6">
+        <div className="mb-6">
           <div className="mb-10 grid grow grid-cols-12 gap-4">
             <div className="col-span-4">
               <div className="hidden lg:block mb-4">
@@ -74,9 +74,7 @@ const ProductDetailsView: FC<ProductDetailsViewProps> = ({ product }) => {
                       <span className="h-4 w-px rounded-full bg-background dark:bg-muted/10"></span>
                       <ProductCommentCount key={product.id} productId={product.id} />
                     </div>
-                  </div>
 
-                  <div className="col-span-1 flex flex-col">
                     {isValidProduct && (
                       <div className="mb-6">
                         <ProductVariants
@@ -87,7 +85,9 @@ const ProductDetailsView: FC<ProductDetailsViewProps> = ({ product }) => {
                         />
                       </div>
                     )}
+                  </div>
 
+                  <Card className="col-span-1 flex flex-col mb-6 p-4">
                     <ProductGuaranteeBadge />
 
                     <div className="mb-6 flex justify-between items-start w-full">
@@ -105,24 +105,22 @@ const ProductDetailsView: FC<ProductDetailsViewProps> = ({ product }) => {
                     </div>
 
                     {isValidProduct ? (
-                      <div className="mb-6">
-                        <AddToCartButtonDesktop
-                          key={product.id}
-                          product={{
-                            id: product.id,
-                            name: product.name,
-                            slug: product.slug,
-                            basePrice: product.basePrice ?? 0,
-                            salePrice: product.salePrice ?? 0,
-                            mainImageUrl: product.mainImage?.fileUrl ?? null,
-                            type: product.type,
-                          }}
-                        />
-                      </div>
+                      <AddToCartButtonDesktop
+                        key={product.id}
+                        product={{
+                          id: product.id,
+                          name: product.name,
+                          slug: product.slug,
+                          basePrice: product.basePrice ?? 0,
+                          salePrice: product.salePrice ?? 0,
+                          mainImageUrl: product.mainImage?.fileUrl ?? null,
+                          type: product.type,
+                        }}
+                      />
                     ) : (
                       ''
                     )}
-                  </div>
+                  </Card>
                 </div>
 
                 <ProductProperties />
@@ -132,7 +130,7 @@ const ProductDetailsView: FC<ProductDetailsViewProps> = ({ product }) => {
           <div className="flex justify-between gap-4">
             <ProductGuarantees />
           </div>
-        </Card>
+        </div>
       </div>
 
       <div className="lg:hidden">

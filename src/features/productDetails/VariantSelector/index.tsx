@@ -8,9 +8,10 @@ import ColorSelector from './ColorSelector';
 import ButtonSelector from './ButtonSelector';
 import { getDefaultSelections, transformVariants } from '../utils/productVariants';
 
-import { ProductVariant } from '@/features/products/productType';
 import { findMatchingVariant } from '../utils/productVariants';
 import { Attribute, AttributeValues } from '@/types/attributeType';
+import { Card } from '@/components/ui/card';
+import { ProductVariant } from '@/features/products/types';
 interface Props {
   variants: ProductVariant[];
   attributes: Attribute[];
@@ -100,7 +101,7 @@ export default function ProductVariants({ variants, attributes, productType, def
   if (productType === 'SIMPLE') return null;
 
   return (
-    <div className="mb-6 p-4 bg-white rounded-lg shadow-sm">
+    <Card className="mb-6 p-4">
       <div className="flex justify-between items-center mb-4">
         <h3 className="text-lg font-semibold text-gray-800">انتخاب مشخصات</h3>
         {(selectedColor || selectedButton) && (
@@ -138,6 +139,6 @@ export default function ProductVariants({ variants, attributes, productType, def
           />
         </div>
       )}
-    </div>
+    </Card>
   );
 }
