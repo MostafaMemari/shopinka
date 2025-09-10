@@ -5,7 +5,7 @@ import PrimaryButton from '@/components/common/PrimaryButton';
 import CartSummary from '@/features/cart/components/CartSummary';
 import { ShippingItem } from '@/features/shippings/types';
 import { usePayment } from '@/features/payment/hooks/usePayment';
-import CartMobileFixContainer from '../../../components/common/MobileCartSticky';
+import MobileCartSticky from '../../../components/common/MobileCartSticky';
 import { formatPrice } from '@/utils/formatter';
 import { CartState } from '@/types/cartType';
 
@@ -38,22 +38,28 @@ export default function CartPriceDetail({ selectedAddressId, selectedShippingIte
   return (
     <div className="col-span-12 md:col-span-4">
       <>
-        <CartMobileFixContainer>
+        <MobileCartSticky position="bottom">
           <div className="flex justify-between items-center w-full">
-            <div className="w-1/2 p-3">
-              <PrimaryButton type="submit" disabled={isCheckoutDisabled} isLoading={isCreatePaymentLoading} onClick={handleCreatePayment}>
+            <div className="w-1/2">
+              <PrimaryButton
+                onClick={handleCreatePayment}
+                disabled={isCheckoutDisabled}
+                isLoading={isCreatePaymentLoading}
+                className="w-full"
+              >
                 {isCheckoutDisabled ? 'لطفاً آدرس را انتخاب کنید' : 'پرداخت'}
               </PrimaryButton>
             </div>
-            <div className="p-2 flex flex-col justify-between items-center">
+
+            <div className="w-1/2 p-2 flex flex-col justify-between items-end">
               <div className="text-xs font-light text-text/70 lg:text-base">مبلغ قابل پرداخت</div>
               <div className="text-primary">
                 <span className="text-base font-semibold lg:text-lg lg:font-bold">{formatPrice(cart.payablePrice + shippingPrice)}</span>
-                <span className="text-xs font-light lg:text-sm lg:font-medium"> تومان</span>
+                <span className="text-xs font-light lg:text-sm lg:font-medium">تومان</span>
               </div>
             </div>
           </div>
-        </CartMobileFixContainer>
+        </MobileCartSticky>
 
         <CartSummary
           totalQuantity={totalQuantity}

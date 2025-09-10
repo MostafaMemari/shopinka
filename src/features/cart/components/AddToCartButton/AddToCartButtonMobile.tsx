@@ -29,11 +29,10 @@ export default function AddToCartButtonMobile({ product }: AddToCartButtonMobile
         </div>
       ) : (
         <PrimaryButton
-          type="submit"
+          className="w-full"
           onClick={addToCart}
           isLoading={isAddingToCart}
           disabled={(isVariableProduct && !isVariantSelected) || isAddingToCart}
-          aria-label={isVariableProduct && !isVariantSelected ? 'لطفاً یک گزینه انتخاب کنید' : 'افزودن به سبد خرید'}
         >
           {isAddingToCart ? (
             <div className="animate-pulse rounded-full bg-white/30 h-5 w-5" aria-label="در حال بارگذاری" />

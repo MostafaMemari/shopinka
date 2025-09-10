@@ -5,7 +5,7 @@ import { getOrderById } from '@/features/orders/api';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import DeliveryAddress from '@/features/address/components/DeliveryAddress';
-import { Button } from '@/components/ui';
+import { Button } from '@/components/ui/button';
 import { ChevronLeft } from 'lucide-react';
 
 type PageProps = {

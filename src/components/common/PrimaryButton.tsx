@@ -12,9 +12,9 @@ interface PrimaryButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 export default function PrimaryButton({ children, isLoading = false, className, disabled, ...props }: PrimaryButtonProps) {
   return (
-    <Button className={cn('relative', className)} disabled={disabled || isLoading} {...props}>
-      {isLoading && <Loader2Icon className="absolute left-2 h-4 w-4 animate-spin" />}
-      <span className={cn(isLoading && 'opacity-0')}>{children}</span>
+    <Button className={cn('relative flex justify-center items-center p-0', className)} disabled={disabled || isLoading} {...props}>
+      {isLoading && <Loader2Icon className="absolute inset-0 m-auto h-5 w-5 animate-spin text-white" />}
+      <span className={cn(isLoading && 'opacity-0 transition-opacity duration-200')}>{children}</span>
     </Button>
   );
 }

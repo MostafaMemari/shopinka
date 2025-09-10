@@ -14,7 +14,7 @@ import ProductGuaranteeBadge from '../ProductGuaranteeBadge';
 
 import FavoriteProductAction from '../ActionButtons/FavoriteProductAction';
 import ShareProductAction from '../ActionButtons/ShareProductAction';
-import CartMobileFixContainer from '@/components/common/MobileCartSticky';
+import MobileCartSticky from '@/components/common/MobileCartSticky';
 import { Card } from '@/components/ui/card';
 import { ProductDetails } from '@/features/products/types';
 import { ProductDesktopDetailsPrice, ProductStickyMobilePrice } from '../ProductDetailsPrice';
@@ -170,9 +170,9 @@ const ProductDetailsView: FC<ProductDetailsViewProps> = ({ product }) => {
                 <ProductGuaranteeBadge />
 
                 {isValidProduct ? (
-                  <CartMobileFixContainer>
+                  <MobileCartSticky position="bottom" className="p-1">
                     <div className="flex justify-between items-center w-full">
-                      <div className="w-1/2 p-3">
+                      <div className="w-1/2">
                         <AddToCartButtonMobile
                           key={product.id}
                           product={{
@@ -187,7 +187,7 @@ const ProductDetailsView: FC<ProductDetailsViewProps> = ({ product }) => {
                         />
                       </div>
 
-                      {isValidProduct ? (
+                      {isValidProduct && (
                         <div className="p-2">
                           <ProductStickyMobilePrice
                             product={{
@@ -197,11 +197,9 @@ const ProductDetailsView: FC<ProductDetailsViewProps> = ({ product }) => {
                             }}
                           />
                         </div>
-                      ) : (
-                        ''
                       )}
                     </div>
-                  </CartMobileFixContainer>
+                  </MobileCartSticky>
                 ) : (
                   ''
                 )}

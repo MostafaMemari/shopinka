@@ -1,22 +1,30 @@
-import React from 'react';
+import { Card, CardContent } from '@/components/ui/card';
 
-const PaymentDetails = ({ trackingCode, paymentDate, amount }: { trackingCode: string; paymentDate: string; amount: string }) => (
-  <div className="w-full rounded border p-4 bg-muted/70 flex flex-col gap-y-3">
-    <div className="flex flex-col md:flex-row items-center justify-between gap-2 text-sm md:text-base">
-      <div className="flex flex-col items-center gap-1">
-        <span>شماره پیگیری</span>
-        <span className="font-mono tracking-wider">{trackingCode}</span>
+interface PaymentDetailsProps {
+  trackingCode: string;
+  paymentDate: string;
+  amount: string;
+}
+
+const PaymentDetails = ({ trackingCode, paymentDate, amount }: PaymentDetailsProps) => (
+  <Card className="w-full">
+    <CardContent className="p-4">
+      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between md:gap-6">
+        <div className="flex flex-col items-center gap-1 text-sm md:text-base">
+          <span className="text-muted-foreground">شماره پیگیری</span>
+          <span className="font-mono tracking-wider">{trackingCode}</span>
+        </div>
+        <div className="flex flex-col items-center gap-1 text-sm md:text-base">
+          <span className="text-muted-foreground">تاریخ پرداخت</span>
+          <span>{paymentDate}</span>
+        </div>
+        <div className="flex flex-col items-center gap-1 text-sm md:text-base">
+          <span className="text-muted-foreground">مبلغ</span>
+          <span>{amount}</span>
+        </div>
       </div>
-      <div className="flex flex-col items-center gap-1">
-        <span>تاریخ پرداخت</span>
-        <span>{paymentDate}</span>
-      </div>
-      <div className="flex flex-col items-center gap-1">
-        <span>مبلغ</span>
-        <span>{amount}</span>
-      </div>
-    </div>
-  </div>
+    </CardContent>
+  </Card>
 );
 
 export default PaymentDetails;

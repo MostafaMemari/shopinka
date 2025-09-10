@@ -1,27 +1,24 @@
 import React from 'react';
 import RetryPaymentButton from './RetryPaymentButton';
 import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 
 const PaymentActions = ({ isSuccess, orderId, orderStatus }: { isSuccess: boolean; orderId: string; orderStatus: string }) => (
   <div className="flex w-full gap-3 mt-3">
-    {orderStatus === 'PENDING' && (
-      <div>
-        <RetryPaymentButton orderId={Number(orderId)} />
-      </div>
-    )}
+    {orderStatus === 'PENDING' && <RetryPaymentButton orderId={Number(orderId)} />}
     {isSuccess ? (
       <>
-        <Link href={`/profile/orders/${orderId}`} className="btn-primary w-full py-3 text-center">
-          مشاهده سفارش
-        </Link>
-        <Link href="/" className="btn-secondary w-full py-3 text-center">
-          بازگشت به خانه
-        </Link>
+        <Button asChild className="w-1/2">
+          <Link href="/profile/orders">مشاهده سفارش‌ها</Link>
+        </Button>
+        <Button asChild variant="secondary" className="w-1/2 py-3">
+          <Link href="/">بازگشت به خانه</Link>
+        </Button>
       </>
     ) : (
-      <Link href="/" className="btn-secondary w-full py-3 text-center">
-        بازگشت
-      </Link>
+      <Button asChild className="w-full">
+        <Link href="/">بازگشت به خانه</Link>
+      </Button>
     )}
   </div>
 );

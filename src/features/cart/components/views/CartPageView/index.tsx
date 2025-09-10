@@ -89,7 +89,7 @@ function CartPageView() {
       <MobileCartSticky position="bottom">
         <div className="flex justify-between items-center w-full">
           <div className="w-1/2">
-            <PrimaryButton onClick={handleNextCartShipping} type="submit" isLoading={isLoadingContinue} className="w-full">
+            <PrimaryButton onClick={handleNextCartShipping} className="w-full" isLoading={isLoadingContinue}>
               ادامه فرایند خرید
             </PrimaryButton>
           </div>

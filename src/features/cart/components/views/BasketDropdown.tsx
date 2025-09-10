@@ -11,15 +11,19 @@ import { useCart } from '../../hooks/useCart';
 
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Button } from '@/components/ui/button';
+import { useState } from 'react';
+import PrimaryButton from '@/components/common/PrimaryButton';
 
 export default function BasketDropdown() {
   const { cart } = useCart();
   const router = useRouter();
+  const [isLoadingContinueToCard, setIsLoadingContinueToCard] = useState(false);
 
   const { items: cartItems, payablePrice } = cart || { items: [], payablePrice: 0 };
 
   const handleBasketClick = () => {
+    if (isLoadingContinueToCard) return;
+    setIsLoadingContinueToCard(true);
     router.push('/checkout/cart');
   };
 
@@ -52,15 +56,15 @@ export default function BasketDropdown() {
 
             <div className="flex items-center justify-between border-t pt-3">
               <div className="flex flex-col items-center gap-y-1">
-                <span className="text-sm text-text/60">مبلغ قابل پرداخت</span>
+                <span className="text-sm text-text/60">جمع سبد خرید</span>
                 <div className="text-text/90">
                   <span className="font-bold">{formatPrice(payablePrice)}</span>
                   <span className="text-sm"> تومان</span>
                 </div>
               </div>
-              <Button className="w-32 text-sm" onClick={handleBasketClick}>
+              <PrimaryButton className="w-1/2 text-sm" onClick={handleBasketClick} isLoading={isLoadingContinueToCard}>
                 ثبت سفارش
-              </Button>
+              </PrimaryButton>
             </div>
           </>
         ) : (
