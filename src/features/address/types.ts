@@ -1,7 +1,7 @@
 import { validationAddressSchema } from '@/validation/validationAddressSchema';
-import * as yup from 'yup';
+import { z } from 'zod';
 
-export type AddressFormType = yup.InferType<typeof validationAddressSchema>;
+export type AddressFormType = z.infer<typeof validationAddressSchema>;
 
 export type AddressItem = {
   id: number;

@@ -1,8 +1,6 @@
 'use client';
 
 import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as Yup from 'yup';
 import { toast } from 'sonner';
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
@@ -14,12 +12,8 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { OTP_EXPIRE_SECONDS } from '@/constants';
 import { Button } from '@/components/ui/button';
-
-const FormSchema = Yup.object().shape({
-  otp: Yup.string()
-    .matches(/^\d{6}$/, 'کد یک‌بارمصرف باید دقیقاً ۶ رقم عددی باشد')
-    .required('کد یک‌بارمصرف الزامی است'),
-});
+import { validationOtpSchema } from '@/validation/ValidateOtp';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 interface InputOTPFormProps {
   verifyOtp?: any;
@@ -41,7 +35,7 @@ function InputOTPForm({ verifyOtp, ref }: InputOTPFormProps) {
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   const form = useForm<OTPFormValues>({
-    resolver: yupResolver(FormSchema),
+    resolver: zodResolver(validationOtpSchema),
     defaultValues: {
       otp: '',
     },

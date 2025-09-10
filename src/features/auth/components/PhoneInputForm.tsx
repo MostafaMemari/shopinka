@@ -1,29 +1,21 @@
 import { toast } from 'sonner';
 import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as Yup from 'yup';
 import { Input } from '@/components/ui/input';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
-import { validateIranPhoneNumber } from '@/validation/validateIranPhoneNumber';
 import { cn } from '@/lib/utils';
-import { useAuth } from '@/features/auth/hooks/useAuth';
 import React from 'react';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 import { setOtpSentAt, setMobile } from '@/store/slices/otpSlice';
 import { RootState } from '@/store';
+import { phoneValidationSchema } from '@/validation/validateIranPhoneNumber';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 interface PhoneInputFormProps {
   className?: string;
   ref?: React.Ref<HTMLFormElement>;
   sendOtp: any;
 }
-
-const phoneValidationSchema = Yup.object({
-  mobile: Yup.string()
-    .required('شماره موبایل الزامی است')
-    .test('is-valid-iran-phone', 'شماره موبایل معتبر نیست', (value) => validateIranPhoneNumber(value || '')),
-});
 
 type PhoneFormValues = { mobile: string };
 
@@ -33,7 +25,7 @@ function PhoneInputForm({ className, ref, sendOtp }: PhoneInputFormProps) {
   const dispatch = useDispatch();
 
   const form = useForm<PhoneFormValues>({
-    resolver: yupResolver(phoneValidationSchema),
+    resolver: zodResolver(phoneValidationSchema),
     defaultValues: {
       mobile: mobile || '',
     },

@@ -16,5 +16,3 @@ export const validationAddressSchema = z.object({
 
   postalCode: z.string().regex(/^\d{10}$/, 'کدپستی باید ۱۰ رقمی باشد'),
 });
-
-export type AddressForm = z.infer<typeof validationAddressSchema>;

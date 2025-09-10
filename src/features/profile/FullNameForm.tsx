@@ -1,13 +1,17 @@
 'use client';
 
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
+import { z } from 'zod';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { forwardRef } from 'react';
-import TextInput from '@/components/form/TextInput';
+import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
 
-interface FullNameFormType {
-  fullName: string;
-}
+const fullNameSchema = z.object({
+  fullName: z.string().trim().min(1, 'نام و نام خانوادگی الزامی است'),
+});
+
+type FullNameFormType = z.infer<typeof fullNameSchema>;
 
 interface AddressProps {
   onSubmit: (values: FullNameFormType) => Promise<void>;
@@ -15,34 +19,36 @@ interface AddressProps {
   className?: string;
 }
 
-const FullNameForm = forwardRef<HTMLFormElement, AddressProps>(
-  (
-    {
-      onSubmit,
-      initialValues = {
-        fullName: '',
-      },
-      className = '',
-    },
-    ref,
-  ) => {
-    const formik = useFormik({
-      initialValues,
-      validationSchema: Yup.object({
-        fullName: Yup.string().trim().required('نام و نام خانوادگی الزامی است'),
-      }),
-      onSubmit: async (values) => {
-        await onSubmit(values);
-      },
-    });
+const FullNameForm = forwardRef<HTMLFormElement, AddressProps>(({ onSubmit, initialValues = { fullName: '' }, className = '' }, ref) => {
+  const form = useForm<FullNameFormType>({
+    resolver: zodResolver(fullNameSchema),
+    defaultValues: initialValues,
+  });
 
-    return (
-      <form ref={ref} onSubmit={formik.handleSubmit} className={`space-y-1 p-4 text-right ${className}`.trim()} dir="rtl">
-        <TextInput id="fullName" name="fullName" label="نام و نام خانوادگی" formik={formik} />
+  const handleSubmit = async (values: FullNameFormType) => {
+    await onSubmit(values);
+  };
+
+  return (
+    <Form {...form}>
+      <form ref={ref} onSubmit={form.handleSubmit(handleSubmit)} className={`space-y-4 p-4 text-right ${className}`.trim()} dir="rtl">
+        <FormField
+          control={form.control}
+          name="fullName"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>نام و نام خانوادگی</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
       </form>
-    );
-  },
-);
+    </Form>
+  );
+});
 
 FullNameForm.displayName = 'FullNameForm';
 
