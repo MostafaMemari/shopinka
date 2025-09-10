@@ -1,7 +1,9 @@
-import * as Yup from 'yup';
+import { z } from 'zod';
 
-export const validationCommentSchema = Yup.object({
-  title: Yup.string().trim().required('عنوان الزامی است'),
-  content: Yup.string().trim().required('متن دیدگاه الزامی است'),
-  isRecommended: Yup.boolean().optional(),
+export const validationCommentSchema = z.object({
+  title: z.string().trim().min(1, 'عنوان الزامی است'),
+  content: z.string().trim().min(1, 'متن دیدگاه الزامی است'),
+  isRecommended: z.boolean().optional(),
 });
+
+export type CommentForm = z.infer<typeof validationCommentSchema>;

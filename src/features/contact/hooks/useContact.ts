@@ -2,7 +2,8 @@ import { useMutation } from '@tanstack/react-query';
 
 import { toast } from 'sonner';
 import { createContact } from '@/features/contact/api';
-import { ContactFormType, ContactItem } from '@/types/contactType';
+import { ContactItem } from '@/types/contactType';
+import { ContactForm } from '@/validation/validationContactSchema';
 
 export function useContact() {
   const createMutation = useMutation({
@@ -10,7 +11,7 @@ export function useContact() {
   });
 
   return {
-    createContact: (data: ContactFormType, onSuccess?: (created: ContactItem) => void, onError?: (error: any) => void) => {
+    createContact: (data: ContactForm, onSuccess?: (created: ContactItem) => void, onError?: (error: any) => void) => {
       createMutation.mutate(data, {
         onSuccess: (response) => {
           toast.success('پیام شما با موفقیت ثبت شد');

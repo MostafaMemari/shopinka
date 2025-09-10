@@ -1,24 +1,27 @@
-import * as Yup from 'yup';
+import { z } from 'zod';
 
 const emailRegex = /^[\w.-]+@[a-zA-Z\d-]+\.[a-zA-Z]{2,}$/;
 
-export const validationContactSchema = Yup.object({
-  fullName: Yup.string()
-    .required('نام الزامی است')
+export const validationContactSchema = z.object({
+  fullName: z
+    .string()
+    .trim()
     .min(3, 'نام باید حداقل ۳ کاراکتر باشد')
     .max(100, 'نام نباید بیش از ۱۰۰ کاراکتر باشد')
-    .trim(),
+    .nonempty('نام الزامی است'),
 
-  phone: Yup.string()
-    .required('شماره تماس الزامی است')
-    .matches(/^(\+98|0)?9\d{9}$/, 'شماره تماس معتبر نیست'),
+  phone: z
+    .string()
+    .regex(/^(\+98|0)?9\d{9}$/, 'شماره تماس معتبر نیست')
+    .nonempty('شماره تماس الزامی است'),
 
-  email: Yup.string().trim().notRequired().matches(emailRegex, {
-    message: 'ایمیل نامعتبر است',
-    excludeEmptyString: true,
-  }),
-  message: Yup.string()
-    .required('پیام الزامی است')
+  email: z.string().trim().regex(emailRegex, 'ایمیل نامعتبر است').optional().or(z.literal('')), // اجازه می‌ده خالی هم باشه
+
+  message: z
+    .string()
     .min(5, 'پیام باید حداقل ۵ کاراکتر باشد')
-    .max(1000, 'پیام نباید بیشتر از ۱۰۰۰ کاراکتر باشد'),
+    .max(1000, 'پیام نباید بیشتر از ۱۰۰۰ کاراکتر باشد')
+    .nonempty('پیام الزامی است'),
 });
+
+export type ContactForm = z.infer<typeof validationContactSchema>;

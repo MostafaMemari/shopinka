@@ -1,26 +1,20 @@
-import * as Yup from 'yup';
+import { z } from 'zod';
 
-export const validationAddressSchema = Yup.object({
-  fullName: Yup.string().trim().required('نام و نام خانوادگی وارد کنید'),
-  province: Yup.string().required('استان وارد کنید'),
-  city: Yup.string().required('شهر وارد کنید'),
-  postalAddress: Yup.string().required('آدرس پستی وارد کنید'),
+export const validationAddressSchema = z.object({
+  fullName: z.string().trim().min(1, 'نام و نام خانوادگی وارد کنید'),
+  province: z.string().trim().min(1, 'استان وارد کنید'),
+  city: z.string().trim().min(1, 'شهر وارد کنید'),
+  postalAddress: z.string().trim().min(1, 'آدرس پستی وارد کنید'),
 
-  buildingNumber: Yup.number()
-    .transform((value, originalValue) => (String(originalValue).trim() === '' ? undefined : Number(originalValue)))
-    .typeError('پلاک باید عدد باشد')
-    .integer('پلاک باید عدد صحیح باشد')
+  buildingNumber: z.coerce
+    .number()
+    .int('پلاک باید عدد صحیح باشد')
     .positive('پلاک باید عدد مثبت باشد')
-    .required('پلاک وارد کنید'),
+    .refine((val) => val > 0, 'پلاک وارد کنید'),
 
-  unit: Yup.number()
-    .transform((value, originalValue) => (String(originalValue).trim() === '' ? undefined : Number(originalValue)))
-    .typeError('واحد باید عدد باشد')
-    .integer('واحد باید عدد صحیح باشد')
-    .positive('واحد باید عدد مثبت باشد')
-    .optional(),
+  unit: z.coerce.number().int('واحد باید عدد صحیح باشد').positive('واحد باید عدد مثبت باشد').optional(),
 
-  postalCode: Yup.string()
-    .matches(/^\d{10}$/, 'کدپستی باید ۱۰ رقمی باشد')
-    .required('کدپستی وارد کنید'),
+  postalCode: z.string().regex(/^\d{10}$/, 'کدپستی باید ۱۰ رقمی باشد'),
 });
+
+export type AddressForm = z.infer<typeof validationAddressSchema>;
