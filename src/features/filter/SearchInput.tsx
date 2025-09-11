@@ -3,8 +3,8 @@
 import { useState, useEffect } from 'react';
 import { useQueryState } from 'nuqs';
 import { useDebouncedCallback } from 'use-debounce';
-import { FiSearch } from 'react-icons/fi';
 import { useResetPageOnQueryChange } from '@/hooks/useResetPageOnQueryChange';
+import { Search } from 'lucide-react';
 
 interface SearchInputProps {
   queryKey?: string;
@@ -50,7 +50,7 @@ const SearchInput = ({
   return (
     <div className={`relative w-full ${wrapperClassName}`}>
       <label className="sr-only">{label}</label>
-      <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-text/60 text-lg pointer-events-none" />
+      <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-text/60 text-lg pointer-events-none" />
       <input
         className={`w-full rounded-lg border-none pl-10 pr-3 py-3 text-text/90 outline-none placeholder:text-sm placeholder:text-text/60 focus:ring-0 ${className}`}
         placeholder={placeholder}

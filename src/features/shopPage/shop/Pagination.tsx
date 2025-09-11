@@ -1,8 +1,8 @@
 'use client';
 
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useQueryState } from 'nuqs';
 import { FC } from 'react';
-import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 
 interface PaginationProps {
   currentPage: number;
@@ -52,7 +52,7 @@ const Pagination: FC<PaginationProps> = ({ currentPage, totalPages }) => {
         onClick={() => currentPage > 1 && setQueryPage(String(currentPage - 1))}
         disabled={currentPage === 1}
       >
-        <FiChevronRight className="h-6 w-6" />
+        <ChevronRight className="h-6 w-6" />
       </button>
 
       <div className="flex items-center gap-x-2">
@@ -80,7 +80,7 @@ const Pagination: FC<PaginationProps> = ({ currentPage, totalPages }) => {
         onClick={() => currentPage < totalPages && setQueryPage(String(currentPage + 1))}
         disabled={currentPage === totalPages}
       >
-        <FiChevronLeft className="h-6 w-6" />
+        <ChevronLeft className="h-6 w-6" />
       </button>
     </div>
   );

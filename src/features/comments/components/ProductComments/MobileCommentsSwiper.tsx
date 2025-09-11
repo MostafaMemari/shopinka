@@ -3,11 +3,10 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 import CommentsDrawer from './CommentsDrawer';
-import { AiOutlineLeft } from 'react-icons/ai';
 import { CommentItem } from '@/types/commentType';
 import Recommendation from './Recommendation';
-import { FaUserCircle } from 'react-icons/fa';
 import { useBoolean } from '@/hooks/use-boolean';
+import { ChevronLeft, UserCircle } from 'lucide-react';
 
 interface Props {
   comments: CommentItem[];
@@ -35,7 +34,7 @@ export default function MobileCommentsCarousel({ comments, productId, drawerHand
                   <CardContent className="p-4 flex flex-col h-full">
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center gap-2">
-                        <FaUserCircle className="text-gray-400 dark:text-zinc-500 w-6 h-6" />
+                        <UserCircle className="text-gray-400 dark:text-zinc-500 w-6 h-6" />
                         <span className="bg-gray-100 text-xs rounded-full px-2 py-0.5 flex items-center gap-1">{'کاربر'}</span>
                       </div>
                       <Recommendation isRecommended={comment.isRecommended} />
@@ -59,7 +58,7 @@ export default function MobileCommentsCarousel({ comments, productId, drawerHand
                   className="flex flex-col items-center justify-center gap-y-2 text-primary"
                 >
                   <div className="rounded-full border border-primary p-2 bg-primary/10">
-                    <AiOutlineLeft className="h-4 w-4" />
+                    <ChevronLeft className="h-4 w-4" />
                   </div>
                   <div className="text-sm font-semibold">مشاهده بیشتر</div>
                 </button>

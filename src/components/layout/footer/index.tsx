@@ -1,12 +1,12 @@
 'use client';
 
-import { FaArrowUp } from 'react-icons/fa';
 import Copyright from './Copyright';
 import SupportInfo from './SupportInfo';
 import ScrollTopButton from './ScrollTopButton';
 import MenuLinks from './MenuLinks';
 import TrustBadges from './TrustBadges';
 import { defaultFooterData, menuLinks1, menuLinks2, trustBadges } from '@/data/footerData';
+import { ArrowUp } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -14,7 +14,7 @@ const Footer = () => {
       <div className="absolute inset-x-0 -top-3 flex items-center justify-center">
         <div className="relative flex h-10 w-14 justify-center">
           <div className="absolute inset-0 -top-[2px] h-full w-full rounded-full bg-muted blur-[6px]" />
-          <FaArrowUp className="relative h-5 w-5 text-gray-200" aria-hidden="true" />
+          <ArrowUp className="relative h-5 w-5 text-gray-200" aria-hidden="true" />
         </div>
       </div>
 

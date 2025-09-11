@@ -4,13 +4,13 @@ import React, { FC, useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
-import { HiChevronLeft } from 'react-icons/hi';
 import { productSwiperConfig } from '@/config/swiper';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import ProductCard from '../ProductCard';
 import { Product } from '../../types';
 import SkeletonLoader from './ProductCarouselSkeleton';
+import { ChevronLeft } from 'lucide-react';
 
 interface ProductCarouselProps {
   title: string;
@@ -35,7 +35,7 @@ const ProductCarousel: FC<ProductCarouselProps> = ({ title, viewAllLink, viewAll
           className="flex items-center gap-2 py-2 text-sm text-primary hover:text-blue-800 transition-colors lg:text-base"
         >
           {viewAllText}
-          <HiChevronLeft className="h-5 w-5 lg:h-6 lg:w-6" />
+          <ChevronLeft className="h-5 w-5 lg:h-6 lg:w-6" />
         </Link>
       </div>
 

@@ -4,9 +4,7 @@ import { usePathname } from 'next/navigation';
 import { Fragment, useState } from 'react';
 import { Transition } from '@headlessui/react';
 
-import { HiOutlineXMark } from 'react-icons/hi2';
-import { HiOutlineMenu } from 'react-icons/hi';
-import { Phone } from 'lucide-react';
+import { Menu, Phone, X } from 'lucide-react';
 import { Button } from '../../ui/button';
 
 import MobileBottomNav from './MobileBottomNav';
@@ -47,7 +45,7 @@ const MobileLayout = ({ showHeader = true, showNav = true }: MobileLayoutProps) 
           <header>
             <div className="flex items-center justify-between py-2 px-4 h-[60px]">
               <button onClick={toggleMenu} className="cursor-pointer">
-                {isMenuOpen ? <HiOutlineXMark className="h-6 w-6" /> : <HiOutlineMenu className="h-6 w-6" />}
+                {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
               </button>
               <MobileLogo />
 

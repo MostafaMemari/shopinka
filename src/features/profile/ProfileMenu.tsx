@@ -4,10 +4,9 @@ import { profileMenuItem } from '@/data/profileMenuItem';
 import { cn } from '@/utils/utils';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import React, { useState } from 'react';
-import { HiOutlineLogout } from 'react-icons/hi';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useAuth } from '../auth/hooks/useAuth';
+import { LogOut } from 'lucide-react';
 
 type ProfileMenuProps = {
   onClose?: () => void;
@@ -56,7 +55,7 @@ function ProfileMenu({ onClose }: ProfileMenuProps) {
             className="w-full flex items-center gap-x-2 rounded-lg px-1 py-3 text-red-500 hover:bg-red-100 dark:text-red-400 dark:hover:bg-red-900/20 transition group cursor-pointer"
             aria-label="خروج از حساب کاربری"
           >
-            <HiOutlineLogout className="h-6 w-6 group-hover:text-red-600 dark:group-hover:text-red-300" />
+            <LogOut className="h-6 w-6 group-hover:text-red-600 dark:group-hover:text-red-300" />
             <span className="group-hover:text-red-600 dark:group-hover:text-red-300">{isLogoutLoading ? 'در حال خروج...' : 'خروج'}</span>
           </button>
         </li>

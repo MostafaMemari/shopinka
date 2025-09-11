@@ -7,10 +7,10 @@ import { ShippingItem } from '@/features/shippings/types';
 import { useIsMounted } from '@/hooks/useIsMounted';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 import EmptyState from '../../profile/EmptyState';
-import { PiBasketFill } from 'react-icons/pi';
 import Link from 'next/link';
 import AddressSection from '../../address/components/AddressSection';
 import { useCart } from '@/features/cart/hooks/useCart';
+import { ShoppingBasket } from 'lucide-react';
 
 function CheckoutPageView() {
   const [selectedAddressId, setSelectedAddressId] = useState<number | null>(null);
@@ -36,7 +36,7 @@ function CheckoutPageView() {
       <div className="col-span-12">
         <div className="rounded-lg bg-muted p-6 min-h-[300px] flex flex-col items-center justify-center gap-4">
           <EmptyState
-            icon={<PiBasketFill className="w-12 h-12 text-gray-400" />}
+            icon={<ShoppingBasket className="w-12 h-12 text-gray-400" />}
             message="سبد خرید شما خالی است!"
             description="محصولات مورد علاقه‌تون رو به سبد خرید اضافه کنید و دوباره به این صفحه برگردید."
           />

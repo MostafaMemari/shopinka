@@ -1,4 +1,4 @@
-import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface PaginationProps {
   totalPages: number;
@@ -32,7 +32,7 @@ const Pagination: React.FC<PaginationProps> = ({ totalPages, currentPage, onPage
         disabled={currentPage === 1}
         aria-label="صفحه قبلی"
       >
-        <FaChevronRight className="h-6 w-6" />
+        <ChevronRight className="h-6 w-6" />
       </button>
       <div className="flex items-center gap-x-2">
         {pages.map((page, index) =>
@@ -59,7 +59,7 @@ const Pagination: React.FC<PaginationProps> = ({ totalPages, currentPage, onPage
         disabled={currentPage === totalPages}
         aria-label="صفحه بعدی"
       >
-        <FaChevronLeft className="h-6 w-6" />
+        <ChevronLeft className="h-6 w-6" />
       </button>
     </div>
   );

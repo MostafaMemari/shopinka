@@ -1,8 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { HiOutlineChevronLeft } from 'react-icons/hi';
 import { Category } from '@/features/categories/types';
+import { ChevronLeft } from 'lucide-react';
 
 interface SubCategoryListProps {
   category: Category;
@@ -18,7 +18,7 @@ const SubCategoryList = ({ category, onLinkClick }: SubCategoryListProps) => {
         <div className="mb-4">
           <Link className="flex items-center gap-x-1 py-2 text-sm text-primary" href={categorySlug} onClick={onLinkClick}>
             <span>مشاهده همه {category.name}</span>
-            <HiOutlineChevronLeft className="h-5 w-5" />
+            <ChevronLeft className="h-5 w-5" />
           </Link>
         </div>
 
@@ -33,7 +33,7 @@ const SubCategoryList = ({ category, onLinkClick }: SubCategoryListProps) => {
                 >
                   <span className="h-5 w-0.5 rounded-full bg-primary dark:bg-primary"></span>
                   <span>{subCategory.name}</span>
-                  <HiOutlineChevronLeft className="h-5 w-5" />
+                  <ChevronLeft className="h-5 w-5" />
                 </Link>
                 {subCategory.children && (
                   <ul className="space-y-2">

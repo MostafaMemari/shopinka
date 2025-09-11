@@ -4,11 +4,11 @@ import React from 'react';
 import { CommentItem } from '@/types/commentType';
 import Recommendation from './Recommendation';
 import { useComment } from '@/features/comments/hooks/useComment';
-import { FaUserCircle } from 'react-icons/fa';
 import ReplyComment from '../AddReplyComment/ReplyComment';
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from '@/components/ui/drawer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useBoolean } from '@/hooks/use-boolean';
+import { UserCircle } from 'lucide-react';
 
 interface CommentsDrawerProps {
   drawerHandlers: ReturnType<typeof useBoolean>;
@@ -69,7 +69,7 @@ function CommentsDrawer({ drawerHandlers, productId }: CommentsDrawerProps) {
               <Card className="flex flex-col p-4 shadow-md">
                 <CardHeader className="flex items-center justify-between mb-3 p-0">
                   <div className="flex items-center gap-2">
-                    <FaUserCircle className="text-gray-400 dark:text-zinc-500 w-7 h-7" />
+                    <UserCircle className="text-gray-400 dark:text-zinc-500 w-7 h-7" />
                     <span
                       className={`text-xs font-semibold rounded-full px-2 py-0.5
                     ${comment.userId ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' : 'bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400'}`}
@@ -113,7 +113,7 @@ function ReplyList({ replies }: { replies: CommentItem[] }) {
             <Card className="flex flex-col p-3 bg-gray-50 dark:bg-zinc-800">
               <CardHeader className="flex items-center justify-between mb-2 p-0">
                 <div className="flex items-center gap-2">
-                  <FaUserCircle className="text-gray-400 dark:text-zinc-500 w-5 h-5" />
+                  <UserCircle className="text-gray-400 dark:text-zinc-500 w-5 h-5" />
                   <span
                     className={`text-xs rounded-full px-2 py-0.5 font-semibold
                     ${reply.userId ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' : 'bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400'}`}

@@ -7,7 +7,7 @@ import Pagination from '../Pagination';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 import { useOrder } from '@/features/orders/hooks';
 import OrderCard from './OrderCard';
-import { FaBoxOpen } from 'react-icons/fa';
+import { Box } from 'lucide-react';
 
 interface TabContentProps {
   tabId: 'current' | 'delivered' | 'canceled';
@@ -34,7 +34,7 @@ const TabContent: React.FC<TabContentProps> = ({ tabId }) => {
         ) : error ? (
           <ErrorState message={error.message} />
         ) : orderPager?.totalCount === 0 ? (
-          <EmptyState icon={<FaBoxOpen className="w-full h-full" />} />
+          <EmptyState icon={<Box className="w-full h-full" />} />
         ) : (
           <div className="space-y-4">
             {orders.map((order) => (

@@ -1,6 +1,6 @@
 'use client';
 
-import { AiOutlineLike, AiOutlineDislike } from 'react-icons/ai';
+import { ThumbsDown, ThumbsUp } from 'lucide-react';
 
 interface Props {
   name?: string;
@@ -30,7 +30,7 @@ export default function SuggestionRadio({ name = 'isRecommended', selected, onCh
           className="relative block cursor-pointer rounded-lg border p-2 shadow-base peer-checked:border-emerald-500 dark:peer-checked:border-emerald-400"
         >
           <div className="flex items-center gap-x-2 text-emerald-600">
-            <AiOutlineLike className="h-5 w-5" />
+            <ThumbsUp className="h-5 w-5" />
             <p className="text-sm xs:text-base">می‌کنم</p>
           </div>
         </label>
@@ -51,7 +51,7 @@ export default function SuggestionRadio({ name = 'isRecommended', selected, onCh
           className="relative block cursor-pointer rounded-lg border p-2 shadow-base peer-checked:border-red-500 dark:peer-checked:border-red-400"
         >
           <div className="flex items-center gap-x-2 text-red-500 dark:text-red-400">
-            <AiOutlineDislike className="h-5 w-5" />
+            <ThumbsDown className="h-5 w-5" />
             <p className="text-sm xs:text-base">نمی‌کنم</p>
           </div>
         </label>

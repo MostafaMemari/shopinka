@@ -1,6 +1,6 @@
 'use client';
 
-import { FaEdit, FaPlus } from 'react-icons/fa';
+import { Edit, Plus } from 'lucide-react';
 
 interface ProfileFieldProps {
   label: string;
@@ -33,11 +33,7 @@ const ProfileField: React.FC<ProfileFieldProps> = ({ label, value, status, isPas
                 <div className="mr-2 text-text/60">{value}</div>
               )}
             </div>
-            {status === 'not-set' ? (
-              <FaPlus className="h-6 w-6 text-primary" />
-            ) : onEdit ? (
-              <FaEdit className="h-6 w-6 text-primary" />
-            ) : null}
+            {status === 'not-set' ? <Plus className="h-6 w-6 text-primary" /> : onEdit ? <Edit className="h-6 w-6 text-primary" /> : null}
           </div>
         </div>
       </button>

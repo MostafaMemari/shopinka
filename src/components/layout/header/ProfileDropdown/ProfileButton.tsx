@@ -1,7 +1,7 @@
 'use client';
 
-import { HiOutlineChevronDown, HiOutlineChevronUp, HiOutlineUser } from 'react-icons/hi';
 import { useAppSelector } from '@/store/hooks';
+import { ChevronDown, ChevronUp, User } from 'lucide-react';
 
 interface ProfileButtonProps {
   toggleDropdown: () => void;
@@ -19,9 +19,9 @@ const ProfileButton = ({ toggleDropdown, isOpen }: ProfileButtonProps) => {
       aria-label="باز کردن منوی پروفایل"
       aria-expanded={isOpen}
     >
-      <HiOutlineUser className="h-5 w-5" />
+      <User className="h-5 w-5" />
       <span>{user?.full_name || 'کاربر گرامی'}</span>
-      {isOpen ? <HiOutlineChevronUp className="h-5 w-5" /> : <HiOutlineChevronDown className="h-5 w-5" />}
+      {isOpen ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
     </button>
   );
 };

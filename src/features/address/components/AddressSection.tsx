@@ -1,11 +1,11 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import { MdOutlineEditLocation } from 'react-icons/md';
 import AddressItem from './AddressCard';
 import { useAddress } from '@/features/address/hooks';
 import { AddressCardSkeleton } from './AddressCardSkeleton';
 import { CreateAddressDialogDrawer } from './CreateAddressDialogDrawer';
+import { MapPin } from 'lucide-react';
 
 export interface Option {
   value: string;
@@ -29,7 +29,7 @@ export default function AddressSection({ onAddressSelect }: AddressSectionProps)
     <div className="mb-6">
       <div className="flex items-center justify-between gap-x-2 pb-4">
         <h3 className="flex items-center gap-x-2 text-sm xs:text-base md:text-lg font-medium text-gray-800">
-          <MdOutlineEditLocation className="h-5 w-5 text-primary" />
+          <MapPin className="h-5 w-5 text-primary" />
           آدرس تحویل سفارش
         </h3>
 

@@ -1,5 +1,5 @@
+import { AlertTriangle } from 'lucide-react';
 import { ReactNode } from 'react';
-import { FaExclamationTriangle } from 'react-icons/fa';
 
 interface ErrorStateProps {
   message?: string;
@@ -9,7 +9,7 @@ interface ErrorStateProps {
 
 const ErrorState: React.FC<ErrorStateProps> = ({
   message = 'خطایی رخ داده است',
-  icon = <FaExclamationTriangle className="w-full h-full" />,
+  icon = <AlertTriangle className="w-full h-full" />,
   className = '',
 }) => {
   return (

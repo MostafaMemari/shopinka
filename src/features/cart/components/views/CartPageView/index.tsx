@@ -1,8 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import { PiBasketFill } from 'react-icons/pi';
-import { HiOutlineTrash } from 'react-icons/hi';
 
 import CartPageItem from '@/features/cart/components/views/CartPageView/CartPageItem';
 import CartSummary from '@/features/cart/components/CartSummary';
@@ -21,6 +19,7 @@ import { openDialog } from '@/store/slices/authDialogSlice';
 import { useBoolean } from '@/hooks/use-boolean';
 import { useCart } from '@/features/cart/hooks/useCart';
 import ConfirmDialog from '@/components/common/ConfirmDialog';
+import { ShoppingBasket, Trash2 } from 'lucide-react';
 
 function CartPageView() {
   const router = useRouter();
@@ -69,7 +68,7 @@ function CartPageView() {
       <div className="col-span-12">
         <div className="rounded-lg bg-muted p-6 min-h-[300px] flex flex-col items-center justify-center gap-4">
           <EmptyState
-            icon={<PiBasketFill className="w-12 h-12 text-gray-400" />}
+            icon={<ShoppingBasket className="w-12 h-12 text-gray-400" />}
             message="سبد خرید شما خالی است!"
             description="محصولات مورد علاقه‌تون رو به سبد خرید اضافه کنید و دوباره به این صفحه برگردید."
           />{' '}
@@ -116,7 +115,7 @@ function CartPageView() {
               className="btn-red-nobg px-3 py-2 text-sm cursor-pointer flex items-center gap-2"
               onClick={confirmDialogDrawer.onTrue}
             >
-              <HiOutlineTrash className="h-6 w-6" />
+              <Trash2 className="h-6 w-6" />
               <span>حذف همه</span>
             </button>
           </div>

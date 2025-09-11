@@ -7,8 +7,8 @@ import { useToggleFavorite } from '@/features/favorite/hooks/useToggleFavorite';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 import { useState } from 'react';
 import EmptyState from '../EmptyState';
-import { FaHeartBroken } from 'react-icons/fa';
 import ErrorState from '../ErrorState';
+import { HeartCrack } from 'lucide-react';
 
 const FavoriteActions = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -38,7 +38,7 @@ const FavoriteActions = () => {
         ) : error ? (
           <ErrorState message={error.message} />
         ) : favorites.length === 0 ? (
-          <EmptyState icon={<FaHeartBroken className="w-full h-full" />} />
+          <EmptyState icon={<HeartCrack className="w-full h-full" />} />
         ) : (
           <>
             <div className="mb-8 grid grid-cols-2 gap-1 gap-y-2 xs:gap-4 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">

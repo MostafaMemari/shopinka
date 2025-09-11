@@ -1,14 +1,13 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import { FaUserCircle } from 'react-icons/fa';
 import ProfileMenu from '../ProfileMenu';
 import { useIsMounted } from '@/hooks/useIsMounted';
 import { useAppSelector } from '@/store/hooks';
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from '@/components/ui/drawer';
 import { Button } from '@/components/ui/button';
 import { useBoolean } from '@/hooks/use-boolean';
-import { Menu } from 'lucide-react';
+import { Menu, UserCircle } from 'lucide-react';
 import { useMediaQuery } from '@/hooks/use-media-query';
 
 function ProfileMenuCard() {
@@ -31,7 +30,7 @@ function ProfileMenuCard() {
         <div className="flex items-center justify-center">
           <div className="flex flex-col items-center justify-center gap-y-4">
             <div className="relative">
-              <FaUserCircle className="h-20 w-20 only:rounded-full" />
+              <UserCircle className="h-20 w-20 only:rounded-full" />
             </div>
             <div>
               <p className="line-clamp-1">{!!user?.full_name ? user.full_name : 'کاربر گرامی'}</p>

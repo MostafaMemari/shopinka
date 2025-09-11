@@ -3,9 +3,9 @@
 import { FC, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { HiOutlineChevronLeft } from 'react-icons/hi';
 import { searchBarSwiperConfig } from '@/config/swiper';
 import Carousel from './Carousel';
+import { ChevronLeft } from 'lucide-react';
 
 interface Item {
   id: string;
@@ -38,7 +38,7 @@ const CarouselSearchBar: FC<Props> = ({ sectionTitle, viewAllLink, viewAllText =
               className="flex items-center justify-center gap-x-2 rounded-full border p-2 text-text/60 hover:border-border/50"
             >
               <p className="line-clamp-1">{item.title}</p>
-              <HiOutlineChevronLeft className="h-4 w-4" />
+              <ChevronLeft className="h-4 w-4" />
             </Link>
           )}
         </div>

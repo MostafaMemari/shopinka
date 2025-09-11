@@ -1,6 +1,6 @@
-import { HiChevronLeft } from 'react-icons/hi';
 import Link from 'next/link';
 import { Card } from '@/components/ui/card';
+import { ChevronLeft } from 'lucide-react';
 
 interface Props {
   items: { name: string; href: string }[];
@@ -20,7 +20,7 @@ const BreadcrumbContainer = ({ items, variant = 'boxed' }: Props) => {
                     <Link href={item.href} className="text-sm text-text/90 hover:underline">
                       {item.name}
                     </Link>
-                    {index < items.length - 1 && <HiChevronLeft className="h-5 w-5 text-text/90" />}
+                    {index < items.length - 1 && <ChevronLeft className="h-5 w-5 text-text/90" />}
                   </li>
                 ))}
               </ol>
@@ -34,7 +34,7 @@ const BreadcrumbContainer = ({ items, variant = 'boxed' }: Props) => {
               <Link href={item.href} className="text-sm text-text/90 hover:underline">
                 {item.name}
               </Link>
-              {index < items.length - 1 && <HiChevronLeft className="h-5 w-5" />}
+              {index < items.length - 1 && <ChevronLeft className="h-5 w-5" />}
             </div>
           ))}
         </div>

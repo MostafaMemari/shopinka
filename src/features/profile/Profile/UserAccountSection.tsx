@@ -1,7 +1,5 @@
 import CardBox from '@/features/profile/CardBox';
-import { GrLocation } from 'react-icons/gr';
-import { HiOutlineHeart, HiOutlineShoppingBag } from 'react-icons/hi';
-import { RiAccountCircle2Line } from 'react-icons/ri';
+import { Heart, MapPin, ShoppingBag, UserCircle } from 'lucide-react';
 interface UserAccountSectionProps {
   favoriteCount?: number;
   notificationCount?: number;
@@ -10,28 +8,28 @@ interface UserAccountSectionProps {
 const items = [
   {
     href: '/profile/personal-info',
-    icon: <RiAccountCircle2Line />,
+    icon: <UserCircle />,
     color: 'from-sky-400 via-sky-500 to-sky-600',
     title: 'تکمیل مشخصات',
     value: undefined,
   },
   {
     href: '/profile/favorite',
-    icon: <HiOutlineHeart />,
+    icon: <Heart />,
     color: 'from-pink-400 via-rose-500 to-rose-600',
     title: 'علاقه‌مندی ها',
     value: undefined,
   },
   {
     href: '/profile/address',
-    icon: <GrLocation />,
+    icon: <MapPin />,
     color: 'from-blue-400 via-blue-500 to-blue-600',
     title: 'آدرس ها',
     value: undefined,
   },
   {
     href: '/profile/orders',
-    icon: <HiOutlineShoppingBag />,
+    icon: <ShoppingBag />,
     color: 'from-green-400 via-green-500 to-green-600',
     title: 'سفارش ها',
     value: undefined,

@@ -2,7 +2,7 @@
 
 import { toast } from 'sonner';
 import { FC } from 'react';
-import { BiCopy, BiShare } from 'react-icons/bi';
+import { Copy, Share2 } from 'lucide-react';
 
 const ShareButton: FC = () => {
   const handleCopyLink = () => {
@@ -20,7 +20,7 @@ const ShareButton: FC = () => {
         className="btn-primary-nobg cursor-pointer"
         onClick={handleCopyLink}
       >
-        <BiShare className="h-5 w-5" />
+        <Share2 className="h-5 w-5" />
         اشتراک گذاری
       </button>
       <div className="z-10 ml-5! hidden w-50 overflow-hidden rounded-lg border bg-muted shadow-base" id="copy-social-share-link">
@@ -32,7 +32,7 @@ const ShareButton: FC = () => {
               className="flex w-full items-center justify-between rounded-lg px-4 py-3 text-sky-500 hover:bg-sky-500/10 dark:text-sky-400 dark:hover:bg-sky-400/10"
             >
               <div className="flex items-center gap-x-2">
-                <BiCopy className="h-6 w-6" />
+                <Copy className="h-6 w-6" />
                 <span id="copyToClipboardSocialShareText">کپی کردن لینک</span>
               </div>
             </button>

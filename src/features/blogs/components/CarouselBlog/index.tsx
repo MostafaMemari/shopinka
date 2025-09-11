@@ -10,7 +10,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import { Navigation } from 'swiper/modules';
-import { HiChevronLeft } from 'react-icons/hi';
+import { ChevronLeft } from 'lucide-react';
 
 const SkeletonLoader = () => {
   return (
@@ -51,7 +51,7 @@ const CarouselBlog: FC<CarouselBlogProps> = ({ title, viewAllLink, viewAllText =
           className="flex items-center gap-2 py-2 text-sm text-primary hover:text-blue-800 transition-colors lg:text-base"
         >
           {viewAllText}
-          <HiChevronLeft className="h-5 w-5 lg:h-6 lg:w-6" />
+          <ChevronLeft className="h-5 w-5 lg:h-6 lg:w-6" />
         </Link>
       </div>
       {blogs && blogs.length > 0 ? (

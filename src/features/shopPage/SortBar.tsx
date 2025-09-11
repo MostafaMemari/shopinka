@@ -1,7 +1,7 @@
 'use client';
 
+import { SortAsc } from 'lucide-react';
 import { useQueryState } from 'nuqs';
-import { BsSortDown } from 'react-icons/bs';
 
 const SORT_OPTIONS = {
   default: { label: 'پیش‌فرض', value: '' },
@@ -31,7 +31,7 @@ function SortBar() {
     <div className="hidden md:block">
       <div className="flex h-14 items-center gap-x-2 rounded-lg bg-muted px-2 text-text/90 shadow-base lg:px-4">
         <div className="flex items-center gap-x-2 text-sm lg:text-base">
-          <BsSortDown className="h-6 w-6" />
+          <SortAsc className="h-6 w-6" />
           <p>مرتب‌سازی بر اساس</p>
         </div>
         {Object.entries(SORT_OPTIONS).map(([key, { label }]) => (

@@ -3,11 +3,11 @@
 import { FC, ReactNode, useEffect, useRef, useState } from 'react';
 import { Swiper, SwiperSlide, SwiperRef } from 'swiper/react';
 import { Navigation, FreeMode } from 'swiper/modules';
-import { ImSpinner2 } from 'react-icons/im';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/free-mode';
 import './caroucel.css';
+import { Loader2 } from 'lucide-react';
 
 interface CarouselProps {
   items: ReactNode[];
@@ -42,7 +42,7 @@ const Carousel: FC<CarouselProps> = ({
   if (loading) {
     return (
       <div className="flex w-full items-center justify-center">
-        <ImSpinner2 className="h-8 w-8 animate-spin text-gray-500 dark:text-gray-300" />
+        <Loader2 className="h-8 w-8 animate-spin text-gray-500 dark:text-gray-300" />
       </div>
     );
   }

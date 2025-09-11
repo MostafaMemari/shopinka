@@ -2,13 +2,12 @@
 
 import React from 'react';
 import { useRouter } from 'next/navigation';
-import { IoIosArrowBack } from 'react-icons/io';
-import { RiHome3Line } from 'react-icons/ri';
 import FavoriteProductAction from './ActionButtons/FavoriteProductAction';
 import CartIconTotalQuantity from '../cart/components/CartIconTotalQuantity';
 import { useIsMounted } from '@/hooks/useIsMounted';
 import ShareProductAction from './ActionButtons/ShareProductAction';
 import { Skeleton } from '@/components/ui/skeleton';
+import { ChevronLeft, Home } from 'lucide-react';
 
 interface MobileHeaderProps {
   productId: number;
@@ -45,11 +44,11 @@ const MobileHeader = ({ productId }: MobileHeaderProps) => {
           <>
             <div className="flex gap-2">
               <button onClick={handleBack} className="bg-white p-3 rounded-lg shadow-md cursor-pointer" aria-label="Back">
-                <IoIosArrowBack size={22} className="transform rotate-180" />
+                <ChevronLeft size={22} className="transform rotate-180" />
               </button>
 
               <button onClick={handleHome} className="bg-white p-3 rounded-lg shadow-md cursor-pointer" aria-label="Home">
-                <RiHome3Line size={22} />
+                <Home size={22} />
               </button>
             </div>
 

@@ -6,10 +6,10 @@ import Pagination from '@/components/common/Pagination';
 import DesktopComments from './DesktopComments';
 import { CommentItem } from '@/types/commentType';
 import { useComment } from '@/features/comments/hooks/useComment';
-import { AiOutlineLeft } from 'react-icons/ai';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 import CreateComment from '../AddReplyComment/CreateComment';
 import { useBoolean } from '@/hooks/use-boolean';
+import { ChevronLeftCircle } from 'lucide-react';
 
 interface Props {
   productId: number;
@@ -59,7 +59,7 @@ export default function ProductComments({ productId }: Props) {
                 <CreateComment productId={productId} />
               </div>
               <div onClick={drawerHandlers.onTrue} className="text-sm flex items-center gap-x-1 text-primary cursor-pointer">
-                {`مشاهده ${comments.length} دیدگاه`} <AiOutlineLeft className="h-4 w-4" />
+                {`مشاهده ${comments.length} دیدگاه`} <ChevronLeftCircle className="h-4 w-4" />
               </div>
             </div>
           </div>

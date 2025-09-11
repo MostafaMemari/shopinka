@@ -1,5 +1,5 @@
+import { CheckCircle2, CreditCard, FileText } from 'lucide-react';
 import React from 'react';
-import { HiOutlineCheck, HiOutlineCreditCard, HiOutlineDocumentText } from 'react-icons/hi';
 
 // تعریف تایپ برای props
 interface CheckoutProgressProps {
@@ -14,9 +14,9 @@ interface Step {
 
 const CheckoutProgress: React.FC<CheckoutProgressProps> = ({ currentStep }) => {
   const steps: Step[] = [
-    { name: 'سبد خرید', key: 'cart', icon: HiOutlineCheck },
-    { name: 'صورتحساب', key: 'checkout', icon: HiOutlineDocumentText },
-    { name: 'پرداخت', key: 'payment', icon: HiOutlineCreditCard },
+    { name: 'سبد خرید', key: 'cart', icon: CheckCircle2 },
+    { name: 'صورتحساب', key: 'checkout', icon: FileText },
+    { name: 'پرداخت', key: 'payment', icon: CreditCard },
   ];
 
   const currentStepIndex = steps.findIndex((step) => step.key === currentStep);
