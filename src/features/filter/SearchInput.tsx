@@ -5,6 +5,9 @@ import { useQueryState } from 'nuqs';
 import { useDebouncedCallback } from 'use-debounce';
 import { useResetPageOnQueryChange } from '@/hooks/useResetPageOnQueryChange';
 import { Search } from 'lucide-react';
+import { Card } from '@/components/ui/card';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
 
 interface SearchInputProps {
   queryKey?: string;
@@ -48,18 +51,18 @@ const SearchInput = ({
   };
 
   return (
-    <div className={`relative w-full ${wrapperClassName}`}>
-      <label className="sr-only">{label}</label>
+    <Card className={`relative w-full p-0 ${wrapperClassName}`}>
+      <Label className="sr-only">{label}</Label>
       <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-text/60 text-lg pointer-events-none" />
       <input
-        className={`w-full rounded-lg border-none pl-10 pr-3 py-3 text-text/90 outline-none placeholder:text-sm placeholder:text-text/60 focus:ring-0 ${className}`}
+        className={`w-full border-none py-4 pr-3 text-text/90 outline-none placeholder:text-sm placeholder:text-text/60 focus:ring-0 ${className}`}
         placeholder={placeholder}
         type="text"
         value={inputValue}
         onChange={handleChange}
         autoFocus={autoFocus}
       />
-    </div>
+    </Card>
   );
 };
 

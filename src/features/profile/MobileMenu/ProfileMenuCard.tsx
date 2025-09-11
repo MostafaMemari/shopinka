@@ -1,14 +1,14 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import ProfileMenu from '../ProfileMenu';
 import { useIsMounted } from '@/hooks/useIsMounted';
 import { useAppSelector } from '@/store/hooks';
-import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from '@/components/ui/drawer';
-import { Button } from '@/components/ui/button';
 import { useBoolean } from '@/hooks/use-boolean';
 import { Menu, UserCircle } from 'lucide-react';
 import { useMediaQuery } from '@/hooks/use-media-query';
+import MobileDrawer from '@/components/common/Drawer';
+import ProfileMenu from '../ProfileMenu';
+import { Button } from '@/components/ui/button';
 
 function ProfileMenuCard() {
   const { user } = useAppSelector((state) => state.auth);
@@ -37,20 +37,19 @@ function ProfileMenuCard() {
               <p className="text-text/60">{user?.mobile}</p>
             </div>
             <div>
-              <Drawer open={drawerControl.value} onOpenChange={drawerControl.setValue}>
-                <DrawerTrigger asChild>
+              <MobileDrawer
+                open={drawerControl.value}
+                onOpenChange={drawerControl.setValue}
+                title="منوی پنل کاربری"
+                showClose={false}
+                trigger={
                   <Button>
                     <Menu /> منوی پنل کاربری
                   </Button>
-                </DrawerTrigger>
-                <DrawerContent>
-                  <DrawerHeader>
-                    <DrawerTitle>منوی پنل کاربری</DrawerTitle>
-                  </DrawerHeader>
-
-                  <ProfileMenu onClose={drawerControl.onFalse} />
-                </DrawerContent>
-              </Drawer>
+                }
+              >
+                <ProfileMenu onClose={drawerControl.onFalse} />
+              </MobileDrawer>
             </div>
           </div>
         </div>

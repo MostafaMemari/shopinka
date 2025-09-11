@@ -9,7 +9,7 @@ import { Button } from '../../ui/button';
 
 import MobileBottomNav from './MobileBottomNav';
 import MobileLogo from '../Logo/MobileLogo';
-import MobileMenu from '@/components/layout/mobileLayout/MobileMenu';
+import SideMenu from '@/components/layout/mobileLayout/SideMenu';
 import MobileCartSticky from '../MobileCartSticky';
 
 interface MobileLayoutProps {
@@ -27,19 +27,6 @@ const MobileLayout = ({ showHeader = true, showNav = true }: MobileLayoutProps) 
 
   return (
     <div className="lg:hidden">
-      <Transition
-        show={isMenuOpen}
-        enter="transition-opacity duration-200"
-        enterFrom="opacity-0"
-        enterTo="opacity-100"
-        leave="transition-opacity duration-150"
-        leaveFrom="opacity-100"
-        leaveTo="opacity-0"
-        as={Fragment}
-      >
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40" aria-hidden="true" />
-      </Transition>
-
       {showHeader && (
         <MobileCartSticky position="top">
           <header>
@@ -57,7 +44,7 @@ const MobileLayout = ({ showHeader = true, showNav = true }: MobileLayoutProps) 
         </MobileCartSticky>
       )}
 
-      <MobileMenu isMenuOpen={isMenuOpen} onToggleMenu={setIsMenuOpen} />
+      <SideMenu isMenuOpen={isMenuOpen} onToggleMenu={setIsMenuOpen} />
 
       {showNav && <MobileBottomNav />}
     </div>

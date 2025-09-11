@@ -42,10 +42,10 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
         {(actions || showClose) && (
           <DrawerFooter className="sticky bottom-0 left-0 right-0 border-t mt-3">
             <div className="flex items-center justify-between gap-2">
-              {actions}
+              {actions && <div className={`flex items-center gap-2 ${showClose ? 'w-2/3' : 'w-full'}`}>{actions}</div>}
               {showClose && (
                 <DrawerClose asChild>
-                  <Button variant="secondary" className="w-24">
+                  <Button variant="secondary" className={actions ? 'w-1/3' : 'w-full'}>
                     بستن
                   </Button>
                 </DrawerClose>

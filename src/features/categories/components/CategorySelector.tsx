@@ -6,6 +6,7 @@ import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/
 import { Checkbox } from '@/components/ui/checkbox';
 import { Category } from '@/features/categories/types';
 import { useResetPageOnQueryChange } from '@/hooks/useResetPageOnQueryChange';
+import { Label } from '@/components/ui/label';
 
 interface Props {
   queryKey?: string;
@@ -43,9 +44,11 @@ const CategorySelector: React.FC<Props> = ({ queryKey = 'categoryIds', title = '
     <ul>
       <Accordion type="single" collapsible defaultValue="categories">
         <AccordionItem value="categories">
-          <AccordionTrigger className="hover:no-underline cursor-pointer">{title}</AccordionTrigger>
+          <AccordionTrigger className="hover:no-underline cursor-pointer">
+            <Label>{title}</Label>
+          </AccordionTrigger>
           <AccordionContent>
-            <ul className="space-y-3">
+            <ul className="space-y-4.5">
               {categories.map((category) => (
                 <li key={category.id}>
                   <div className="flex items-center gap-2">
@@ -55,12 +58,12 @@ const CategorySelector: React.FC<Props> = ({ queryKey = 'categoryIds', title = '
                       checked={selectedCategories.includes(category.id)}
                       onCheckedChange={() => handleToggle(category.id)}
                     />
-                    <label
+                    <Label
                       htmlFor={`category-${category.id}`}
                       className="text-sm font-medium leading-none cursor-pointer peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                     >
                       {category.name}
-                    </label>
+                    </Label>
                   </div>
                 </li>
               ))}

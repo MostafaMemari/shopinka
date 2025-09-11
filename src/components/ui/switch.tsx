@@ -10,8 +10,7 @@ function Switch({ className, ...props }: React.ComponentProps<typeof SwitchPrimi
     <SwitchPrimitive.Root
       data-slot="switch"
       className={cn(
-        'rotate-180',
-        'peer data-[state=checked]:bg-primary data-[state=unchecked]:bg-input focus-visible:border-ring focus-visible:ring-ring/50 dark:data-[state=unchecked]:bg-input/80 inline-flex h-[1.15rem] w-8 shrink-0 items-center rounded-full border border-transparent shadow-xs transition-all outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50',
+        'rotate-180 peer inline-flex h-7 w-12 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=unchecked]:bg-gray-300 dark:data-[state=unchecked]:bg-gray-700',
         className,
       )}
       {...props}
@@ -19,11 +18,11 @@ function Switch({ className, ...props }: React.ComponentProps<typeof SwitchPrimi
       <SwitchPrimitive.Thumb
         data-slot="switch-thumb"
         className={cn(
-          'bg-background dark:data-[state=unchecked]:bg-foreground dark:data-[state=checked]:bg-primary-foreground pointer-events-none block size-4 rounded-full ring-0 transition-transform data-[state=unchecked]:translate-x-0',
+          'pointer-events-none block h-6 w-6 rounded-full bg-background shadow-lg ring-0 transition-transform data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0',
           // Default LTR behavior
-          'data-[state=checked]:translate-x-[calc(100%-2px)]',
-          // Add this line for RTL support
-          'rtl:data-[state=checked]:-translate-x-[calc(100%-2px)]',
+          'data-[state=checked]:translate-x-[20px]',
+          // RTL support
+          'rtl:data-[state=checked]:-translate-x-[20px]',
         )}
       />
     </SwitchPrimitive.Root>

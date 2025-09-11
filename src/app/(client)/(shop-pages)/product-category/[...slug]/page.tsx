@@ -62,9 +62,7 @@ export default async function ShopPage({ searchParams, params }: PageProps) {
       <CategoryChildrenGrid name={category.name} basePath={`product-category/${category.slug}`} categories={category.children} />
 
       <div className="mb-4 flex flex-col gap-4 md:hidden">
-        <div className="rounded-lg bg-muted shadow-base">
-          <SearchInput />
-        </div>
+        <SearchInput />
         <div className="flex items-center justify-center gap-x-4">
           <MobileFilter totalCount={pager.totalCount} categories={category.children} type="SHOP" />
           <MobileSortDrawer options={PRODUCT_SORT_OPTIONS} />

@@ -6,7 +6,6 @@ import { BLOG_SORT_OPTIONS, BlogParams } from '@/features/blogs/types';
 import SearchInput from '@/features/filter/SearchInput';
 import SortBar from '@/features/filter/SortBar';
 import MobileFilter from '@/features/filter/MobileFilter';
-import MobileSort from '@/features/filter/MobileSort';
 import BlogListBlogClient from '@/features/blogs/components/BlogListClient';
 import MobileSortDrawer from '@/features/filter/MobileSortDrawer';
 
@@ -30,9 +29,7 @@ export default async function BlogPage({ searchParams }: PageProps) {
   return (
     <>
       <div className="mb-4 flex flex-col gap-4 md:hidden">
-        <div className="rounded-lg bg-muted shadow-base">
-          <SearchInput />
-        </div>
+        <SearchInput />
 
         <div className="flex items-center justify-center gap-x-4">
           <MobileFilter totalCount={pager.totalCount} type="BLOG" />

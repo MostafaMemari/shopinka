@@ -22,12 +22,7 @@ function StockStatusFilter() {
       <Label htmlFor="onlyAvailableDesktop" className="cursor-pointer">
         فقط کالاهای موجود
       </Label>
-      <Switch
-        id="onlyAvailableDesktop"
-        className="cursor-pointer"
-        checked={isInStock}
-        onCheckedChange={(checked) => setIsInStock(checked)}
-      />
+      <Switch id="airplane-mode" className="cursor-pointer" checked={isInStock} onCheckedChange={(checked) => setIsInStock(checked)} />
     </div>
   );
 }

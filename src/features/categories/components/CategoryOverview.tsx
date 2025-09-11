@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader } from '@/components/ui';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { NoImage } from '@/types/noImageEnum';
 import Image from 'next/image';
 
