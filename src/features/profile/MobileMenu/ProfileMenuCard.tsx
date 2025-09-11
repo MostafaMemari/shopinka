@@ -9,6 +9,8 @@ import { useMediaQuery } from '@/hooks/use-media-query';
 import MobileDrawer from '@/components/common/Drawer';
 import ProfileMenu from '../ProfileMenu';
 import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { Label } from '@/components/ui/label';
 
 function ProfileMenuCard() {
   const { user } = useAppSelector((state) => state.auth);
@@ -25,36 +27,34 @@ function ProfileMenuCard() {
   if (!isMounted) return null;
 
   return (
-    <>
-      <div className="rounded-lg bg-muted p-6 shadow-base lg:hidden mb-4">
-        <div className="flex items-center justify-center">
-          <div className="flex flex-col items-center justify-center gap-y-4">
-            <div className="relative">
-              <UserCircle className="h-20 w-20 only:rounded-full" />
-            </div>
-            <div>
-              <p className="line-clamp-1">{!!user?.full_name ? user.full_name : 'کاربر گرامی'}</p>
-              <p className="text-text/60">{user?.mobile}</p>
-            </div>
-            <div>
-              <MobileDrawer
-                open={drawerControl.value}
-                onOpenChange={drawerControl.setValue}
-                title="منوی پنل کاربری"
-                showClose={false}
-                trigger={
-                  <Button>
-                    <Menu /> منوی پنل کاربری
-                  </Button>
-                }
-              >
-                <ProfileMenu onClose={drawerControl.onFalse} />
-              </MobileDrawer>
-            </div>
+    <Card className="p-6 lg:hidden mb-4">
+      <div className="flex items-center justify-center">
+        <div className="flex flex-col items-center justify-center gap-y-4">
+          <div className="relative">
+            <UserCircle className="h-20 w-20 only:rounded-full" />
+          </div>
+          <div className="text-center space-y-1">
+            <Label className="line-clamp-1 text-md">{!!user?.full_name ? user.full_name : 'کاربر گرامی'}</Label>
+            <Label className="text-text/60 text-md">{user?.mobile}</Label>
+          </div>
+          <div>
+            <MobileDrawer
+              open={drawerControl.value}
+              onOpenChange={drawerControl.setValue}
+              title="منوی پنل کاربری"
+              showClose={false}
+              trigger={
+                <Button>
+                  <Menu /> منوی پنل کاربری
+                </Button>
+              }
+            >
+              <ProfileMenu onClose={drawerControl.onFalse} />
+            </MobileDrawer>
           </div>
         </div>
       </div>
-    </>
+    </Card>
   );
 }
 

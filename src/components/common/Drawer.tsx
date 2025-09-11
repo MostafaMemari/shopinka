@@ -40,7 +40,7 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
         <div className={cn('flex-1 overflow-y-auto px-4')}>{children}</div>
 
         {(actions || showClose) && (
-          <DrawerFooter className="sticky bottom-0 left-0 right-0 border-t mt-3">
+          <DrawerFooter className="sticky bottom-0 left-0 right-0 border-t mt-1">
             <div className="flex items-center justify-between gap-2">
               {actions && <div className={`flex items-center gap-2 ${showClose ? 'w-2/3' : 'w-full'}`}>{actions}</div>}
               {showClose && (
