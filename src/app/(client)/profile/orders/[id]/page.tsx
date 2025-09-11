@@ -23,10 +23,10 @@ async function Page({ params }: PageProps) {
 
   return (
     <div className="container mx-auto px-4 py-6">
-      <div className="mb-10 flex flex-col items-center justify-between gap-y-6 sm:flex-row">
+      <div className="mb-4 lg:mb-10 flex flex-col items-center justify-between gap-y-6 sm:flex-row">
         <DashboardHeader title={`جزئیات سفارش #${order.orderNumber}`} />
         <Link href="/profile/orders">
-          <Button className="cursor-pointer">
+          <Button variant="outline" size="sm">
             بازگشت
             <ChevronLeft />
           </Button>

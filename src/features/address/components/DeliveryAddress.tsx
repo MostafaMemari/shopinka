@@ -1,4 +1,4 @@
-import { Card, CardContent } from '@/components/ui';
+import { Card, CardContent } from '@/components/ui/card';
 import { AddressItem } from '@/features/address/types';
 import { MapPinHouse } from 'lucide-react';
 

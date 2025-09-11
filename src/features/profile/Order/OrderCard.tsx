@@ -27,6 +27,9 @@ const Item = ({ label, value }: { label: string; value: React.ReactNode }) => (
 
 const OrderCard: React.FC<OrderCardProps> = ({ order }) => {
   const config = getStatusConfig(order.status, order.transaction.status);
+  const formattedPrice = formatPrice(order.totalPrice);
+  const formattedDate = new Date(order.createdAt).toLocaleDateString('fa-IR') || 'نامشخص';
+  const formattedTime = new Date(order.createdAt).toLocaleTimeString('fa-IR') || 'نامشخص';
 
   return (
     <Card className="mt-6">
@@ -50,13 +53,13 @@ const OrderCard: React.FC<OrderCardProps> = ({ order }) => {
                 label="مبلغ کل"
                 value={
                   <span className="text-primary-500 dark:text-primary-400 font-bold">
-                    {formatPrice(order.totalPrice)}
+                    {formattedPrice}
                     <span className="text-xs font-normal mr-1">تومان</span>
                   </span>
                 }
               />
 
-              <Item label="تاریخ ثبت" value={new Date(order.createdAt).toLocaleDateString('fa-IR')} />
+              <Item label="تاریخ ثبت" value={formattedDate} />
             </div>
           </div>
 
@@ -77,11 +80,11 @@ const OrderCard: React.FC<OrderCardProps> = ({ order }) => {
                 <div className={cn('flex justify-between text-xs md:text-sm', config.statusColor)}>
                   <span>
                     <span className="mr-1">تاریخ: </span>
-                    {new Date(order.createdAt).toLocaleDateString('fa-IR') || 'نامشخص'}
+                    {formattedDate}
                   </span>
                   <span>
                     <span className="mr-1">ساعت: </span>
-                    {new Date(order.createdAt).toLocaleTimeString('fa-IR') || 'نامشخص'}
+                    {formattedTime}
                   </span>
                 </div>
               </>
@@ -91,7 +94,7 @@ const OrderCard: React.FC<OrderCardProps> = ({ order }) => {
       </Link>
 
       {order.items?.length > 0 && (
-        <div className="p-4 border-t border-gray-200 dark:border-gray-700 mt-4">
+        <div className="pt-4 px-4 border-t border-gray-200 dark:border-gray-700 mt-4">
           <ProductSlider orderProductItems={order.items} />
         </div>
       )}

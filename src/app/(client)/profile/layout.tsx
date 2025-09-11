@@ -1,3 +1,4 @@
+import { Card } from '@/components/ui/card';
 import ProfileMenuDrawer from '@/features/profile/MobileMenu/ProfileMenuCard';
 import ProfileHeader from '@/features/profile/ProfileHeader';
 import ProfileMenu from '@/features/profile/ProfileMenu';
@@ -8,17 +9,17 @@ export default function Layout({ children }: Readonly<{ children: React.ReactNod
       <div className="container">
         <div className="grid grid-cols-12 gap-4">
           <div className="col-span-12 lg:col-span-3">
-            <div className="sticky top-32 hidden w-full overflow-hidden rounded-lg bg-muted shadow-base lg:block">
+            <Card className="hidden w-full overflow-hidden p-0 lg:block">
               <div className="p-4">
                 <ProfileHeader />
               </div>
               <ProfileMenu />
-            </div>
+            </Card>
           </div>
           <div className="col-span-12 lg:col-span-9">
             <ProfileMenuDrawer />
             <div className="col-span-12 lg:col-span-9">
-              <div className="rounded-lg bg-muted p-5 shadow-base">{children}</div>
+              <Card className="p-5">{children}</Card>
             </div>
           </div>
         </div>

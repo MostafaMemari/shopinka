@@ -40,7 +40,7 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ orderProductItems }) => {
                 href={`/product/${productSlug}`}
                 className="
               flex items-center gap-x-3 rounded-xl border border-gray-100 bg-white
-              px-2 py-2 shadow-sm transition hover:shadow-lg hover:border-primary
+              px-2 py-2 shadow-sm transition hover:shadow-lg hover:border-primary mb-0.5
             "
               >
                 <div className="flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden bg-gray-50 flex items-center justify-center">

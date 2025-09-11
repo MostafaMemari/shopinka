@@ -1,4 +1,4 @@
-import { Card } from '@/components/ui';
+import { Card } from '@/components/ui/card';
 import { BlogItem } from '@/features/blogs/types';
 import { NoImage } from '@/types/noImageEnum';
 import Image from 'next/image';
