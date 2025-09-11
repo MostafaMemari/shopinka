@@ -38,7 +38,6 @@
     "clsx": "^2.1.1",
     "cross-env": "^7.0.3",
     "embla-carousel-react": "^8.6.0",
-    "formik": "^2.4.6",
     "framer-motion": "^12.23.12",
     "input-otp": "^1.4.2",
     "lucide-react": "^0.539.0",

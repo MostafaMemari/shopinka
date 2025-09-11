@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { AiOutlineLeft, AiOutlineRight } from 'react-icons/ai';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface Props {
   currentPage: number;
@@ -32,7 +32,7 @@ const Pagination: React.FC<Props> = ({ currentPage, totalPages, onPageChange }) 
           disabled={currentPage === 1}
           className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-gray-100 text-gray-600 transition-all duration-200 hover:bg-primary hover:text-white disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          <AiOutlineRight className="h-5 w-5" />
+          <ChevronRight className="h-5 w-5" />
         </button>
 
         {pages.map((page) => (
@@ -52,7 +52,7 @@ const Pagination: React.FC<Props> = ({ currentPage, totalPages, onPageChange }) 
           disabled={currentPage === totalPages}
           className="flex h-10 w-10 items-center justify-center cursor-pointer rounded-full bg-gray-100 text-gray-600 transition-all duration-200 hover:bg-primary hover:text-white disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          <AiOutlineLeft className="h-5 w-5" />
+          <ChevronLeft className="h-5 w-5" />
         </button>
       </div>
     </div>
