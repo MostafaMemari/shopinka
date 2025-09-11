@@ -7,7 +7,9 @@ import CartIconTotalQuantity from '../cart/components/CartIconTotalQuantity';
 import { useIsMounted } from '@/hooks/useIsMounted';
 import ShareProductAction from './ActionButtons/ShareProductAction';
 import { Skeleton } from '@/components/ui/skeleton';
-import { ChevronLeft, Home } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Home } from 'lucide-react';
+import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 
 interface MobileHeaderProps {
   productId: number;
@@ -30,7 +32,7 @@ const MobileHeader = ({ productId }: MobileHeaderProps) => {
   };
 
   return (
-    <div className="fixed top-3 right-0 z-50 lg:hidden w-full">
+    <div className="fixed top-2 right-0 z-50 lg:hidden w-full">
       <div className="flex items-center justify-between py-2 px-4">
         {!isMounted ? (
           <>
@@ -43,24 +45,23 @@ const MobileHeader = ({ productId }: MobileHeaderProps) => {
         ) : (
           <>
             <div className="flex gap-2">
-              <button onClick={handleBack} className="bg-white p-3 rounded-lg shadow-md cursor-pointer" aria-label="Back">
-                <ChevronLeft size={22} className="transform rotate-180" />
-              </button>
-
-              <button onClick={handleHome} className="bg-white p-3 rounded-lg shadow-md cursor-pointer" aria-label="Home">
-                <Home size={22} />
-              </button>
+              <Card className="cursor-pointer p-3" onClick={handleBack}>
+                <ChevronRight size={22} className="transform" />
+              </Card>
+              <Card className="cursor-pointer p-3" onClick={handleHome}>
+                <Home size={22} className="transform" />
+              </Card>
             </div>
 
-            <div className="flex bg-white items-center rounded-lg shadow-md cursor-pointer">
-              <ShareProductAction className="p-3 cursor-pointer" />
+            <Card className="flex flex-row items-center p-3 gap-3">
+              <ShareProductAction />
 
-              <FavoriteProductAction productId={productId} className="p-3 cursor-pointer" />
+              <FavoriteProductAction productId={productId} />
 
-              <button onClick={handleCart} className="p-3 cursor-pointer" aria-label="Add to Cart">
+              <button onClick={handleCart}>
                 <CartIconTotalQuantity />
               </button>
-            </div>
+            </Card>
           </>
         )}
       </div>

@@ -53,7 +53,7 @@ const Dialog: FC<DialogProps> = ({
     <ShadcnDialog open={open} onOpenChange={onOpenChange}>
       {trigger && <DialogTrigger asChild>{trigger}</DialogTrigger>}
       <DialogContent
-        className={cn(sizeMap[size], 'max-h-[90vh] p-5', className)}
+        className={cn(sizeMap[size], 'max-h-[90vh] p-5 overflow-y-auto', className)}
         aria-describedby={description ? descriptionId : undefined}
       >
         <DialogHeader className="border-b pb-5">

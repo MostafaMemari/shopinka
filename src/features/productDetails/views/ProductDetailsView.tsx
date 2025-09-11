@@ -87,40 +87,40 @@ const ProductDetailsView: FC<ProductDetailsViewProps> = ({ product }) => {
                     )}
                   </div>
 
-                  <Card className="col-span-1 flex flex-col mb-6 p-4">
-                    <ProductGuaranteeBadge />
+                  <div>
+                    <Card className="p-4">
+                      <ProductGuaranteeBadge />
 
-                    <div className="mb-6 flex justify-between items-start w-full">
-                      <div className="flex-grow"></div>
+                      <div className="mb-6 flex justify-between items-start w-full">
+                        {isValidProduct ? (
+                          <div className="text-left">
+                            <ProductDesktopDetailsPrice
+                              product={{ type: product.type, basePrice: product.basePrice ?? 0, salePrice: product.salePrice }}
+                            />
+                          </div>
+                        ) : (
+                          ''
+                        )}
+                      </div>
 
                       {isValidProduct ? (
-                        <div className="text-left">
-                          <ProductDesktopDetailsPrice
-                            product={{ type: product.type, basePrice: product.basePrice ?? 0, salePrice: product.salePrice }}
-                          />
-                        </div>
+                        <AddToCartButtonDesktop
+                          key={product.id}
+                          product={{
+                            id: product.id,
+                            name: product.name,
+                            slug: product.slug,
+                            basePrice: product.basePrice ?? 0,
+                            salePrice: product.salePrice ?? 0,
+                            mainImageUrl: product.mainImage?.fileUrl ?? null,
+                            type: product.type,
+                          }}
+                        />
                       ) : (
                         ''
                       )}
-                    </div>
-
-                    {isValidProduct ? (
-                      <AddToCartButtonDesktop
-                        key={product.id}
-                        product={{
-                          id: product.id,
-                          name: product.name,
-                          slug: product.slug,
-                          basePrice: product.basePrice ?? 0,
-                          salePrice: product.salePrice ?? 0,
-                          mainImageUrl: product.mainImage?.fileUrl ?? null,
-                          type: product.type,
-                        }}
-                      />
-                    ) : (
-                      ''
-                    )}
-                  </Card>
+                    </Card>
+                  </div>
                 </div>
 
                 <ProductProperties />

@@ -19,9 +19,11 @@ interface AddressFormProps {
   initialValues?: AddressItem;
   className?: string;
   onSuccess?: () => void;
+  ref?: React.Ref<HTMLFormElement>;
+  onLoadingChange?: (isLoading: boolean) => void;
 }
 
-export default function AddressForm({ initialValues, className = '', onSuccess }: AddressFormProps) {
+export default function AddressForm({ initialValues, className = '', onSuccess, ref, onLoadingChange }: AddressFormProps) {
   const [selectedProvinceId, setSelectedProvinceId] = useState<number | null>(null);
   const { createAddress, updateAddress, isCreateAddressLoading, isUpdateAddressLoading } = useAddress({});
   const isLoadingSubmit = isCreateAddressLoading || isUpdateAddressLoading;
@@ -55,6 +57,10 @@ export default function AddressForm({ initialValues, className = '', onSuccess }
     }
   }, [initialValues?.province]);
 
+  useEffect(() => {
+    onLoadingChange?.(isLoadingSubmit);
+  }, [isLoadingSubmit]);
+
   const onSubmit: SubmitHandler<any> = (values: AddressItem) => {
     const payload = {
       ...values,
@@ -78,7 +84,7 @@ export default function AddressForm({ initialValues, className = '', onSuccess }
   };
 
   return (
-    <form onSubmit={form.handleSubmit(onSubmit)} className={cn('space-y-4 text-right', className)} dir="rtl">
+    <form onSubmit={form.handleSubmit(onSubmit)} ref={ref} className={cn('space-y-4 text-right', className)} dir="rtl">
       <div className="grid grid-cols-2 gap-4">
         <div>
           <Label htmlFor="fullName">نام تحویل گیرنده</Label>
@@ -156,10 +162,6 @@ export default function AddressForm({ initialValues, className = '', onSuccess }
         <Textarea {...form.register('postalAddress')} id="postalAddress" />
         {form.formState.errors.postalAddress && <p className="text-red-500 text-sm">{form.formState.errors.postalAddress.message}</p>}
       </div>
-
-      <Button type="submit" className="w-full" disabled={isLoadingSubmit}>
-        {initialValues ? 'ویرایش' : 'ثبت'} آدرس
-      </Button>
     </form>
   );
 }

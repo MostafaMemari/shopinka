@@ -86,10 +86,6 @@ const CommentForm = ({ productId, className = '', parentId, onSuccess, createCom
           )}
         />
       </div>
-
-      <div>
-        <Button type="submit">ثبت دیدگاه</Button>
-      </div>
     </form>
   );
 };

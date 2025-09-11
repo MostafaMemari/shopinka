@@ -3,17 +3,25 @@
 import * as React from 'react';
 
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Drawer, DrawerClose, DrawerContent, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from '@/components/ui/drawer';
 import { useMediaQuery } from '@/hooks/use-media-query';
 import { MapPinPlus } from 'lucide-react';
 import { useState } from 'react';
 import AddressForm from './AddressForm';
 import { COMPONENT_BREAKPOINTS } from '@/constants';
+import Dialog from '@/components/common/Dialog';
+import MobileDrawer from '@/components/common/Drawer';
+import PrimaryButton from '@/components/common/PrimaryButton';
 
 export function CreateAddressDialogDrawer() {
   const [open, setOpen] = useState(false);
-  const isDesktop = useMediaQuery(`(min-width: ${COMPONENT_BREAKPOINTS.DIALOG_DRAWER}px)`);
+  const isDesktop = useMediaQuery(`(min-width: ${COMPONENT_BREAKPOINTS.DIALOG_DRAWER})`);
+  const [isLoadingSubmit, setIsLoadingSubmit] = useState(false);
+
+  const formRef = React.useRef<HTMLFormElement>(null);
+
+  const handleSubmit = () => {
+    formRef.current?.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+  };
 
   const handleSuccess = () => {
     setOpen(false);
@@ -21,43 +29,43 @@ export function CreateAddressDialogDrawer() {
 
   if (isDesktop) {
     return (
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>
+      <Dialog
+        open={open}
+        onOpenChange={setOpen}
+        trigger={
           <Button className="cursor-pointer">
             <MapPinPlus /> ثبت آدرس جدید
           </Button>
-        </DialogTrigger>
-
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle>افزودن آدرس جدید</DialogTitle>
-          </DialogHeader>
-          <AddressForm className="pt-2" onSuccess={handleSuccess} />
-        </DialogContent>
+        }
+        title="افزودن آدرس جدید"
+        actions={
+          <PrimaryButton type="submit" className="flex-1" onClick={handleSubmit} isLoading={isLoadingSubmit}>
+            ثبت
+          </PrimaryButton>
+        }
+      >
+        <AddressForm className="pt-2" onSuccess={handleSuccess} ref={formRef} onLoadingChange={setIsLoadingSubmit} />
       </Dialog>
     );
   }
 
   return (
-    <Drawer open={open} onOpenChange={setOpen}>
-      <DrawerTrigger asChild>
-        <Button>
+    <MobileDrawer
+      trigger={
+        <Button className="cursor-pointer">
           <MapPinPlus /> ثبت آدرس جدید
         </Button>
-      </DrawerTrigger>
-      <DrawerContent>
-        <DrawerHeader className="text-left">
-          <DrawerTitle>افزودن آدرس جدید</DrawerTitle>
-        </DrawerHeader>
-
-        <AddressForm className="px-4" onSuccess={handleSuccess} />
-
-        <DrawerFooter className="pt-2">
-          <DrawerClose asChild>
-            <Button variant="outline">انصراف</Button>
-          </DrawerClose>
-        </DrawerFooter>
-      </DrawerContent>
-    </Drawer>
+      }
+      open={open}
+      onOpenChange={setOpen}
+      title="افزودن آدرس جدید"
+      actions={
+        <PrimaryButton className="flex-1" onClick={handleSubmit} isLoading={isLoadingSubmit}>
+          ثبت
+        </PrimaryButton>
+      }
+    >
+      <AddressForm className="px-4" onSuccess={handleSuccess} ref={formRef} onLoadingChange={setIsLoadingSubmit} />
+    </MobileDrawer>
   );
 }

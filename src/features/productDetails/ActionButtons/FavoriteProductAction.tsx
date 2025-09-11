@@ -61,7 +61,8 @@ function FavoriteProductAction({ productId, isTooltip = false, className }: Favo
             )}
           >
             <Heart
-              className={cn('h-6 w-6', {
+              size={22}
+              className={cn('', {
                 'fill-red-500': isFavoriteProduct && isLogin,
               })}
             />

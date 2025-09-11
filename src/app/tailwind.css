@@ -4,12 +4,12 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --breakpoint-*: initial;
-  --breakpoint-xs: 480px;
-  --breakpoint-sm: 640px;
-  --breakpoint-md: 768px;
-  --breakpoint-lg: 1024px;
-  --breakpoint-xl: 1380px;
+  --breakpoint-xs: 480px; /* موبایل کوچک */
+  --breakpoint-sm: 640px; /* موبایل بزرگ */
+  --breakpoint-md: 768px; /* تبلت */
+  --breakpoint-lg: 1024px; /* لپ‌تاپ */
+  --breakpoint-xl: 1280px; /* دسکتاپ */
+  --breakpoint-2xl: 1400px; /* مانیتور بزرگ */
 
   --shadow-base: 0px 1px 10px rgba(0, 0, 0, 0.05);
 
@@ -80,9 +80,27 @@
 
 @utility container {
   margin-inline: auto;
-  padding-inline: 1rem;
+  padding-inline: 1rem; /* پیشفرض برای موبایل */
+
+  @media (width >= theme(--breakpoint-sm)) {
+    max-width: 640px;
+  }
+
+  @media (width >= theme(--breakpoint-md)) {
+    max-width: 768px;
+  }
+
   @media (width >= theme(--breakpoint-lg)) {
-    padding-inline: 0.625rem;
+    max-width: 1024px;
+    padding-inline: 0.75rem;
+  }
+
+  @media (width >= theme(--breakpoint-xl)) {
+    max-width: 1280px;
+  }
+
+  @media (width >= theme(--breakpoint-2xl)) {
+    max-width: 1400px;
   }
 }
 
@@ -239,87 +257,6 @@
 @utility sort-button-active {
   /* Shop Desktop Sort active  */
   @apply bg-background  text-primary;
-}
-
-@utility btn-primary {
-  /* Buttons */
-  @apply flex items-center justify-center gap-x-1 rounded-lg bg-primary-btn hover:bg-primary-btn/80 text-white duration-200 focus:outline-hidden disabled:cursor-not-allowed disabled:opacity-60;
-}
-
-@utility btn-primary-nobg {
-  @apply justify-center text-primary hover:text-primary/80 transition-colors duration-200 flex items-center gap-x-1 focus:outline-hidden disabled:cursor-not-allowed disabled:opacity-60;
-}
-
-@utility btn-secondary {
-  @apply flex items-center justify-center gap-x-1 rounded-lg bg-sky-500 text-white transition-colors duration-200 hover:bg-sky-600 focus:outline-hidden disabled:cursor-not-allowed disabled:opacity-60 dark:bg-sky-600 dark:hover:bg-sky-700;
-}
-
-@utility btn-secondary-nobg {
-  @apply justify-center text-sky-500 dark:text-sky-400 hover:text-sky-600 dark:hover:text-sky-300 transition-colors duration-200 flex items-center gap-x-1 focus:outline-hidden disabled:cursor-not-allowed disabled:opacity-60;
-}
-
-@utility btn-red {
-  @apply flex items-center justify-center gap-x-1 rounded-lg bg-warning hover:bg-warning/80 text-white transition-colors duration-200 focus:outline-hidden disabled:cursor-not-allowed disabled:opacity-60;
-}
-
-@utility btn-red-nobg {
-  @apply justify-center text-warning hover:text-warning/80 transition-colors duration-200 flex items-center gap-x-1 focus:outline-hidden disabled:cursor-not-allowed disabled:opacity-60;
-}
-
-@utility btn-gray {
-  @apply flex items-center justify-center gap-x-1 rounded-lg bg-gray-500 text-white transition-colors duration-200 hover:bg-gray-600 focus:outline-hidden disabled:cursor-not-allowed disabled:opacity-60 dark:bg-gray-600 dark:hover:bg-gray-700;
-}
-
-@utility btn-gray-nobg {
-  @apply justify-center text-gray-500 dark:text-gray-400 hover:text-gray-600 text-text/80 transition-colors duration-200 flex items-center gap-x-1 focus:outline-hidden disabled:cursor-not-allowed disabled:opacity-60;
-}
-
-@utility btn-orange {
-  @apply flex items-center justify-center gap-x-1 rounded-lg bg-orange-500 text-white transition-colors duration-200 hover:bg-orange-600 focus:outline-hidden disabled:cursor-not-allowed disabled:opacity-60 dark:bg-orange-600 dark:hover:bg-orange-700;
-}
-
-@utility btn-orange-nobg {
-  @apply justify-center text-orange-500 dark:text-orange-400 hover:text-orange-600 dark:hover:text-orange-300 transition-colors duration-200 flex items-center gap-x-1 focus:outline-hidden disabled:cursor-not-allowed disabled:opacity-60;
-}
-
-@utility btn-yellow {
-  @apply flex items-center justify-center gap-x-1 rounded-lg bg-yellow-500 text-white transition-colors duration-200 hover:bg-yellow-600 focus:outline-hidden disabled:cursor-not-allowed disabled:opacity-60 dark:bg-yellow-600 dark:hover:bg-yellow-700;
-}
-
-@utility btn-yellow-nobg {
-  @apply justify-center text-yellow-500 dark:text-yellow-400 hover:text-yellow-600 dark:hover:text-yellow-300 transition-colors duration-200 flex items-center gap-x-1 focus:outline-hidden disabled:cursor-not-allowed disabled:opacity-60;
-}
-
-@utility btn-indigo {
-  @apply flex items-center justify-center gap-x-1 rounded-lg bg-indigo-500 text-white transition-colors duration-200 hover:bg-indigo-600 focus:outline-hidden disabled:cursor-not-allowed disabled:opacity-60 dark:bg-indigo-600 dark:hover:bg-indigo-700;
-}
-
-@utility btn-indigo-nobg {
-  @apply justify-center text-indigo-500 dark:text-indigo-400 hover:text-indigo-600 dark:hover:text-indigo-300 transition-colors duration-200 flex items-center gap-x-1 focus:outline-hidden disabled:cursor-not-allowed disabled:opacity-60;
-}
-
-@utility btn-purple {
-  @apply flex items-center justify-center gap-x-1 rounded-lg bg-purple-500 text-white transition-colors duration-200 hover:bg-purple-600 focus:outline-hidden disabled:cursor-not-allowed disabled:opacity-60 dark:bg-purple-600 dark:hover:bg-purple-700;
-}
-
-@utility btn-purple-nobg {
-  @apply justify-center text-purple-500 dark:text-purple-400 hover:text-purple-600 dark:hover:text-purple-300 transition-colors duration-200 flex items-center gap-x-1 focus:outline-hidden disabled:cursor-not-allowed disabled:opacity-60;
-}
-
-@utility btn-rose {
-  @apply flex items-center justify-center gap-x-1 rounded-lg bg-rose-500 text-white transition-colors duration-200 hover:bg-rose-600 focus:outline-hidden disabled:cursor-not-allowed disabled:opacity-60 dark:bg-rose-600 dark:hover:bg-rose-700;
-}
-
-@utility btn-rose-nobg {
-  @apply justify-center text-rose-500 dark:text-rose-400 hover:text-rose-600 dark:hover:text-rose-300 transition-colors duration-200 flex items-center gap-x-1 focus:outline-hidden disabled:cursor-not-allowed disabled:opacity-60;
-}
-
-@utility btn-pink {
-  @apply flex items-center justify-center gap-x-1 rounded-lg bg-pink-500 text-white transition-colors duration-200 hover:bg-pink-600 focus:outline-hidden disabled:cursor-not-allowed disabled:opacity-60 dark:bg-pink-600 dark:hover:bg-pink-700;
-}
-
-@utility btn-pink-nobg {
-  @apply justify-center text-pink-500 dark:text-pink-400 hover:text-pink-600 dark:hover:text-pink-300 transition-colors duration-200 flex items-center gap-x-1 focus:outline-hidden disabled:cursor-not-allowed disabled:opacity-60;
 }
 
 @utility pagination-button {
