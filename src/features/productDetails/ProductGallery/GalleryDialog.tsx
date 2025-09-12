@@ -11,13 +11,13 @@ export interface ImageType {
   title: string | null;
 }
 
-interface Props {
+interface GalleryDialogProps {
   dialogController: ReturnType<typeof useBoolean>;
   images: ImageType[];
   title: string;
 }
 
-export default function GalleryDialog({ dialogController, images, title }: Props) {
+export default function GalleryDialog({ dialogController, images, title }: GalleryDialogProps) {
   const isDesktop = useMediaQuery('(min-width: 1024px)');
 
   useEffect(() => {

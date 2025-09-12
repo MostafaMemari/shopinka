@@ -5,10 +5,10 @@ import { CommentItem } from '@/types/commentType';
 import Recommendation from './Recommendation';
 import { useComment } from '@/features/comments/hooks/useComment';
 import ReplyComment from '../AddReplyComment/ReplyComment';
-import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from '@/components/ui/drawer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useBoolean } from '@/hooks/use-boolean';
 import { UserCircle } from 'lucide-react';
+import MobileDrawer from '@/components/common/Drawer';
 
 interface CommentsDrawerProps {
   drawerHandlers: ReturnType<typeof useBoolean>;
@@ -30,75 +30,57 @@ function CommentsDrawer({ drawerHandlers, productId }: CommentsDrawerProps) {
 
   if (isLoading) {
     return (
-      <Drawer open={drawerHandlers.value} onOpenChange={onOpenChange}>
-        <DrawerContent>
-          <DrawerHeader className="text-left">
-            <DrawerTitle>دیدگاه ها</DrawerTitle>
-          </DrawerHeader>
-
-          <p className="text-center text-text/60 py-10">در حال بارگذاری دیدگاه ها...</p>
-        </DrawerContent>
-      </Drawer>
+      <MobileDrawer open={drawerHandlers.value} onOpenChange={onOpenChange} title="دیدگاه ها">
+        <p className="text-center text-text/60 py-10">در حال بارگذاری دیدگاه ها...</p>
+      </MobileDrawer>
     );
   }
 
   if (!comments.length) {
     return (
-      <Drawer open={drawerHandlers.value} onOpenChange={onOpenChange}>
-        <DrawerContent>
-          <DrawerHeader className="text-left">
-            <DrawerTitle>دیدگاه ها</DrawerTitle>
-          </DrawerHeader>
-
-          <p className="text-center text-text/60 py-10">دیدگاهی برای نمایش وجود ندارد.</p>
-        </DrawerContent>
-      </Drawer>
+      <MobileDrawer open={drawerHandlers.value} onOpenChange={onOpenChange} title="دیدگاه ها">
+        <p className="text-center text-text/60 py-10">دیدگاهی برای نمایش وجود ندارد.</p>
+      </MobileDrawer>
     );
   }
 
   return (
-    <Drawer open={drawerHandlers.value} onOpenChange={onOpenChange}>
-      <DrawerContent>
-        <DrawerHeader className="text-left">
-          <DrawerTitle>دیدگاه ها</DrawerTitle>
-        </DrawerHeader>
-
-        <ul className="space-y-5 pb-8 mx-4">
-          {comments.map((comment) => (
-            <li key={comment.id}>
-              <Card className="flex flex-col p-4 shadow-md">
-                <CardHeader className="flex items-center justify-between mb-3 p-0">
-                  <div className="flex items-center gap-2">
-                    <UserCircle className="text-gray-400 dark:text-zinc-500 w-7 h-7" />
-                    <span
-                      className={`text-xs font-semibold rounded-full px-2 py-0.5
+    <MobileDrawer open={drawerHandlers.value} onOpenChange={onOpenChange} title="دیدگاه ها">
+      <ul className="space-y-5 pb-8 mx-4">
+        {comments.map((comment) => (
+          <li key={comment.id}>
+            <Card className="flex flex-col p-4 shadow-md">
+              <CardHeader className="flex items-center justify-between mb-3 p-0">
+                <div className="flex items-center gap-2">
+                  <UserCircle className="text-gray-400 dark:text-zinc-500 w-7 h-7" />
+                  <span
+                    className={`text-xs font-semibold rounded-full px-2 py-0.5
                     ${comment.userId ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' : 'bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400'}`}
-                    >
-                      {comment.userId ? 'خریدار' : 'کاربر'}
-                    </span>
-                  </div>
-                  <Recommendation isRecommended={comment.isRecommended} />
-                  <div>
-                    <ReplyComment productId={comment.productId} parentId={comment.id} commentTitle={comment.title} />
-                  </div>
-                </CardHeader>
+                  >
+                    {comment.userId ? 'خریدار' : 'کاربر'}
+                  </span>
+                </div>
+                <Recommendation isRecommended={comment.isRecommended} />
+                <div>
+                  <ReplyComment productId={comment.productId} parentId={comment.id} commentTitle={comment.title} />
+                </div>
+              </CardHeader>
 
-                <CardContent className="p-0 mb-3 flex flex-col gap-3">
-                  <CardTitle className="flex justify-between">
-                    {comment.title}
+              <CardContent className="p-0 mb-3 flex flex-col gap-3">
+                <CardTitle className="flex justify-between">
+                  {comment.title}
 
-                    <span className="text-xs text-text/60">{new Date(comment.createdAt).toLocaleDateString('fa-IR')}</span>
-                  </CardTitle>
-                  <p className="line-clamp-4 text-sm text-text/90">{comment.content}</p>
-                </CardContent>
+                  <span className="text-xs text-text/60">{new Date(comment.createdAt).toLocaleDateString('fa-IR')}</span>
+                </CardTitle>
+                <p className="line-clamp-4 text-sm text-text/90">{comment.content}</p>
+              </CardContent>
 
-                {comment.replies && comment.replies.length > 0 && <ReplyList replies={comment.replies} />}
-              </Card>
-            </li>
-          ))}
-        </ul>
-      </DrawerContent>
-    </Drawer>
+              {comment.replies && comment.replies.length > 0 && <ReplyList replies={comment.replies} />}
+            </Card>
+          </li>
+        ))}
+      </ul>
+    </MobileDrawer>
   );
 }
 

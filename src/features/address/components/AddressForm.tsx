@@ -76,13 +76,14 @@ export default function AddressForm({ initialValues, className = '', onSuccess, 
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} ref={ref} className={cn('space-y-4 text-right', className)} dir="rtl">
-        <div className="grid grid-cols-2 gap-4">
+      <form onSubmit={form.handleSubmit(onSubmit)} ref={ref} className={cn('space-y-2.5 text-right', className)} dir="rtl">
+        <div className="grid grid-cols-2 gap-4 items-start">
           <FormInput control={form.control} name="fullName" label="نام تحویل گیرنده" />
           <FormInput control={form.control} name="postalCode" label="کدپستی" />
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
+        {/* ردیف دوم */}
+        <div className="grid grid-cols-2 gap-4 items-start">
           <FormSelect
             control={form.control}
             name="province"
@@ -107,7 +108,8 @@ export default function AddressForm({ initialValues, className = '', onSuccess, 
           />
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
+        {/* ردیف سوم */}
+        <div className="grid grid-cols-2 gap-4 items-start">
           <FormInput control={form.control} name="buildingNumber" label="پلاک" />
           <FormInput control={form.control} name="unit" label="واحد" />
         </div>

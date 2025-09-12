@@ -1,6 +1,4 @@
 import { useAppSelector } from '@/store/hooks';
-import React from 'react';
-
 import { Button } from '@/components/ui/button';
 import { useMediaQuery } from '@/hooks/use-media-query';
 import { useBoolean } from '@/hooks/use-boolean';
@@ -12,6 +10,7 @@ import MobileDrawer from '@/components/common/Drawer';
 import Dialog from '@/components/common/Dialog';
 import PrimaryButton from '@/components/common/PrimaryButton';
 import { useCreateComment } from '../../hooks/useCreateComment';
+import { useRef } from 'react';
 
 interface ReplyCommentProps {
   productId: number;
@@ -23,7 +22,7 @@ function ReplyComment({ productId, parentId, commentTitle }: ReplyCommentProps) 
   const isDesktop = useMediaQuery('(min-width: 768px)');
   const dispatch = useDispatch();
   const commentControl = useBoolean(false);
-  const formRef = React.useRef<HTMLFormElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
   const { createComment, isCreateCommentLoading } = useCreateComment();
 
   const { isLogin } = useAppSelector((state) => state.auth);

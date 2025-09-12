@@ -1,9 +1,7 @@
 'use client';
 
 import { useMediaQuery } from '@/hooks/use-media-query';
-
 import PhoneInputForm from '@/features/auth/components/PhoneInputForm';
-
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { closeDialog } from '@/store/slices/authDialogSlice';
