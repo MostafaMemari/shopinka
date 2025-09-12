@@ -17,7 +17,7 @@ interface AddressSectionProps {
 }
 
 export default function AddressSection({ onAddressSelect }: AddressSectionProps) {
-  const { data, isLoading, error } = useAddress({});
+  const { data, isLoading } = useAddress({});
 
   const addresses = data?.items ?? [];
 

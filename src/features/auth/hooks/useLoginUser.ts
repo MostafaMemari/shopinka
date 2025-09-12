@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { useAppDispatch } from '@/store/hooks';
-import { loginStart, loginSuccess, loginFailure } from '@/store/slices/authSlice';
+import { loginStart, loginSuccess } from '@/store/slices/authSlice';
 import { useQueryClient } from '@tanstack/react-query';
 import { QueryKeys } from '@/types/query-keys';
 import { UserState } from '@/types/userType';

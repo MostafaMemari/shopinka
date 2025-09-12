@@ -1,9 +1,8 @@
 'use client';
 
 import { useComment } from '@/features/comments/hooks/useComment';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import CommentsDrawer from './CommentsDrawer';
-import useIsMdUp from '@/hooks/useIsMdUp';
 import { useBoolean } from '@/hooks/use-boolean';
 import { useMediaQuery } from '@/hooks/use-media-query';
 import { COMPONENT_BREAKPOINTS } from '@/constants';

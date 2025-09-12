@@ -9,8 +9,6 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
 import { forwardRef, ReactNode } from 'react';
-import { Button } from '@/components/ui/button';
-import { ChevronDown, ChevronUp } from 'lucide-react';
 
 type DropdownMenuItemType = {
   label: string;
@@ -69,5 +67,7 @@ const DropdownMenu = forwardRef<HTMLDivElement, AppDropdownMenuProps>(
     );
   },
 );
+
+DropdownMenu.displayName = 'DropdownMenu';
 
 export default DropdownMenu;

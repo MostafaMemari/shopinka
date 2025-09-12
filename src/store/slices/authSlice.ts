@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import type { UserState } from '@/types/userType';
-import type { AuthState } from '@/types/authType';
 import { getMe } from '@/service/userService';
+import { AuthState } from '@/features/auth/types';
 
 export const checkAuth = createAsyncThunk<UserState, void, { rejectValue: string }>('auth/checkAuth', async (_, { rejectWithValue }) => {
   try {

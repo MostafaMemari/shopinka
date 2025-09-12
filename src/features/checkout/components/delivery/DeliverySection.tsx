@@ -12,7 +12,7 @@ interface DeliverySectionProps {
 }
 
 export default function DeliverySection({ onShippingSelect }: DeliverySectionProps) {
-  const { data, isLoading, error } = useShipping({});
+  const { data, isLoading } = useShipping({});
 
   const shippings = data?.items ?? [];
 

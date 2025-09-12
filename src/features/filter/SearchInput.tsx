@@ -7,7 +7,6 @@ import { useResetPageOnQueryChange } from '@/hooks/useResetPageOnQueryChange';
 import { Search } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
 
 interface SearchInputProps {
   queryKey?: string;

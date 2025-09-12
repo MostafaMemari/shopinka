@@ -56,7 +56,7 @@ const Pagination: FC<PaginationProps> = ({ currentPage, totalPages }) => {
       </button>
 
       <div className="flex items-center gap-x-2">
-        {pages.map((page, index) =>
+        {pages.map((page, _) =>
           typeof page === 'number' ? (
             <button
               key={`page-${page}`}

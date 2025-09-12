@@ -6,7 +6,6 @@ import PaymentStatus from '@/features/payment/components/PaymentStatus';
 import PaymentWarnings from '@/features/payment/components/PaymentWarnings';
 import { getOrderById } from '@/features/orders/api';
 import { formatAmount, formatDate, getRemainingTime } from '@/utils/formatter';
-import { Card } from '@/components/ui/card';
 
 type PageProps = {
   searchParams: Promise<{ status: 'success' | 'failed'; orderId: string }>;

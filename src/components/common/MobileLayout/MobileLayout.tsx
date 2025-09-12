@@ -1,8 +1,7 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import { Fragment, useState } from 'react';
-import { Transition } from '@headlessui/react';
+import { useState } from 'react';
 
 import { Menu, Phone, X } from 'lucide-react';
 import { Button } from '../../ui/button';

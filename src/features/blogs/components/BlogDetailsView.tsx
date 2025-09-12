@@ -4,7 +4,7 @@ import { NoImage } from '@/types/noImageEnum';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import { Calendar, User, Book } from 'lucide-react';
+import { Calendar, Book } from 'lucide-react';
 import ShareButton from './ShareButton';
 
 interface BlogDetailsViewProps {

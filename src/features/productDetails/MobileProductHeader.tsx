@@ -7,9 +7,8 @@ import CartIconTotalQuantity from '../cart/components/CartIconTotalQuantity';
 import { useIsMounted } from '@/hooks/useIsMounted';
 import ShareProductAction from './ActionButtons/ShareProductAction';
 import { Skeleton } from '@/components/ui/skeleton';
-import { ChevronLeft, ChevronRight, Home } from 'lucide-react';
+import { ChevronRight, Home } from 'lucide-react';
 import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 
 interface MobileHeaderProps {
   productId: number;

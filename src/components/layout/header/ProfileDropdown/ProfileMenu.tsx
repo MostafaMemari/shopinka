@@ -1,8 +1,6 @@
 'use client';
 
-import Link from 'next/link';
 import { LogOut, ChevronUp, ChevronDown, User } from 'lucide-react';
-import { usePathname, useRouter } from 'next/navigation';
 import { profileMenuItems } from '@/data/menuData';
 
 import { Button } from '@/components/ui/button';

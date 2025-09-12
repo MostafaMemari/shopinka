@@ -68,7 +68,7 @@ function Page() {
                 </div>
               ))
             ) : (
-              <p className="text-sm sm:text-base text-gray-600 text-center">هیچ نتیجه‌ای برای "{searchTerm}" یافت نشد.</p>
+              <p className="text-sm sm:text-base text-gray-600 text-center">هیچ نتیجه‌ای برای &quot;{searchTerm}&quot; یافت نشد.</p>
             )}
           </div>
         </div>
