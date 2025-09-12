@@ -6,13 +6,14 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+// import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { AddressFormValues, AddressItem } from '@/features/address/types';
 import { provinces } from '@/data/provinces';
 import { cities } from '@/data/cities';
 import { useAddress } from '@/features/address/hooks';
 import { cn } from '@/lib/utils';
 import { validationAddressSchema } from '@/validation/validationAddressSchema';
+import Select from '@/components/common/Select';
 
 interface AddressFormProps {
   initialValues?: AddressItem;
@@ -101,43 +102,35 @@ export default function AddressForm({ initialValues, className = '', onSuccess, 
       <div className="grid grid-cols-2 gap-4">
         <div>
           <Label htmlFor="province">استان</Label>
+
           <Select
+            options={provinces}
+            value={form.watch('province')}
             onValueChange={(value) => {
               const provinceId = provinces.find((p) => p.name === value)?.id || null;
               setSelectedProvinceId(provinceId);
               form.setValue('province', value);
               form.setValue('city', '');
             }}
-            value={form.watch('province')}
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="انتخاب کنید" />
-            </SelectTrigger>
-            <SelectContent>
-              {provinces.map((p) => (
-                <SelectItem key={p.id} value={p.name}>
-                  {p.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+            placeholder="استان را انتخاب کنید"
+            className="my-2"
+          />
+
           {form.formState.errors.province && <p className="text-red-500 text-sm">{form.formState.errors.province.message}</p>}
         </div>
 
         <div>
           <Label htmlFor="city">شهر</Label>
-          <Select onValueChange={(value) => form.setValue('city', value)} value={form.watch('city')} disabled={!selectedProvinceId}>
-            <SelectTrigger>
-              <SelectValue placeholder="انتخاب کنید" />
-            </SelectTrigger>
-            <SelectContent>
-              {filteredCities.map((c) => (
-                <SelectItem key={c.id} value={c.name}>
-                  {c.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+
+          <Select
+            options={filteredCities}
+            value={form.watch('city')}
+            onValueChange={(value) => form.setValue('city', value)}
+            placeholder="شهر را انتخاب کنید"
+            className="my-2"
+            disabled={!selectedProvinceId}
+          />
+
           {form.formState.errors.city && <p className="text-red-500 text-sm">{form.formState.errors.city.message}</p>}
         </div>
       </div>

@@ -1,7 +1,6 @@
 import React from 'react';
 import { type AddressItem } from '@/features/address/types';
 import { useAddress } from '@/features/address/hooks';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Card, CardContent } from '@/components/ui/card';
 import { EllipsisVertical, Pencil, Square, SquareCheckBig, Trash } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -9,6 +8,7 @@ import { UpdateAddressDialogDrawer } from './UpdateAddressDialogDrawer';
 import { useBoolean } from '@/hooks/use-boolean';
 import { formatFullAddress } from '@/utils/address';
 import RemoveAddressConfirm from './RemoveAddressConfirm';
+import DropdownMenu from '@/components/common/DropdownMenu';
 
 interface AddressCardProps {
   item: AddressItem;
@@ -58,30 +58,28 @@ const AddressCard: React.FC<AddressCardProps> = ({ item }) => {
             </div>
           </div>
 
-          <DropdownMenu modal={false}>
-            <DropdownMenuTrigger asChild>
-              <EllipsisVertical size={20} onClick={(e) => e.stopPropagation()} />
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem
-                onClick={(e) => {
+          <DropdownMenu
+            trigger={<EllipsisVertical size={20} onClick={(e) => e.stopPropagation()} />}
+            items={[
+              {
+                label: 'ویرایش',
+                icon: <Pencil className="w-4 h-4 ml-2" />,
+                onClick: (e) => {
                   e.stopPropagation();
                   updateAddressDialog.onToggle();
-                }}
-              >
-                <Pencil className="w-4 h-4 ml-2" /> ویرایش
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                className="text-red-600"
-                onClick={(e) => {
+                },
+              },
+              {
+                label: 'حذف',
+                icon: <Trash className="w-4 h-4 ml-2" />,
+                onClick: (e) => {
                   e.stopPropagation();
                   deleteAddressDialog.onToggle();
-                }}
-              >
-                <Trash className="w-4 h-4 ml-2" /> حذف
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+                },
+                textClassName: 'text-red-600',
+              },
+            ]}
+          />
         </CardContent>
       </Card>
 

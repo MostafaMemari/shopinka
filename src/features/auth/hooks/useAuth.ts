@@ -6,10 +6,13 @@ import { signout, sendOtp, verifyOtp } from '@/features/auth/api';
 import { toast } from 'sonner';
 import { clearOtp } from '@/store/slices/otpSlice';
 import { closeDialog } from '@/store/slices/authDialogSlice';
+import { usePathname, useRouter } from 'next/navigation';
 
 export const useAuth = () => {
   const queryClient = useQueryClient();
   const dispatch = useAppDispatch();
+  const pathname = usePathname();
+  const router = useRouter();
 
   const sendOtpMutation = useMutation({
     mutationFn: sendOtp,
@@ -66,6 +69,12 @@ export const useAuth = () => {
       dispatch(logout());
       toast.success('خروج با موفقیت انجام شد');
       queryClient.clear();
+
+      console.log(pathname.startsWith('/profile'));
+
+      if (pathname.startsWith('/profile') || pathname.startsWith('/checkout')) {
+        router.push('/');
+      }
     },
     onError: () => {
       dispatch(logout());

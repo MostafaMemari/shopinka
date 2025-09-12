@@ -2,22 +2,15 @@
 
 import Link from 'next/link';
 import { LogOut, ChevronUp, ChevronDown, User } from 'lucide-react';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { profileMenuItems } from '@/data/menuData';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+
 import { Button } from '@/components/ui/button';
 import { useBoolean } from '@/hooks/use-boolean';
 import { useAuth } from '@/features/auth/hooks/useAuth';
+import DropdownMenu from '@/components/common/DropdownMenu';
 
 const ProfileMenu = () => {
-  const pathname = usePathname();
-
   const { logOut, logOutStatus } = useAuth();
 
   const dropdownOpen = useBoolean(false);
@@ -28,8 +21,8 @@ const ProfileMenu = () => {
   };
 
   return (
-    <DropdownMenu modal={false}>
-      <DropdownMenuTrigger asChild>
+    <DropdownMenu
+      trigger={
         <Button variant="outline" className="flex items-center justify-center gap-2 h-10">
           <User className="h-5 w-5" />
           کاربر گرامی
@@ -39,41 +32,30 @@ const ProfileMenu = () => {
             <ChevronDown className="h-5 w-5 transition-transform duration-200" />
           )}
         </Button>
-      </DropdownMenuTrigger>
-
-      <DropdownMenuContent align="end" className="w-60 border-t-2 border-t-primary">
-        {profileMenuItems.map((item) => (
-          <DropdownMenuItem
-            key={item.href}
-            className="p-3 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
-            asChild
-          >
-            <Link
-              href={item.href}
-              className="flex items-center gap-2 text-gray-800 hover:text-primary"
-              aria-current={pathname === item.href ? 'page' : undefined}
-              onClick={dropdownOpen.onFalse}
-            >
-              <item.icon className="h-5 w-5" />
-              <span>{item.label}</span>
-            </Link>
-          </DropdownMenuItem>
-        ))}
-        <DropdownMenuSeparator />
-        <DropdownMenuItem asChild>
-          <Button
-            variant="ghost"
-            className="w-full justify-start gap-2 py-1 text-red-500 hover:text-red-600 hover:bg-red-50 cursor-pointer transition-colors duration-200"
-            onClick={handleUserLogout}
-            aria-label="خروج از حساب کاربری"
-            disabled={isLogoutLoading}
-          >
-            <LogOut className="h-5 w-5" />
-            <span>{isLogoutLoading ? 'در حال خروج...' : 'خروج'}</span>
-          </Button>
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+      }
+      showChevron
+      open={dropdownOpen.value}
+      onOpenChange={dropdownOpen.onToggle}
+      items={[
+        ...profileMenuItems.map((item) => ({
+          label: item.label,
+          icon: <item.icon className="h-5 w-5" />,
+          href: item.href,
+          className: 'hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200',
+          textClassName: 'text-gray-800 hover:text-primary',
+          onClick: dropdownOpen.onFalse,
+        })),
+        {
+          label: isLogoutLoading ? 'در حال خروج...' : 'خروج',
+          icon: <LogOut className="h-5 w-5" />,
+          onClick: handleUserLogout,
+          className: 'hover:bg-red-50',
+          textClassName: 'text-red-500 hover:text-red-600',
+          disabled: isLogoutLoading,
+        },
+      ]}
+      className="border-t-2 border-t-primary"
+    />
   );
 };
 
