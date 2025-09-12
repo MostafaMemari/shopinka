@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
 import { formatPrice } from '@/utils/formatter';
+import { Card } from '@/components/ui/card';
 
 interface CartSummaryProps {
   totalQuantity: number;
@@ -20,7 +21,7 @@ const CartSummary: React.FC<CartSummaryProps> = ({
 }) => {
   return (
     <div className="col-span-12 md:col-span-4">
-      <div className="hidden rounded-lg bg-muted p-4 md:block">
+      <Card className="p-4 md:block">
         <div className="mb-2 divide-y">
           <div className="flex items-center justify-between gap-x-2 py-6">
             <div className="flex flex-col">
@@ -62,7 +63,7 @@ const CartSummary: React.FC<CartSummaryProps> = ({
           </div>
         </div>
         {children}
-      </div>
+      </Card>
     </div>
   );
 };

@@ -1,7 +1,9 @@
+'use client';
+
+import { Card, CardContent } from '@/components/ui/card';
 import { CheckCircle2, CreditCard, FileText } from 'lucide-react';
 import React from 'react';
 
-// تعریف تایپ برای props
 interface CheckoutProgressProps {
   currentStep: 'cart' | 'checkout' | 'payment';
 }
@@ -22,25 +24,27 @@ const CheckoutProgress: React.FC<CheckoutProgressProps> = ({ currentStep }) => {
   const currentStepIndex = steps.findIndex((step) => step.key === currentStep);
 
   return (
-    <div className="col-span-12 rounded-lg bg-muted">
-      <ol className="grid grid-cols-3 overflow-hidden rounded-lg">
-        {steps.map((step, index) => {
-          const isCompleted = index <= currentStepIndex || index <= currentStepIndex - 2;
+    <Card className="col-span-12 p-0">
+      <CardContent className="p-0">
+        <ol className="grid grid-cols-3 rounded-xl overflow-hidden">
+          {steps.map((step, index) => {
+            const isCompleted = index <= currentStepIndex;
 
-          return (
-            <li
-              key={step.key}
-              className={`flex flex-col items-center justify-center gap-2 p-4 text-xs sm:text-sm md:text-base ${
-                isCompleted ? 'bg-primary/10 text-primary' : 'text-primary opacity-50'
-              }`}
-            >
-              <step.icon className="h-6 w-6 md:h-8 md:w-8" />
-              <p className="leading-none">{step.name}</p>
-            </li>
-          );
-        })}
-      </ol>
-    </div>
+            return (
+              <li
+                key={step.key}
+                className={`flex flex-col items-center justify-center gap-2 p-4 text-xs sm:text-sm md:text-base transition-colors ${
+                  isCompleted ? 'bg-primary/10 text-primary' : 'text-muted-foreground'
+                }`}
+              >
+                <step.icon className="h-6 w-6 md:h-8 md:w-8" />
+                <p className="leading-none">{step.name}</p>
+              </li>
+            );
+          })}
+        </ol>
+      </CardContent>
+    </Card>
   );
 };
 

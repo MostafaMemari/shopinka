@@ -1,3 +1,4 @@
+import { Card } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 
 export default function ProductLoader() {
@@ -9,7 +10,7 @@ export default function ProductLoader() {
           <Skeleton className="h-8 w-1/2 rounded-lg" />
         </div>
 
-        <div className="mb-6 rounded-lg bg-muted p-6 shadow-base">
+        <Card className="mb-6 p-6">
           <div className="mb-10 grid grid-cols-12 gap-4">
             <div className="col-span-4">
               <div className="mb-4 flex items-center gap-x-4">
@@ -47,12 +48,12 @@ export default function ProductLoader() {
           <div className="flex justify-between gap-4">
             <Skeleton className="h-16 w-full rounded-lg" />
           </div>
-        </div>
+        </Card>
       </div>
 
       {/* Mobile Loader */}
       <div className="lg:hidden">
-        <div className="mb-6 relative rounded-lg bg-muted p-4 shadow-base">
+        <Card className="mb-6 relative p-4">
           <Skeleton className="mb-4 aspect-square w-full rounded-lg" />
           <Skeleton className="mb-4 h-6 w-1/2 rounded-lg" />
           <Skeleton className="mb-4 h-8 w-3/4 rounded-lg" />
@@ -67,7 +68,7 @@ export default function ProductLoader() {
             <Skeleton className="h-12 w-1/2 rounded-lg" />
             <Skeleton className="h-12 w-1/3 rounded-lg" />
           </div>
-        </div>
+        </Card>
       </div>
     </div>
   );

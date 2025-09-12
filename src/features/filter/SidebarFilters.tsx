@@ -4,22 +4,23 @@ import CategorySelector from '../categories/components/CategorySelector';
 import StockStatusFilter from '../shopPage/FilterDesktop/StockStatusFilter';
 import DiscountFilter from '../shopPage/FilterDesktop/DiscountFilter';
 import { Category } from '@/features/categories/types';
+import { Card } from '@/components/ui/card';
 
 function SidebarFilters({ categories }: { categories: Category[] }) {
   return (
     <div className="col-span-4 row-span-2 hidden md:flex md:flex-col lg:col-span-3 gap-4">
       <SearchInput />
       {categories && categories.length > 0 && (
-        <div className="px-3 rounded-lg bg-muted shadow-base">
+        <Card className="px-3">
           <CategorySelector title="فیلتر بر اساس دسته‌بندی" categories={categories} />
-        </div>
+        </Card>
       )}
-      <div className="p-3 rounded-lg bg-muted shadow-base">
+      <Card className="p-3">
         <StockStatusFilter />
-      </div>
-      <div className="p-3 rounded-lg bg-muted shadow-base">
+      </Card>
+      <Card className="p-3">
         <DiscountFilter />
-      </div>
+      </Card>
     </div>
   );
 }

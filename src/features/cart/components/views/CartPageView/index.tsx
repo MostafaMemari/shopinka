@@ -20,6 +20,7 @@ import { useBoolean } from '@/hooks/use-boolean';
 import { useCart } from '@/features/cart/hooks/useCart';
 import ConfirmDialog from '@/components/common/ConfirmDialog';
 import { ShoppingBasket, Trash2 } from 'lucide-react';
+import { Card } from '@/components/ui/card';
 
 function CartPageView() {
   const router = useRouter();
@@ -46,9 +47,9 @@ function CartPageView() {
   if (!isMounted || isLoading) {
     return (
       <div className="col-span-12">
-        <div className="rounded-lg bg-muted p-4 min-h-[300px] flex items-center justify-center">
+        <Card className="p-4 min-h-[300px] flex items-center justify-center">
           <LoadingSpinner />
-        </div>
+        </Card>
       </div>
     );
   }
@@ -56,9 +57,9 @@ function CartPageView() {
   if (error) {
     return (
       <div className="col-span-12">
-        <div className="rounded-lg bg-muted p-4 min-h-[300px] flex items-center justify-center">
+        <Card className="p-4 min-h-[300px] flex items-center justify-center">
           <ErrorState message={error.message} />
-        </div>
+        </Card>
       </div>
     );
   }
@@ -66,7 +67,7 @@ function CartPageView() {
   if (!cart || cartItems?.length === 0) {
     return (
       <div className="col-span-12">
-        <div className="rounded-lg bg-muted p-6 min-h-[300px] flex flex-col items-center justify-center gap-4">
+        <Card className="p-6 min-h-[300px] flex flex-col items-center justify-center gap-4">
           <EmptyState
             icon={<ShoppingBasket className="w-12 h-12 text-gray-400" />}
             message="سبد خرید شما خالی است!"
@@ -78,7 +79,7 @@ function CartPageView() {
           >
             مشاهده محصولات
           </Link>
-        </div>
+        </Card>
       </div>
     );
   }
@@ -104,7 +105,7 @@ function CartPageView() {
       </MobileCartSticky>
 
       <div className="col-span-12 md:col-span-8">
-        <div className="rounded-lg bg-muted p-4 min-h-[300px]">
+        <Card className="p-4 min-h-[300px]">
           <div className="flex items-center justify-between gap-x-2 pb-4">
             <h1 className="flex items-center gap-x-4 text-sm xs:text-base md:text-lg">
               سبد خرید
@@ -126,7 +127,7 @@ function CartPageView() {
               </li>
             ))}
           </ul>
-        </div>
+        </Card>
       </div>
 
       <CartSummary

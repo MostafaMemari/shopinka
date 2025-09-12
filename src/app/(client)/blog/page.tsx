@@ -38,9 +38,7 @@ export default async function BlogPage({ searchParams }: PageProps) {
       </div>
       <div className="grid grid-cols-12 grid-rows-[60px_min(500px,_1fr)] gap-4">
         <div className="col-span-4 row-span-2 hidden md:block lg:col-span-3">
-          <div className="py-1 rounded-lg bg-muted shadow-base">
-            <SearchInput />
-          </div>
+          <SearchInput />
         </div>
         <div className="col-span-12 space-y-4 md:col-span-8 lg:col-span-9">
           <SortBar options={BLOG_SORT_OPTIONS} queryKey="sortBy" />

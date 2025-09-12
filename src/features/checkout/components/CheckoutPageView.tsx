@@ -11,6 +11,7 @@ import Link from 'next/link';
 import AddressSection from '../../address/components/AddressSection';
 import { useCart } from '@/features/cart/hooks/useCart';
 import { ShoppingBasket } from 'lucide-react';
+import { Card } from '@/components/ui/card';
 
 function CheckoutPageView() {
   const [selectedAddressId, setSelectedAddressId] = useState<number | null>(null);
@@ -24,9 +25,9 @@ function CheckoutPageView() {
   if (!isMounted || isLoadingCart) {
     return (
       <div className="col-span-12">
-        <div className="rounded-lg bg-muted p-4 min-h-[300px] flex items-center justify-center">
+        <Card className="min-h-[300px] flex items-center justify-center">
           <LoadingSpinner />
-        </div>
+        </Card>
       </div>
     );
   }
@@ -34,7 +35,7 @@ function CheckoutPageView() {
   if (!cart || cartItems.length === 0) {
     return (
       <div className="col-span-12">
-        <div className="rounded-lg bg-muted p-6 min-h-[300px] flex flex-col items-center justify-center gap-4">
+        <Card className="p-4 min-h-[300px] flex flex-col items-center justify-center gap-4">
           <EmptyState
             icon={<ShoppingBasket className="w-12 h-12 text-gray-400" />}
             message="سبد خرید شما خالی است!"
@@ -46,7 +47,7 @@ function CheckoutPageView() {
           >
             مشاهده محصولات
           </Link>
-        </div>
+        </Card>
       </div>
     );
   }
@@ -54,10 +55,10 @@ function CheckoutPageView() {
   return (
     <>
       <div className="col-span-12 md:col-span-8">
-        <div className="rounded-lg bg-muted p-4">
+        <Card className="p-4">
           <AddressSection onAddressSelect={setSelectedAddressId} />
           <DeliverySection onShippingSelect={setSelectedShippingItem} />
-        </div>
+        </Card>
       </div>
 
       <CartPriceDetail cart={cart} selectedAddressId={selectedAddressId} selectedShippingItem={selectedShippingItem} />
