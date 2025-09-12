@@ -16,11 +16,31 @@ interface AccordionProps {
 
 export function Accordion({ items, type = 'single', collapsible = true, className }: AccordionProps) {
   return (
-    <AccordionShadcn type={type} collapsible={collapsible} className={className}>
+    <AccordionShadcn
+      type={type}
+      collapsible={collapsible}
+      className={`w-full rounded-xl border border-gray-200 bg-white shadow-sm ${className}`}
+    >
       {items.map((item) => (
-        <AccordionItem key={item.value} value={item.value}>
-          <AccordionTrigger>{item.trigger}</AccordionTrigger>
-          <AccordionContent>{item.content}</AccordionContent>
+        <AccordionItem key={item.value} value={item.value} className="border-b py-2 last:border-b-0">
+          <AccordionTrigger
+            className="
+              flex w-full items-center justify-between 
+              px-4 py-3 text-right text-sm sm:text-base font-medium
+              transition-all hover:bg-gray-50
+              cursor-pointer
+            "
+          >
+            {item.trigger}
+          </AccordionTrigger>
+          <AccordionContent
+            className="
+              px-4 pb-4 pt-2 text-gray-600 text-sm sm:text-base leading-relaxed
+              animate-in fade-in slide-in-from-top-1
+            "
+          >
+            {item.content}
+          </AccordionContent>
         </AccordionItem>
       ))}
     </AccordionShadcn>

@@ -9,7 +9,7 @@ import {
   DialogFooter,
   DialogDescription,
   DialogClose,
-} from '@/components/ui/dialog';
+} from '@/components/ui/dalog';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import PrimaryButton from './PrimaryButton';

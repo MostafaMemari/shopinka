@@ -9,6 +9,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useContact } from '@/features/contact/hooks/useContact';
 import { type ContactForm, validationContactSchema } from '@/validation/validationContactSchema';
 import { FormInput, FormTextarea } from '@/components/form/FormField';
+import PrimaryButton from '@/components/common/PrimaryButton';
 
 function ContactForm() {
   const { createContact, isCreateContactLoading } = useContact();
@@ -46,9 +47,9 @@ function ContactForm() {
 
         <FormTextarea control={form.control} name="message" label="پیام شما" className="col-span-1 md:col-span-2" rows={3} />
         <div className="col-span-1 flex justify-end md:col-span-2">
-          <Button type="submit" disabled={isCreateContactLoading}>
+          <PrimaryButton type="submit" className="w-full lg:w-3xs" disabled={isCreateContactLoading} isLoading={isCreateContactLoading}>
             {isCreateContactLoading ? 'در حال ارسال...' : 'ارسال پیام'}
-          </Button>
+          </PrimaryButton>
         </div>
       </form>
     </Form>
