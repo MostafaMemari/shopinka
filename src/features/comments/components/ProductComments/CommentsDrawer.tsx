@@ -57,7 +57,7 @@ function CommentsDrawer({ drawerHandlers, productId }: CommentsDrawerProps) {
                     className={`text-xs font-semibold rounded-full px-2 py-0.5
                     ${comment.userId ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' : 'bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400'}`}
                   >
-                    {comment.userId ? 'خریدار' : 'کاربر'}
+                    کاربر
                   </span>
                 </div>
                 <Recommendation isRecommended={comment.isRecommended} />
@@ -100,7 +100,7 @@ function ReplyList({ replies }: { replies: CommentItem[] }) {
                     className={`text-xs rounded-full px-2 py-0.5 font-semibold
                     ${reply.userId ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' : 'bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400'}`}
                   >
-                    {reply.userId ? 'خریدار' : 'کاربر'}
+                    کاربر
                   </span>
                 </div>
 

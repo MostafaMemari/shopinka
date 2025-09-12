@@ -39,61 +39,53 @@ function ReplyComment({ productId, parentId, commentTitle }: ReplyCommentProps) 
   const commentButtonLabel = 'پاسخ';
   const commentFormTitle = 'پاسخ به دیدگاه: ' + commentTitle;
 
-  if (isDesktop) {
-    return (
-      <Dialog
-        open={commentControl.value}
-        onOpenChange={commentControl.onToggle}
-        title={commentFormTitle}
-        actions={
-          <PrimaryButton onClick={handleSubmit} disabled={isCreateCommentLoading} isLoading={isCreateCommentLoading} className="flex-1">
-            ثبت پاسخ
-          </PrimaryButton>
-        }
-        trigger={
-          <Button variant="ghost" onClick={handleReplyComment} className="cursor-pointer">
-            {commentButtonLabel}
-            <ChevronLeft />
-          </Button>
-        }
-      >
-        <CommentForm
-          ref={formRef}
-          productId={productId}
-          parentId={parentId}
-          onSuccess={commentControl.onFalse}
-          createComment={createComment}
-        />
-      </Dialog>
-    );
-  }
-
   return (
-    <MobileDrawer
-      open={commentControl.value}
-      onOpenChange={commentControl.onToggle}
-      title="پاسخ به دیدگاه"
-      actions={
-        <PrimaryButton onClick={handleSubmit} disabled={isCreateCommentLoading} isLoading={isCreateCommentLoading} className="flex-1">
-          ثبت پاسخ
-        </PrimaryButton>
-      }
-      trigger={
-        <Button variant="ghost" onClick={handleReplyComment} className="cursor-pointer">
-          {commentButtonLabel}
-          <ChevronLeft />
-        </Button>
-      }
-    >
-      <CommentForm
-        className="p-4"
-        ref={formRef}
-        productId={productId}
-        parentId={parentId}
-        onSuccess={commentControl.onFalse}
-        createComment={createComment}
-      />
-    </MobileDrawer>
+    <>
+      <Button variant="ghost" onClick={handleReplyComment} className="cursor-pointer">
+        {commentButtonLabel}
+        <ChevronLeft />
+      </Button>
+      {isDesktop ? (
+        <Dialog
+          open={commentControl.value}
+          onOpenChange={commentControl.onToggle}
+          title={commentFormTitle}
+          actions={
+            <PrimaryButton onClick={handleSubmit} disabled={isCreateCommentLoading} isLoading={isCreateCommentLoading} className="flex-1">
+              ثبت پاسخ
+            </PrimaryButton>
+          }
+        >
+          <CommentForm
+            ref={formRef}
+            productId={productId}
+            parentId={parentId}
+            onSuccess={commentControl.onFalse}
+            createComment={createComment}
+          />
+        </Dialog>
+      ) : (
+        <MobileDrawer
+          open={commentControl.value}
+          onOpenChange={commentControl.onToggle}
+          title="پاسخ به دیدگاه"
+          actions={
+            <PrimaryButton onClick={handleSubmit} disabled={isCreateCommentLoading} isLoading={isCreateCommentLoading} className="flex-1">
+              ثبت پاسخ
+            </PrimaryButton>
+          }
+        >
+          <CommentForm
+            className="p-4"
+            ref={formRef}
+            productId={productId}
+            parentId={parentId}
+            onSuccess={commentControl.onFalse}
+            createComment={createComment}
+          />
+        </MobileDrawer>
+      )}
+    </>
   );
 }
 

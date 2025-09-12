@@ -7,6 +7,7 @@ import { CommentItem } from '@/types/commentType';
 import Recommendation from './Recommendation';
 import { useBoolean } from '@/hooks/use-boolean';
 import { ChevronLeft, UserCircle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 interface Props {
   comments: CommentItem[];
@@ -29,7 +30,7 @@ export default function MobileCommentsCarousel({ comments, productId, drawerHand
           {comments
             .filter((comment) => comment.isActive)
             .map((comment) => (
-              <CarouselItem key={comment.id} className="basis-[85%] sm:basis-[45%] lg:basis-[30%]">
+              <CarouselItem key={comment.id} className="basis-[85%] sm:basis-[45%] lg:basis-[30%] mb-3">
                 <Card className="h-56 rounded-xl border border-gray-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 shadow-md transition hover:shadow-lg">
                   <CardContent className="p-4 flex flex-col h-full">
                     <div className="flex items-center justify-between mb-2">
@@ -52,8 +53,8 @@ export default function MobileCommentsCarousel({ comments, productId, drawerHand
           <CarouselItem className="basis-[85%] sm:basis-[45%] lg:basis-[30%]">
             <Card className="h-56 rounded-xl flex items-center justify-center border border-gray-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 shadow-md transition hover:shadow-lg">
               <CardContent className="flex flex-col items-center justify-center gap-y-2 text-primary">
-                <button
-                  type="button"
+                <Button
+                  variant="ghost"
                   onClick={drawerHandlers.onTrue}
                   className="flex flex-col items-center justify-center gap-y-2 text-primary"
                 >
@@ -61,7 +62,7 @@ export default function MobileCommentsCarousel({ comments, productId, drawerHand
                     <ChevronLeft className="h-4 w-4" />
                   </div>
                   <div className="text-sm font-semibold">مشاهده بیشتر</div>
-                </button>
+                </Button>
               </CardContent>
             </Card>
           </CarouselItem>
