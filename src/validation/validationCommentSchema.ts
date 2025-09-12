@@ -6,4 +6,4 @@ export const validationCommentSchema = z.object({
   isRecommended: z.boolean().optional(),
 });
 
-export type CommentForm = z.infer<typeof validationCommentSchema>;
+export type CommentFormValues = z.infer<typeof validationCommentSchema>;

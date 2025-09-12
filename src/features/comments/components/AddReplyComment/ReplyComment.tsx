@@ -1,8 +1,6 @@
 import { useAppSelector } from '@/store/hooks';
 import React from 'react';
 
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Drawer, DrawerClose, DrawerContent, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from '@/components/ui/drawer';
 import { Button } from '@/components/ui/button';
 import { useMediaQuery } from '@/hooks/use-media-query';
 import { useBoolean } from '@/hooks/use-boolean';
@@ -10,6 +8,10 @@ import { ChevronLeft } from 'lucide-react';
 import CommentForm from './CommentForm';
 import { useDispatch } from 'react-redux';
 import { openDialog } from '@/store/slices/authDialogSlice';
+import MobileDrawer from '@/components/common/Drawer';
+import Dialog from '@/components/common/Dialog';
+import PrimaryButton from '@/components/common/PrimaryButton';
+import { useCreateComment } from '../../hooks/useCreateComment';
 
 interface ReplyCommentProps {
   productId: number;
@@ -21,6 +23,8 @@ function ReplyComment({ productId, parentId, commentTitle }: ReplyCommentProps) 
   const isDesktop = useMediaQuery('(min-width: 768px)');
   const dispatch = useDispatch();
   const commentControl = useBoolean(false);
+  const formRef = React.useRef<HTMLFormElement>(null);
+  const { createComment, isCreateCommentLoading } = useCreateComment();
 
   const { isLogin } = useAppSelector((state) => state.auth);
 
@@ -29,51 +33,68 @@ function ReplyComment({ productId, parentId, commentTitle }: ReplyCommentProps) 
     else dispatch(openDialog());
   };
 
+  const handleSubmit = () => {
+    formRef.current?.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+  };
+
   const commentButtonLabel = 'پاسخ';
   const commentFormTitle = 'پاسخ به دیدگاه: ' + commentTitle;
 
   if (isDesktop) {
     return (
-      <Dialog open={commentControl.value} onOpenChange={commentControl.onToggle}>
-        <DialogTrigger asChild>
+      <Dialog
+        open={commentControl.value}
+        onOpenChange={commentControl.onToggle}
+        title={commentFormTitle}
+        actions={
+          <PrimaryButton onClick={handleSubmit} disabled={isCreateCommentLoading} isLoading={isCreateCommentLoading} className="flex-1">
+            ثبت پاسخ
+          </PrimaryButton>
+        }
+        trigger={
           <Button variant="ghost" onClick={handleReplyComment} className="cursor-pointer">
             {commentButtonLabel}
             <ChevronLeft />
           </Button>
-        </DialogTrigger>
-
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle>{commentFormTitle}</DialogTitle>
-          </DialogHeader>
-          <CommentForm className="pt-2" productId={productId} parentId={parentId} onSuccess={commentControl.onFalse} />
-        </DialogContent>
+        }
+      >
+        <CommentForm
+          ref={formRef}
+          productId={productId}
+          parentId={parentId}
+          onSuccess={commentControl.onFalse}
+          createComment={createComment}
+        />
       </Dialog>
     );
   }
 
   return (
-    <Drawer open={commentControl.value} onOpenChange={commentControl.onToggle}>
-      <DrawerTrigger asChild>
+    <MobileDrawer
+      open={commentControl.value}
+      onOpenChange={commentControl.onToggle}
+      title="پاسخ به دیدگاه"
+      actions={
+        <PrimaryButton onClick={handleSubmit} disabled={isCreateCommentLoading} isLoading={isCreateCommentLoading} className="flex-1">
+          ثبت پاسخ
+        </PrimaryButton>
+      }
+      trigger={
         <Button variant="ghost" onClick={handleReplyComment} className="cursor-pointer">
           {commentButtonLabel}
           <ChevronLeft />
         </Button>
-      </DrawerTrigger>
-      <DrawerContent>
-        <DrawerHeader className="text-left">
-          <DrawerTitle>{commentFormTitle}</DrawerTitle>
-        </DrawerHeader>
-
-        <CommentForm className="px-4" productId={productId} parentId={parentId} onSuccess={commentControl.onFalse} />
-
-        <DrawerFooter className="pt-2">
-          <DrawerClose asChild>
-            <Button variant="outline">انصراف</Button>
-          </DrawerClose>
-        </DrawerFooter>
-      </DrawerContent>
-    </Drawer>
+      }
+    >
+      <CommentForm
+        className="p-4"
+        ref={formRef}
+        productId={productId}
+        parentId={parentId}
+        onSuccess={commentControl.onFalse}
+        createComment={createComment}
+      />
+    </MobileDrawer>
   );
 }
 

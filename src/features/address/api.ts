@@ -4,7 +4,7 @@ import { pager } from '@/types/paginationType';
 import { cleanObject } from '@/utils/cleanObject';
 
 export const createAddress = async (data: AddressFormValues): Promise<{ message: string; address: AddressItem }> => {
-  const res = await shopApiFetch('/address', {
+  return await shopApiFetch('/address', {
     method: 'POST',
     body: cleanObject({
       ...data,
@@ -12,8 +12,6 @@ export const createAddress = async (data: AddressFormValues): Promise<{ message:
       unit: data.unit ? Number(data.unit) : undefined,
     }),
   });
-
-  return res;
 };
 
 export const updateAddress = async (id: number, data: AddressFormValues): Promise<{ message: string; address: AddressItem }> => {

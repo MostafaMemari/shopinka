@@ -41,8 +41,6 @@ export default function AddressForm({ initialValues, className = '', onSuccess, 
     postalCode: initialValues?.postalCode ?? '',
   };
 
-  // @ts-ignore
-
   const form = useForm<AddressFormValues>({
     resolver: zodResolver(validationAddressSchema),
     defaultValues,
