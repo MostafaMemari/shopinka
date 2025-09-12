@@ -1,15 +1,14 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Textarea } from '@/components/ui/textarea';
+import { Form } from '@/components/ui/form';
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { useContact } from '@/features/contact/hooks/useContact';
 import { type ContactForm, validationContactSchema } from '@/validation/validationContactSchema';
+import { FormInput, FormTextarea } from '@/components/form/FormField';
 
 function ContactForm() {
   const { createContact, isCreateContactLoading } = useContact();
@@ -39,58 +38,13 @@ function ContactForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="grid grid-cols-1 gap-6 md:grid-cols-2">
-        <FormField
-          control={form.control}
-          name="fullName"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>نام شما</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="phone"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>شماره تماس شما</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem className="col-span-1 md:col-span-2">
-              <FormLabel>ایمیل شما</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="message"
-          render={({ field }) => (
-            <FormItem className="col-span-1 md:col-span-2">
-              <FormLabel>پیام شما</FormLabel>
-              <FormControl>
-                <Textarea {...field} rows={3} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <FormInput control={form.control} name="fullName" label="نام شما" />
+
+        <FormInput control={form.control} name="phone" label="شماره تماس شما" />
+
+        <FormInput control={form.control} name="email" label="ایمیل شما" className="col-span-1 md:col-span-2" type="email" />
+
+        <FormTextarea control={form.control} name="message" label="پیام شما" className="col-span-1 md:col-span-2" rows={3} />
         <div className="col-span-1 flex justify-end md:col-span-2">
           <Button type="submit" disabled={isCreateContactLoading}>
             {isCreateContactLoading ? 'در حال ارسال...' : 'ارسال پیام'}

@@ -1,19 +1,29 @@
 import { shopApiFetch } from '@/service/api';
-import { AddressFormType, AddressItem } from '@/features/address/types';
+import { AddressFormValues, AddressItem } from '@/features/address/types';
 import { pager } from '@/types/paginationType';
 import { cleanObject } from '@/utils/cleanObject';
 
-export const createAddress = async (data: AddressFormType): Promise<{ message: string; address: AddressItem }> => {
-  return await shopApiFetch('/address', {
+export const createAddress = async (data: AddressFormValues): Promise<{ message: string; address: AddressItem }> => {
+  const res = await shopApiFetch('/address', {
     method: 'POST',
-    body: cleanObject(data),
+    body: cleanObject({
+      ...data,
+      buildingNumber: Number(data.buildingNumber),
+      unit: data.unit ? Number(data.unit) : undefined,
+    }),
   });
+
+  return res;
 };
 
-export const updateAddress = async (id: number, data: AddressFormType): Promise<{ message: string; address: AddressItem }> => {
+export const updateAddress = async (id: number, data: AddressFormValues): Promise<{ message: string; address: AddressItem }> => {
   return await shopApiFetch(`/address/${id}`, {
     method: 'PATCH',
-    body: cleanObject(data),
+    body: cleanObject({
+      ...data,
+      buildingNumber: data.unit ? Number(data.buildingNumber) : undefined,
+      unit: data.unit ? Number(data.unit) : undefined,
+    }),
   });
 };
 
