@@ -22,7 +22,7 @@ function RemoveAddressConfirm({
 }: RemoveAddressConfirmProps) {
   const { deleteAddress, isDeleteAddressLoading } = useAddress({});
 
-  const isDesktop = useMediaQuery(`(min-width: ${COMPONENT_BREAKPOINTS.DIALOG_DRAWER}px)`);
+  const isDesktop = useMediaQuery(`(min-width: ${COMPONENT_BREAKPOINTS.DIALOG_DRAWER})`);
 
   const handleConfirm = () => {
     deleteAddress(addressId);
@@ -52,7 +52,7 @@ function RemoveAddressConfirm({
       confirmLabel="حذف"
       cancelLabel="انصراف"
       description={description}
-      onConfirm={control.onToggle}
+      onConfirm={handleConfirm}
     />
   );
 }

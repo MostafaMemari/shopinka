@@ -52,7 +52,7 @@ const ConfirmDialog: FC<ConfirmDialogProps> = ({
           <DialogClose asChild>
             <Button variant="secondary">{cancelLabel}</Button>
           </DialogClose>
-          <PrimaryButton onClick={onConfirm} isLoading={isConfirmLoading}>
+          <PrimaryButton className="w-1/4" onClick={onConfirm} isLoading={isConfirmLoading}>
             {confirmLabel}
           </PrimaryButton>
         </DialogFooter>

@@ -2,12 +2,13 @@
 
 import * as React from 'react';
 
-import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Drawer, DrawerClose, DrawerContent, DrawerFooter, DrawerHeader, DrawerTitle } from '@/components/ui/drawer';
 import { useMediaQuery } from '@/hooks/use-media-query';
 import { AddressItem } from '@/features/address/types';
 import AddressForm from './AddressForm';
+import MobileDrawer from '@/components/common/Drawer';
+import { useState } from 'react';
+import PrimaryButton from '@/components/common/PrimaryButton';
+import Dialog from '@/components/common/Dialog';
 
 interface UpdateAddressDialogDrawerProps {
   open: boolean;
@@ -18,38 +19,47 @@ interface UpdateAddressDialogDrawerProps {
 export function UpdateAddressDialogDrawer({ open, onOpenChange, item }: UpdateAddressDialogDrawerProps) {
   const isDesktop = useMediaQuery('(min-width: 768px)');
 
+  const [isLoadingSubmit, setIsLoadingSubmit] = useState(false);
+
+  const formRef = React.useRef<HTMLFormElement>(null);
+
+  const handleSubmit = () => {
+    formRef.current?.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+  };
+
   const handleSuccess = () => {
     onOpenChange(false);
   };
 
   if (isDesktop) {
     return (
-      <Dialog open={open} onOpenChange={onOpenChange}>
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle>ویرایش آدرس</DialogTitle>
-          </DialogHeader>
-          <AddressForm className="pt-2" onSuccess={handleSuccess} initialValues={item} />
-        </DialogContent>
+      <Dialog
+        open={open}
+        onOpenChange={onOpenChange}
+        title="ویرایش آدرس"
+        actions={
+          <PrimaryButton type="submit" className="flex-1" onClick={handleSubmit} isLoading={isLoadingSubmit}>
+            ثبت
+          </PrimaryButton>
+        }
+      >
+        <AddressForm className="pt-2" onSuccess={handleSuccess} initialValues={item} ref={formRef} onLoadingChange={setIsLoadingSubmit} />
       </Dialog>
     );
   }
 
   return (
-    <Drawer open={open} onOpenChange={onOpenChange}>
-      <DrawerContent>
-        <DrawerHeader className="text-left">
-          <DrawerTitle>ویرایش آدرس</DrawerTitle>
-        </DrawerHeader>
-
-        <AddressForm className="px-4" onSuccess={handleSuccess} initialValues={item} />
-
-        <DrawerFooter className="pt-2">
-          <DrawerClose asChild>
-            <Button variant="outline">انصراف</Button>
-          </DrawerClose>
-        </DrawerFooter>
-      </DrawerContent>
-    </Drawer>
+    <MobileDrawer
+      open={open}
+      onOpenChange={onOpenChange}
+      title="ویرایش آدرس"
+      actions={
+        <PrimaryButton className="flex-1" onClick={handleSubmit} isLoading={isLoadingSubmit}>
+          ثبت
+        </PrimaryButton>
+      }
+    >
+      <AddressForm className="px-4" onSuccess={handleSuccess} initialValues={item} onLoadingChange={setIsLoadingSubmit} />
+    </MobileDrawer>
   );
 }
