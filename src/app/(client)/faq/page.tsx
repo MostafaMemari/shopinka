@@ -2,9 +2,9 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import Accordion from '@/components/common/Accordion';
 import { faqData } from '@/data/faqData';
 import { Search } from 'lucide-react';
+import { Accordion } from '@/components/common/Accordion';
 
 function Page() {
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -53,7 +53,7 @@ function Page() {
 
         <div className="lg:col-span-8 space-y-8">
           {filteredFaqData.length > 0 ? (
-            filteredFaqData.map((section, index) => <Accordion key={index} category={section.category} items={section.items} />)
+            filteredFaqData.map((section, index) => <Accordion key={index} items={section.items} />)
           ) : (
             <p className="text-sm sm:text-base text-gray-600 text-center">هیچ نتیجه‌ای برای {searchTerm} یافت نشد.</p>
           )}

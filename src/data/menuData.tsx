@@ -19,7 +19,7 @@ export interface ProfileMenuItem {
 export const navigationMenuItems = [
   { title: 'فروشگاه', href: '/shop', icon: ShoppingBag, isActive: true },
   { title: 'بلاگ', href: '/blog', icon: BookA },
-  { title: 'سوال دارید', href: '#docs', icon: MessageCircle },
+  { title: 'سوال دارید', href: '/faq', icon: MessageCircle },
   { title: 'تماس با ما', href: '/contact', icon: PhoneCall },
 ];
 
