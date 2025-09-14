@@ -42,7 +42,6 @@ export const useAuth = () => {
     onError: (error) => {
       const message = error.message;
 
-      toast.error(message);
       dispatch(loginFailure(message));
       queryClient.invalidateQueries({ queryKey: [QueryKeys.User] });
     },

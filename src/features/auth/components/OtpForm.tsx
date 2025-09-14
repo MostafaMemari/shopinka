@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useCountdownSeconds } from '@/hooks/use-countdown';
 import { secondsToTime } from '@/utils/utils';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,6 +14,7 @@ import { validationOtpSchema } from '@/validation/ValidateOtp';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { clearOtp, setOtpSentAt } from '@/store/slices/otpSlice';
 import { OtpTimer } from './OtpTimer';
+import { Alert } from '@/components/common/Alert';
 
 interface InputOTPFormProps {
   verifyOtp?: any;
@@ -23,6 +24,8 @@ interface InputOTPFormProps {
 type OTPFormValues = { otp: string };
 
 function InputOTPForm({ verifyOtp, ref }: InputOTPFormProps) {
+  const [error, setError] = useState<string | null>(null);
+
   const dispatch = useDispatch();
   const mobile = useSelector((state: RootState) => state.otp.mobile)!;
 
@@ -55,11 +58,6 @@ function InputOTPForm({ verifyOtp, ref }: InputOTPFormProps) {
   }, [otpSentAt, startCountdown]);
 
   const handleSubmit = async (values: { otp: string }) => {
-    if (isExpired) {
-      toast.error('کد یک‌بارمصرف منقضی شده است. لطفا مجددا تلاش کنید.');
-      return;
-    }
-
     verifyOtp(
       { mobile, otp: values.otp },
       {
@@ -68,7 +66,8 @@ function InputOTPForm({ verifyOtp, ref }: InputOTPFormProps) {
           form.reset();
         },
 
-        onError: () => {
+        onError: (error: Error) => {
+          setError(error.message);
           form.reset();
           setTimeout(() => inputRef.current?.focus(), 0);
         },
@@ -86,6 +85,8 @@ function InputOTPForm({ verifyOtp, ref }: InputOTPFormProps) {
 
   return (
     <>
+      {error && <Alert variant="destructive" icon="error" title={error} />}
+
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)} ref={ref} className="flex flex-col gap-4 mt-1">
           <FormField

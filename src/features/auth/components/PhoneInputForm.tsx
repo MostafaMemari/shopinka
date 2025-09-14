@@ -1,4 +1,3 @@
-import { toast } from 'sonner';
 import { useForm } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
@@ -10,6 +9,7 @@ import { setOtpSentAt, setMobile } from '@/store/slices/otpSlice';
 import { RootState } from '@/store';
 import { phoneValidationSchema } from '@/validation/validateIranPhoneNumber';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Alert } from '@/components/common/Alert';
 
 interface PhoneInputFormProps {
   className?: string;
@@ -21,6 +21,7 @@ type PhoneFormValues = { mobile: string };
 
 function PhoneInputForm({ className, ref, sendOtp }: PhoneInputFormProps) {
   const mobile = useSelector((state: RootState) => state.otp.mobile)!;
+  const [error, setError] = React.useState<string | null>(null);
 
   const dispatch = useDispatch();
 
@@ -39,13 +40,14 @@ function PhoneInputForm({ className, ref, sendOtp }: PhoneInputFormProps) {
       },
       onError: (error: Error) => {
         form.reset();
-        toast.error(error.message);
+        setError(error.message);
       },
     });
   };
 
   return (
     <>
+      {error && <Alert variant="destructive" icon="error" title={error} />}
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)} ref={ref} className={cn('flex flex-col gap-4 mt-1', className)}>
           <FormField
@@ -75,7 +77,6 @@ function PhoneInputForm({ className, ref, sendOtp }: PhoneInputFormProps) {
           />
         </form>
       </Form>
-
       <p className="text-center text-sm text-text/90 pt-3">
         با ورود به فروشگاه،
         <Link href="/info/terms-of-service" className="text-primary">
