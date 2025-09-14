@@ -2,21 +2,16 @@
 
 import { shopApiFetch } from '@/service/api';
 import { User } from '../types/userType';
-import { cookies } from 'next/headers';
 import { COOKIE_NAMES } from '@/types/constants';
 import { FavoriteResponse } from '@/features/favorite/type';
+import { getCookie } from '@/utils/cookie';
 
 export const getMe = async (): Promise<User> => {
-  const cookieStore = await cookies();
-  const accessToken = cookieStore.get(COOKIE_NAMES.ACCESS_TOKEN)?.value;
+  const accessToken = await getCookie(COOKIE_NAMES.ACCESS_TOKEN);
 
-  if (!accessToken) {
-    throw new Error('No access or access token found');
-  }
+  if (!accessToken) throw new Error('No access or access token found');
 
-  return await shopApiFetch('/user/me', {
-    headers: { Authorization: `Bearer ${accessToken}` },
-  });
+  return await shopApiFetch('/user/me', { method: 'GET' });
 };
 
 export const getFavorites = async (params: { page?: number; take?: number }): Promise<FavoriteResponse> => {

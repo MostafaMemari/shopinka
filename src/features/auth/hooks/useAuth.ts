@@ -70,8 +70,6 @@ export const useAuth = () => {
       toast.success('خروج با موفقیت انجام شد');
       queryClient.clear();
 
-      console.log(pathname.startsWith('/profile'));
-
       if (pathname.startsWith('/profile') || pathname.startsWith('/checkout')) {
         router.push('/');
       }

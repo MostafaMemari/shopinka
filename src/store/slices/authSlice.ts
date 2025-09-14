@@ -6,6 +6,7 @@ import { AuthState } from '@/features/auth/types';
 export const checkAuth = createAsyncThunk<UserState, void, { rejectValue: string }>('auth/checkAuth', async (_, { rejectWithValue }) => {
   try {
     const res = await getMe();
+
     const user: UserState = {
       full_name: res.fullName || '',
       mobile: res.mobile,

@@ -42,8 +42,6 @@ export default function ProductVariants({ variants, attributes, productType, def
       }
       const matchingVariant = findMatchingVariant(variants, selectedColor, selectedButton, attributes);
 
-      console.log(matchingVariant);
-
       if (matchingVariant && matchingVariant.id !== selectedVariant?.id) {
         dispatch(setSelectedVariant(matchingVariant));
       }

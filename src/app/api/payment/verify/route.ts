@@ -17,6 +17,8 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.redirect(result.redirectUrl);
   } catch (error: any) {
+    console.log('object => ', error);
+
     return NextResponse.redirect(`/payment/fail?error=${encodeURIComponent(error.message || 'خطای نامشخص در پرداخت')}`);
   }
 }
