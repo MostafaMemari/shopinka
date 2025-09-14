@@ -54,6 +54,7 @@ export function AuthDialogDrawer() {
       onOpenChange={handleClose}
       title={title}
       description={description}
+      size="sm"
       actions={
         <PrimaryButton onClick={handleSubmit} disabled={isLoadingSubmit} isLoading={isLoadingSubmit} className="flex-1">
           {!otpStep ? 'ارسال کد' : 'ورود و ادامه'}

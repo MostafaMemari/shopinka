@@ -7,13 +7,13 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from '@/component
 import { useEffect, useRef } from 'react';
 import { useCountdownSeconds } from '@/hooks/use-countdown';
 import { secondsToTime } from '@/utils/utils';
-import { useAuth } from '@/features/auth/hooks/useAuth';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { OTP_EXPIRE_SECONDS } from '@/constants';
-import { Button } from '@/components/ui/button';
 import { validationOtpSchema } from '@/validation/ValidateOtp';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { clearOtp, setOtpSentAt } from '@/store/slices/otpSlice';
+import { OtpTimer } from './OtpTimer';
 
 interface InputOTPFormProps {
   verifyOtp?: any;
@@ -23,13 +23,12 @@ interface InputOTPFormProps {
 type OTPFormValues = { otp: string };
 
 function InputOTPForm({ verifyOtp, ref }: InputOTPFormProps) {
-  const { resendOtp, resendOtpStatus } = useAuth();
-
+  const dispatch = useDispatch();
   const mobile = useSelector((state: RootState) => state.otp.mobile)!;
 
   const { otpSentAt } = useSelector((state: RootState) => state.otp);
 
-  const { countdown, startCountdown, counting } = useCountdownSeconds(OTP_EXPIRE_SECONDS);
+  const { countdown, startCountdown } = useCountdownSeconds(OTP_EXPIRE_SECONDS);
   const isExpired = countdown === 0;
   const timeLeft = secondsToTime(countdown);
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -42,12 +41,16 @@ function InputOTPForm({ verifyOtp, ref }: InputOTPFormProps) {
   });
 
   useEffect(() => {
+    if (isExpired) {
+      dispatch(clearOtp());
+    }
+  }, [isExpired, dispatch]);
+
+  useEffect(() => {
     if (otpSentAt) {
       const diff = Math.floor((Date.now() - otpSentAt) / 1000);
       const left = OTP_EXPIRE_SECONDS - diff;
-      if (left > 0) {
-        startCountdown(left);
-      }
+      if (left > 0) startCountdown(left);
     }
   }, [otpSentAt, startCountdown]);
 
@@ -60,27 +63,17 @@ function InputOTPForm({ verifyOtp, ref }: InputOTPFormProps) {
     verifyOtp(
       { mobile, otp: values.otp },
       {
+        onSuccess: () => {
+          dispatch(setOtpSentAt(Date.now()));
+          form.reset();
+        },
+
         onError: () => {
           form.reset();
           setTimeout(() => inputRef.current?.focus(), 0);
         },
       },
     );
-  };
-
-  const handleResendCode = () => {
-    if (isExpired) {
-      resendOtp(mobile, {
-        onSuccess: () => {
-          startCountdown(OTP_EXPIRE_SECONDS);
-          form.reset();
-        },
-        onError: (error) => {
-          toast.error(error.message);
-          form.reset();
-        },
-      });
-    }
   };
 
   useEffect(() => {
@@ -128,20 +121,10 @@ function InputOTPForm({ verifyOtp, ref }: InputOTPFormProps) {
         </form>
       </Form>
 
-      <Button
-        variant="ghost"
-        onClick={handleResendCode}
-        className="mt-1 text-sm text-gray-500 dark:text-gray-400 text-center cursor-pointer"
-        disabled={counting || resendOtpStatus === 'pending' || !isExpired}
-      >
-        {counting ? (
-          <>
-            ارسال مجدد کد ({String(timeLeft.minutes).padStart(2, '0')}:{String(timeLeft.seconds).padStart(2, '0')})
-          </>
-        ) : (
-          <>{resendOtpStatus === 'pending' ? 'در حال ارسال...' : 'ارسال مجدد کد'}</>
-        )}
-      </Button>
+      <div className="flex items-center justify-center gap-2 mt-2">
+        <span className="text-sm text-gray-600 dark:text-gray-300">مانده تا انقضای کد:</span>
+        <OtpTimer timeLeft={timeLeft} />
+      </div>
     </>
   );
 }

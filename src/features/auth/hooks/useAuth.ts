@@ -29,21 +29,6 @@ export const useAuth = () => {
     },
   });
 
-  const resendOtpMutation = useMutation({
-    mutationFn: sendOtp,
-    onSuccess: () => {
-      toast.success('کد اعتبار سنجی مجددا ارسال شد');
-
-      queryClient.invalidateQueries({ queryKey: [QueryKeys.User] });
-    },
-    onError: (error) => {
-      const message = error.message;
-
-      loginFailure(message);
-      queryClient.invalidateQueries({ queryKey: [QueryKeys.User] });
-    },
-  });
-
   const verifyOtpMutation = useMutation({
     mutationFn: verifyOtp,
     onSuccess: (response) => {
@@ -85,11 +70,9 @@ export const useAuth = () => {
     sendOtp: sendOtpMutation.mutate,
     verifyOtp: verifyOtpMutation.mutate,
     logOut: logOutMutation.mutate,
-    resendOtp: resendOtpMutation.mutate,
 
     sendOtpStatus: sendOtpMutation.status,
     verifyOtpStatus: verifyOtpMutation.status,
     logOutStatus: logOutMutation.status,
-    resendOtpStatus: resendOtpMutation.status,
   };
 };

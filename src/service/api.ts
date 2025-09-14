@@ -82,6 +82,6 @@ export async function shopApiFetch<T = any, R extends ResponseType = 'json'>(
       }
     }
 
-    throw err;
+    throw err.message ? new Error(message) : err;
   }
 }
