@@ -1,6 +1,6 @@
 import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList } from '@/components/ui/navigation-menu';
 import { cn } from '@/lib/utils';
-import { ShoppingBag, TableOfContents } from 'lucide-react';
+import { TableOfContents } from 'lucide-react';
 import Link from 'next/link';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '../../../ui/hover-card';
 
@@ -8,6 +8,7 @@ import { useMemo, useState } from 'react';
 import { Category } from '@/features/categories/CategoryType';
 import SubCategoryList from './SubCategoryList';
 import { navigationMenuItems } from '@/data/menuData';
+import { Separator } from '@/components/ui/separator';
 
 interface NavigationMenuWithActiveItemProps {
   categories: Category[];
@@ -24,13 +25,13 @@ export default function NavigationMenuDesktop({ categories }: NavigationMenuWith
 
   return (
     <NavigationMenu>
-      <NavigationMenuList className="space-x-1">
+      <NavigationMenuList className="flex h-5 items-center space-x-1 text-sm">
         <NavigationMenuItem key="categories">
           <NavigationMenuLink asChild>
             <HoverCard openDelay={30} closeDelay={120} open={isOpen} onOpenChange={setIsOpen}>
               <HoverCardTrigger>
                 <div
-                  className={cn('flex items-center gap-2 text-sm font-medium cursor-pointer text-gray-800 dark:text-gray-200', {
+                  className={cn('flex p-2 items-center gap-2 text-sm font-medium cursor-pointer text-gray-800 dark:text-gray-200', {
                     'text-primary': isOpen,
                   })}
                 >
@@ -68,6 +69,8 @@ export default function NavigationMenuDesktop({ categories }: NavigationMenuWith
             </HoverCard>
           </NavigationMenuLink>
         </NavigationMenuItem>
+
+        <Separator orientation="vertical" />
 
         {navigationMenuItems.map((item) => (
           <NavigationMenuItem key={item.title}>
