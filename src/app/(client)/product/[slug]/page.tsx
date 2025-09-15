@@ -18,9 +18,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function Page({ params }: Props) {
   const { slug } = await params;
-  const product = await fetchProductBySlug(slug);
+  const res = await fetchProductBySlug(slug);
 
-  if (!product) return notFound();
+  if (!res.success) return;
+
+  if (!res.data) return notFound();
+
+  const product = res.data;
 
   const lastCategory = product.categories?.[product.categories.length - 1];
   const categoryIds = lastCategory ? [lastCategory.id] : [];
@@ -31,11 +35,13 @@ export default async function Page({ params }: Props) {
     <>
       <MobileHeader productId={product.id} />
       <ProductDetailsView product={product} />
-      <CarouselProduct
-        title="محصولات مرتبط"
-        products={discountProducts?.items}
-        viewAllLink={`/shop?categoryIds=${categoryIds.join(',')}`}
-      />
+      {discountProducts.success && (
+        <CarouselProduct
+          title="محصولات مرتبط"
+          products={discountProducts?.data.items}
+          viewAllLink={`/shop?categoryIds=${categoryIds.join(',')}`}
+        />
+      )}
       <ProductTabs description={product?.description} specifications={product?.properties} productId={product.id} />
     </>
   );

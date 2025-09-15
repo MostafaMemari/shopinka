@@ -38,7 +38,7 @@ export default async function ShopPage({ searchParams }: PageProps) {
         : undefined,
   };
 
-  const categories = await getCategories({
+  const resCategory = await getCategories({
     type: 'PRODUCT',
     includeThumbnailImage: true,
     includeChildren: true,
@@ -46,11 +46,15 @@ export default async function ShopPage({ searchParams }: PageProps) {
     includeOnlyTopLevel: true,
   });
 
-  const { items: products, pager } = await getProducts(query);
+  const resProduct = await getProducts(query);
+
+  if (!resProduct.success || !resCategory.success) return;
+
+  const { items: products, pager } = resProduct.data;
 
   return (
     <>
-      <CategoryChildrenGrid basePath="product-category" name="دسته‌بندی ها" categories={categories.items} />
+      <CategoryChildrenGrid basePath="product-category" name="دسته‌بندی ها" categories={resCategory.data.items} />
 
       <div className="mb-6 flex flex-col gap-4 md:hidden">
         <SearchInput />
@@ -60,7 +64,7 @@ export default async function ShopPage({ searchParams }: PageProps) {
         </div>
       </div>
       <div className="grid grid-cols-12 grid-rows-[60px_min(500px,_1fr)]  text-sm font-medium text-right gap-4">
-        <SidebarFilters categories={categories.items.flatMap((cat: Category) => cat.children ?? [])} />
+        <SidebarFilters categories={resCategory.data.items.flatMap((cat: Category) => cat.children ?? [])} />
         <div className="col-span-12 space-y-4 md:col-span-8 lg:col-span-9">
           <SortBar options={PRODUCT_SORT_OPTIONS} queryKey="sortBy" />
           <ProductListShop initialProducts={products} initialQuery={query} pager={pager} />

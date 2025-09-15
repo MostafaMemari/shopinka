@@ -11,16 +11,41 @@ import { useAppSelector } from '@/store/hooks';
 import { setAddToCart } from '@/store/slices/pendingActionSlice';
 import { ApiResponse } from '@/service/api';
 
-const useCartData = ({ enabled = true, staleTime = 60_000 }: QueryOptions) => {
-  const query = useQuery<ApiResponse<CartState>>({
+export function useCartData({ enabled = true, staleTime = 60_000 }: QueryOptions) {
+  const { data, isLoading, error, refetch, isFetching } = useQuery<ApiResponse<CartState>>({
     queryKey: [QueryKeys.Cart],
-    queryFn: getCart,
+    queryFn: async () => {
+      try {
+        const response = await getCart();
+        return response;
+      } catch (err: any) {
+        return {
+          success: false,
+          status: err?.response?.status || 500,
+          message: err?.response?._data?.message || err?.message || 'خطای نامعلوم',
+        };
+      }
+    },
     enabled,
     staleTime,
   });
 
-  return query;
-};
+  const formattedError = error
+    ? {
+        success: false,
+        status: (error as any)?.response?.status || 500,
+        message: (error as any)?.response?._data?.message || error.message || 'خطای نامعلوم',
+      }
+    : null;
+
+  return {
+    data: data?.success ? data.data : null,
+    error: formattedError,
+    isLoading,
+    isFetching,
+    refetch,
+  };
+}
 
 export const useCart = () => {
   const isLogin = useAppSelector((state) => state.auth.isLogin);

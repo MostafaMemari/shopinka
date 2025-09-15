@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { QueryKeys } from '@/types/query-keys';
 import { CommentParams, CommentResponse } from '@/types/commentType';
 import { getComments } from '@/features/comments/services/commentService';
+import { ApiResponse } from '@/service/api';
 
 export interface QueryOptions {
   enabled?: boolean;
@@ -19,7 +20,7 @@ export function useComment({
   gcTime = 10 * 60 * 1000,
   refetchOnWindowFocus = false,
 }: QueryOptions) {
-  const { data, isLoading, error, refetch, isFetching } = useQuery<CommentResponse, Error>({
+  const query = useQuery<ApiResponse<CommentResponse>>({
     queryKey: [QueryKeys.Comments, params],
     queryFn: () => getComments(params),
     enabled,
@@ -28,11 +29,22 @@ export function useComment({
     refetchOnWindowFocus,
   });
 
+  let data: CommentResponse | undefined;
+  let error: string | null = null;
+
+  if (query.data) {
+    if (query.data.success) {
+      data = query.data.data;
+    } else {
+      error = query.data.message || 'خطای نامشخص';
+    }
+  }
+
   return {
     data,
-    isLoading,
     error,
-    isFetching,
-    refetch,
+    isLoading: query.isLoading,
+    isFetching: query.isFetching,
+    refetch: query.refetch,
   };
 }

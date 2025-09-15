@@ -23,19 +23,28 @@ export default async function Home() {
     <>
       <div className="fixed inset-x-0 top-1/3 mx-auto h-1/3 w-1/4 bg-primary/50 blur-[400px]" />
 
-      <div className="w-full max-w-screen-xl mx-auto">
-        <BannerSlider
-          mainSliderBanners={bannerts.items.filter((item) => item.type === 'MAIN_SLIDER')}
-          sideBanners={bannerts.items.filter((item) => item.type === 'SIDE').slice(0, 2)}
-        />
-      </div>
+      {bannerts.success && (
+        <div className="w-full max-w-screen-xl mx-auto">
+          <BannerSlider
+            mainSliderBanners={bannerts.data.items.filter((item) => item.type === 'MAIN_SLIDER')}
+            sideBanners={bannerts.data.items.filter((item) => item.type === 'SIDE').slice(0, 2)}
+          />
+        </div>
+      )}
 
       {/* <DesignShowcase /> */}
 
-      <CarouselProduct key="discount" title="فروش ویژه" products={discountProducts.items} viewAllLink="/shop?hasDiscount=true" />
-      <CarouselProduct key="newest" title="جدیدترین محصولات" products={newestProducts.items} viewAllLink="/shop?sortBy=newest" />
+      {discountProducts.success && (
+        <CarouselProduct key="discount" title="فروش ویژه" products={discountProducts.data.items} viewAllLink="/shop?hasDiscount=true" />
+      )}
+
+      {newestProducts.success && (
+        <CarouselProduct key="newest" title="جدیدترین محصولات" products={newestProducts.data.items} viewAllLink="/shop?sortBy=newest" />
+      )}
+
       <CategoryCirclesBanners basePath={`/product-category/${categories.slug}`} categories={categories.children} />
-      <CarouselBlog title="آخرین مقالات" blogs={blogs.items} viewAllLink="/shop?sortBy=newest" />
+
+      {blogs.success && <CarouselBlog title="آخرین مقالات" blogs={blogs.data.items} viewAllLink="/shop?sortBy=newest" />}
     </>
   );
 }
