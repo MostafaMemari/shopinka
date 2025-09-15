@@ -1,6 +1,6 @@
 'use server';
 
-import { type MappedResponseType, ofetch, type FetchOptions, type ResponseType } from 'ofetch';
+import { type MappedResponseType, ofetch, type FetchOptions } from 'ofetch';
 import 'server-only';
 
 import { COOKIE_NAMES } from '@/types/constants';
@@ -9,15 +9,19 @@ import { refreshToken } from './refreshToken';
 
 let isRefreshingPromise: Promise<string | null> | null = null;
 
+export type ApiResponse<T> = { success: true; data: T } | { success: false; status: number; message: string };
+
 const api = ofetch.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
   retry: 0,
   async onRequest({ options }) {
-    const accessToken = await getCookie(COOKIE_NAMES.ACCESS_TOKEN);
-    if (accessToken) {
-      const headers = new Headers(options.headers as HeadersInit);
-      headers.set('Authorization', `Bearer ${accessToken}`);
-      options.headers = headers;
+    if (typeof window === 'undefined' && process.env.NEXT_PHASE !== 'phase-production-build') {
+      const accessToken = await getCookie(COOKIE_NAMES.ACCESS_TOKEN);
+      if (accessToken) {
+        const headers = new Headers(options.headers as HeadersInit);
+        headers.set('Authorization', `Bearer ${accessToken}`);
+        options.headers = headers;
+      }
     }
   },
 });
@@ -25,9 +29,10 @@ const api = ofetch.create({
 export async function shopApiFetch<T = any, R extends 'json' | 'text' = 'json'>(
   request: RequestInfo,
   options: FetchOptions<R> = {},
-): Promise<{ success: true; data: MappedResponseType<R, T> } | { success: false; status: number; message: string }> {
+): Promise<ApiResponse<MappedResponseType<R, T>>> {
   try {
     const res = await api<T, R>(request, options);
+
     return { success: true, data: res };
   } catch (err: any) {
     const status = err?.response?.status;
@@ -57,12 +62,14 @@ const getNewAccessToken = async () => {
   isRefreshingPromise = (async () => {
     try {
       const res = await refreshToken();
-      const newAccessToken = res?.data?.accessToken;
+      if (res.success) {
+        const newAccessToken = res?.data?.data;
 
-      if (!newAccessToken) throw new Error('No access token returned');
+        if (!newAccessToken) throw new Error('No access token returned');
 
-      await setCookie(COOKIE_NAMES.ACCESS_TOKEN, newAccessToken);
-      return newAccessToken;
+        await setCookie(COOKIE_NAMES.ACCESS_TOKEN, newAccessToken);
+        return newAccessToken;
+      }
     } catch (refreshErr) {
       await deleteCookie(COOKIE_NAMES.ACCESS_TOKEN);
       await deleteCookie(COOKIE_NAMES.REFRESH_TOKEN);
@@ -74,7 +81,3 @@ const getNewAccessToken = async () => {
 
   return isRefreshingPromise;
 };
-
-export async function publicApiFetch<T = any>(url: string, options = {}): Promise<T> {
-  return await api<T>(url, options);
-}

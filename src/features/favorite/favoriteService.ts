@@ -1,21 +1,23 @@
-import { shopApiFetch } from '@/service/api';
+import { ApiResponse, shopApiFetch } from '@/service/api';
 import { FavoriteResponse } from './FavoriteType';
-import { unwrap } from '@/utils/api-helpers';
 
-export const getFavorites = async (params: { page?: number; take?: number }): Promise<FavoriteResponse> => {
-  const res = await shopApiFetch('/user/favorites', { method: 'GET', query: { ...params } });
-
-  return unwrap(res);
+export const getFavorites = async (params: { page?: number; take?: number }): Promise<ApiResponse<FavoriteResponse>> => {
+  return await shopApiFetch('/user/favorites', { method: 'GET', query: { ...params } });
 };
 
-export async function isFavorite(productId: number): Promise<boolean> {
+export async function isFavorite(productId: number): Promise<ApiResponse<boolean>> {
   const res = await shopApiFetch(`/product/${productId}/favorite`);
 
-  return unwrap(res) === 'true' ? true : false;
+  if (res.success) {
+    return {
+      ...res,
+      data: res.data === 'true' ? true : false,
+    };
+  }
+
+  return res;
 }
 
 export async function favoriteToggle(productId: number) {
-  const res = await shopApiFetch(`/product/favorite-toggle/${productId}`, { method: 'Patch' });
-
-  return unwrap(res);
+  return await shopApiFetch(`/product/favorite-toggle/${productId}`, { method: 'Patch' });
 }

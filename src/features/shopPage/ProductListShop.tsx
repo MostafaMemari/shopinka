@@ -2,12 +2,12 @@
 
 import { useEffect, useState, useCallback } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { getProducts } from '@/features/products/productService';
 import LoadingDots from '@/features/shopPage/LoadingDots';
 import Pagination from '@/features/shopPage/shop/Pagination';
 import { Pager } from '@/types/pagerType';
 import { useSearchParams } from 'next/navigation';
 import ProductCard from '../products/components/ProductCard';
+import { getProducts } from '../products/productService';
 import { Product, ProductParams } from '../products/ProductType';
 
 interface ProductListShopProps {
@@ -37,23 +37,27 @@ export default function ProductListShop({ initialProducts, initialQuery, pager }
   const fetchMore = useCallback(async () => {
     try {
       const nextPage = page + 1;
-      const { items: newProducts, pager: newPager } = await getProducts({
+      const res = await getProducts({
         ...initialQuery,
         page: nextPage,
         take: initialQuery.take ?? 20,
       });
 
-      setProducts((prev) => {
-        const all = [...prev, ...newProducts];
-        const unique = Array.from(new Map(all.map((p) => [p.id, p])).values());
-        return unique;
-      });
+      if (res.success) {
+        const { items: newProducts, pager: newPager } = res.data;
 
-      setPage(nextPage);
+        setProducts((prev) => {
+          const all = [...prev, ...newProducts];
+          const unique = Array.from(new Map(all.map((p) => [p.id, p])).values());
+          return unique;
+        });
 
-      if (!newPager.hasNextPage || nextPage >= 10) {
-        setHasMore(false);
-        setShowPagination(true);
+        setPage(nextPage);
+
+        if (!newPager.hasNextPage || nextPage >= 10) {
+          setHasMore(false);
+          setShowPagination(true);
+        }
       }
     } catch (error) {
       setHasMore(false);

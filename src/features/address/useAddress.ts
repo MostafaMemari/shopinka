@@ -5,12 +5,13 @@ import { QueryOptions } from '@/types/queryOptions';
 import { QueryKeys } from '@/types/query-keys';
 import { toast } from 'sonner';
 import { pager } from '@/types/paginationType';
+import { ApiResponse } from '@/service/api';
 
 export function useAddress({ enabled = true, staleTime = 60_000 }: QueryOptions) {
   const queryClient = useQueryClient();
   const invalidate = () => queryClient.invalidateQueries({ queryKey: [QueryKeys.Address] });
 
-  const { data, isLoading, error, refetch } = useQuery<{ items: AddressItem[]; pager: pager }>({
+  const { data, isLoading, error, refetch } = useQuery<ApiResponse<{ items: AddressItem[]; pager: pager }>>({
     queryKey: [QueryKeys.Address],
     queryFn: getAddress,
     enabled,
@@ -42,14 +43,16 @@ export function useAddress({ enabled = true, staleTime = 60_000 }: QueryOptions)
     createAddress: (data: AddressFormValues, onSuccess?: (created: AddressItem) => void, onError?: (error: any) => void) => {
       createMutation.mutate(data, {
         onSuccess: (response) => {
-          invalidate();
-          toast.success('ثبت آدرس با موفقیت انجام شد');
-          onSuccess?.(response.address);
+          if (response.success) {
+            invalidate();
+            toast.success('ثبت آدرس با موفقیت انجام شد');
+            onSuccess?.(response.data);
+          } else {
+            toast.error(response.message);
+            onError?.(error);
+          }
         },
-        onError: (error) => {
-          toast.error(error.message);
-          onError?.(error);
-        },
+        onError: (error) => {},
       });
     },
 

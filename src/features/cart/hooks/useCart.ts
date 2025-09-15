@@ -9,9 +9,10 @@ import { useDispatch } from 'react-redux';
 import { openDialog } from '@/store/slices/authDialogSlice';
 import { useAppSelector } from '@/store/hooks';
 import { setAddToCart } from '@/store/slices/pendingActionSlice';
+import { ApiResponse } from '@/service/api';
 
 const useCartData = ({ enabled = true, staleTime = 60_000 }: QueryOptions) => {
-  const query = useQuery<CartState>({
+  const query = useQuery<ApiResponse<CartState>>({
     queryKey: [QueryKeys.Cart],
     queryFn: getCart,
     enabled,

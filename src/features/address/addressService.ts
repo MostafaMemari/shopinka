@@ -1,11 +1,10 @@
-import { shopApiFetch } from '@/service/api';
+import { ApiResponse, shopApiFetch } from '@/service/api';
 import { AddressFormValues, AddressItem } from '@/features/address/AddressType';
 import { pager } from '@/types/paginationType';
 import { cleanObject } from '@/utils/cleanObject';
-import { unwrap } from '@/utils/api-helpers';
 
-export const createAddress = async (data: AddressFormValues): Promise<{ message: string; address: AddressItem }> => {
-  const res = await shopApiFetch('/address', {
+export const createAddress = async (data: AddressFormValues): Promise<ApiResponse<AddressItem>> => {
+  return await shopApiFetch('/address', {
     method: 'POST',
     body: cleanObject({
       ...data,
@@ -13,12 +12,10 @@ export const createAddress = async (data: AddressFormValues): Promise<{ message:
       unit: data.unit ? Number(data.unit) : undefined,
     }),
   });
-
-  return unwrap(res);
 };
 
-export const updateAddress = async (id: number, data: AddressFormValues): Promise<{ message: string; address: AddressItem }> => {
-  const res = await shopApiFetch(`/address/${id}`, {
+export const updateAddress = async (id: number, data: AddressFormValues): Promise<ApiResponse<AddressItem>> => {
+  return await shopApiFetch(`/address/${id}`, {
     method: 'PATCH',
     body: cleanObject({
       ...data,
@@ -26,28 +23,20 @@ export const updateAddress = async (id: number, data: AddressFormValues): Promis
       unit: data.unit ? Number(data.unit) : undefined,
     }),
   });
-
-  return unwrap(res);
 };
 
-export const setDefaultAddress = async (id: number): Promise<{ message: string; address: AddressItem }> => {
-  const res = await shopApiFetch(`/address/${id}/set-default`, {
+export const setDefaultAddress = async (id: number): Promise<ApiResponse<AddressItem>> => {
+  return await shopApiFetch(`/address/${id}/set-default`, {
     method: 'PATCH',
   });
-
-  return unwrap(res);
 };
 
-export const deleteAddress = async (id: number): Promise<{ message: string }> => {
-  const res = await shopApiFetch(`/address/${id}`, {
+export const deleteAddress = async (id: number): Promise<ApiResponse<{ message: string }>> => {
+  return await shopApiFetch(`/address/${id}`, {
     method: 'DELETE',
   });
-
-  return unwrap(res);
 };
 
-export const getAddress = async (): Promise<{ items: AddressItem[]; pager: pager }> => {
-  const res = await shopApiFetch('/address', { method: 'GET' });
-
-  return unwrap(res);
+export const getAddress = async (): Promise<ApiResponse<{ items: AddressItem[]; pager: pager }>> => {
+  return await shopApiFetch('/address', { method: 'GET' });
 };

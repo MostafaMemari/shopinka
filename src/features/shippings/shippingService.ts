@@ -1,10 +1,7 @@
-import { shopApiFetch } from '@/service/api';
+import { ApiResponse, shopApiFetch } from '@/service/api';
 import { pager } from '@/types/paginationType';
 import { ShippingItem } from './ShippingType';
-import { unwrap } from '@/utils/api-helpers';
 
-export const getShipping = async (): Promise<{ items: ShippingItem[]; pager: pager }> => {
-  const res = await shopApiFetch('/shipping', { method: 'GET' });
-
-  return unwrap(res);
+export const getShipping = async (): Promise<ApiResponse<{ items: ShippingItem[]; pager: pager }>> => {
+  return await shopApiFetch('/shipping', { method: 'GET' });
 };

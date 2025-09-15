@@ -1,7 +1,6 @@
 import { mapCartResponseToCartItemState } from '@/utils/mapCartResponse';
 import { CartData, CartResponse, CartState } from '@/types/cartType';
-import { unwrap } from '@/utils/api-helpers';
-import { shopApiFetch } from '@/service/api';
+import { ApiResponse, shopApiFetch } from '@/service/api';
 
 export const createCart = async ({ cartData }: { cartData?: CartData }): Promise<void> => {
   if (cartData) {
@@ -34,33 +33,35 @@ export const createCartReplace = async ({ items }: { items: CartData[] }): Promi
   }
 };
 
-export const getCart = async (): Promise<CartState> => {
+export const getCart = async (): Promise<ApiResponse<CartState>> => {
   const res = await shopApiFetch('/cart/me', { method: 'GET' });
 
-  const data = unwrap(res);
+  if (res.success) {
+    const mappedItems = mapCartResponseToCartItemState(res.data.items);
 
-  const mappedItems = mapCartResponseToCartItemState(data.items);
+    return {
+      ...res.data,
+      items: mappedItems,
+    };
+  }
 
-  return {
-    ...data,
-    items: mappedItems,
-  };
+  return res;
 };
 
-export const clearCart = async (): Promise<CartResponse> => {
-  const res = await shopApiFetch('/cart/clear', { method: 'POST' });
-
-  return unwrap(res);
+export const clearCart = async (): Promise<ApiResponse<CartResponse>> => {
+  return await shopApiFetch('/cart/clear', { method: 'POST' });
 };
 
-export const updateQuantityItemCart = async ({ quantity, itemId }: { quantity: number; itemId: number }): Promise<CartResponse> => {
-  const res = await shopApiFetch(`/cart/item/${itemId}`, { method: 'PATCH', body: { quantity } });
-
-  return unwrap(res);
+export const updateQuantityItemCart = async ({
+  quantity,
+  itemId,
+}: {
+  quantity: number;
+  itemId: number;
+}): Promise<ApiResponse<CartResponse>> => {
+  return await shopApiFetch(`/cart/item/${itemId}`, { method: 'PATCH', body: { quantity } });
 };
 
-export const removeItemCart = async (itemId: number): Promise<CartResponse> => {
-  const res = await shopApiFetch(`/cart/item/${itemId}`, { method: 'DELETE' });
-
-  return unwrap(res);
+export const removeItemCart = async (itemId: number): Promise<ApiResponse<CartResponse>> => {
+  return await shopApiFetch(`/cart/item/${itemId}`, { method: 'DELETE' });
 };

@@ -11,9 +11,9 @@ export default async function Page({ params }: PageProps) {
   const { slug } = await params;
   const res = await getPageBySlug(slug);
 
-  if (res?.status === 404 || !res) return notFound();
+  if (!res?.success && res.status === 404) return notFound();
 
-  const { description, name } = res;
+  const { description, name } = res.success && res.data;
 
   return (
     <Card>

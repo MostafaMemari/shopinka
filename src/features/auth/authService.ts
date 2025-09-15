@@ -5,52 +5,51 @@ import { cookies } from 'next/headers';
 import { COOKIE_NAMES } from '@/types/constants';
 import { setCookie } from '@/utils/cookie';
 import { getMe } from '../../service/userService';
-import { unwrap } from '@/utils/api-helpers';
 import { VerifyOtpResponse } from './AuthType';
-import { shopApiFetch } from '@/service/api';
+import { ApiResponse, shopApiFetch } from '@/service/api';
 
-export const sendOtp = async (mobile: string): Promise<{ message: string }> => {
-  const res = await shopApiFetch('/auth/authenticate', {
+export const sendOtp = async (mobile: string): Promise<ApiResponse<{ message: string }>> => {
+  return await shopApiFetch('/auth/authenticate', {
     method: 'POST',
     body: {
       mobile,
     },
   });
-
-  return unwrap(res);
 };
 
-export const verifyOtp = async ({ mobile, otp }: { mobile: string; otp: string }): Promise<VerifyOtpResponse> => {
+export const verifyOtp = async ({ mobile, otp }: { mobile: string; otp: string }): Promise<ApiResponse<VerifyOtpResponse>> => {
   const res = await shopApiFetch('/auth/verify-authenticate-otp', {
     method: 'POST',
     body: { mobile, otp },
   });
 
-  const data = unwrap(res);
+  if (res.success) {
+    if (res.data?.accessToken && res.data?.refreshToken) {
+      const { accessToken, refreshToken }: VerifyOtpResponse = res.data;
 
-  if (data?.accessToken && data?.refreshToken) {
-    const { accessToken, refreshToken }: VerifyOtpResponse = data;
+      await setCookie(COOKIE_NAMES.ACCESS_TOKEN, accessToken, {
+        httpOnly: true,
+        expires: new Date(Date.now() + Number(process.env.ACCESS_TOKEN_EXPIRE_TIME) * 1000),
+      });
 
-    await setCookie(COOKIE_NAMES.ACCESS_TOKEN, accessToken, {
-      httpOnly: true,
-      expires: new Date(Date.now() + Number(process.env.ACCESS_TOKEN_EXPIRE_TIME) * 1000),
-    });
+      await setCookie(COOKIE_NAMES.REFRESH_TOKEN, refreshToken, {
+        httpOnly: true,
+        expires: new Date(Date.now() + Number(process.env.REFRESH_TOKEN_EXPIRE_TIME) * 1000),
+      });
+    }
 
-    await setCookie(COOKIE_NAMES.REFRESH_TOKEN, refreshToken, {
-      httpOnly: true,
-      expires: new Date(Date.now() + Number(process.env.REFRESH_TOKEN_EXPIRE_TIME) * 1000),
-    });
+    const user = await getMe();
+
+    return {
+      ...res.data,
+      user,
+    };
   }
 
-  const user = await getMe();
-
-  return {
-    ...data,
-    user,
-  };
+  return res;
 };
 
-export const signout = async (): Promise<{ status: number; data: any }> => {
+export const signout = async (): Promise<ApiResponse<{ status: number; data: any }>> => {
   const cookieStore = await cookies();
   const refreshToken = cookieStore.get(COOKIE_NAMES.REFRESH_TOKEN)?.value;
 
@@ -59,12 +58,13 @@ export const signout = async (): Promise<{ status: number; data: any }> => {
     body: { refreshToken },
   });
 
-  const data = unwrap(res);
+  if (res.success) {
+    cookieStore.delete(COOKIE_NAMES.ACCESS_TOKEN);
+    cookieStore.delete(COOKIE_NAMES.REFRESH_TOKEN);
 
-  cookieStore.delete(COOKIE_NAMES.ACCESS_TOKEN);
-  cookieStore.delete(COOKIE_NAMES.REFRESH_TOKEN);
-
-  return {
-    ...data,
-  };
+    return {
+      ...res.data,
+    };
+  }
+  return res;
 };

@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
-import { QueryKeys } from '@/types/query-keys';
 import { OrderParams, OrderResponse } from '@/features/orders/OrderType';
 import { getOrders } from '@/features/orders/orderService';
+import { ApiResponse } from '@/service/api';
 
 export interface QueryOptions {
   enabled?: boolean;
@@ -19,19 +19,38 @@ export function useOrder({
   gcTime = 10 * 60 * 1000,
   refetchOnWindowFocus = false,
 }: QueryOptions) {
-  const { data, isLoading, error, refetch, isFetching } = useQuery<OrderResponse, Error>({
-    queryKey: [QueryKeys.Orders, params],
-    queryFn: () => getOrders({ params }),
+  const { data, isLoading, error, refetch, isFetching } = useQuery<ApiResponse<OrderResponse>>({
+    queryKey: ['orders', params],
+    queryFn: async () => {
+      try {
+        const response = await getOrders({ params });
+        return response;
+      } catch (err: any) {
+        return {
+          success: false,
+          status: err?.response?.status || 500,
+          message: err?.response?._data?.message || err?.message || 'خطای نامعلوم',
+        };
+      }
+    },
     enabled,
     staleTime,
     gcTime,
     refetchOnWindowFocus,
   });
 
+  const formattedError = error
+    ? {
+        success: false,
+        status: (error as any)?.response?.status || 500,
+        message: (error as any)?.response?._data?.message || error.message || 'خطای نامعلوم',
+      }
+    : null;
+
   return {
-    data,
+    data: data?.success ? data.data : null,
+    error: formattedError,
     isLoading,
-    error,
     isFetching,
     refetch,
   };

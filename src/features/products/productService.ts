@@ -3,15 +3,12 @@
 import { revalidateTag } from 'next/cache';
 import { Pager } from '@/types/pagerType';
 import { Product, ProductParams } from '@/features/products/ProductType';
-import { unwrap } from '@/utils/api-helpers';
-import { shopApiFetch } from '@/service/api';
+import { ApiResponse, shopApiFetch } from '@/service/api';
 
-export const getProducts = async (params?: ProductParams): Promise<{ items: Product[]; pager: Pager }> => {
-  const res = await shopApiFetch(`/product`, {
+export const getProducts = async (params?: ProductParams): Promise<ApiResponse<{ items: Product[]; pager: Pager }>> => {
+  return await shopApiFetch(`/product`, {
     query: { ...params, includeMainImage: true, includeVariants: true },
   });
-
-  return unwrap(res);
 };
 
 export async function refetchProducts() {
@@ -19,7 +16,5 @@ export async function refetchProducts() {
 }
 
 export async function fetchProductBySlug(slug: string) {
-  const res = await shopApiFetch(`/product/by-slug/${slug}`);
-
-  return unwrap(res);
+  return await shopApiFetch(`/product/by-slug/${slug}`);
 }

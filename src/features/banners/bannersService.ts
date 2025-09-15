@@ -1,15 +1,10 @@
 import { BannerItem, BannerParams, BannerResponse } from '@/features/banners/BannerType';
-import { shopApiFetch } from '@/service/api';
-import { unwrap } from '@/utils/api-helpers';
+import { ApiResponse, shopApiFetch } from '@/service/api';
 
-export const getBanners = async (params: BannerParams): Promise<BannerResponse> => {
-  const res = await shopApiFetch('/banner', { method: 'GET', query: { ...params, includeMainImage: true } });
-
-  return unwrap(res);
+export const getBanners = async (params: BannerParams): Promise<ApiResponse<BannerResponse>> => {
+  return await shopApiFetch('/banner', { method: 'GET', query: { ...params, includeMainImage: true } });
 };
 
-export const getBannerById = async (id: string): Promise<BannerItem> => {
-  const res = await shopApiFetch(`/banner/${id}`, { method: 'GET' });
-
-  return unwrap(res);
+export const getBannerById = async (id: string): Promise<ApiResponse<BannerItem>> => {
+  return await shopApiFetch(`/banner/${id}`, { method: 'GET' });
 };

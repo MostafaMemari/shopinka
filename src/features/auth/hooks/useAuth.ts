@@ -32,21 +32,25 @@ export const useAuth = () => {
   const verifyOtpMutation = useMutation({
     mutationFn: verifyOtp,
     onSuccess: (response) => {
-      dispatch(loginSuccess({ full_name: response.user.fullName ?? '', mobile: response.user.mobile, role: response.user.role }));
-      dispatch(clearOtp());
-      dispatch(closeDialog());
-      toast.success('ورود شما با موفقیت انجام شد');
+      if (response.success) {
+        dispatch(
+          loginSuccess({ full_name: response.data.user.fullName ?? '', mobile: response.data.user.mobile, role: response.data.user.role }),
+        );
+        dispatch(clearOtp());
+        dispatch(closeDialog());
+        toast.success('ورود شما با موفقیت انجام شد');
 
-      queryClient.invalidateQueries({ queryKey: [QueryKeys.User] });
+        queryClient.invalidateQueries({ queryKey: [QueryKeys.User] });
+      } else {
+        console.log('error in useAuth.ts: ', response);
+
+        const message = response.message;
+
+        dispatch(loginFailure(message));
+        queryClient.invalidateQueries({ queryKey: [QueryKeys.User] });
+      }
     },
-    onError: (error) => {
-      console.log('error in useAuth.ts: ', error);
-
-      const message = error.message;
-
-      dispatch(loginFailure(message));
-      queryClient.invalidateQueries({ queryKey: [QueryKeys.User] });
-    },
+    onError: (error) => {},
   });
 
   const logOutMutation = useMutation({

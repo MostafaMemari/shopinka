@@ -2,17 +2,12 @@ import { Category, CategoryParams } from './CategoryType';
 import { unstable_cache } from 'next/cache';
 import { ofetch } from 'ofetch';
 import { Pager } from '@/types/pagerType';
-import { unwrap } from '@/utils/api-helpers';
 import { shopApiFetch } from '@/service/api';
 
 export async function getCategories(params?: CategoryParams) {
-  const res = await shopApiFetch('/category', {
+  return await shopApiFetch('/category', {
     query: { ...params },
   });
-
-  const data = unwrap(res);
-
-  return data;
 }
 
 export const getCategoryBySlug = unstable_cache(
