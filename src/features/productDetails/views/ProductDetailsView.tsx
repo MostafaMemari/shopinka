@@ -42,7 +42,7 @@ const ProductDetailsView: FC<ProductDetailsViewProps> = ({ product }) => {
 
   return (
     <>
-      <div className="hidden lg:block">
+      <Card className="hidden lg:block">
         <BreadcrumbContainer variant="boxed" items={[{ name: 'خانه', href: '/' }, ...breadcrumbItems]} />
         <div className="mb-6">
           <div className="mb-10 grid grow grid-cols-12 gap-4">
@@ -131,7 +131,7 @@ const ProductDetailsView: FC<ProductDetailsViewProps> = ({ product }) => {
             <ProductGuarantees />
           </div>
         </div>
-      </div>
+      </Card>
 
       <div className="lg:hidden">
         <Card className="mb-6 relative p-4">

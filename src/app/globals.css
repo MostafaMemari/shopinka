@@ -1,7 +1,7 @@
 :root {
-  --radius: 0.5rem;
+  --radius: 20px;
 
-  --background: #ffffff;
+  --background: #f7f8fa;
   --foreground: #111111;
 
   --card: #ffffff;
