@@ -1,4 +1,4 @@
-import { getProducts } from '@/features/products/api';
+import { getProducts } from '@/features/products/productService';
 import { loadSearchParams } from '@/utils/loadSearchParams';
 import { parseArrayParam } from '@/utils/parseArrayParam';
 import { SearchParams } from 'nuqs';
@@ -6,12 +6,12 @@ import SearchInput from '@/features/filter/SearchInput';
 import SortBar from '@/features/filter/SortBar';
 import MobileFilter from '@/features/filter/MobileFilter';
 import MobileSortDrawer from '@/features/filter/MobileSortDrawer';
-import { getCategories } from '@/features/categories/api';
+import { getCategories } from '@/features/categories/cartService';
 import CategoryChildrenGrid from '@/features/categories/components/CategoryListGrid';
 import ProductListShop from '@/features/shopPage/ProductListShop';
 import SidebarFilters from '@/features/filter/SidebarFilters';
-import { Category } from '@/features/categories/types';
-import { PRODUCT_SORT_OPTIONS, ProductParams } from '@/features/products/types';
+import { Category } from '@/features/categories/CategoryType';
+import { PRODUCT_SORT_OPTIONS, ProductParams } from '@/features/products/ProductType';
 
 type PageProps = {
   searchParams: Promise<SearchParams>;

@@ -2,13 +2,13 @@
 
 import { useEffect, useState, useCallback } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { getProducts } from '@/features/products/api';
+import { getProducts } from '@/features/products/productService';
 import LoadingDots from '@/features/shopPage/LoadingDots';
 import Pagination from '@/features/shopPage/shop/Pagination';
 import { Pager } from '@/types/pagerType';
 import { useSearchParams } from 'next/navigation';
 import ProductCard from '../products/components/ProductCard';
-import { Product, ProductParams } from '../products/types';
+import { Product, ProductParams } from '../products/ProductType';
 
 interface ProductListShopProps {
   initialProducts: Product[];
@@ -56,7 +56,6 @@ export default function ProductListShop({ initialProducts, initialQuery, pager }
         setShowPagination(true);
       }
     } catch (error) {
-      console.error('Error fetching products:', error);
       setHasMore(false);
       setShowPagination(true);
     }

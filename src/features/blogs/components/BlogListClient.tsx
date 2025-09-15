@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { BlogItem, BlogParams } from '@/features/blogs/types';
-import { getBlogs } from '@/features/blogs/api';
+import { BlogItem, BlogParams } from '@/features/blogs/BlogType';
+import { getBlogs } from '@/features/blogs/blogsService';
 import LoadingDots from '@/features/shopPage/LoadingDots';
 import { Pager } from '@/types/pagerType';
 import BlogListShop from './BlogListShop';

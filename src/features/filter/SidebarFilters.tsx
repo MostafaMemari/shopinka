@@ -3,7 +3,7 @@ import SearchInput from './SearchInput';
 import CategorySelector from '../categories/components/CategorySelector';
 import StockStatusFilter from '../shopPage/FilterDesktop/StockStatusFilter';
 import DiscountFilter from '../shopPage/FilterDesktop/DiscountFilter';
-import { Category } from '@/features/categories/types';
+import { Category } from '@/features/categories/CategoryType';
 import { Card } from '@/components/ui/card';
 
 function SidebarFilters({ categories }: { categories: Category[] }) {

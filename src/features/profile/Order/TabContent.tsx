@@ -5,7 +5,7 @@ import EmptyState from '../EmptyState';
 import ErrorState from '../ErrorState';
 import Pagination from '../Pagination';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
-import { useOrder } from '@/features/orders/hooks';
+import { useOrder } from '@/features/orders/useOrders';
 import OrderCard from './OrderCard';
 import { Box } from 'lucide-react';
 

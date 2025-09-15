@@ -4,7 +4,7 @@ import { FC } from 'react';
 import ProductPrice from './ProductPrice';
 import Link from 'next/link';
 import ProductImage from './ProductImage';
-import { Product } from '../../types';
+import { Product } from '../../ProductType';
 import { Card } from '@/components/ui/card';
 
 interface Props {

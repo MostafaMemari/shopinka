@@ -1,5 +1,5 @@
 import { getStatusConfig } from '@/config/orderStatusConfig';
-import { OrderItem } from '@/features/orders/types';
+import { OrderItem } from '@/features/orders/OrderType';
 import React from 'react';
 import RetryPaymentButton from '../../payment/components/RetryPaymentButton';
 import { RemainingTimeItem } from './RemainingTimeItem';

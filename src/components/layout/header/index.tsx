@@ -4,7 +4,7 @@ import ProfileDropdown from './ProfileDropdown';
 import SearchBarBase from './Search/SearchBar';
 import BasketDropdown from '../../../features/cart/components/views/BasketDropdown';
 import DesktopNavbar from './DesktopNavbar';
-import { getCategoriesCatch } from '@/features/categories/api';
+import { getCategoriesCatch } from '@/features/categories/cartService';
 import { cn } from '@/lib/utils';
 
 async function Header() {

@@ -1,5 +1,5 @@
 import { Attribute, AttributeValues } from '@/types/attributeType';
-import { Category } from '@/features/categories/types';
+import { Category } from '@/features/categories/CategoryType';
 import { Image } from '@/types/imageType';
 import { SeoMeta } from '@/types/seoMetaType';
 import { User } from '../../types/userType';

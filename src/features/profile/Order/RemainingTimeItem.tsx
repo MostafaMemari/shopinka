@@ -1,4 +1,4 @@
-import { OrderStatus } from '@/features/orders/types';
+import { OrderStatus } from '@/features/orders/OrderType';
 import { TransactionStatus } from '@/types/transactionType';
 import { getRemainingTime } from '@/utils/formatter';
 import { Item } from './OrderCardDetails';

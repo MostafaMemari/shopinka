@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import DeliverySection from '@/features/checkout/components/delivery/DeliverySection';
 import CartPriceDetail from '@/features/checkout/components/CartPriceDetail';
-import { ShippingItem } from '@/features/shippings/types';
+import { ShippingItem } from '@/features/shippings/ShippingType';
 import { useIsMounted } from '@/hooks/useIsMounted';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 import EmptyState from '../../profile/EmptyState';

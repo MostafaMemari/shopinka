@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import Link from 'next/link';
-import { BlogItem } from '@/features/blogs/types';
+import { BlogItem } from '@/features/blogs/BlogType';
 import { NoImage } from '@/types/noImageEnum';
 import BlogImage from './BlogImage';
 

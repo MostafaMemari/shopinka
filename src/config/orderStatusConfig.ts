@@ -1,4 +1,4 @@
-import { OrderStatus } from '@/features/orders/types';
+import { OrderStatus } from '@/features/orders/OrderType';
 import { TransactionStatus } from '@/types/transactionType';
 import { AlertTriangle, Box, CheckCircle2, Clock, Truck, X } from 'lucide-react';
 import React from 'react';

@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { QueryKeys } from '@/types/query-keys';
-import { OrderParams, OrderResponse } from '@/features/orders/types';
-import { getOrders } from '@/features/orders/api';
+import { OrderParams, OrderResponse } from '@/features/orders/OrderType';
+import { getOrders } from '@/features/orders/orderService';
 
 export interface QueryOptions {
   enabled?: boolean;

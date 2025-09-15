@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Category } from '@/features/categories/types';
+import { Category } from '@/features/categories/CategoryType';
 import { ChevronLeft } from 'lucide-react';
 
 interface SubCategoryListProps {

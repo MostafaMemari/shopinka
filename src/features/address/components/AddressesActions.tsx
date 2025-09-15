@@ -1,6 +1,6 @@
 'use client';
 
-import { useAddress } from '@/features/address/hooks';
+import { useAddress } from '@/features/address/useAddress';
 import AddressItem from './AddressCard';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 import ErrorState from '../../profile/ErrorState';

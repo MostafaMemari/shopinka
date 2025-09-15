@@ -1,4 +1,4 @@
-import { getBlogBySlug } from '@/features/blogs/api';
+import { getBlogBySlug } from '@/features/blogs/blogsService';
 import type { Metadata } from 'next';
 
 type Params = {

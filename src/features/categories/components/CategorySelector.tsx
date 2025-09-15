@@ -4,7 +4,7 @@ import { useMemo, useCallback } from 'react';
 import { useQueryState } from 'nuqs';
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Category } from '@/features/categories/types';
+import { Category } from '@/features/categories/CategoryType';
 import { useResetPageOnQueryChange } from '@/hooks/useResetPageOnQueryChange';
 import { Label } from '@/components/ui/label';
 

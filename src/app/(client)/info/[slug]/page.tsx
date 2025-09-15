@@ -1,4 +1,4 @@
-import { getPageBySlug } from '@/features/page/api';
+import { getPageBySlug } from '@/features/page/pageService';
 import { notFound } from 'next/navigation';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { SectionHeader } from '@/components/common/SectionHeader';

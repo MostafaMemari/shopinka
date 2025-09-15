@@ -1,11 +1,13 @@
-import { getProducts } from '@/features/products/api';
-import { getBlogs } from '@/features/blogs/api';
+export const revalidate = 60;
 
-import { getCategoryBySlug } from '@/features/categories/api';
+import { getProducts } from '@/features/products/productService';
+import { getBlogs } from '@/features/blogs/blogsService';
+
+import { getCategoryBySlug } from '@/features/categories/cartService';
 import CategoryCirclesBanners from '@/features/categoryBanners';
 import BannerSlider from '@/features/carousel/BannerSlider';
 import CarouselBlog from '@/features/blogs/components/CarouselBlog';
-import { getBanners } from '@/features/banners/api';
+import { getBanners } from '@/features/banners/bannersService';
 import CarouselProduct from '@/features/products/components/ProductCarousel';
 
 export default async function Home() {

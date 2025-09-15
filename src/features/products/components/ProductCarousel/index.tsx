@@ -8,7 +8,7 @@ import { productSwiperConfig } from '@/config/swiper';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import ProductCard from '../ProductCard';
-import { Product } from '../../types';
+import { Product } from '../../ProductType';
 import SkeletonLoader from './ProductCarouselSkeleton';
 import { ChevronLeft } from 'lucide-react';
 

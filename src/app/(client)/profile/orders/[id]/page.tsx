@@ -1,7 +1,7 @@
 import DashboardHeader from '@/features/profile/DashboardHeader';
 import OrderCardDetails from '@/features/profile/Order/OrderCardDetails';
 import OrderItems from '@/features/profile/Order/OrderItems';
-import { getOrderById } from '@/features/orders/api';
+import { getOrderById } from '@/features/orders/orderService';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import DeliveryAddress from '@/features/address/components/DeliveryAddress';

@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
-import { getBlogBySlug } from '@/features/blogs/api';
+import { getBlogBySlug } from '@/features/blogs/blogsService';
 import Sidebar from '@/features/blogs/components/Sidebar';
-import { Category } from '@/features/categories/types';
+import { Category } from '@/features/categories/CategoryType';
 import type { Metadata } from 'next';
 import { generateBlogMetadata } from './metadata';
 import Image from 'next/image';

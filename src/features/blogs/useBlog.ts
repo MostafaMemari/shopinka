@@ -1,5 +1,5 @@
-import { getBlogs } from '@/features/blogs/api';
-import { BlogParams } from '@/features/blogs/types';
+import { getBlogs } from '@/features/blogs/blogsService';
+import { BlogParams } from '@/features/blogs/BlogType';
 import { QueryKeys } from '@/types/query-keys';
 import { useQuery } from '@tanstack/react-query';
 

@@ -1,5 +1,5 @@
 // src/store/slices/productSlice.ts
-import { ProductVariant } from '@/features/products/types';
+import { ProductVariant } from '@/features/products/ProductType';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface ProductState {

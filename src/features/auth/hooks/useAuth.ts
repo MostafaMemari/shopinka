@@ -2,7 +2,7 @@ import { useAppDispatch } from '@/store/hooks';
 import { QueryKeys } from '@/types/query-keys';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { loginFailure, loginSuccess, logout } from '@/store/slices/authSlice';
-import { signout, sendOtp, verifyOtp } from '@/features/auth/api';
+import { signout, sendOtp, verifyOtp } from '@/features/auth/authService';
 import { toast } from 'sonner';
 import { clearOtp } from '@/store/slices/otpSlice';
 import { closeDialog } from '@/store/slices/authDialogSlice';
@@ -40,6 +40,8 @@ export const useAuth = () => {
       queryClient.invalidateQueries({ queryKey: [QueryKeys.User] });
     },
     onError: (error) => {
+      console.log('error in useAuth.ts: ', error);
+
       const message = error.message;
 
       dispatch(loginFailure(message));

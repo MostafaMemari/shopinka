@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { Card, CardContent } from '@/components/ui/card';
-import { OrderProductItem } from '@/features/orders/types';
+import { OrderProductItem } from '@/features/orders/OrderType';
 import { formatPrice } from '@/utils/formatter';
 import { BaggageClaim } from 'lucide-react';
 

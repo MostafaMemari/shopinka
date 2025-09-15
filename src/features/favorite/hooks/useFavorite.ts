@@ -1,7 +1,7 @@
-import { getFavorites } from '@/service/userService';
-import { FavoriteResponse } from '@/features/favorite/type';
+import { FavoriteResponse } from '@/features/favorite/FavoriteType';
 import { QueryKeys } from '@/types/query-keys';
 import { useQuery } from '@tanstack/react-query';
+import { getFavorites } from '../favoriteService';
 
 export interface QueryOptions {
   enabled?: boolean;

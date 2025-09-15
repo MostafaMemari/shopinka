@@ -1,11 +1,13 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import type { UserState } from '@/types/userType';
 import { getMe } from '@/service/userService';
-import { AuthState } from '@/features/auth/types';
+import { AuthState } from '@/features/auth/AuthType';
 
 export const checkAuth = createAsyncThunk<UserState, void, { rejectValue: string }>('auth/checkAuth', async (_, { rejectWithValue }) => {
   try {
     const res = await getMe();
+
+    if (!res) return rejectWithValue('کاربر وارد نشده است');
 
     const user: UserState = {
       full_name: res.fullName || '',

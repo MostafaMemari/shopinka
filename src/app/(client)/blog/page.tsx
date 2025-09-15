@@ -1,8 +1,8 @@
 import { Suspense } from 'react';
 import { loadSearchParams } from '@/utils/loadSearchParams';
 import { SearchParams } from 'nuqs';
-import { getBlogs } from '@/features/blogs/api';
-import { BLOG_SORT_OPTIONS, BlogParams } from '@/features/blogs/types';
+import { getBlogs } from '@/features/blogs/blogsService';
+import { BLOG_SORT_OPTIONS, BlogParams } from '@/features/blogs/BlogType';
 import SearchInput from '@/features/filter/SearchInput';
 import SortBar from '@/features/filter/SortBar';
 import MobileFilter from '@/features/filter/MobileFilter';

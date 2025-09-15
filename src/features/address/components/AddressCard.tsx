@@ -1,6 +1,6 @@
 import React from 'react';
-import { type AddressItem } from '@/features/address/types';
-import { useAddress } from '@/features/address/hooks';
+import { type AddressItem } from '@/features/address/AddressType';
+import { useAddress } from '@/features/address/useAddress';
 import { Card, CardContent } from '@/components/ui/card';
 import { EllipsisVertical, Pencil, Square, SquareCheckBig, Trash } from 'lucide-react';
 import { cn } from '@/lib/utils';

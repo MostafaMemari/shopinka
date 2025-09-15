@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
-import { getCategories } from '@/features/categories/api';
+import { getCategories } from '@/features/categories/cartService';
 import { QueryKeys } from '@/types/query-keys';
-import { CategoryParams } from '@/features/categories/types';
+import { CategoryParams } from '@/features/categories/CategoryType';
 
 export interface QueryOptions {
   enabled?: boolean;

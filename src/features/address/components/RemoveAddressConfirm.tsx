@@ -4,7 +4,7 @@ import { COMPONENT_BREAKPOINTS } from '@/constants';
 import { useBoolean } from '@/hooks/use-boolean';
 import { useMediaQuery } from '@/hooks/use-media-query';
 import React from 'react';
-import { useAddress } from '../hooks';
+import { useAddress } from '../useAddress';
 
 interface RemoveAddressConfirmProps {
   control: ReturnType<typeof useBoolean>;

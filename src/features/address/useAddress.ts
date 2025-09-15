@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { createAddress, deleteAddress, getAddress, setDefaultAddress, updateAddress } from '@/features/address/api';
-import { AddressFormValues, AddressItem } from '@/features/address/types';
+import { createAddress, deleteAddress, getAddress, setDefaultAddress, updateAddress } from '@/features/address/addressService';
+import { AddressFormValues, AddressItem } from '@/features/address/AddressType';
 import { QueryOptions } from '@/types/queryOptions';
 import { QueryKeys } from '@/types/query-keys';
 import { toast } from 'sonner';

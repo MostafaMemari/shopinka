@@ -6,36 +6,30 @@ import { shopApiFetch } from '@/service/api';
 import { COOKIE_NAMES } from '@/types/constants';
 import { setCookie } from '@/utils/cookie';
 import { getMe } from '../../service/userService';
-import { User } from '@/types/userType';
+import { unwrap } from '@/utils/api-helpers';
+import { VerifyOtpResponse } from './AuthType';
 
 export const sendOtp = async (mobile: string): Promise<{ message: string }> => {
-  return await shopApiFetch('/auth/authenticate', {
+  const res = await shopApiFetch('/auth/authenticate', {
     method: 'POST',
     body: {
       mobile,
     },
   });
+
+  return unwrap(res);
 };
 
-interface VerifyOtpResponse {
-  accessToken: string;
-  refreshToken: string;
-}
-
-export const verifyOtp = async ({
-  mobile,
-  otp,
-}: {
-  mobile: string;
-  otp: string;
-}): Promise<{ accessToken: string; refreshToken: string; message: string; user: User }> => {
+export const verifyOtp = async ({ mobile, otp }: { mobile: string; otp: string }): Promise<VerifyOtpResponse> => {
   const res = await shopApiFetch('/auth/verify-authenticate-otp', {
     method: 'POST',
     body: { mobile, otp },
   });
 
-  if (res?.accessToken && res?.refreshToken) {
-    const { accessToken, refreshToken }: VerifyOtpResponse = res;
+  const data = unwrap(res);
+
+  if (data?.accessToken && data?.refreshToken) {
+    const { accessToken, refreshToken }: VerifyOtpResponse = data;
 
     await setCookie(COOKIE_NAMES.ACCESS_TOKEN, accessToken, {
       httpOnly: true,
@@ -51,7 +45,7 @@ export const verifyOtp = async ({
   const user = await getMe();
 
   return {
-    ...res,
+    ...data,
     user,
   };
 };
@@ -65,10 +59,12 @@ export const signout = async (): Promise<{ status: number; data: any }> => {
     body: { refreshToken },
   });
 
+  const data = unwrap(res);
+
   cookieStore.delete(COOKIE_NAMES.ACCESS_TOKEN);
   cookieStore.delete(COOKIE_NAMES.REFRESH_TOKEN);
 
   return {
-    ...res,
+    ...data,
   };
 };

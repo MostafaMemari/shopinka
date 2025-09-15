@@ -1,4 +1,4 @@
-import { verifyPayment } from '@/features/payment/api';
+import { verifyPayment } from '@/features/payment/paymentService';
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
@@ -17,8 +17,6 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.redirect(result.redirectUrl);
   } catch (error: any) {
-    console.log('object => ', error);
-
     return NextResponse.redirect(`/payment/fail?error=${encodeURIComponent(error.message || 'خطای نامشخص در پرداخت')}`);
   }
 }

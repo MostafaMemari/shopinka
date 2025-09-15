@@ -2,7 +2,7 @@
 
 import React, { useEffect } from 'react';
 import AddressItem from './AddressCard';
-import { useAddress } from '@/features/address/hooks';
+import { useAddress } from '@/features/address/useAddress';
 import { AddressCardSkeleton } from './AddressCardSkeleton';
 import { CreateAddressDialogDrawer } from './CreateAddressDialogDrawer';
 import { MapPin } from 'lucide-react';

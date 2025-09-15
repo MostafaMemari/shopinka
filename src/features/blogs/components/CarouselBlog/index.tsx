@@ -3,7 +3,7 @@
 import { FC, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { blogSwiperConfig } from '@/config/swiper';
-import { BlogItem } from '@/features/blogs/types';
+import { BlogItem } from '@/features/blogs/BlogType';
 import BlogCard from './BlogCard';
 import { Swiper, SwiperSlide } from 'swiper/react';
 

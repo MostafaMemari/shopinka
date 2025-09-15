@@ -1,4 +1,4 @@
-import { BlogItem } from '@/features/blogs/types';
+import { BlogItem } from '@/features/blogs/BlogType';
 import BlogCard from './CarouselBlog/BlogCard';
 import BlogCardSkeleton from './BlogCardSkeleton';
 

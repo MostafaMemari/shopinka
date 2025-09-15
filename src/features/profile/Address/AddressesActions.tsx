@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { useAddress } from '@/features/address/hooks';
+import { useAddress } from '@/features/address/useAddress';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 import ErrorState from '../ErrorState';
 import EmptyState from '../EmptyState';

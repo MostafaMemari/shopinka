@@ -1,11 +1,19 @@
 'use server';
 
-import { ofetch, type FetchOptions, type FetchResponse, type ResponseType, type MappedResponseType } from 'ofetch';
+import { type MappedResponseType, ofetch, type FetchOptions, type ResponseType } from 'ofetch';
 import 'server-only';
 
 import { COOKIE_NAMES } from '@/types/constants';
 import { deleteCookie, getCookie, setCookie } from '@/utils/cookie';
 import { refreshToken } from './refreshToken';
+
+export class ApiError extends Error {
+  status: number;
+  constructor(status: number, message: string) {
+    super(message);
+    this.status = status;
+  }
+}
 
 let isRefreshingPromise: Promise<string | null> | null = null;
 
@@ -20,33 +28,56 @@ const api = ofetch.create({
       options.headers = headers;
     }
   },
-  async onResponseError({ response }) {
-    if (response.status === 401) {
-      console.error('Unauthorized response. Attempting to refresh token...');
-    }
-  },
+  // async onResponseError({ response }) {
+  //   if (response.status === 401) {
+  //   }
+  // },
 });
 
-const getNewAccessToken = async () => {
-  if (isRefreshingPromise) {
-    return isRefreshingPromise;
+export async function shopApiFetch<T = any, R extends 'json' | 'text' = 'json'>(
+  request: RequestInfo,
+  options: FetchOptions<R> = {},
+): Promise<{ success: true; data: MappedResponseType<R, T> } | { success: false; status: number; message: string }> {
+  try {
+    const res = await api<T, R>(request, options);
+    return { success: true, data: res };
+  } catch (err: any) {
+    const status = err?.response?.status;
+    const message = err?.response?._data?.message || err?.message || 'خطای نامعلوم';
+
+    if (status === 401 && message.toLowerCase().includes('expired')) {
+      const newAccessToken = await getNewAccessToken();
+
+      if (newAccessToken) {
+        const headers = new Headers(options.headers as HeadersInit);
+        headers.set('Authorization', `Bearer ${newAccessToken}`);
+
+        const retryRes = await api<T, R>(request, { ...options, headers });
+        return { success: true, data: retryRes };
+      } else {
+        throw new Error('Unauthorized: Unable to refresh token');
+      }
+    }
+
+    return { success: false, status, message };
   }
+}
+
+const getNewAccessToken = async () => {
+  if (isRefreshingPromise) return isRefreshingPromise;
 
   isRefreshingPromise = (async () => {
     try {
       const res = await refreshToken();
       const newAccessToken = res?.data?.accessToken;
 
-      if (!newAccessToken) {
-        throw new Error('No access token returned');
-      }
+      if (!newAccessToken) throw new Error('No access token returned');
 
       await setCookie(COOKIE_NAMES.ACCESS_TOKEN, newAccessToken);
       return newAccessToken;
     } catch (refreshErr) {
       await deleteCookie(COOKIE_NAMES.ACCESS_TOKEN);
       await deleteCookie(COOKIE_NAMES.REFRESH_TOKEN);
-      console.error('Failed to refresh token', refreshErr);
       return null;
     } finally {
       isRefreshingPromise = null;
@@ -56,32 +87,6 @@ const getNewAccessToken = async () => {
   return isRefreshingPromise;
 };
 
-export async function shopApiFetch<T = any, R extends ResponseType = 'json'>(
-  request: RequestInfo,
-  options: FetchOptions<R> = {},
-): Promise<MappedResponseType<R, T>> {
-  try {
-    return await api<T, R>(request, options);
-  } catch (err: any) {
-    const status = err?.response?.status;
-    const message = err?.response?._data?.message;
-
-    if (status === 401 && message?.toLowerCase().includes('expired')) {
-      const newAccessToken = await getNewAccessToken();
-
-      if (newAccessToken) {
-        const headers = new Headers(options.headers as HeadersInit);
-        headers.set('Authorization', `Bearer ${newAccessToken}`);
-
-        return await api<T, R>(request, {
-          ...options,
-          headers,
-        });
-      } else {
-        throw new Error('Unauthorized: Unable to refresh token');
-      }
-    }
-
-    throw err.message ? new Error(message) : err;
-  }
+export async function publicApiFetch<T = any>(url: string, options = {}): Promise<T> {
+  return await api<T>(url, options);
 }

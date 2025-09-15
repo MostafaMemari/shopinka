@@ -1,6 +1,7 @@
 import { mapCartResponseToCartItemState } from '@/utils/mapCartResponse';
 import { shopApiFetch } from '@/service/api';
 import { CartData, CartResponse, CartState } from '@/types/cartType';
+import { unwrap } from '@/utils/api-helpers';
 
 export const createCart = async ({ cartData }: { cartData?: CartData }): Promise<void> => {
   if (cartData) {
@@ -36,22 +37,30 @@ export const createCartReplace = async ({ items }: { items: CartData[] }): Promi
 export const getCart = async (): Promise<CartState> => {
   const res = await shopApiFetch('/cart/me', { method: 'GET' });
 
-  const mappedItems = mapCartResponseToCartItemState(res.items);
+  const data = unwrap(res);
+
+  const mappedItems = mapCartResponseToCartItemState(data.items);
 
   return {
-    ...res,
+    ...data,
     items: mappedItems,
   };
 };
 
 export const clearCart = async (): Promise<CartResponse> => {
-  return await shopApiFetch('/cart/clear', { method: 'POST' });
+  const res = await shopApiFetch('/cart/clear', { method: 'POST' });
+
+  return unwrap(res);
 };
 
 export const updateQuantityItemCart = async ({ quantity, itemId }: { quantity: number; itemId: number }): Promise<CartResponse> => {
-  return await shopApiFetch(`/cart/item/${itemId}`, { method: 'PATCH', body: { quantity } });
+  const res = await shopApiFetch(`/cart/item/${itemId}`, { method: 'PATCH', body: { quantity } });
+
+  return unwrap(res);
 };
 
 export const removeItemCart = async (itemId: number): Promise<CartResponse> => {
-  return await shopApiFetch(`/cart/item/${itemId}`, { method: 'DELETE' });
+  const res = await shopApiFetch(`/cart/item/${itemId}`, { method: 'DELETE' });
+
+  return unwrap(res);
 };

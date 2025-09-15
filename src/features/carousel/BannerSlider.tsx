@@ -9,7 +9,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
-import { BannerItem } from '@/features/banners/types';
+import { BannerItem } from '@/features/banners/BannerType';
 
 interface BannerSliderProps {
   mainSliderBanners: BannerItem[];

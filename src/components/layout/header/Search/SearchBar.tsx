@@ -6,7 +6,7 @@ import { useDebounce } from 'use-debounce';
 import { useProducts } from '@/features/products/hooks/useProduct';
 import SearchItem from './SearchItem';
 import { cn } from '@/lib/utils';
-import { Product } from '@/features/products/types';
+import { Product } from '@/features/products/ProductType';
 
 import { ScrollArea } from '@/components/ui/scroll-area';
 

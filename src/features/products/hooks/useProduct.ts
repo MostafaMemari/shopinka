@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { QueryKeys } from '@/types/query-keys';
-import { getProducts, isFavorite } from '@/features/products/api';
+import { getProducts, isFavorite } from '@/features/products/productService';
 
 export function useProducts({
   enabled = true,

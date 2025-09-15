@@ -1,4 +1,4 @@
-import { fetchProductBySlug, getProducts } from '@/features/products/api';
+import { fetchProductBySlug, getProducts } from '@/features/products/productService';
 import ProductDetailsView from '@/features/productDetails/views/ProductDetailsView';
 import { notFound } from 'next/navigation';
 import MobileHeader from '@/features/productDetails/MobileProductHeader';

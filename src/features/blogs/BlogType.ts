@@ -1,4 +1,4 @@
-import { Category } from '../categories/types';
+import { Category } from '../categories/CategoryType';
 import { Image } from '../../types/imageType';
 import { Pager } from '../../types/pagerType';
 import { SeoMeta } from '../../types/seoMetaType';

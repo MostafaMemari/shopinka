@@ -3,7 +3,7 @@
 import * as React from 'react';
 
 import { useMediaQuery } from '@/hooks/use-media-query';
-import { AddressItem } from '@/features/address/types';
+import { AddressItem } from '@/features/address/AddressType';
 import AddressForm from './AddressForm';
 import MobileDrawer from '@/components/common/Drawer';
 import { useState } from 'react';

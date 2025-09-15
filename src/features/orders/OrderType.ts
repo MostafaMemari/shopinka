@@ -1,9 +1,9 @@
-import { AddressItem } from '../address/types';
+import { AddressItem } from '../address/AddressType';
 import { AttributeValues } from '../../types/attributeType';
 import { Pager } from '../../types/pagerType';
-import { ShippingItem } from '../shippings/types';
+import { ShippingItem } from '../shippings/ShippingType';
 import { Transaction } from '../../types/transactionType';
-import { Product, ProductVariant } from '../products/types';
+import { Product, ProductVariant } from '../products/ProductType';
 
 export interface Order {
   pager: Pager;

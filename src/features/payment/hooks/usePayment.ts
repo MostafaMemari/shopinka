@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { QueryKeys } from '@/types/query-keys';
-import { paymentCart } from '@/features/payment/api';
-import { PaymentFormType } from '@/features/payment/types';
+import { paymentCart } from '@/features/payment/paymentService';
+import { PaymentFormType } from '@/features/payment/PaymentType';
 import { useRouter } from 'next/navigation';
 
 export function usePayment() {

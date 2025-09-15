@@ -122,7 +122,7 @@ function InputOTPForm({ verifyOtp, ref }: InputOTPFormProps) {
         </form>
       </Form>
 
-      <div className="flex items-center justify-center gap-2 mt-2">
+      <div className="flex items-center justify-center gap-2">
         <span className="text-sm text-gray-600 dark:text-gray-300">مانده تا انقضای کد:</span>
         <OtpTimer timeLeft={timeLeft} />
       </div>

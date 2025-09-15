@@ -6,7 +6,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { getStatusConfig } from '@/config/orderStatusConfig';
 import ProductSlider from '../ProductSlider';
-import { OrderItem } from '@/features/orders/types';
+import { OrderItem } from '@/features/orders/OrderType';
 import RetryPaymentButton from '../../payment/components/RetryPaymentButton';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { cn } from '@/lib/utils';

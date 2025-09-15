@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import RelatedPosts from './RelatedPosts';
-import { getBlogs } from '@/features/blogs/api';
+import { getBlogs } from '@/features/blogs/blogsService';
 
 interface SidebarProps {
   categoryIds: number[];

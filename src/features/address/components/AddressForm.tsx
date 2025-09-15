@@ -4,10 +4,10 @@ import { useEffect, useMemo, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { AddressFormValues, AddressItem } from '@/features/address/types';
+import { AddressFormValues, AddressItem } from '@/features/address/AddressType';
 import { provinces } from '@/data/provinces';
 import { cities } from '@/data/cities';
-import { useAddress } from '@/features/address/hooks';
+import { useAddress } from '@/features/address/useAddress';
 import { cn } from '@/lib/utils';
 import { validationAddressSchema } from '@/validation/validationAddressSchema';
 import { FormInput, FormSelect, FormTextarea } from '@/components/form/FormField';

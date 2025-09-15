@@ -1,5 +1,5 @@
 import { Card, CardContent } from '@/components/ui/card';
-import { AddressItem } from '@/features/address/types';
+import { AddressItem } from '@/features/address/AddressType';
 import { MapPinHouse } from 'lucide-react';
 
 interface DeliveryAddressProps {

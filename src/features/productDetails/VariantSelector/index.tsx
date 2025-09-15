@@ -11,7 +11,7 @@ import { getDefaultSelections, transformVariants } from '../utils/productVariant
 import { findMatchingVariant } from '../utils/productVariants';
 import { Attribute, AttributeValues } from '@/types/attributeType';
 import { Card } from '@/components/ui/card';
-import { ProductVariant } from '@/features/products/types';
+import { ProductVariant } from '@/features/products/ProductType';
 interface Props {
   variants: ProductVariant[];
   attributes: Attribute[];

@@ -1,4 +1,4 @@
-import { Category } from '@/features/categories/types';
+import { Category } from '@/features/categories/CategoryType';
 import { PlaceholderImageEnum } from '@/types/enums/PlaceholderImageEnum';
 import Image from 'next/image';
 import Link from 'next/link';

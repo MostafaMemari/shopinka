@@ -16,7 +16,7 @@ import FavoriteProductAction from '../ActionButtons/FavoriteProductAction';
 import ShareProductAction from '../ActionButtons/ShareProductAction';
 import MobileCartSticky from '@/components/common/MobileCartSticky';
 import { Card } from '@/components/ui/card';
-import { ProductDetails } from '@/features/products/types';
+import { ProductDetails } from '@/features/products/ProductType';
 import { ProductDesktopDetailsPrice, ProductStickyMobilePrice } from '../ProductDetailsPrice';
 
 interface ProductDetailsViewProps {

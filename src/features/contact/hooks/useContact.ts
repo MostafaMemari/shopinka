@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 
 import { toast } from 'sonner';
-import { createContact } from '@/features/contact/api';
+import { createContact } from '@/features/contact/contact';
 import { ContactItem } from '@/types/contactType';
 import { ContactForm } from '@/validation/validationContactSchema';
 

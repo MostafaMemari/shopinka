@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Category } from '@/features/categories/types';
+import { Category } from '@/features/categories/CategoryType';
 import CategoryItemShop from './CategoryListGridItem';
 import { Plus } from 'lucide-react';
 import { useIsMounted } from '@/hooks/useIsMounted';

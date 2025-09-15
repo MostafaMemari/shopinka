@@ -3,7 +3,7 @@
 import React from 'react';
 import PrimaryButton from '@/components/common/PrimaryButton';
 import CartSummary from '@/features/cart/components/CartSummary';
-import { ShippingItem } from '@/features/shippings/types';
+import { ShippingItem } from '@/features/shippings/ShippingType';
 import { usePayment } from '@/features/payment/hooks/usePayment';
 import MobileCartSticky from '../../../components/common/MobileCartSticky';
 import { formatPrice } from '@/utils/formatter';

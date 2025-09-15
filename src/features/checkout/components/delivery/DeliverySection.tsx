@@ -1,10 +1,10 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { ShippingItem } from '@/features/shippings/types';
+import { ShippingItem } from '@/features/shippings/ShippingType';
 import DeliveryItem from './DeliveryItem';
 import { Truck } from 'lucide-react';
-import { useShipping } from '@/features/shippings/hooks';
+import { useShipping } from '@/features/shippings/useShipping';
 import { ShippingCardSkeleton } from './ShippingCardSkeleton';
 
 interface DeliverySectionProps {

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { Category } from '@/features/categories/types';
+import { Category } from '@/features/categories/CategoryType';
 import MenuItem from './MenuItem';
 import { cn } from '@/lib/utils';
 import NavigationMenuDesktop from '@/components/layout/header/DesktopNavbar/NavigationMenuDesktop';

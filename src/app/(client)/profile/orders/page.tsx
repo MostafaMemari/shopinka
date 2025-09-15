@@ -3,7 +3,7 @@
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import DashboardHeader from '@/features/profile/DashboardHeader';
 import TabContent from '@/features/profile/Order/TabContent';
-import { getCountOrders } from '@/features/orders/api';
+import { getCountOrders } from '@/features/orders/orderService';
 import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 

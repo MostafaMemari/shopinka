@@ -4,7 +4,7 @@ import { FC, useState } from 'react';
 import StockStatusFilter from '../shopPage/FilterDesktop/StockStatusFilter';
 import DiscountFilter from '../shopPage/FilterDesktop/DiscountFilter';
 import CategorySelector from '../categories/components/CategorySelector';
-import { Category } from '@/features/categories/types';
+import { Category } from '@/features/categories/CategoryType';
 import { Button } from '@/components/ui/button';
 import { Funnel } from 'lucide-react';
 import MobileDrawer from '@/components/common/Drawer';

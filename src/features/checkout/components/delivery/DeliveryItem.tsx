@@ -1,6 +1,6 @@
 import { Card, CardContent, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
-import { ShippingItem } from '@/features/shippings/types';
+import { ShippingItem } from '@/features/shippings/ShippingType';
 import { formatPrice } from '@/utils/formatter';
 import { Square, SquareCheckBig, Tag, Timer } from 'lucide-react';
 import React from 'react';
