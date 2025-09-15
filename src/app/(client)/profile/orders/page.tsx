@@ -33,7 +33,12 @@ const OrderTabs = () => {
 
   useEffect(() => {
     (async () => {
-      const { cancelled, current, delivered } = await getCountOrders();
+      const res = await getCountOrders();
+
+      if (!res.success) return;
+
+      const { cancelled, current, delivered } = res.data;
+
       setTabCounts({ current, delivered, canceled: cancelled });
     })();
   }, []);

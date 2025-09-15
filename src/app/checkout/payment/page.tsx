@@ -14,9 +14,13 @@ type PageProps = {
 export default async function PaymentResult({ searchParams }: PageProps) {
   const { status, orderId } = await searchParams;
 
-  const order = await getOrderById(Number(orderId)).catch(() => {
+  const res = await getOrderById(Number(orderId)).catch(() => {
     return null;
   });
+
+  if (!res?.success) return null;
+
+  const order = res.data;
 
   if (!order) return <OrderNotFound />;
 

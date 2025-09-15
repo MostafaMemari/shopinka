@@ -41,7 +41,7 @@ export const addToCart = createAsyncThunk('cart/addToCart', async (item: CartIte
 
     await createCartBulk({ items: [payload] });
     const updatedCart = await getCart();
-    const items = updatedCart.items;
+    const items = updatedCart.success ? updatedCart.data.items : [];
     dispatch(setCart({ items }));
   } catch (error) {
     throw error;
@@ -64,7 +64,7 @@ export const increaseCount = createAsyncThunk('cart/increaseCount', async (item:
   try {
     await updateQuantityItemCart({ itemId: Number(item.id), quantity: item.count + 1 });
     const updatedCart = await getCart();
-    const items = updatedCart.items;
+    const items = updatedCart.success ? updatedCart.data.items : [];
     dispatch(setCart({ items }));
   } catch (error) {
     throw error;
@@ -87,7 +87,7 @@ export const decreaseCount = createAsyncThunk('cart/decreaseCount', async (item:
   try {
     await updateQuantityItemCart({ itemId: Number(item.id), quantity: item.count - 1 });
     const updatedCart = await getCart();
-    const items = updatedCart.items;
+    const items = updatedCart.success ? updatedCart.data.items : [];
     dispatch(setCart({ items }));
   } catch (error) {
     throw error;
@@ -110,7 +110,7 @@ export const deleteFromCart = createAsyncThunk('cart/deleteFromCart', async (ite
   try {
     await removeItemCart(Number(itemId));
     const updatedCart = await getCart();
-    const items = updatedCart.items;
+    const items = updatedCart.success ? updatedCart.data.items : [];
     dispatch(setCart({ items }));
   } catch (error) {
     throw error;

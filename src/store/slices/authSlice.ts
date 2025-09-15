@@ -7,12 +7,12 @@ export const checkAuth = createAsyncThunk<UserState, void, { rejectValue: string
   try {
     const res = await getMe();
 
-    if (!res) return rejectWithValue('کاربر وارد نشده است');
+    if (!res.success) return rejectWithValue('کاربر وارد نشده است');
 
     const user: UserState = {
-      full_name: res.fullName || '',
-      mobile: res.mobile,
-      role: res.role,
+      full_name: res.data.fullName || '',
+      mobile: res.data.mobile,
+      role: res.data.role,
     };
     return user;
   } catch (err: any) {

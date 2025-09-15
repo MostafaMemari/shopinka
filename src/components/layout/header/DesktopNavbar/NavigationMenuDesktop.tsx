@@ -1,6 +1,6 @@
 import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList } from '@/components/ui/navigation-menu';
 import { cn } from '@/lib/utils';
-import { ShoppingBag } from 'lucide-react';
+import { ShoppingBag, TableOfContents } from 'lucide-react';
 import Link from 'next/link';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '../../../ui/hover-card';
 
@@ -24,7 +24,7 @@ export default function NavigationMenuDesktop({ categories }: NavigationMenuWith
 
   return (
     <NavigationMenu>
-      <NavigationMenuList className="space-x-3">
+      <NavigationMenuList className="space-x-1">
         <NavigationMenuItem key="categories">
           <NavigationMenuLink asChild>
             <HoverCard openDelay={30} closeDelay={120} open={isOpen} onOpenChange={setIsOpen}>
@@ -34,11 +34,11 @@ export default function NavigationMenuDesktop({ categories }: NavigationMenuWith
                     'text-primary': isOpen,
                   })}
                 >
-                  <ShoppingBag className="w-4 h-4" /> دسته‌بندی‌ها
+                  <TableOfContents className="w-4 h-4" /> دسته‌بندی‌ها
                 </div>
               </HoverCardTrigger>
-              <HoverCardContent align="start" className="w-[800px] p-0 mt-0.5">
-                <div className="flex h-[450px] max-h-[450px] w-full overflow-hidden rounded-b-lg">
+              <HoverCardContent align="start" className="w-[800px] p-0 mt-0.5 rounded-none rounded-b-2xl">
+                <div className="flex h-[450px] max-h-[450px] w-full overflow-hidden">
                   <div className="w-48 bg-background overflow-y-auto main-scroll">
                     <ul dir="rtl">
                       {categories.map((category) => (
@@ -72,14 +72,10 @@ export default function NavigationMenuDesktop({ categories }: NavigationMenuWith
         {navigationMenuItems.map((item) => (
           <NavigationMenuItem key={item.title}>
             <NavigationMenuLink
-              className={cn(
-                'relative group inline-flex h-9 w-max items-center justify-center px-0.5 py-2 text-sm font-medium',
-                'before:absolute before:bottom-0 before:inset-x-0 before:h-[2px] before:bg-primary before:scale-x-0 before:transition-transform',
-                'hover:before:scale-x-100 hover:text-accent-foreground',
-                'focus:before:scale-x-100 focus:text-accent-foreground focus:outline-none',
-                'disabled:pointer-events-none disabled:opacity-50',
-                'data-[active]:before:scale-x-100 data-[state=open]:before:scale-x-100',
-              )}
+              className="relative group inline-flex items-center justify-center p-2 text-sm font-medium
+             before:absolute before:bottom-0 before:h-[2px] before:w-0 before:bg-primary before:transition-all
+             hover:before:w-full hover:text-accent-foreground
+             focus:before:w-full focus:text-accent-foreground focus:outline-none"
               asChild
             >
               <Link href={item.href}>

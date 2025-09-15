@@ -14,9 +14,11 @@ export function usePayment() {
     createPayment: (data: PaymentFormType, onSuccess?: () => void, onError?: (error: any) => void) => {
       createMutation.mutate(data, {
         onSuccess: (res) => {
-          router.push(res.gatewayURL);
-          queryClient.invalidateQueries({ queryKey: [QueryKeys.Orders, QueryKeys.Cart] });
-          onSuccess?.();
+          if (res.success) {
+            router.push(res.data.gatewayURL);
+            queryClient.invalidateQueries({ queryKey: [QueryKeys.Orders, QueryKeys.Cart] });
+            onSuccess?.();
+          }
         },
         onError: (error) => {
           onError?.(error);

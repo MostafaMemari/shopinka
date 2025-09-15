@@ -72,7 +72,7 @@ export default function ProductComments({ productId }: Props) {
 
       {error && (
         <div className="text-center text-red-500 py-4">
-          <p>خطا در بارگذاری دیدگاه‌ها: {error.message}</p>
+          <p>خطا در بارگذاری دیدگاه‌ها: {error}</p>
         </div>
       )}
 

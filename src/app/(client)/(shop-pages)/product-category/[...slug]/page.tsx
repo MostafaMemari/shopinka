@@ -41,7 +41,7 @@ export default async function ShopPage({ searchParams, params }: PageProps) {
         : undefined,
   };
 
-  const { items } = await getCategories({
+  const resCategory = await getCategories({
     type: 'PRODUCT',
     slug: lastSlug,
     includeOnlyTopLevel: false,
@@ -50,12 +50,18 @@ export default async function ShopPage({ searchParams, params }: PageProps) {
     childrenDepth: 3,
   });
 
-  const category = items[0];
+  if (!resCategory.success) return;
 
-  const { items: products, pager } = await getProducts({
+  const resProduct = await getProducts({
     ...query,
-    categoryIds: query.categoryIds ? query.categoryIds : [category.id],
+    categoryIds: query.categoryIds ? query.categoryIds : [resCategory.data.id],
   });
+
+  if (!resProduct.success) return;
+
+  const { items: products, pager } = resProduct.data;
+
+  const category = resCategory.data;
 
   return (
     <>

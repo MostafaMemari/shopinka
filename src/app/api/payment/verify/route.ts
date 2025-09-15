@@ -15,7 +15,9 @@ export async function GET(req: NextRequest) {
   try {
     const result = await verifyPayment({ authority, status } as { authority: string; status: 'OK' | 'NOK' });
 
-    return NextResponse.redirect(result.redirectUrl);
+    if (result.success) {
+      return NextResponse.redirect(result.data.redirectUrl);
+    }
   } catch (error: any) {
     return NextResponse.redirect(`/payment/fail?error=${encodeURIComponent(error.message || 'خطای نامشخص در پرداخت')}`);
   }

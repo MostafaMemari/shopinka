@@ -24,7 +24,11 @@ export default async function BlogPage({ searchParams }: PageProps) {
     sortBy: params.sortBy && ['updatedAt'].includes(params.sortBy) ? (params.sortBy as BlogParams['sortBy']) : undefined,
   };
 
-  const { items, pager } = await getBlogs(query);
+  const res = await getBlogs(query);
+
+  if (!res.success) return;
+
+  const { items, pager } = res.data;
 
   return (
     <>

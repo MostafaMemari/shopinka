@@ -72,7 +72,7 @@ function CartPageView() {
             icon={<ShoppingBasket className="w-12 h-12 text-gray-400" />}
             message="سبد خرید شما خالی است!"
             description="محصولات مورد علاقه‌تون رو به سبد خرید اضافه کنید و دوباره به این صفحه برگردید."
-          />{' '}
+          />
           <Link
             href="/shop"
             className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-primary rounded-md hover:bg-primary-600 focus:outline-none focus:ring focus:ring-primary-300"

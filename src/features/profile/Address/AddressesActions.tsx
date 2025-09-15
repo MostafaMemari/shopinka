@@ -11,7 +11,7 @@ import { MapPin } from 'lucide-react';
 export default function AddressSection() {
   const { data, isLoading, error } = useAddress({});
 
-  const addresses = data?.items || [];
+  const addresses = data?.success ? data.data.items : [];
 
   return (
     <>

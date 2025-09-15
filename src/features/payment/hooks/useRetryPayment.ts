@@ -15,9 +15,11 @@ export function useRetryPayment() {
         { orderId },
         {
           onSuccess: (res) => {
-            router.push(res.gatewayURL);
-            queryClient.invalidateQueries({ queryKey: [QueryKeys.Orders, QueryKeys.Cart] });
-            onSuccess?.();
+            if (res.success) {
+              router.push(res.data.gatewayURL);
+              queryClient.invalidateQueries({ queryKey: [QueryKeys.Orders, QueryKeys.Cart] });
+              onSuccess?.();
+            }
           },
           onError: (error) => {
             onError?.(error);

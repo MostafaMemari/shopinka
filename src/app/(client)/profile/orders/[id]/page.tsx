@@ -15,9 +15,13 @@ type PageProps = {
 async function Page({ params }: PageProps) {
   const { id } = await params;
 
-  const order = await getOrderById(Number(id)).catch(() => {
+  const res = await getOrderById(Number(id)).catch(() => {
     return null;
   });
+
+  if (!res?.success) return redirect('/');
+
+  const order = res.data;
 
   if (!order) return redirect('/profile/orders');
 

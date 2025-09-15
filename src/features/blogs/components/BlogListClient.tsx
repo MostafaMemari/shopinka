@@ -37,7 +37,13 @@ export default function BlogListShopClient({ query, initialBlogs, pager }: Props
     setIsLoading(true);
     try {
       const nextPage = page + 1;
-      const { items, pager: newPager } = await getBlogs({ ...query, page: nextPage });
+
+      const res = await getBlogs({ ...query, page: nextPage });
+
+      if (!res.success) return;
+
+      const { items, pager: newPager } = res.data;
+
       setBlogs((prev) => [...prev, ...items]);
       setPage(nextPage);
       setHasMore((newPager?.hasNextPage ?? false) && items.length === (query.take ?? 10) && nextPage < MAX_PAGES);

@@ -17,6 +17,7 @@ export function useCartData({ enabled = true, staleTime = 60_000 }: QueryOptions
     queryFn: async () => {
       try {
         const response = await getCart();
+
         return response;
       } catch (err: any) {
         return {

@@ -23,9 +23,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function Page({ params }: Props) {
   const { slug } = await params;
-  const blog = await getBlogBySlug(slug);
+  const res = await getBlogBySlug(slug);
 
-  if (!blog) return notFound();
+  if (!res.success) return;
+
+  if (!res.data) return notFound();
+
+  const blog = res.data;
 
   const title = blog.title;
   const content = blog.content ?? '';

@@ -18,8 +18,8 @@ const FavoriteActions = () => {
     params: { page: currentPage },
   });
 
-  const favorites = data?.items || [];
-  const favoritePager = data?.pager ?? { totalCount: 0, totalPages: 1 };
+  const favorites = data?.success ? data?.data.items : [];
+  const favoritePager = data?.success ? data?.data.pager : { totalCount: 0, totalPages: 1 };
 
   const handleFavoriteToggle = (productId: number) => {
     favoriteToggle(productId);

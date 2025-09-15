@@ -7,15 +7,16 @@ type Params = {
 
 export async function generateBlogMetadata({ slug }: Params): Promise<Metadata> {
   const res = await getBlogBySlug(slug);
-  const blog = res?.data;
 
-  if (!blog || res.status !== 200) {
+  if (!res.success) {
     return {
       title: 'مقاله پیدا نشد',
       description: 'مقاله مورد نظر یافت نشد.',
       robots: 'noindex, nofollow',
     };
   }
+
+  const blog = res.data;
 
   const seo = blog.seoMeta;
 

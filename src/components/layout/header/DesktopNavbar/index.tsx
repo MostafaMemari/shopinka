@@ -31,7 +31,9 @@ const DesktopNavbar = ({ categories }: DesktopNavbarProps) => {
   }, []);
 
   return (
-    <nav className={cn('border-b transition-transform duration-700 px-4 bg-muted', isVisible ? 'translate-y-0' : '-translate-y-full')}>
+    <nav
+      className={cn('border-b transition-transform duration-700 px-4 bg-white shadow', isVisible ? 'translate-y-0' : '-translate-y-full')}
+    >
       <div className="container mx-auto max-w-[1640px] flex items-center gap-x-2">
         <div className="flex justify-between items-center w-full">
           <div className="flex gap-x-2">
