@@ -7,14 +7,6 @@ import { COOKIE_NAMES } from '@/types/constants';
 import { deleteCookie, getCookie, setCookie } from '@/utils/cookie';
 import { refreshToken } from './refreshToken';
 
-export class ApiError extends Error {
-  status: number;
-  constructor(status: number, message: string) {
-    super(message);
-    this.status = status;
-  }
-}
-
 let isRefreshingPromise: Promise<string | null> | null = null;
 
 const api = ofetch.create({
@@ -28,10 +20,6 @@ const api = ofetch.create({
       options.headers = headers;
     }
   },
-  // async onResponseError({ response }) {
-  //   if (response.status === 401) {
-  //   }
-  // },
 });
 
 export async function shopApiFetch<T = any, R extends 'json' | 'text' = 'json'>(

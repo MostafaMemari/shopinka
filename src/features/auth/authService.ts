@@ -2,12 +2,12 @@
 
 import 'server-only';
 import { cookies } from 'next/headers';
-import { shopApiFetch } from '@/service/api';
 import { COOKIE_NAMES } from '@/types/constants';
 import { setCookie } from '@/utils/cookie';
 import { getMe } from '../../service/userService';
 import { unwrap } from '@/utils/api-helpers';
 import { VerifyOtpResponse } from './AuthType';
+import { shopApiFetch } from '@/service/api';
 
 export const sendOtp = async (mobile: string): Promise<{ message: string }> => {
   const res = await shopApiFetch('/auth/authenticate', {

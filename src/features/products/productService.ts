@@ -1,10 +1,10 @@
 'use server';
 
-import { shopApiFetch } from '@/service/api';
 import { revalidateTag } from 'next/cache';
 import { Pager } from '@/types/pagerType';
 import { Product, ProductParams } from '@/features/products/ProductType';
 import { unwrap } from '@/utils/api-helpers';
+import { shopApiFetch } from '@/service/api';
 
 export const getProducts = async (params?: ProductParams): Promise<{ items: Product[]; pager: Pager }> => {
   const res = await shopApiFetch(`/product`, {
