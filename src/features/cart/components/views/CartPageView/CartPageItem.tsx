@@ -5,6 +5,7 @@ import CartItemAttributes from '@/features/cart/components/CartItemAttributes';
 import CartControls from '@/features/cart/components/CartControls';
 import Image from 'next/image';
 import ProductCartPrice from '../../ProductCartPrice';
+import { Package } from 'lucide-react';
 
 interface CartPageItemProps {
   cartItem: CartItemState;
@@ -16,43 +17,43 @@ function CartPageItem({ cartItem, isLast = false }: CartPageItemProps) {
   const productUrl = `/product/${cartItem.slug}`;
 
   return (
-    <div className={`py-4 ${!isLast ? 'border-b border-gray-200' : ''}`}>
-      <div className="grid grid-cols-12 gap-6 items-start">
-        <div className="col-span-4 sm:col-span-3 flex flex-col items-center gap-2">
-          <div className="w-24 h-24 sm:w-28 sm:h-28">
-            <Link href={productUrl}>
-              <Image
-                alt={cartItem.title}
-                className="h-full w-full"
-                src={cartItem.thumbnail}
-                width={80}
-                height={80}
-                loading="lazy"
-                unoptimized
-              />
-            </Link>
+    <div className={`py-4 px-2 sm:px-4 flex gap-4 items-center border-b border-gray-200 ${isLast ? 'border-b-0' : ''}`}>
+      <div className="flex-shrink-0">
+        <Link href={productUrl}>
+          <Image
+            alt={cartItem.title}
+            src={cartItem.thumbnail}
+            width={96}
+            height={96}
+            loading="lazy"
+            unoptimized
+            className="w-24 h-24 rounded-md object-cover border"
+          />
+        </Link>
+      </div>
+
+      <div className="flex-1 flex flex-col justify-between space-y-2">
+        <Link href={productUrl} className="text-sm sm:text-base font-medium text-gray-900 hover:text-blue-600 line-clamp-2">
+          {cartItem.title}
+        </Link>
+
+        <div className="flex items-center mt-1 gap-3">
+          <div className="flex items-center gap-1 text-xs text-gray-500 ">
+            <Package className="w-4 h-4 text-gray-400" />
+            <span>موجود در انبار</span>
           </div>
 
-          <div className="w-24 flex justify-center">
-            <CartControls product={cartItem} />
+          <div className="text-xs text-gray-500">
+            <CartItemAttributes type={cartItem.type} attributes={attributes} />
           </div>
         </div>
 
-        <div className="col-span-8 sm:col-span-9 space-y-2">
-          <Link
-            href={productUrl}
-            className="line-clamp-2 text-sm sm:text-base font-semibold text-gray-900 leading-snug hover:text-blue-600"
-          >
-            {cartItem.title}
-          </Link>
-
-          <div className="space-y-1 text-xs text-gray-500">
-            <CartItemAttributes count={cartItem.count} type={cartItem.type} attributes={attributes} />
+        <div className="flex items-center justify-between mt-3">
+          <div className="flex items-center gap-3">
+            <CartControls product={cartItem} className="w-22 lg:w-30 h-8 lg:h-10" />
+            <span className="text-xs hidden lg:block text-gray-600">تعداد: {cartItem.count}</span>
           </div>
-
-          <div className="text-blue-600 text-sm font-bold pt-1">
-            <ProductCartPrice salePrice={cartItem.salePrice * cartItem.count} basePrice={cartItem.basePrice * cartItem.count} />
-          </div>
+          <ProductCartPrice salePrice={cartItem.salePrice * cartItem.count} basePrice={cartItem.basePrice * cartItem.count} />
         </div>
       </div>
     </div>

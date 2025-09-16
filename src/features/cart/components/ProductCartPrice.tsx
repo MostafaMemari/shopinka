@@ -15,39 +15,12 @@ export default function ProductCartPrice({ salePrice, basePrice }: ProductCartPr
   const hasDiscount = discount > 0 && salePrice != null;
 
   return (
-    <div className="flex flex-col items-start gap-1 text-sm text-gray-800">
-      {hasDiscount ? (
-        <>
-          <div className="text-lg font-bold text-primary">{formatPrice(salePrice ?? 0)} تومان</div>
+    <div className="flex flex-col items-end text-sm text-gray-800">
+      {hasDiscount && <span className="line-through text-gray-500 text-xs">{formatPrice(basePrice ?? 0)} تومان</span>}
 
-          <div className="flex items-center gap-2">
-            <span className="line-through text-gray-500">{formatPrice(basePrice ?? 0)} تومان</span>
-            <span className="rounded bg-red-100 px-2 py-0.5 text-xs text-red-600">{discount}% تخفیف</span>
-          </div>
-        </>
-      ) : (
-        <>
-          {isAvailable ? (
-            <>
-              <div className="text-lg font-bold text-primary mt-4">{formatPrice(basePrice ?? 0)} تومان</div>
-            </>
-          ) : (
-            <span className="text-xs font-light text-text/60">ناموجود</span>
-          )}
-        </>
-      )}
+      <div className="text-lg lg:text-xl font-bold text-primary">
+        {formatPrice(salePrice ? salePrice : (basePrice ?? 0))} <span className="text-xs">تومان</span>
+      </div>
     </div>
   );
-}
-
-{
-  /* <div className="flex flex-col items-start gap-1 text-sm text-gray-800">
-  <div className="text-lg font-bold text-green-600">{newPrice.toLocaleString()} تومان</div>
-  {oldPrice && oldPrice > newPrice && (
-    <div className="flex items-center gap-2">
-      <span className="line-through text-gray-500">{oldPrice.toLocaleString()} تومان</span>
-      <span className="rounded bg-red-100 px-2 py-0.5 text-xs text-red-600">{discount}% تخفیف</span>
-    </div>
-  )}
-</div>; */
 }

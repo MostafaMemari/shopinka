@@ -35,7 +35,9 @@ export default function DesktopBasketItem({ item }: ItemCardBasketProp) {
         </Link>
 
         <div className="flex items-center gap-x-2 text-sm text-text/60">
-          <CartItemAttributes count={item.count} type={item.type} attributes={attributes} />
+          <div>تعداد: {item.count}</div>
+
+          <CartItemAttributes type={item.type} attributes={attributes} />
         </div>
 
         <div className="flex items-center justify-between gap-x-2">
