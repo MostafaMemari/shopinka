@@ -19,8 +19,6 @@ export const useCartLogic = ({ product }: ProductCardLogicProps) => {
   const { cart, addToCart, isAddingToCart } = useCart();
   const [existingProduct, setExistingProduct] = useState<CartItemState | undefined>();
 
-  console.log(cart);
-
   const isVariableProduct = product.type === 'VARIABLE';
 
   useEffect(() => {

@@ -6,7 +6,7 @@ import DesktopBasketItem from './DesktopBasketItem';
 import { formatPrice } from '@/utils/formatter';
 import CartIconTotalQuantity from '../CartIconTotalQuantity';
 import { useRouter } from 'next/navigation';
-import { ChevronLeft, ShoppingCart } from 'lucide-react';
+import { ChevronLeft } from 'lucide-react';
 import { useCart } from '../../hooks/useCart';
 
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
@@ -31,55 +31,45 @@ export default function BasketDropdown() {
   };
 
   return (
-    <>
-      {isLogin ? (
-        <HoverCard openDelay={40} closeDelay={150}>
-          <HoverCardTrigger>
-            <Link href="/checkout/cart">
-              <CartIconTotalQuantity />
+    <HoverCard openDelay={40} closeDelay={150}>
+      <HoverCardTrigger>
+        <CartIconTotalQuantity />
+      </HoverCardTrigger>
+
+      <HoverCardContent className={cn('w-[350px]')} sideOffset={10}>
+        <>
+          <div className="flex items-center justify-between pb-2">
+            <span className="text-sm text-text/90">{cartItems?.length || 0} مورد</span>
+            <Link className="flex items-center gap-x-1 text-sm text-primary" href="/checkout/cart">
+              <span>مشاهده سبد خرید</span>
+              <ChevronLeft className="h-5 w-5" />
             </Link>
-          </HoverCardTrigger>
+          </div>
 
-          <HoverCardContent className={cn('w-[350px]')} sideOffset={10}>
-            <>
-              <div className="flex items-center justify-between pb-2">
-                <span className="text-sm text-text/90">{cartItems?.length || 0} مورد</span>
-                <Link className="flex items-center gap-x-1 text-sm text-primary" href="/checkout/cart">
-                  <span>مشاهده سبد خرید</span>
-                  <ChevronLeft className="h-5 w-5" />
-                </Link>
+          <ScrollArea dir="ltr" className="h-60">
+            <ul className="space-y-2 divide-y p-3 pl-1">
+              {cartItems.map((item) => (
+                <li key={item.id}>
+                  <DesktopBasketItem item={item} />
+                </li>
+              ))}
+            </ul>
+          </ScrollArea>
+
+          <div className="flex items-center justify-between border-t pt-3">
+            <div className="flex flex-col items-center gap-y-1">
+              <span className="text-sm text-text/60">جمع سبد خرید</span>
+              <div className="text-text/90">
+                <span className="font-bold">{formatPrice(payablePrice)}</span>
+                <span className="text-sm"> تومان</span>
               </div>
-
-              <ScrollArea dir="ltr" className="h-60">
-                <ul className="space-y-2 divide-y p-3 pl-1">
-                  {cartItems.map((item) => (
-                    <li key={item.id}>
-                      <DesktopBasketItem item={item} />
-                    </li>
-                  ))}
-                </ul>
-              </ScrollArea>
-
-              <div className="flex items-center justify-between border-t pt-3">
-                <div className="flex flex-col items-center gap-y-1">
-                  <span className="text-sm text-text/60">جمع سبد خرید</span>
-                  <div className="text-text/90">
-                    <span className="font-bold">{formatPrice(payablePrice)}</span>
-                    <span className="text-sm"> تومان</span>
-                  </div>
-                </div>
-                <PrimaryButton className="w-1/2 text-sm" onClick={handleBasketClick} isLoading={isLoadingContinueToCard}>
-                  ثبت سفارش
-                </PrimaryButton>
-              </div>
-            </>
-          </HoverCardContent>
-        </HoverCard>
-      ) : (
-        <Link href="/checkout/cart">
-          <CartIconTotalQuantity />
-        </Link>
-      )}
-    </>
+            </div>
+            <PrimaryButton className="w-1/2 text-sm" onClick={handleBasketClick} isLoading={isLoadingContinueToCard}>
+              ثبت سفارش
+            </PrimaryButton>
+          </div>
+        </>
+      </HoverCardContent>
+    </HoverCard>
   );
 }

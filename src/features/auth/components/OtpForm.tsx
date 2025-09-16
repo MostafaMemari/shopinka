@@ -20,11 +20,7 @@ import { VerifyOtpResponse } from '../AuthType';
 import { ApiResponse } from '@/service/api';
 
 interface InputOTPFormProps {
-  verifyOtp: UseMutateFunction<
-    ApiResponse<VerifyOtpResponse>, // نوع داده‌ای که mutation برمی‌گردونه
-    Error, // نوع خطا
-    { mobile: string; otp: string } // ورودی تابع
-  >;
+  verifyOtp: UseMutateFunction<ApiResponse<VerifyOtpResponse>, Error, { mobile: string; otp: string }>;
   ref: React.Ref<HTMLFormElement>;
 }
 
@@ -69,16 +65,17 @@ function InputOTPForm({ verifyOtp, ref }: InputOTPFormProps) {
       { mobile, otp: values.otp },
       {
         onSuccess: (response) => {
-          console.log('otp form => ', response);
-          dispatch(setOtpSentAt(Date.now()));
-          form.reset();
+          if (response.success) {
+            toast.success('ورود شما با موفقیت انجام شد');
+            form.reset();
+          } else {
+            setError(response.message);
+            form.reset();
+            setTimeout(() => inputRef.current?.focus(), 0);
+          }
         },
 
-        onError: (error: Error) => {
-          setError(error.message);
-          form.reset();
-          setTimeout(() => inputRef.current?.focus(), 0);
-        },
+        onError: (error: Error) => {},
       },
     );
   };

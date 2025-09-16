@@ -63,13 +63,15 @@ const getNewAccessToken = async () => {
     try {
       const res = await refreshToken();
       if (res.success) {
-        const newAccessToken = res?.data?.data;
+        const newAccessToken = res?.data?.accessToken;
 
         if (!newAccessToken) throw new Error('No access token returned');
 
         await setCookie(COOKIE_NAMES.ACCESS_TOKEN, newAccessToken);
         return newAccessToken;
       }
+
+      return null;
     } catch (refreshErr) {
       await deleteCookie(COOKIE_NAMES.ACCESS_TOKEN);
       await deleteCookie(COOKIE_NAMES.REFRESH_TOKEN);

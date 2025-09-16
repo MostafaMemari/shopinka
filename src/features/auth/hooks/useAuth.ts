@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { loginFailure, loginSuccess, logout } from '@/store/slices/authSlice';
 import { signout, sendOtp, verifyOtp } from '@/features/auth/authService';
 import { toast } from 'sonner';
-import { clearOtp } from '@/store/slices/otpSlice';
+import { clearOtp, setOtpSentAt } from '@/store/slices/otpSlice';
 import { closeDialog } from '@/store/slices/authDialogSlice';
 import { usePathname, useRouter } from 'next/navigation';
 
@@ -36,9 +36,9 @@ export const useAuth = () => {
         dispatch(
           loginSuccess({ full_name: response.data.user.fullName ?? '', mobile: response.data.user.mobile, role: response.data.user.role }),
         );
+        dispatch(setOtpSentAt(Date.now()));
         dispatch(clearOtp());
         dispatch(closeDialog());
-        toast.success('ورود شما با موفقیت انجام شد');
 
         queryClient.invalidateQueries({ queryKey: [QueryKeys.User] });
       } else {

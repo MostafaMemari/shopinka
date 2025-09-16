@@ -41,8 +41,11 @@ export const verifyOtp = async ({ mobile, otp }: { mobile: string; otp: string }
     const user = await getMe();
 
     return {
-      ...res.data,
-      user,
+      ...res,
+      data: {
+        ...res.data,
+        user: user.success ? user.data : undefined,
+      },
     };
   }
 
