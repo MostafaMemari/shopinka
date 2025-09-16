@@ -14,23 +14,23 @@ export default function DesktopBasketItem({ item }: ItemCardBasketProp) {
   const productUrl = `/product/${item.slug}`;
 
   return (
-    <div className="flex gap-x-2 py-5">
+    <div className="flex items-center gap-x-3 py-3 border-b border-gray-100">
       <div className="relative min-w-fit">
-        <Link href={productUrl}>
+        <Link href={productUrl} className="min-w-fit">
           <Image
             alt={item.title}
-            className="h-[120px] w-[120px]"
+            className="h-16 w-16 object-cover rounded"
             src={item?.thumbnail ?? ''}
-            width={120}
-            height={120}
+            width={64}
+            height={64}
             loading="lazy"
             unoptimized
           />
         </Link>
       </div>
 
-      <div className="w-full space-y-1.5">
-        <Link className="line-clamp-2 h-12" href={productUrl}>
+      <div className="flex-1 min-w-0 space-y-1">
+        <Link href={productUrl} className="text-sm font-medium text-gray-900 truncate block">
           {item.title}
         </Link>
 
@@ -41,11 +41,48 @@ export default function DesktopBasketItem({ item }: ItemCardBasketProp) {
         <div className="flex items-center justify-between gap-x-2">
           <BasketItemPrice salePrice={item.salePrice * item.count} basePrice={item.basePrice * item.count} />
 
-          <div className="w-28">
-            <CartControls product={item} />
+          <div className="w-24">
+            <CartControls className="h-10" product={item} />
           </div>
         </div>
       </div>
     </div>
   );
 }
+
+// export default function DesktopBasketItem({ item }: ItemCardBasketProp) {
+//   const attributes = item.type === 'VARIABLE' && item.attributeValues ? item.attributeValues : [];
+//   const productUrl = `/product/${item.slug}`;
+
+//   return (
+//     <div className="flex items-center gap-x-3 py-3 border-b border-gray-100">
+//       <Link href={productUrl} className="min-w-fit">
+//         <Image
+//           alt={item.title}
+//           className="h-16 w-16 object-cover rounded"
+//           src={item?.thumbnail ?? ''}
+//           width={64}
+//           height={64}
+//           loading="lazy"
+//           unoptimized
+//         />
+//       </Link>
+
+//       <div className="flex-1 min-w-0">
+//         <Link href={productUrl} className="text-sm font-medium text-gray-900 truncate block">
+//           {item.title}
+//         </Link>
+//         <div className="text-xs text-gray-500 mt-1">
+//           <CartItemAttributes count={item.count} type={item.type} attributes={attributes} />
+//         </div>
+//       </div>
+
+//       <div className="flex items-center gap-x-4">
+//         <BasketItemPrice salePrice={item.salePrice * item.count} basePrice={item.basePrice * item.count} />
+//         <div className="w-20">
+//           <CartControls product={item} />
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }

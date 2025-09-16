@@ -40,8 +40,11 @@ export const getCart = async (): Promise<ApiResponse<CartState>> => {
     const mappedItems = mapCartResponseToCartItemState(res.data.items);
 
     return {
-      ...res.data,
-      items: mappedItems,
+      ...res,
+      data: {
+        ...res.data,
+        items: mappedItems,
+      },
     };
   }
 
