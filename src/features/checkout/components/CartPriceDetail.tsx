@@ -36,38 +36,39 @@ export default function CartPriceDetail({ selectedAddressId, selectedShippingIte
   };
 
   return (
-    <div className="col-span-12 md:col-span-4">
-      <>
-        <MobileCartSticky position="bottom">
-          <div className="flex justify-between items-center w-full">
-            <div className="w-1/2">
-              <PrimaryButton
-                onClick={handleCreatePayment}
-                disabled={isCheckoutDisabled}
-                isLoading={isCreatePaymentLoading}
-                className="w-full"
-              >
-                {isCheckoutDisabled ? 'لطفاً آدرس را انتخاب کنید' : 'پرداخت'}
-              </PrimaryButton>
-            </div>
+    <>
+      <MobileCartSticky position="bottom">
+        <div className="flex justify-between items-center w-full">
+          <div className="w-1/2">
+            <PrimaryButton
+              onClick={handleCreatePayment}
+              disabled={isCheckoutDisabled}
+              isLoading={isCreatePaymentLoading}
+              className="w-full"
+            >
+              {isCheckoutDisabled ? 'لطفاً آدرس را انتخاب کنید' : 'پرداخت'}
+            </PrimaryButton>
+          </div>
 
-            <div className="w-1/2 p-2 flex flex-col justify-between items-end">
-              <div className="text-xs font-light text-text/70 lg:text-base">مبلغ قابل پرداخت</div>
-              <div className="text-primary">
-                <span className="text-base font-semibold lg:text-lg lg:font-bold">{formatPrice(cart.payablePrice + shippingPrice)}</span>
-                <span className="text-xs font-light lg:text-sm lg:font-medium">تومان</span>
-              </div>
+          <div className="w-1/2 p-2 flex flex-col justify-between items-end">
+            <div className="text-xs font-light text-text/70 lg:text-base">مبلغ قابل پرداخت</div>
+            <div className="text-primary">
+              <span className="text-base font-semibold lg:text-lg lg:font-bold">{formatPrice(cart.payablePrice + shippingPrice)}</span>
+              <span className="text-xs font-light lg:text-sm lg:font-medium">تومان</span>
             </div>
           </div>
-        </MobileCartSticky>
+        </div>
+      </MobileCartSticky>
 
+      <div className="flex flex-col gap-4">
         <CartSummary
           totalQuantity={totalQuantity}
-          payablePrice={payablePrice + shippingPrice}
           totalDiscountPrice={totalDiscountPrice}
-          shippingCost={shippingPrice}
+          shippingPrice={shippingPrice}
           totalPrice={totalPrice}
-        >
+        />
+
+        <CartSummary payablePrice={payablePrice + shippingPrice}>
           <PrimaryButton
             type="submit"
             className="w-full"
@@ -78,7 +79,7 @@ export default function CartPriceDetail({ selectedAddressId, selectedShippingIte
             {isCheckoutDisabled ? 'لطفاً آدرس را انتخاب کنید' : 'پرداخت'}
           </PrimaryButton>
         </CartSummary>
-      </>
-    </div>
+      </div>
+    </>
   );
 }
