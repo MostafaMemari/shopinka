@@ -54,14 +54,14 @@ function CheckoutPageView() {
 
   return (
     <>
-      <div className="col-span-12 md:col-span-9">
+      <div className="col-span-12 lg:col-span-9">
         <Card className="p-4">
           <AddressSection onAddressSelect={setSelectedAddressId} />
           <DeliverySection onShippingSelect={setSelectedShippingItem} />
         </Card>
       </div>
 
-      <div className="col-span-12 md:col-span-3">
+      <div className="col-span-12 lg:col-span-3">
         <CartPriceDetail cart={cart} selectedAddressId={selectedAddressId} selectedShippingItem={selectedShippingItem} />
       </div>
     </>

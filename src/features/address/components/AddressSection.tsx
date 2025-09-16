@@ -6,6 +6,7 @@ import { useAddress } from '@/features/address/useAddress';
 import { AddressCardSkeleton } from './AddressCardSkeleton';
 import { CreateAddressDialogDrawer } from './CreateAddressDialogDrawer';
 import { MapPin } from 'lucide-react';
+import AddressNewCard from './AddressNewCard';
 
 export interface Option {
   value: string;
@@ -32,15 +33,18 @@ export default function AddressSection({ onAddressSelect }: AddressSectionProps)
           <MapPin className="h-5 w-5 text-primary" />
           آدرس تحویل سفارش
         </h3>
-
-        <CreateAddressDialogDrawer />
       </div>
 
       <fieldset className="space-y-4 grid grid-cols-1">
         {isLoading ? (
           Array.from({ length: 2 }, (_, index) => <AddressCardSkeleton key={index} />)
         ) : addresses.length ? (
-          addresses.map((item) => <AddressItem key={item.id} item={item} />)
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
+            {addresses.map((item) => (
+              <AddressItem key={item.id} item={item} />
+            ))}
+            <CreateAddressDialogDrawer />
+          </div>
         ) : (
           <p className="text-sm text-gray-500">هیچ آدرسی ثبت نشده است</p>
         )}

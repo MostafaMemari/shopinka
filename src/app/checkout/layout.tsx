@@ -11,7 +11,7 @@ export default function Layout({ children }: Readonly<{ children: React.ReactNod
       <main className="pb-14 pt-22 lg:pt-36">
         <div className="container">
           <div className="relative">
-            <div className="grid grid-cols-12 gap-2 lg:gap-6">{children}</div>
+            <div className="grid grid-cols-12 gap-2">{children}</div>
           </div>
         </div>
       </main>

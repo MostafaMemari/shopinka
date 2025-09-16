@@ -2,15 +2,14 @@
 
 import * as React from 'react';
 
-import { Button } from '@/components/ui/button';
 import { useMediaQuery } from '@/hooks/use-media-query';
-import { MapPinPlus } from 'lucide-react';
 import { useState } from 'react';
 import AddressForm from './AddressForm';
 import { COMPONENT_BREAKPOINTS } from '@/constants';
 import Dialog from '@/components/common/Dialog';
 import MobileDrawer from '@/components/common/Drawer';
 import PrimaryButton from '@/components/common/PrimaryButton';
+import AddressNewCard from './AddressNewCard';
 
 export function CreateAddressDialogDrawer() {
   const [open, setOpen] = useState(false);
@@ -32,11 +31,7 @@ export function CreateAddressDialogDrawer() {
       <Dialog
         open={open}
         onOpenChange={setOpen}
-        trigger={
-          <Button className="cursor-pointer">
-            <MapPinPlus /> ثبت آدرس جدید
-          </Button>
-        }
+        trigger={<AddressNewCard />}
         title="افزودن آدرس جدید"
         actions={
           <PrimaryButton type="submit" className="flex-1" onClick={handleSubmit} isLoading={isLoadingSubmit}>
@@ -51,11 +46,7 @@ export function CreateAddressDialogDrawer() {
 
   return (
     <MobileDrawer
-      trigger={
-        <Button className="cursor-pointer">
-          <MapPinPlus /> ثبت آدرس جدید
-        </Button>
-      }
+      trigger={<AddressNewCard />}
       open={open}
       onOpenChange={setOpen}
       title="افزودن آدرس جدید"
