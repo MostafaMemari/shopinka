@@ -42,8 +42,6 @@ export const useAuth = () => {
 
         queryClient.invalidateQueries({ queryKey: [QueryKeys.User] });
       } else {
-        console.log('error in useAuth.ts: ', response);
-
         const message = response.message;
 
         dispatch(loginFailure(message));
