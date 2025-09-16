@@ -35,7 +35,7 @@ export default function DeliverySection({ onShippingSelect }: DeliverySectionPro
         </h2>
       </div>
 
-      <fieldset className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <fieldset className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
         {isLoading
           ? Array.from({ length: 2 }, (_, index) => <ShippingCardSkeleton key={index} />)
           : shippings.map((item) => {

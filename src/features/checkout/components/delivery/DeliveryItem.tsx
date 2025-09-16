@@ -1,8 +1,8 @@
-import { Card, CardContent, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { ShippingItem } from '@/features/shippings/ShippingType';
 import { formatPrice } from '@/utils/formatter';
-import { Square, SquareCheckBig, Tag, Timer } from 'lucide-react';
+import { Circle, CircleCheckBig, Square, SquareCheckBig, Tag, Timer } from 'lucide-react';
 import React from 'react';
 
 interface DeliveryItemProps {
@@ -18,7 +18,7 @@ function DeliveryItem({ item, selected, setSelected, onShippingSelect }: Deliver
   return (
     <Card
       className={cn(
-        'cursor-pointer transition-all p-4',
+        'border p-4 transition-all cursor-pointer',
         {
           'border-primary bg-primary/10 shadow-md': isChecked,
           'border-border bg-card hover:border-muted-foreground/50': !isChecked,
@@ -32,13 +32,14 @@ function DeliveryItem({ item, selected, setSelected, onShippingSelect }: Deliver
         onShippingSelect(item);
       }}
     >
-      <CardContent className="flex flex-col p-0 gap-4">
-        <CardTitle className="flex gap-2">
-          {isChecked ? <SquareCheckBig size={20} /> : <Square size={20} />}
-
+      <CardHeader className={cn('px-0', isChecked && 'text-primary font-bold')}>
+        <div className="flex items-center gap-2 text-sm">
+          {isChecked ? <CircleCheckBig size={18} /> : <Circle size={18} />}
           <span>{item.name}</span>
-        </CardTitle>
+        </div>
+      </CardHeader>
 
+      <CardContent className="flex flex-col p-0 gap-4">
         <div className="flex flex-col gap-1">
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <Tag size={16} className="text-muted-foreground" />
