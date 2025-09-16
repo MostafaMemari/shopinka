@@ -1,4 +1,3 @@
-import CheckoutProgress from '@/features/checkout/components/CheckoutProgress';
 import OrderNotFound from '@/features/payment/components/OrderNotFound';
 import PaymentActions from '@/features/payment/components/PaymentActions';
 import PaymentDetails from '@/features/payment/components/PaymentDetails';
@@ -33,7 +32,6 @@ export default async function PaymentResult({ searchParams }: PageProps) {
 
   return (
     <>
-      <CheckoutProgress currentStep="payment" />
       <div className="col-span-12">
         <div className="min-h-[320px] flex items-center justify-center">
           <div className="mx-auto w-full max-w-xl rounded-lg bg-background shadow p-6 flex flex-col items-center gap-y-8">

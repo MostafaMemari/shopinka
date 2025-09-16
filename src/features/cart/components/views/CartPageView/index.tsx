@@ -104,7 +104,7 @@ function CartPageView() {
         </div>
       </MobileCartSticky>
 
-      <div className="col-span-12 md:col-span-8">
+      <div className="col-span-12 md:col-span-9">
         <Card className="p-4 min-h-[300px]">
           <div className="flex items-center justify-between gap-x-2 pb-4">
             <h1 className="flex items-center gap-x-4 text-sm xs:text-base md:text-lg">
@@ -130,16 +130,19 @@ function CartPageView() {
         </Card>
       </div>
 
-      <CartSummary
-        totalQuantity={totalQuantity}
-        payablePrice={cart.payablePrice}
-        totalDiscountPrice={cart.totalDiscountPrice}
-        totalPrice={cart.totalPrice}
-      >
-        <PrimaryButton onClick={handleNextCartShipping} className="w-full" isLoading={isLoadingContinue}>
-          ادامه فرایند خرید
-        </PrimaryButton>
-      </CartSummary>
+      <div className="col-span-12 md:col-span-3">
+        <CartSummary
+          totalQuantity={totalQuantity}
+          payablePrice={cart.payablePrice}
+          totalDiscountPrice={cart.totalDiscountPrice}
+          totalPrice={cart.totalPrice}
+          shippingNote="هزینه‌ی ارسال در ادامه بر اساس آدرس، زمان و نحوه‌ی ارسال انتخابی شما‌ محاسبه و به این مبلغ اضافه خواهد شد"
+        >
+          <PrimaryButton onClick={handleNextCartShipping} className="w-full" isLoading={isLoadingContinue}>
+            ادامه فرایند خرید
+          </PrimaryButton>
+        </CartSummary>
+      </div>
 
       <ConfirmDialog
         open={confirmDialogDrawer.value}
