@@ -7,7 +7,7 @@ interface PaymentDetailsProps {
 }
 
 const PaymentDetails = ({ trackingCode, paymentDate, amount }: PaymentDetailsProps) => (
-  <Card className="w-full">
+  <Card className="w-full border">
     <CardContent className="p-4">
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between md:gap-6">
         <div className="flex flex-col items-center gap-1 text-sm md:text-base">

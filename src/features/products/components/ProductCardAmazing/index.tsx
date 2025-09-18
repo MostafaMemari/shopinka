@@ -4,7 +4,7 @@ import { FC } from 'react';
 import Link from 'next/link';
 import ProductImage from './ProductImage';
 import { Product } from '../../ProductType';
-import ProductPriceAmazing from './ProductPriceAmazing';
+import ProductPrice from '../ProductCard/ProductPrice';
 
 interface Props {
   product: Product;
@@ -57,7 +57,7 @@ const ProductCardAmazing: FC<Props> = ({ product }) => {
             <h3>{productName}</h3>
           </Link>
         </div>
-        <ProductPriceAmazing salePrice={salePrice} basePrice={basePrice} />
+        <ProductPrice salePrice={salePrice} basePrice={basePrice} />
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       </div>
     </div>

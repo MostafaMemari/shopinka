@@ -1,3 +1,4 @@
+import TomanIcon from '@/components/common/svg/TomanIcon';
 import { Badge } from '@/components/ui/badge';
 import { calculateDiscount } from '@/utils/calculateDiscount';
 import { formatPrice } from '@/utils/formatter';
@@ -21,13 +22,16 @@ const ProductPrice: FC<Props> = ({ basePrice, salePrice }) => {
           </div>
           <div className="flex items-center justify-between">
             <div>
-              <Badge variant="destructive" className="w-9 rounded-full bg-accent-foreground py-px text-center text-sm text-white">
+              <Badge
+                variant="destructive"
+                className="w-9 rounded-tr-full rounded-tl-full rounded-br-full rounded-bl-sm bg-accent-foreground py-px text-center text-sm text-white shadow-md"
+              >
                 %{discount}
               </Badge>
             </div>
-            <div className="text-sm font-bold text-primary md:text-base">
+            <div className="flex items-center gap-1 text-sm font-bold text-primary md:text-base">
               {salePrice && formatPrice(salePrice)}
-              {salePrice && <span className="text-xs font-light md:text-sm"> تومان</span>}
+              <TomanIcon className="w-5 h-5" />
             </div>
           </div>
         </>
@@ -38,10 +42,10 @@ const ProductPrice: FC<Props> = ({ basePrice, salePrice }) => {
             <div></div>
             <div className="text-sm font-bold text-primary md:text-base">
               {basePrice ? (
-                <>
+                <div className="flex items-center gap-1">
                   {formatPrice(basePrice)}
-                  <span className="text-xs font-light md:text-sm"> تومان</span>
-                </>
+                  <TomanIcon className="w-5 h-5" />
+                </div>
               ) : (
                 <span className="text-xs font-light md:text-sm">ناموجود</span>
               )}
