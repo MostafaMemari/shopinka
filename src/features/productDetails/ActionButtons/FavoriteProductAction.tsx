@@ -22,7 +22,9 @@ function FavoriteProductAction({ productId, isTooltip = false, className }: Favo
   const { isLogin, isLoading } = useAppSelector((state) => state.auth);
   const dispatch = useDispatch();
 
-  const { data: isFavoriteProduct, refetch, isLoading: isFavoriteLoading } = useProductFavorite({ productId, isLogin });
+  const { data, refetch, isLoading: isFavoriteLoading } = useProductFavorite({ productId, isLogin });
+
+  const isFavoriteProduct = data?.data;
 
   const { favoriteToggle, isToggleFavoriteLoading } = useToggleFavorite();
 

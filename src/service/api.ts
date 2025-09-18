@@ -4,10 +4,11 @@ import { type MappedResponseType, ofetch, type FetchOptions } from 'ofetch';
 import 'server-only';
 
 import { COOKIE_NAMES } from '@/types/constants';
-import { deleteCookie, getCookie, setCookie } from '@/utils/cookie';
+import { getCookie, setCookie } from '@/utils/cookie';
 import { refreshToken } from './refreshToken';
 
 let isRefreshingPromise: Promise<string | null> | null = null;
+let pendingRequests: Array<(token: string | null) => void> = []; // برای ذخیره درخواست‌های منتظر
 
 export type ApiResponse<T> = { success: true; data: T } | { success: false; status: number; message: string };
 
@@ -31,10 +32,7 @@ export async function shopApiFetch<T = any, R extends 'json' | 'text' = 'json'>(
   options: FetchOptions<R> = {},
 ): Promise<ApiResponse<MappedResponseType<R, T>>> {
   try {
-    console.log('request.........................=> ', request);
-
     const res = await api<T, R>(request, options);
-
     return { success: true, data: res };
   } catch (err: any) {
     const status = err?.response?.status;
@@ -46,11 +44,12 @@ export async function shopApiFetch<T = any, R extends 'json' | 'text' = 'json'>(
       if (newAccessToken) {
         const headers = new Headers(options.headers as HeadersInit);
         headers.set('Authorization', `Bearer ${newAccessToken}`);
-
-        const retryRes = await api<T, R>(request, { ...options, headers });
-        return { success: true, data: retryRes };
-      } else {
-        throw new Error('Unauthorized: Unable to refresh token');
+        try {
+          const retryRes = await api<T, R>(request, { ...options, headers });
+          return { success: true, data: retryRes };
+        } catch (retryErr: any) {
+          return { success: false, status: retryErr?.response?.status || 500, message: retryErr?.message || 'خطای درخواست مجدد' };
+        }
       }
     }
 
@@ -59,7 +58,12 @@ export async function shopApiFetch<T = any, R extends 'json' | 'text' = 'json'>(
 }
 
 const getNewAccessToken = async () => {
-  if (isRefreshingPromise) return isRefreshingPromise;
+  // اگر در حال رفرش هستیم، به لیست انتظار اضافه شو
+  if (isRefreshingPromise) {
+    return new Promise<string | null>((resolve) => {
+      pendingRequests.push(resolve);
+    });
+  }
 
   isRefreshingPromise = (async () => {
     try {
@@ -71,18 +75,23 @@ const getNewAccessToken = async () => {
         if (!newAccessToken) throw new Error('No access token returned');
 
         await setCookie(COOKIE_NAMES.ACCESS_TOKEN, newAccessToken);
+
+        // پاسخ به تمام درخواست‌های منتظر
+        pendingRequests.forEach((resolve) => resolve(newAccessToken));
+        pendingRequests = []; // پاک کردن لیست انتظار
         return newAccessToken;
       }
 
+      // در صورت عدم موفقیت رفرش
+      pendingRequests.forEach((resolve) => resolve(null));
+      pendingRequests = [];
       return null;
     } catch (refreshErr) {
-      console.log('reffffffffffffffffff error', refreshErr);
-
-      await deleteCookie(COOKIE_NAMES.ACCESS_TOKEN);
-      await deleteCookie(COOKIE_NAMES.REFRESH_TOKEN);
+      pendingRequests.forEach((resolve) => resolve(null));
+      pendingRequests = [];
       return null;
     } finally {
-      isRefreshingPromise = null;
+      isRefreshingPromise = null; // ریست کردن پرامیس
     }
   })();
 
