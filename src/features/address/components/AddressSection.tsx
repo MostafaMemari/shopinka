@@ -46,7 +46,7 @@ export default function AddressSection({ onAddressSelect }: AddressSectionProps)
             <CreateAddressDialogDrawer />
           </div>
         ) : (
-          <p className="text-sm text-gray-500">هیچ آدرسی ثبت نشده است</p>
+          <CreateAddressDialogDrawer />
         )}
       </fieldset>
     </div>

@@ -15,7 +15,7 @@ interface PreviewCardProps {
 
 function PreviewCard({ slug, name, imageUrl, quantity, onClick }: PreviewCardProps) {
   return (
-    <Card className="p-px mb-0.5">
+    <Card className="p-px mb-0.5 border-r shadow-sm hover:shadow-md transition-shadow">
       <div className="p-2 md:p-5">
         <div className="mb-2 md:mb-5" draggable={false}>
           <Link href={`/product/${slug}`}>
