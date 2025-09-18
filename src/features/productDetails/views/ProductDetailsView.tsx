@@ -89,21 +89,19 @@ const ProductDetailsView: FC<ProductDetailsViewProps> = ({ product }) => {
                     <ProductProperties />
                   </div>
 
-                  <div className="col-span-5 flex flex-col justify-between">
+                  <div className="col-span-5 flex flex-col justify-between gap-4">
                     <ProductStatusList />
 
-                    <div className="flex justify-between items-center w-full">
-                      {isValidProduct && (
-                        <>
-                          <div></div>
-                          <div className="text-end mb-4">
-                            <ProductDesktopDetailsPrice
-                              product={{ type: product.type, basePrice: product.basePrice ?? 0, salePrice: product.salePrice }}
-                            />
-                          </div>
-                        </>
-                      )}
-                    </div>
+                    {isValidProduct && (
+                      <div className="flex justify-between items-center w-full">
+                        <div></div>
+                        <div className="text-end">
+                          <ProductDesktopDetailsPrice
+                            product={{ type: product.type, basePrice: product.basePrice ?? 0, salePrice: product.salePrice }}
+                          />
+                        </div>
+                      </div>
+                    )}
 
                     {isValidProduct && (
                       <AddToCartButtonDesktop

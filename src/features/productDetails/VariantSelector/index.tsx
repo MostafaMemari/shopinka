@@ -50,6 +50,11 @@ export default function ProductVariants({ variants, attributes, productType, def
     }
   }, [selectedColor, selectedButton, variants, attributes, productType, dispatch]);
 
+  const onChangeColor = (color: string) => {
+    dispatch(setSelectedColor(color));
+    dispatch(setSelectedButton(null));
+  };
+
   const validButtons = useMemo(() => {
     const buttonAttrId = attributes.find((attr) => attr.type === 'BUTTON')?.id;
     const transformedButtons = transformVariants(variants, attributes).buttons;
@@ -106,7 +111,7 @@ export default function ProductVariants({ variants, attributes, productType, def
   if (productType === 'SIMPLE') return null;
 
   return (
-    <Card className="mb-6 p-4">
+    <Card className="mb-6 p-0">
       <div className="flex justify-between items-center mb-4">
         <h3 className="text-lg font-semibold text-gray-800">انتخاب مشخصات</h3>
         {(selectedColor || selectedButton) && (
@@ -118,14 +123,7 @@ export default function ProductVariants({ variants, attributes, productType, def
 
       {validColors.length > 0 && (
         <div className="mb-4">
-          <ColorSelector
-            label={colorLabel}
-            colors={validColors}
-            selectedColor={selectedColor}
-            onColorChange={(color) => {
-              dispatch(setSelectedColor(color));
-            }}
-          />
+          <ColorSelector label={colorLabel} colors={validColors} selectedColor={selectedColor} onColorChange={onChangeColor} />
           {selectedColor && validButtons.every((button) => button.isDisabled) && (
             <p className="text-sm text-gray-500 mt-2">این رنگ نوع برچسب ندارد.</p>
           )}
