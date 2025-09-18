@@ -5,6 +5,8 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { formatPrice } from '@/utils/formatter';
 import { Badge } from '@/components/ui/badge';
+import DiscountBadge from '@/components/common/DiscountBadge';
+import TomanIcon from '@/components/common/svg/TomanIcon';
 
 interface ProductPriceProps {
   product: {
@@ -28,32 +30,27 @@ export function ProductDesktopDetailsPrice({ product }: ProductPriceProps) {
     return 0;
   }, [salePrice, basePrice]);
 
-  if (isVariable && !selectedVariant) {
-    return null;
-  }
-  if (salePrice == null && basePrice == null) {
-    return null;
-  }
+  if (isVariable && !selectedVariant) return null;
+
+  if (salePrice == null && basePrice == null) return null;
 
   return (
     <div className="space-y-2">
       {discount > 0 && basePrice != null && salePrice ? (
-        <>
+        <div className="flex flex-col items-end gap-y-1">
           <div className="flex items-center gap-x-2">
-            <div>
-              <del className="text-sm font-normal text-muted-foreground">{formatPrice(basePrice)}</del>
-            </div>
-            <Badge variant="destructive">{discount}%</Badge>
+            <del className="text-lg font-normal text-muted-foreground">{formatPrice(basePrice)}</del>
+            <DiscountBadge discount={discount} />
           </div>
-          <div className="flex items-end gap-x-1">
+          <div className="flex items-center gap-x-1">
             <span className="text-2xl font-bold text-primary">{formatPrice(salePrice)}</span>
-            <span className="text-sm font-medium text-muted-foreground">تومان</span>
+            <TomanIcon className="w-6 h-6" />
           </div>
-        </>
+        </div>
       ) : (
-        <div className="flex items-end gap-x-1">
+        <div className="flex items-center gap-x-1">
           <span className="text-2xl font-bold text-primary">{formatPrice(basePrice ?? 0)}</span>
-          <span className="text-sm font-medium text-muted-foreground">تومان</span>
+          <TomanIcon className="w-6 h-6" />
         </div>
       )}
     </div>

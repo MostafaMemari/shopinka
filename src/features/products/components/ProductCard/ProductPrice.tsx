@@ -1,3 +1,4 @@
+import DiscountBadge from '@/components/common/DiscountBadge';
 import TomanIcon from '@/components/common/svg/TomanIcon';
 import { Badge } from '@/components/ui/badge';
 import { calculateDiscount } from '@/utils/calculateDiscount';
@@ -21,14 +22,7 @@ const ProductPrice: FC<Props> = ({ basePrice, salePrice }) => {
             <del className="text-sm text-text/60 decoration-warning md:text-base">{basePrice && formatPrice(basePrice)}</del>
           </div>
           <div className="flex items-center justify-between">
-            <div>
-              <Badge
-                variant="destructive"
-                className="w-9 rounded-tr-full rounded-tl-full rounded-br-full rounded-bl-sm bg-accent-foreground py-px text-center text-sm text-white shadow-md"
-              >
-                %{discount}
-              </Badge>
-            </div>
+            <DiscountBadge discount={discount} />
             <div className="flex items-center gap-1 text-sm font-bold text-primary md:text-base">
               {salePrice && formatPrice(salePrice)}
               <TomanIcon className="w-5 h-5" />

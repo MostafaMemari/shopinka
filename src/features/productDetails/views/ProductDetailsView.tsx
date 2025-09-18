@@ -10,7 +10,6 @@ import AddToCartButtonDesktop from '@/features/cart/components/AddToCartButton/A
 import { FC } from 'react';
 import ProductSku from '../ProductSku';
 import ProductCommentCount from '../../comments/components/ProductComments/ProductCommentCount';
-import ProductGuaranteeBadge from '../ProductGuaranteeBadge';
 
 import FavoriteProductAction from '../ActionButtons/FavoriteProductAction';
 import ShareProductAction from '../ActionButtons/ShareProductAction';
@@ -18,6 +17,7 @@ import MobileCartSticky from '@/components/common/MobileCartSticky';
 import { Card } from '@/components/ui/card';
 import { ProductDetails } from '@/features/products/ProductType';
 import { ProductDesktopDetailsPrice, ProductStickyMobilePrice } from '../ProductDetailsPrice';
+import { ProductStatusList } from '../ProductStatusList';
 
 interface ProductDetailsViewProps {
   product: ProductDetails;
@@ -44,7 +44,7 @@ const ProductDetailsView: FC<ProductDetailsViewProps> = ({ product }) => {
     <>
       <div className="hidden lg:block">
         <BreadcrumbContainer variant="boxed" items={[{ name: 'خانه', href: '/' }, ...breadcrumbItems]} />
-        <div className="mb-6">
+        <Card className="mb-6">
           <div className="mb-10 grid grow grid-cols-12 gap-4">
             <div className="col-span-4">
               <div className="hidden lg:block mb-4">
@@ -67,8 +67,8 @@ const ProductDetailsView: FC<ProductDetailsViewProps> = ({ product }) => {
               <div className="col-span-8 flex min-h-full flex-col">
                 {product.name && <h1 className="text-lg font-semibold pb-2">{product.name}</h1>}
 
-                <div className="grid grow grid-cols-2 gap-x-4">
-                  <div className="col-span-1">
+                <div className="grid grid-cols-12 gap-8 lg:grid">
+                  <div className="col-span-7">
                     <div className="mb-4 flex items-center gap-x-4 text-sm font-light text-primary">
                       <ProductSku sku={product.sku ?? ''} />
                       <span className="h-4 w-px rounded-full bg-background dark:bg-muted/10"></span>
@@ -85,52 +85,50 @@ const ProductDetailsView: FC<ProductDetailsViewProps> = ({ product }) => {
                         />
                       </div>
                     )}
+
+                    <ProductProperties />
                   </div>
 
-                  <div>
-                    <Card className="p-4">
-                      <ProductGuaranteeBadge />
+                  <div className="col-span-5 flex flex-col justify-between">
+                    <ProductStatusList />
 
-                      <div className="mb-6 flex justify-between items-start w-full">
-                        {isValidProduct ? (
-                          <div className="text-left">
+                    <div className="flex justify-between items-center w-full">
+                      {isValidProduct && (
+                        <>
+                          <div></div>
+                          <div className="text-end mb-4">
                             <ProductDesktopDetailsPrice
                               product={{ type: product.type, basePrice: product.basePrice ?? 0, salePrice: product.salePrice }}
                             />
                           </div>
-                        ) : (
-                          ''
-                        )}
-                      </div>
-
-                      {isValidProduct ? (
-                        <AddToCartButtonDesktop
-                          key={product.id}
-                          product={{
-                            id: product.id,
-                            name: product.name,
-                            slug: product.slug,
-                            basePrice: product.basePrice ?? 0,
-                            salePrice: product.salePrice ?? 0,
-                            mainImageUrl: product.mainImage?.fileUrl ?? null,
-                            type: product.type,
-                          }}
-                        />
-                      ) : (
-                        ''
+                        </>
                       )}
-                    </Card>
+                    </div>
+
+                    {isValidProduct && (
+                      <AddToCartButtonDesktop
+                        key={product.id}
+                        product={{
+                          id: product.id,
+                          name: product.name,
+                          slug: product.slug,
+                          basePrice: product.basePrice ?? 0,
+                          salePrice: product.salePrice ?? 0,
+                          mainImageUrl: product.mainImage?.fileUrl ?? null,
+                          type: product.type,
+                        }}
+                      />
+                    )}
                   </div>
                 </div>
-
-                <ProductProperties />
               </div>
             </div>
           </div>
+
           <div className="flex justify-between gap-4">
             <ProductGuarantees />
           </div>
-        </div>
+        </Card>
       </div>
 
       <div className="lg:hidden">
@@ -167,7 +165,7 @@ const ProductDetailsView: FC<ProductDetailsViewProps> = ({ product }) => {
                   </div>
                 )}
 
-                <ProductGuaranteeBadge />
+                <ProductStatusList />
 
                 {isValidProduct ? (
                   <MobileCartSticky position="bottom" className="p-1">
