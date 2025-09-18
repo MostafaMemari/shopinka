@@ -7,6 +7,7 @@ import { redirect } from 'next/navigation';
 import DeliveryAddress from '@/features/address/components/DeliveryAddress';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft } from 'lucide-react';
+import { Separator } from '@/components/ui/separator';
 
 type PageProps = {
   params: Promise<{ id: string }>;

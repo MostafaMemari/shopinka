@@ -24,7 +24,7 @@ const DeliveryAddress: React.FC<DeliveryAddressProps> = ({ address }) => {
         آدرس تحویل سفارش
       </h2>
 
-      <Card>
+      <Card className="border hover:shadow-lg transition-shadow duration-300">
         <CardContent className="flex flex-col gap-2">
           {address ? (
             <>

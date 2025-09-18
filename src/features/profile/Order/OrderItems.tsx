@@ -31,7 +31,7 @@ const OrderItems: React.FC<OrderItemsProps> = ({ items, itemCount }) => {
             item?.product?.mainImage?.fileUrl || item?.productVariant?.product?.mainImage?.fileUrl || '/images/no-image.webp';
 
           return (
-            <Card key={item.id}>
+            <Card key={item.id} className="border hover:shadow-lg transition-shadow duration-300">
               <CardContent>
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                   <div className="flex items-center gap-4">

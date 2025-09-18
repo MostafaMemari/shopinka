@@ -32,7 +32,7 @@ const OrderCard: React.FC<OrderCardProps> = ({ order }) => {
   const formattedTime = new Date(order.createdAt).toLocaleTimeString('fa-IR') || 'نامشخص';
 
   return (
-    <Card className="mt-6">
+    <Card className="mt-6 border hover:shadow-lg transition-shadow duration-300">
       <Link href={`/profile/orders/${order.id}`} aria-label={`مشاهده جزئیات سفارش ${order.orderNumber}`} className="block">
         <CardHeader className="flex items-center justify-between border-b mb-4">
           <div className={cn('flex items-center gap-2', config.headerColor)}>

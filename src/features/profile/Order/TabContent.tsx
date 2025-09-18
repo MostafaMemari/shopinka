@@ -1,9 +1,7 @@
 'use client';
 
-import { useState, useCallback } from 'react';
 import EmptyState from '../EmptyState';
 import ErrorState from '../ErrorState';
-import Pagination from '../Pagination';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 import { useOrder } from '@/features/orders/useOrders';
 import OrderCard from './OrderCard';
@@ -16,15 +14,9 @@ interface TabContentProps {
 const TabContent: React.FC<TabContentProps> = ({ tabId }) => {
   const { data, isLoading, error } = useOrder({ params: { status: tabId } });
 
-  const [currentPage, setCurrentPage] = useState(1);
-
   const orders = data?.items || [];
 
   const orderPager = data?.pager ?? { totalCount: 0, totalPages: 1 };
-
-  const handlePageChange = useCallback((page: number) => {
-    setCurrentPage(page);
-  }, []);
 
   return (
     <div id={`filter-${tabId}`} role="tabpanel" aria-labelledby={`filter-${tabId}-tab`}>
@@ -43,10 +35,6 @@ const TabContent: React.FC<TabContentProps> = ({ tabId }) => {
           </div>
         )}
       </div>
-
-      {orderPager?.totalCount > 0 && orderPager?.totalPages > 1 && (
-        <Pagination currentPage={currentPage} totalPages={orderPager?.totalPages} onPageChange={handlePageChange} />
-      )}
     </div>
   );
 };
