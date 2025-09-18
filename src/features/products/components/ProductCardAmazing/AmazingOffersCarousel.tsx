@@ -31,7 +31,7 @@ export default function AmazingProducts({ products }: AmazingProductsProps) {
         <CardHeader className="bg-gray-200 col-span-1 md:col-span-3 lg:col-span-2 flex flex-col justify-center items-start px-1">
           <div className="flex flex-row md:flex-col items-center gap-4 w-full">
             <Image
-              src="https://digikala.vimascript.ir/media/library/2025-01-27/1/file.1738002393.43484.webp"
+              src="/images/amazing-Carousel.webp"
               alt="blog"
               width={150}
               height={92}
