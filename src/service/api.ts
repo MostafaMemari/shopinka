@@ -31,6 +31,8 @@ export async function shopApiFetch<T = any, R extends 'json' | 'text' = 'json'>(
   options: FetchOptions<R> = {},
 ): Promise<ApiResponse<MappedResponseType<R, T>>> {
   try {
+    console.log('request.........................=> ', request);
+
     const res = await api<T, R>(request, options);
 
     return { success: true, data: res };
@@ -62,6 +64,7 @@ const getNewAccessToken = async () => {
   isRefreshingPromise = (async () => {
     try {
       const res = await refreshToken();
+
       if (res.success) {
         const newAccessToken = res?.data?.accessToken;
 
@@ -73,6 +76,8 @@ const getNewAccessToken = async () => {
 
       return null;
     } catch (refreshErr) {
+      console.log('reffffffffffffffffff error', refreshErr);
+
       await deleteCookie(COOKIE_NAMES.ACCESS_TOKEN);
       await deleteCookie(COOKIE_NAMES.REFRESH_TOKEN);
       return null;

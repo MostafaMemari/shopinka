@@ -7,7 +7,6 @@ import { redirect } from 'next/navigation';
 import DeliveryAddress from '@/features/address/components/DeliveryAddress';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft } from 'lucide-react';
-import { Separator } from '@/components/ui/separator';
 
 type PageProps = {
   params: Promise<{ id: string }>;
@@ -16,9 +15,7 @@ type PageProps = {
 async function Page({ params }: PageProps) {
   const { id } = await params;
 
-  const res = await getOrderById(Number(id)).catch(() => {
-    return null;
-  });
+  const res = await getOrderById(Number(id));
 
   if (!res?.success) return redirect('/');
 

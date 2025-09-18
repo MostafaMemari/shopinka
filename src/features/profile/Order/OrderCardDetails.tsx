@@ -4,9 +4,7 @@ import React from 'react';
 import RetryPaymentButton from '../../payment/components/RetryPaymentButton';
 import { RemainingTimeItem } from './RemainingTimeItem';
 import { formatPrice } from '@/utils/formatter';
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
-import { MapPinHouse } from 'lucide-react';
+import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 
 interface OrderCardDetailsProps {
