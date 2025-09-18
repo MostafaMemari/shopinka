@@ -9,6 +9,7 @@ import BannerSlider from '@/features/carousel/BannerSlider';
 import CarouselBlog from '@/features/blogs/components/CarouselBlog';
 import { getBanners } from '@/features/banners/bannersService';
 import CarouselProduct from '@/features/products/components/ProductCarousel';
+import AmazingProducts from '@/features/products/components/ProductCardAmazing/AmazingOffersCarousel';
 
 export default async function Home() {
   const [bannerts, discountProducts, newestProducts, blogs, categories] = await Promise.all([
@@ -21,8 +22,6 @@ export default async function Home() {
 
   return (
     <>
-      <div className="fixed inset-x-0 top-1/3 mx-auto h-1/3 w-1/4 bg-primary/50 blur-[400px]" />
-
       {bannerts.success && (
         <div className="w-full max-w-screen-xl mx-auto">
           <BannerSlider
@@ -32,6 +31,7 @@ export default async function Home() {
         </div>
       )}
 
+      {discountProducts.success && <AmazingProducts products={discountProducts.data.items} />}
       {/* <DesignShowcase /> */}
 
       {discountProducts.success && (

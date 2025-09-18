@@ -38,7 +38,7 @@ export default function NavigationMenuDesktop({ categories }: NavigationMenuWith
                   <TableOfContents className="w-4 h-4" /> دسته‌بندی‌ها
                 </div>
               </HoverCardTrigger>
-              <HoverCardContent align="start" className="w-[800px] p-0 mt-0.5 rounded-none rounded-b-2xl">
+              <HoverCardContent align="start" className="w-[800px] p-0 mt-0.5 rounded-none rounded-b-2xl" sideOffset={-2}>
                 <div className="flex h-[450px] max-h-[450px] w-full overflow-hidden">
                   <div className="w-48 bg-background overflow-y-auto main-scroll">
                     <ul dir="rtl">

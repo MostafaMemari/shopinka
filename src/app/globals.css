@@ -147,6 +147,17 @@ body {
   border-radius: var(--scrollbar-radius);
   border: var(--scrollbar-border);
 }
+/******************* Amazing carousel ***********************/
+.amazing-product-carousel:not(.swiper-initialized) {
+  opacity: 0;
+  visibility: hidden;
+  height: 0;
+}
+.amazing-product-carousel.swiper-initialized {
+  opacity: 1;
+  visibility: visible;
+  height: auto;
+}
 /******************* product carousel ***********************/
 .product-carousel:not(.swiper-initialized) {
   opacity: 0;
@@ -159,6 +170,7 @@ body {
   height: auto;
 }
 /******************* product carousel ***********************/
+
 .blog-carousel:not(.swiper-initialized) {
   opacity: 0;
   visibility: hidden;

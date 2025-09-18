@@ -29,8 +29,22 @@ export const productSwiperConfig = {
     460: { slidesPerView: 2.5, spaceBetween: 10 },
     640: { slidesPerView: 3, spaceBetween: 10 },
     768: { slidesPerView: 3.5, spaceBetween: 10 },
-    1024: { slidesPerView: 4.5, spaceBetween: 10 },
-    1380: { slidesPerView: 6, spaceBetween: 10 },
+    1024: { slidesPerView: 5.5, spaceBetween: 10 },
+    1380: { slidesPerView: 6.5, spaceBetween: 10 },
+  },
+};
+
+export const productSwiperConfigAmazing = {
+  slidesPerView: 0,
+  spaceBetween: 0,
+  breakpoints: {
+    360: { slidesPerView: 2, spaceBetween: 10 },
+    460: { slidesPerView: 2.5, spaceBetween: 10 },
+    640: { slidesPerView: 3, spaceBetween: 10 },
+    768: { slidesPerView: 3, spaceBetween: 0 },
+    1024: { slidesPerView: 4, spaceBetween: 0 },
+    1280: { slidesPerView: 5, spaceBetween: 0 },
+    1380: { slidesPerView: 6, spaceBetween: 0 },
   },
 };
 
