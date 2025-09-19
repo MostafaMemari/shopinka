@@ -10,6 +10,7 @@ import CarouselBlog from '@/features/blogs/components/CarouselBlog';
 import { getBanners } from '@/features/banners/bannersService';
 import CarouselProduct from '@/features/products/components/ProductCarousel';
 import AmazingProducts from '@/features/products/components/ProductCardAmazing/AmazingOffersCarousel';
+import DomingoHeroWithSwiper from '@/components/common/DesignShowcase';
 
 export default async function Home() {
   const [bannerts, discountProducts, newestProducts, blogs, categories] = await Promise.all([
@@ -22,14 +23,16 @@ export default async function Home() {
 
   return (
     <>
-      {bannerts.success && (
+      {/* {bannerts.success && (
         <div className="w-full max-w-screen-xl mx-auto">
           <BannerSlider
             mainSliderBanners={bannerts.data.items.filter((item) => item.type === 'MAIN_SLIDER')}
             sideBanners={bannerts.data.items.filter((item) => item.type === 'SIDE').slice(0, 2)}
           />
         </div>
-      )}
+      )} */}
+
+      <DomingoHeroWithSwiper />
 
       {discountProducts.success && <AmazingProducts products={discountProducts.data.items} />}
 

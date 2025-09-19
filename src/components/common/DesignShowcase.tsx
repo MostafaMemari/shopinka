@@ -10,12 +10,11 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import type SwiperCore from 'swiper';
 
-// Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/autoplay';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-// ... (آرایه designItems مثل قبل باقی می‌مونه)
 const designItems = [
   {
     id: 'instagram-posts',
@@ -136,7 +135,7 @@ export default function DomingoHeroWithSwiper() {
   const swiperRef = useRef<SwiperCore | null>(null);
 
   const getInitialSlideIndex = useCallback(() => {
-    return 0; // همیشه از اول شروع کن
+    return 0;
   }, []);
 
   useEffect(() => {
@@ -153,7 +152,7 @@ export default function DomingoHeroWithSwiper() {
   const activeColor = activeItem.color;
 
   return (
-    <section className="section relative flex flex-col gap-2 items-center justify-center pt-6 pb-4 sm:gap-6" dir="rtl">
+    <Card className="section relative flex flex-col gap-2 items-center justify-center pt-6 pb-4 sm:gap-6" dir="rtl">
       {/* متن بالا */}
       <div className="contents md:flex md:justify-evenly md:w-full md:min-w-[700px]">
         <div className="contents md:flex flex-col items-center justify-center gap-4 basis-1/3">
@@ -204,21 +203,12 @@ export default function DomingoHeroWithSwiper() {
           modules={[Autoplay]}
           autoplay={{ delay: 4000, disableOnInteraction: false }}
           loop={true}
+          centeredSlidesBounds={true}
           centeredSlides={true}
           initialSlide={getInitialSlideIndex()}
-          slidesPerView={3}
+          slidesPerView="auto"
           spaceBetween={12}
-          breakpoints={{
-            640: {
-              slidesPerView: 5,
-              spaceBetween: 16,
-            },
-            1024: {
-              slidesPerView: 7,
-              spaceBetween: 16,
-            },
-          }}
-          className="w-full max-w-5xl px-4"
+          className="w-full px-4"
         >
           {designItems.map((item, index) => {
             const isActive = index === activeIndex;
@@ -227,50 +217,56 @@ export default function DomingoHeroWithSwiper() {
               <SwiperSlide
                 key={item.id}
                 onClick={() => handleItemClick(index)}
-                className="!w-auto flex cursor-pointer basis-1/3 sm:basis-auto"
+                className="!w-[120px] sm:!w-[150px] flex cursor-pointer my-1"
               >
-                <div className={cn('p-1 transition-all duration-300', isActive ? 'scale-100 opacity-100' : 'scale-90 opacity-60')}>
-                  <Card
-                    className={cn(
-                      'h-[120px] sm:h-[180px] min-w-[100px] sm:min-w-[130px] border-2 transition-colors duration-300',
-                      isActive ? 'shadow-md' : 'border-transparent',
-                    )}
-                    style={{
-                      borderColor: isActive ? item.color : 'transparent',
-                    }}
-                  >
-                    <CardContent className="relative flex aspect-[3/4] flex-col items-center overflow-hidden p-1 pt-2">
-                      <p className="mb-2 text-center text-sm font-semibold" style={{ color: item.color }}>
-                        {item.title}
-                      </p>
-                      <div className="mt-auto aspect-square w-full rounded-full" style={{ backgroundColor: item.color }} />
-                      <Image src={item.thumbImage} alt={item.title} fill className="absolute inset-0 top-[2px] object-cover" />
-                    </CardContent>
-                  </Card>
-                </div>
+                <Card
+                  className={cn(
+                    'relative border-2 border-[var(--main-color)] transition-colors duration-300 p-0 overflow-visible',
+                    isActive &&
+                      'before:absolute before:inset-[-6px] before:rounded-[22px] before:opacity-50 before:content-[""] before:[box-shadow:inset_0_0_11px_11px_var(--light-color)]',
+                  )}
+                  style={
+                    {
+                      '--main-color': item.color,
+                      '--light-color': item.color,
+                    } as React.CSSProperties
+                  }
+                >
+                  <CardContent className="relative flex aspect-[3/4] flex-col items-center overflow-hidden p-1 pt-2">
+                    <p className="mb-2 text-center text-sm font-semibold" style={{ color: item.color }}>
+                      {item.title}
+                    </p>
+                    <div className="mt-auto aspect-square w-full rounded-full" style={{ backgroundColor: item.color }} />
+                    <Image src={item.thumbImage} alt={item.title} fill className="absolute inset-0 top-[2px] object-cover" />
+                  </CardContent>
+                </Card>
               </SwiperSlide>
             );
           })}
         </Swiper>
       </div>
 
-      {/* دکمه‌های ناوبری زیر آیتم فعال */}
-      <div className="flex gap-4 justify-center mt-4">
-        <button
+      <div className="hidden sm:flex gap-4 justify-center mt-4">
+        <Button
+          size="icon"
+          variant="default"
           onClick={() => swiperRef.current?.slidePrev()}
-          className="inline-flex items-center justify-center rounded-full w-10 h-10 text-white"
+          className="rounded-full w-10 h-10"
           style={{ background: activeColor }}
         >
-          ‹
-        </button>
-        <button
+          <ChevronRight className="h-5 w-5 text-white" />
+        </Button>
+
+        <Button
+          size="icon"
+          variant="default"
           onClick={() => swiperRef.current?.slideNext()}
-          className="inline-flex items-center justify-center rounded-full w-10 h-10 text-white"
+          className="rounded-full w-10 h-10"
           style={{ background: activeColor }}
         >
-          ›
-        </button>
+          <ChevronLeft className="h-5 w-5 text-white" />
+        </Button>
       </div>
-    </section>
+    </Card>
   );
 }
