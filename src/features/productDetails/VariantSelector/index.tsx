@@ -24,6 +24,10 @@ export default function ProductVariants({ variants, attributes, productType, def
   const { selectedColor, selectedButton, selectedVariant } = useSelector((state: RootState) => state.product);
 
   useEffect(() => {
+    if (!defaultVariantId) resetVariant();
+  }, []);
+
+  useEffect(() => {
     if (productType === 'VARIABLE' && defaultVariantId && !selectedVariant) {
       const { defaultColor, defaultButton, defaultVariant } = getDefaultSelections(variants, attributes, defaultVariantId);
       if (defaultVariant) {
@@ -100,6 +104,10 @@ export default function ProductVariants({ variants, attributes, productType, def
   }, [selectedColor, validButtons, selectedButton, dispatch]);
 
   const handleReset = () => {
+    resetVariant();
+  };
+
+  const resetVariant = () => {
     dispatch(setSelectedVariant(null));
     dispatch(setSelectedColor(null));
     dispatch(setSelectedButton(null));

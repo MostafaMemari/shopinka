@@ -5,7 +5,6 @@ import { ProductCardLogic } from '@/types/productCardLogic';
 import Link from 'next/link';
 import CartControls from '../CartControls';
 import { useCartLogic } from '../../hooks/useCartLogic';
-import { Loader2 } from 'lucide-react';
 import PrimaryButton from '@/components/common/PrimaryButton';
 
 interface AddToCartButtonDesktopProps {
