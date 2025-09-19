@@ -153,7 +153,6 @@ export default function DomingoHeroWithSwiper() {
 
   return (
     <Card className="section relative flex flex-col gap-2 items-center justify-center pt-6 pb-4 sm:gap-6" dir="rtl">
-      {/* متن بالا */}
       <div className="contents md:flex md:justify-evenly md:w-full md:min-w-[700px]">
         <div className="contents md:flex flex-col items-center justify-center gap-4 basis-1/3">
           <h1 className="text-xl md:text-2xl text-center -order-2">
@@ -195,20 +194,18 @@ export default function DomingoHeroWithSwiper() {
         />
       </div>
 
-      {/* اسلایدر پایین */}
-      <div className="relative select-none w-full mx-auto mt-6">
+      <div className="relative select-none w-full mx-auto mt-6 flex justify-center">
         <Swiper
           onSwiper={(swiper) => (swiperRef.current = swiper)}
           onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
           modules={[Autoplay]}
-          autoplay={{ delay: 4000, disableOnInteraction: false }}
-          loop={true}
-          centeredSlidesBounds={true}
+          autoplay={designItems.length > 1 ? { delay: 4000, disableOnInteraction: false } : false}
+          loop={designItems.length > 1}
           centeredSlides={true}
-          initialSlide={getInitialSlideIndex()}
+          centeredSlidesBounds={true}
           slidesPerView="auto"
           spaceBetween={12}
-          className="w-full px-4"
+          className="flex"
         >
           {designItems.map((item, index) => {
             const isActive = index === activeIndex;
