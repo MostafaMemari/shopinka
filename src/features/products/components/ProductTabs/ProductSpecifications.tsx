@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Drawer, DrawerContent, DrawerHeader } from '@/components/ui/drawer';
 import { ChevronLeft } from 'lucide-react';
+import MobileDrawer from '@/components/common/Drawer';
 
 interface ProductSpecificationsProps {
   specifications: Array<{
@@ -69,28 +70,21 @@ export default function ProductSpecifications({ specifications }: ProductSpecifi
         </div>
       )}
 
-      <Drawer open={isDrawerOpen} onOpenChange={onOpenChange}>
-        <DrawerContent>
-          <DrawerHeader>
-            <h2 className="text-lg font-bold">مشخصات محصول</h2>
-          </DrawerHeader>
-          <div className="p-4">
-            {specifications?.length > 0 &&
-              specifications.map((spec, index) => (
-                <li key={index} className="grid grid-cols-3 gap-x-2 lg:grid-cols-5">
-                  <div className="col-span-1 text-text/60">{spec.title}</div>
-                  <div className="col-span-2 border-b pb-4 text-text/90 lg:col-span-4">
-                    <ul className="space-y-4">
-                      {spec.values.map((value, valueIndex) => (
-                        <li key={valueIndex}>{value}</li>
-                      ))}
-                    </ul>
-                  </div>
-                </li>
-              ))}
-          </div>
-        </DrawerContent>
-      </Drawer>
+      <MobileDrawer open={isDrawerOpen} onOpenChange={onOpenChange} title="مشخصات محصول">
+        {specifications?.length > 0 &&
+          specifications.map((spec, index) => (
+            <li key={index} className="grid grid-cols-3 gap-x-2 lg:grid-cols-5">
+              <div className="col-span-1 text-text/60">{spec.title}</div>
+              <div className="col-span-2 border-b pb-4 text-text/90 lg:col-span-4">
+                <ul className="space-y-4">
+                  {spec.values.map((value, valueIndex) => (
+                    <li key={valueIndex}>{value}</li>
+                  ))}
+                </ul>
+              </div>
+            </li>
+          ))}
+      </MobileDrawer>
     </div>
   );
 }

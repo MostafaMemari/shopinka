@@ -32,7 +32,6 @@ export default async function Home() {
       )}
 
       {discountProducts.success && <AmazingProducts products={discountProducts.data.items} />}
-      {/* <DesignShowcase /> */}
 
       {discountProducts.success && (
         <CarouselProduct key="discount" title="فروش ویژه" products={discountProducts.data.items} viewAllLink="/shop?hasDiscount=true" />
