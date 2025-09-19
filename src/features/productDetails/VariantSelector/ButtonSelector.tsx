@@ -3,6 +3,7 @@
 import * as React from 'react';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
+import { cn } from '@/lib/utils';
 
 interface ButtonOption {
   slug: string;
@@ -30,10 +31,11 @@ export default function ButtonSelector({ options, selectedOption, onOptionChange
             <RadioGroupItem value={option.slug} id={option.slug} disabled={option.isDisabled} className="peer sr-only" />
             <Label
               htmlFor={option.slug}
-              className={`cursor-pointer rounded-full border px-4 py-2 text-sm shadow-sm transition-colors
-                ${option.isDisabled ? 'opacity-50 cursor-not-allowed' : ''}
-                ${selectedOption === option.slug ? 'border-primary text-primary' : 'border-border'}
-              `}
+              className={cn('cursor-pointer rounded-full border-2 px-4 py-2 text-sm shadow-sm transition-colors', {
+                'opacity-50 cursor-not-allowed': option.isDisabled,
+                'border-primary text-primary': selectedOption === option.slug,
+                'border-border': selectedOption !== option.slug,
+              })}
             >
               {option.label}
             </Label>

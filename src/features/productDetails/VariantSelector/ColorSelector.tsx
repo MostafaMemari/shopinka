@@ -4,6 +4,7 @@ import * as React from 'react';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { IColor } from '../utils/productVariants';
+import { cn } from '@/lib/utils';
 
 interface Props {
   colors: IColor[];
@@ -25,10 +26,11 @@ export default function ColorSelector({ colors, selectedColor, onColorChange, la
             <RadioGroupItem value={color.id} id={color.id} disabled={color.isDisabled} className="peer sr-only" />
             <Label
               htmlFor={color.id}
-              className={`flex cursor-pointer items-center gap-x-2 rounded-full border-2 px-3 py-2 shadow-sm transition-colors 
-                ${color.isDisabled ? 'opacity-50 cursor-not-allowed' : ''}
-                ${selectedColor === color.id ? 'border-primary' : 'border-border'}
-              `}
+              className={cn('flex cursor-pointer items-center gap-x-2 rounded-full border-2 px-3 py-2 shadow-sm transition-colors', {
+                'opacity-50 cursor-not-allowed': color.isDisabled,
+                'border-primary': selectedColor === color.id,
+                'border-border': selectedColor !== color.id,
+              })}
             >
               <div
                 className="h-6 w-6 rounded-full border"
