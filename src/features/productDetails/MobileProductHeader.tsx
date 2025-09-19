@@ -31,7 +31,7 @@ const MobileHeader = ({ productId }: MobileHeaderProps) => {
   };
 
   return (
-    <div className="fixed top-2 right-0 z-50 lg:hidden w-full">
+    <div className="fixed top-0 right-0 z-50 lg:hidden w-full">
       <div className="flex items-center justify-between py-2 px-4">
         {!isMounted ? (
           <>

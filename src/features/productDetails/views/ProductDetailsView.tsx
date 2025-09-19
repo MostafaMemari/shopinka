@@ -18,6 +18,7 @@ import { Card } from '@/components/ui/card';
 import { ProductDetails } from '@/features/products/ProductType';
 import { ProductDesktopDetailsPrice, ProductStickyMobilePrice } from '../ProductDetailsPrice';
 import { ProductStatusList } from '../ProductStatusList';
+import { Separator } from '@/components/ui/separator';
 
 interface ProductDetailsViewProps {
   product: ProductDetails;
@@ -149,7 +150,7 @@ const ProductDetailsView: FC<ProductDetailsViewProps> = ({ product }) => {
                 <ProductSku sku={product.sku ?? ''} />
                 <ProductCommentCount key={product.id} productId={product.id} />
               </div>
-              <div className="my-4 h-px w-full bg-background"></div>
+              <Separator className="my-4" />
 
               <div className="mb-6 space-y-4">
                 {isVariableProduct && (
@@ -165,7 +166,7 @@ const ProductDetailsView: FC<ProductDetailsViewProps> = ({ product }) => {
 
                 <ProductStatusList />
 
-                {isValidProduct ? (
+                {isValidProduct && (
                   <MobileCartSticky position="bottom" className="p-1">
                     <div className="flex justify-between items-center w-full">
                       <div className="w-1/2">
@@ -196,8 +197,6 @@ const ProductDetailsView: FC<ProductDetailsViewProps> = ({ product }) => {
                       )}
                     </div>
                   </MobileCartSticky>
-                ) : (
-                  ''
                 )}
               </div>
             </div>
