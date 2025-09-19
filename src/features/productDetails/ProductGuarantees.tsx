@@ -26,10 +26,10 @@ export default function ProductGuarantees() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 gap-3 w-full">
       {guarantees.map((item, index) => (
-        <Card key={index} className="border rounded-xl py-2">
+        <Card key={index} className="border p-2">
           <CardContent className="flex items-center gap-x-3 p-2 text-sm text-muted-foreground">
             <item.icon className="h-6 w-6 text-primary" />
-            <span>{item.text}</span>
+            <span className="text-xs">{item.text}</span>
           </CardContent>
         </Card>
       ))}
