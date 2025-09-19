@@ -94,7 +94,7 @@ export default function DomingoHeroWithSwiper() {
         </Swiper>
       </div>
 
-      <div className="hidden sm:flex gap-4 justify-center mt-4">
+      <div className="hidden sm:flex gap-4 justify-center">
         <Button
           size="icon"
           variant="default"

@@ -22,7 +22,7 @@ export default async function Home() {
   ]);
 
   return (
-    <>
+    <div className="space-y-4">
       {/* {bannerts.success && (
         <div className="w-full max-w-screen-xl mx-auto">
           <BannerSlider
@@ -47,6 +47,6 @@ export default async function Home() {
       <CategoryCirclesBanners basePath={`/product-category/${categories.slug}`} categories={categories.children} />
 
       {blogs.success && <CarouselBlog title="آخرین مقالات" blogs={blogs.data.items} viewAllLink="/shop?sortBy=newest" />}
-    </>
+    </div>
   );
 }

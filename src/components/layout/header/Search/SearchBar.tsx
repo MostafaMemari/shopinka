@@ -22,7 +22,7 @@ const SearchBar = () => {
     staleTime: 5 * 60 * 1000,
   });
 
-  const productItems: Product[] = data?.items || [];
+  const productItems: Product[] = data?.data?.items || [];
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent | TouchEvent) => {
@@ -56,7 +56,7 @@ const SearchBar = () => {
           onFocus={() => setIsOpen(true)}
           onClick={() => setIsOpen(true)}
           placeholder="جستجو کنید ..."
-          className="flex w-[500px] md:w-[350px] bg-transparent border-none px-3 py-2 outline-none placeholder:text-sm placeholder:text-text/60 focus:ring-0 text-text/90"
+          className="flex w-[350px] lg:w-[500px] bg-transparent border-none px-3 py-2 outline-none placeholder:text-sm placeholder:text-text/60 focus:ring-0 text-text/90"
         />
       </div>
 

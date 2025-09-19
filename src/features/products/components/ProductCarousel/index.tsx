@@ -27,7 +27,7 @@ const ProductCarousel: FC<ProductCarouselProps> = ({ title, viewAllLink, viewAll
   }, []);
 
   return (
-    <div className="mx-auto mb-8">
+    <div className="mx-auto">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg font-medium md:text-xl lg:text-2xl">{title}</h3>
         <Link

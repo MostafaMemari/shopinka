@@ -43,7 +43,7 @@ const CarouselBlog: FC<CarouselBlogProps> = ({ title, viewAllLink, viewAllText =
   }, []);
 
   return (
-    <div className="mx-auto relative mb-6">
+    <div className="mx-auto relative">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg font-medium md:text-xl lg:text-2xl">{title}</h3>
         <Link
