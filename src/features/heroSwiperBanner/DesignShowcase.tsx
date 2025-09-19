@@ -15,12 +15,10 @@ import 'swiper/css/autoplay';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { designItems } from './heroItems';
 import HeroSwiperCard from './HeroSwiperCard';
-import { useRouter } from 'next/navigation';
 
 export default function DomingoHeroWithSwiper() {
   const [activeIndex, setActiveIndex] = useState(0);
   const swiperRef = useRef<SwiperCore | null>(null);
-  const router = useRouter();
 
   const getInitialSlideIndex = useCallback(() => {
     return 0;
@@ -49,7 +47,7 @@ export default function DomingoHeroWithSwiper() {
           <p className="text-center text-sm sm:leading-6 max-w-[250px]">همین حالا ماشینت رو خاص کن!</p>
           <Link className="w-3/5 text-center sm:w-10/12 my-2 sm:my-4 max-w-[200px] sm:max-w-[250px]" href={`${activeItem.link}`}>
             <Button
-              className="inline-flex items-center justify-center whitespace-nowrap text-sm text-primary-foreground hover:bg-primary/90 h-15 rounded-2xl px-8 w-full sm:text-lg font-bold"
+              className="inline-flex items-center justify-center whitespace-nowrap text-sm text-primary-foreground hover:bg-primary/90 px-8 w-full sm:text-lg font-bold"
               style={{ background: activeColor }}
             >
               مشاهده برچسب‌ها
