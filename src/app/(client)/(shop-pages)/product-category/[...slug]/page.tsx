@@ -54,14 +54,14 @@ export default async function ShopPage({ searchParams, params }: PageProps) {
 
   const resProduct = await getProducts({
     ...query,
-    categoryIds: query.categoryIds ? query.categoryIds : [resCategory.data.id],
+    categoryIds: query.categoryIds ? query.categoryIds : [resCategory.data.items[0].id],
   });
 
   if (!resProduct.success) return;
 
   const { items: products, pager } = resProduct.data;
 
-  const category = resCategory.data;
+  const category = resCategory.data.items[0];
 
   return (
     <>

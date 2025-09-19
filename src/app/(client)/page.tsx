@@ -10,7 +10,7 @@ import CarouselBlog from '@/features/blogs/components/CarouselBlog';
 import { getBanners } from '@/features/banners/bannersService';
 import CarouselProduct from '@/features/products/components/ProductCarousel';
 import AmazingProducts from '@/features/products/components/ProductCardAmazing/AmazingOffersCarousel';
-import DomingoHeroWithSwiper from '@/components/common/DesignShowcase';
+import DomingoHeroWithSwiper from '@/features/heroSwiperBanner/DesignShowcase';
 
 export default async function Home() {
   const [bannerts, discountProducts, newestProducts, blogs, categories] = await Promise.all([
