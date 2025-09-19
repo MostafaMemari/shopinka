@@ -13,6 +13,7 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/h
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useState } from 'react';
 import PrimaryButton from '@/components/common/PrimaryButton';
+import TomanIcon from '@/components/common/svg/TomanIcon';
 
 export default function BasketDropdown() {
   const { cart } = useCart();
@@ -59,7 +60,8 @@ export default function BasketDropdown() {
                 <span className="text-sm text-text/60">جمع سبد خرید</span>
                 <div className="text-text/90">
                   <span className="font-bold">{formatPrice(payablePrice)}</span>
-                  <span className="text-sm"> تومان</span>
+
+                  <TomanIcon className="w-4 h-4" />
                 </div>
               </div>
               <PrimaryButton className="w-1/2 text-sm" onClick={handleBasketClick} isLoading={isLoadingContinueToCard}>

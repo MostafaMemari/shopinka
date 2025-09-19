@@ -5,7 +5,7 @@ import { getCountOrders } from '@/features/orders/orderService';
 import ClientTabsList from '@/features/orders/components/ClientTabsList';
 
 interface PageProps {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
 const TABS = [
@@ -18,7 +18,9 @@ type TabId = (typeof TABS)[number]['id'];
 const DEFAULT_TAB: TabId = 'current';
 
 async function page({ searchParams }: PageProps) {
-  const activeTabParam = searchParams.activeTab;
+  const params = await searchParams;
+  const activeTabParam = params.activeTab;
+
   const isValidTab = activeTabParam && TABS.some((tab) => tab.id === activeTabParam);
   const tabId: TabId = (isValidTab ? activeTabParam : DEFAULT_TAB) as TabId;
 

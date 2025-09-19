@@ -21,6 +21,7 @@ import { useCart } from '@/features/cart/hooks/useCart';
 import ConfirmDialog from '@/components/common/ConfirmDialog';
 import { ShoppingBasket, Trash2 } from 'lucide-react';
 import { Card } from '@/components/ui/card';
+import TomanIcon from '@/components/common/svg/TomanIcon';
 
 function CartPageView() {
   const router = useRouter();
@@ -86,7 +87,7 @@ function CartPageView() {
 
   return (
     <>
-      <MobileCartSticky position="bottom">
+      <MobileCartSticky position="bottom" className="px-1">
         <div className="flex justify-between items-center w-full">
           <div className="w-1/2">
             <PrimaryButton onClick={handleNextCartShipping} className="w-full" isLoading={isLoadingContinue}>
@@ -96,9 +97,9 @@ function CartPageView() {
 
           <div className="w-1/2 p-2 flex flex-col justify-between items-end">
             <div className="text-xs font-light text-text/70 lg:text-base">جمع سبد خرید</div>
-            <div className="text-primary">
+            <div className="text-primary flex items-center gap-1">
               <span className="text-base font-semibold lg:text-lg lg:font-bold">{formatPrice(cart.payablePrice)}</span>
-              <span className="text-xs font-light lg:text-sm lg:font-medium">تومان</span>
+              <TomanIcon className="w-4 h-4" />
             </div>
           </div>
         </div>

@@ -8,6 +8,7 @@ import { usePayment } from '@/features/payment/hooks/usePayment';
 import MobileCartSticky from '../../../components/common/MobileCartSticky';
 import { formatPrice } from '@/utils/formatter';
 import { CartState } from '@/types/cartType';
+import TomanIcon from '@/components/common/svg/TomanIcon';
 
 interface CartPriceDetailProps {
   selectedAddressId: number | null;
@@ -52,9 +53,9 @@ export default function CartPriceDetail({ selectedAddressId, selectedShippingIte
 
           <div className="w-1/2 p-2 flex flex-col justify-between items-end">
             <div className="text-xs font-light text-text/70 lg:text-base">مبلغ قابل پرداخت</div>
-            <div className="text-primary">
+            <div className="text-primary flex items-center gap-1">
               <span className="text-base font-semibold lg:text-lg lg:font-bold">{formatPrice(cart.payablePrice + shippingPrice)}</span>
-              <span className="text-xs font-light lg:text-sm lg:font-medium">تومان</span>
+              <TomanIcon className="w-4 h-4" />
             </div>
           </div>
         </div>
