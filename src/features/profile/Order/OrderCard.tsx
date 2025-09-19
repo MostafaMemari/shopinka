@@ -13,6 +13,7 @@ import { cn } from '@/lib/utils';
 import { ChevronLeft } from 'lucide-react';
 import { RemainingTimeItem } from './RemainingTimeItem';
 import { formatPrice } from '@/utils/formatter';
+import { Separator } from '@/components/ui/separator';
 
 interface OrderCardProps {
   order: OrderItem;
@@ -32,15 +33,17 @@ const OrderCard: React.FC<OrderCardProps> = ({ order }) => {
   const formattedTime = new Date(order.createdAt).toLocaleTimeString('fa-IR') || 'نامشخص';
 
   return (
-    <Card className="mt-6 border hover:shadow-lg transition-shadow duration-300">
+    <Card className="border hover:shadow-lg transition-shadow duration-300">
       <Link href={`/profile/orders/${order.id}`} aria-label={`مشاهده جزئیات سفارش ${order.orderNumber}`} className="block">
-        <CardHeader className="flex items-center justify-between border-b mb-4 px-0">
+        <CardHeader className="flex items-center justify-between px-0">
           <div className={cn('flex items-center gap-2', config.headerColor)}>
             {config.headerIcon}
             <span className="font-semibold text-base md:text-lg">{config.headerLabel}</span>
           </div>
           <ChevronLeft size={25} />
         </CardHeader>
+
+        <Separator className="my-4" />
 
         <CardContent className="flex flex-col lg:flex-row gap-6">
           <div className="flex-1 flex flex-col gap-3 md:flex-row md:flex-wrap md:gap-x-6 md:gap-y-4">
@@ -93,16 +96,21 @@ const OrderCard: React.FC<OrderCardProps> = ({ order }) => {
         </CardContent>
       </Link>
 
+      <Separator className="my-4" />
+
       {order.items?.length > 0 && (
-        <div className="pt-4 px-4 border-t border-gray-200 dark:border-gray-700 mt-4">
+        <div className="border-gray-200 dark:border-gray-700">
           <ProductSlider orderProductItems={order.items} />
         </div>
       )}
 
       {order.status === 'PENDING' && (
-        <CardFooter className="border-t border-gray-200 dark:border-gray-700 text-left">
-          <RetryPaymentButton orderId={order.id} />
-        </CardFooter>
+        <>
+          <Separator className="my-4" />
+          <CardFooter className="border-gray-200 dark:border-gray-700 text-left p-0">
+            <RetryPaymentButton orderId={order.id} />
+          </CardFooter>
+        </>
       )}
     </Card>
   );

@@ -28,7 +28,7 @@ async function Page({ params }: PageProps) {
       <div className="mb-4 lg:mb-10 flex flex-col items-center justify-between gap-y-6 sm:flex-row">
         <DashboardHeader title={`جزئیات سفارش #${order.orderNumber}`} />
         <Link href="/profile/orders">
-          <Button variant="outline" size="sm">
+          <Button variant="outline" size="lg">
             بازگشت
             <ChevronLeft />
           </Button>
