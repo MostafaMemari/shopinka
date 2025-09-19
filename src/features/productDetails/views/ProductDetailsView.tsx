@@ -169,7 +169,7 @@ const ProductDetailsView: FC<ProductDetailsViewProps> = ({ product }) => {
                 <ProductStatusList />
 
                 {isValidProduct && (
-                  <MobileCartSticky position="bottom" className="p-1">
+                  <MobileCartSticky position="bottom" className="p-0">
                     <div className="flex justify-between items-center w-full">
                       <div className="w-1/2">
                         <AddToCartButtonMobile

@@ -87,13 +87,12 @@ export function ProductStickyMobilePrice({ product }: ProductPriceProps) {
         <>
           <div className="flex items-center gap-1">
             <span className="line-through text-gray-400">{formatPrice(basePrice ?? 0)}</span>
-            <Badge variant="destructive" className="px-1 py-0 text-[10px]">
-              %{discount}
-            </Badge>
+
+            <DiscountBadge discount={discount} className="px-1 py-0 text-[10px] w-7" />
           </div>
           <div className="flex items-center gap-1">
             <span className="font-bold text-base">{formatPrice(salePrice)}</span>
-            <span className="text-gray-500">تومان</span>
+            <TomanIcon className="w-4 h-4" />
           </div>
         </>
       ) : (
