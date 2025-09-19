@@ -6,6 +6,7 @@ import Link from 'next/link';
 import CartControls from '../CartControls';
 import { useCartLogic } from '../../hooks/useCartLogic';
 import { Loader2 } from 'lucide-react';
+import PrimaryButton from '@/components/common/PrimaryButton';
 
 interface AddToCartButtonDesktopProps {
   product: ProductCardLogic;
@@ -37,15 +38,17 @@ export function AddToCartButtonDesktop({ product }: AddToCartButtonDesktopProps)
           </div>
         </div>
       ) : (
-        <Button
+        <PrimaryButton
           type="button"
           onClick={addToCart}
           disabled={(isVariableProduct && !isVariantSelected) || isAddingToCart}
-          className="flex w-full items-center justify-center gap-2"
+          isLoading={isAddingToCart}
+          className="flex w-full items-center justify-center gap-2
+             shadow-md shadow-primary/50 transition-all duration-300 
+             hover:shadow-none "
         >
-          {isAddingToCart && <Loader2 className="h-4 w-4 animate-spin" aria-label="loading" />}
           {getButtonText()}
-        </Button>
+        </PrimaryButton>
       )}
     </div>
   );
