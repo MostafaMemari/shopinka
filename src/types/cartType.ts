@@ -19,9 +19,6 @@ export interface CartState {
   payablePrice: number;
   totalDiscountPrice: number;
   totalPrice: number;
-  createdAt: string;
-  updatedAt: string;
-  userId: number;
 }
 
 export interface CartItem {

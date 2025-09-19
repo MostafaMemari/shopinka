@@ -52,7 +52,7 @@ const ProfileMenu = () => {
           disabled: isLogoutLoading,
         },
       ]}
-      className="border-t-2 border-t-primary"
+      className="rounded-[var(--radius)]"
     />
   );
 };

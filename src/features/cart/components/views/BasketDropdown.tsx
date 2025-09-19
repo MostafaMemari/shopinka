@@ -34,7 +34,7 @@ export default function BasketDropdown() {
         <CartIconTotalQuantity />
       </HoverCardTrigger>
 
-      <HoverCardContent className={cn('w-[350px] border-t-2 border-t-primary')} sideOffset={10}>
+      <HoverCardContent className={cn('w-[350px]')} sideOffset={10}>
         {cartItems.length > 0 ? (
           <>
             <div className="flex items-center justify-between pb-2">
