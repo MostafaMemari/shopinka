@@ -45,7 +45,7 @@ export default function DomingoHeroWithSwiper() {
             </div>
           </h1>
           <p className="text-center text-sm sm:leading-6 max-w-[250px]">همین حالا ماشینت رو خاص کن!</p>
-          <Link className="w-3/5 text-center sm:w-10/12 my-2 sm:my-4 max-w-[200px] sm:max-w-[250px]" href={`${activeItem.link}`}>
+          <Link className="w-3/5 text-center sm:w-10/12 sm:my-4 max-w-[200px] sm:max-w-[250px]" href={`${activeItem.link}`}>
             <Button
               className="inline-flex items-center justify-center whitespace-nowrap text-sm text-primary-foreground hover:bg-primary/90 px-8 w-full sm:text-lg font-bold"
               style={{ background: activeColor }}
