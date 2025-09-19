@@ -1,4 +1,3 @@
-import BreadcrumbContainer from '../BreadcrumbContainer';
 import ProductGallery from '../ProductGallery/ProductGallery';
 import ProductGuarantees from '../ProductGuarantees';
 
@@ -19,6 +18,7 @@ import { ProductDetails } from '@/features/products/ProductType';
 import { ProductDesktopDetailsPrice, ProductStickyMobilePrice } from '../ProductDetailsPrice';
 import { ProductStatusList } from '../ProductStatusList';
 import { Separator } from '@/components/ui/separator';
+import Breadcrumb from '@/components/common/Breadcrumb';
 
 interface ProductDetailsViewProps {
   product: ProductDetails;
@@ -36,7 +36,7 @@ const ProductDetailsView: FC<ProductDetailsViewProps> = ({ product }) => {
         .map((c) => c.slug)
         .join('/')}`;
       return {
-        name: product.categories[index].name,
+        label: product.categories[index].name,
         href,
       };
     }) || [];
@@ -44,7 +44,7 @@ const ProductDetailsView: FC<ProductDetailsViewProps> = ({ product }) => {
   return (
     <>
       <div className="hidden lg:block">
-        <BreadcrumbContainer variant="boxed" items={[{ name: 'خانه', href: '/' }, ...breadcrumbItems]} />
+        <Breadcrumb variant="boxed" items={[{ label: 'خانه', href: '/' }, ...breadcrumbItems]} />
         <Card className="mb-6">
           <div className="mb-10 grid grow grid-cols-12 gap-4">
             <div className="col-span-4">
@@ -141,7 +141,8 @@ const ProductDetailsView: FC<ProductDetailsViewProps> = ({ product }) => {
                 name: product.name,
               }}
             />
-            <BreadcrumbContainer variant="compact" items={[{ name: 'خانه', href: '/' }, ...breadcrumbItems]} />
+
+            <Breadcrumb variant="compact" items={[{ label: 'خانه', href: '/' }, ...breadcrumbItems]} />
           </div>
           <div>
             <div className="space-y-4">
@@ -150,6 +151,7 @@ const ProductDetailsView: FC<ProductDetailsViewProps> = ({ product }) => {
                 <ProductSku sku={product.sku ?? ''} />
                 <ProductCommentCount key={product.id} productId={product.id} />
               </div>
+
               <Separator className="my-4" />
 
               <div className="mb-6 space-y-4">
