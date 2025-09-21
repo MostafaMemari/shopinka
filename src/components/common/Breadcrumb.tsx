@@ -18,35 +18,33 @@ interface Props {
 const BreadcrumbContainer = ({ items, variant = 'boxed' }: Props) => {
   if (variant === 'boxed') {
     return (
-      <div className="mb-4">
-        <Card className="w-fit px-4 py-4">
-          <BreadcrumbShadcn>
-            <BreadcrumbList className="flex flex-wrap items-center justify-center gap-x-2 gap-y-4">
-              {items.map((item, index) => (
-                <React.Fragment key={index}>
-                  <BreadcrumbItem>
-                    <BreadcrumbLink asChild>
-                      <Link href={item.href} className="text-sm text-text/90 hover:underline">
-                        {item.label}
-                      </Link>
-                    </BreadcrumbLink>
-                  </BreadcrumbItem>
-                  {index < items.length - 1 && (
-                    <BreadcrumbSeparator>
-                      <ChevronLeft className="h-5 w-5 text-text/90" />
-                    </BreadcrumbSeparator>
-                  )}
-                </React.Fragment>
-              ))}
-            </BreadcrumbList>
-          </BreadcrumbShadcn>
-        </Card>
-      </div>
+      <Card className="w-fit px-4 py-4">
+        <BreadcrumbShadcn>
+          <BreadcrumbList className="flex flex-wrap items-center justify-center gap-x-2 gap-y-4">
+            {items.map((item, index) => (
+              <React.Fragment key={index}>
+                <BreadcrumbItem>
+                  <BreadcrumbLink asChild>
+                    <Link href={item.href} className="text-sm text-text/90 hover:underline">
+                      {item.label}
+                    </Link>
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                {index < items.length - 1 && (
+                  <BreadcrumbSeparator>
+                    <ChevronLeft className="h-5 w-5 text-text/90" />
+                  </BreadcrumbSeparator>
+                )}
+              </React.Fragment>
+            ))}
+          </BreadcrumbList>
+        </BreadcrumbShadcn>
+      </Card>
     );
   }
 
   return (
-    <div className="my-4 flex flex-wrap items-center gap-2">
+    <div className="flex flex-wrap items-center gap-2">
       <BreadcrumbShadcn>
         <BreadcrumbList className="flex flex-wrap items-center gap-2">
           {items.map((item, index) => (

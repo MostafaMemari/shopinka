@@ -53,28 +53,26 @@ export default function ProductTabs({ description, specifications, productId }: 
 
   return (
     <Card className="p-4">
-      <div className="mb-6">
-        <Tabs value={activeTab} onValueChange={handleTabChange}>
-          <TabsList className="flex overflow-x-auto scrollbar-thin scrollbar-thumb-gray-200 dark:scrollbar-thumb-zinc-800 w-full lg:w-2/4">
-            {tabs.map((tab) => (
-              <TabsTrigger key={tab.id} value={tab.id} className="flex items-center cursor-pointer bg-card gap-1">
-                <span>{tab.title}</span>
-                {tab.count !== undefined && tab.count > 0 && (
-                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs text-white dark:bg-emerald-600">
-                    {tab.count}
-                  </span>
-                )}
-              </TabsTrigger>
-            ))}
-          </TabsList>
-
+      <Tabs value={activeTab} onValueChange={handleTabChange}>
+        <TabsList className="flex overflow-x-auto scrollbar-thin scrollbar-thumb-gray-200 dark:scrollbar-thumb-zinc-800 w-full lg:w-2/4">
           {tabs.map((tab) => (
-            <TabsContent key={tab.id} value={tab.id}>
-              <div className="space-y-16 divide-y">{renderTabContent()}</div>
-            </TabsContent>
+            <TabsTrigger key={tab.id} value={tab.id} className="flex items-center cursor-pointer bg-card gap-1">
+              <span>{tab.title}</span>
+              {tab.count !== undefined && tab.count > 0 && (
+                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs text-white dark:bg-emerald-600">
+                  {tab.count}
+                </span>
+              )}
+            </TabsTrigger>
           ))}
-        </Tabs>
-      </div>
+        </TabsList>
+
+        {tabs.map((tab) => (
+          <TabsContent key={tab.id} value={tab.id}>
+            <div className="space-y-16 divide-y">{renderTabContent()}</div>
+          </TabsContent>
+        ))}
+      </Tabs>
     </Card>
   );
 }
