@@ -29,9 +29,9 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
   showClose = true,
 }) => {
   return (
-    <Drawer open={open} onOpenChange={onOpenChange}>
+    <Drawer open={open} onOpenChange={onOpenChange} repositionInputs={false}>
       {trigger && <DrawerTrigger asChild>{trigger}</DrawerTrigger>}
-      <DrawerContent className={cn('fixed inset-x-0 bottom-0 !h-auto mt-0 mb-0', className)}>
+      <DrawerContent className={cn('inset-x-0 !h-auto mt-0 mb-0', className)}>
         <DrawerHeader className="text-left pb-3 border-b mb-3">
           <DrawerTitle>{title}</DrawerTitle>
           {description && <p className="text-sm text-muted-foreground">{description}</p>}
@@ -41,11 +41,11 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
 
         {(actions || showClose) && (
           <DrawerFooter className="sticky bottom-0 left-0 right-0 border-t mt-1">
-            <div className="flex items-center justify-between gap-2">
-              {actions && <div className={`flex items-center gap-2 ${showClose ? 'w-2/3' : 'w-full'}`}>{actions}</div>}
+            <div className="flex flex-col items-center justify-between gap-2">
+              {actions && <div className={'flex items-center gap-2 w-full'}>{actions}</div>}
               {showClose && (
                 <DrawerClose asChild>
-                  <Button variant="secondary" className={actions ? 'w-1/3' : 'w-full'}>
+                  <Button size="lg" variant="outline" className="w-full">
                     بستن
                   </Button>
                 </DrawerClose>
