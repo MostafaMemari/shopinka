@@ -87,7 +87,7 @@ function CartPageView() {
 
   return (
     <>
-      <MobileCartSticky position="bottom" className="px-1">
+      <MobileCartSticky position="bottom">
         <div className="flex justify-between items-center w-full">
           <div className="w-1/2">
             <PrimaryButton onClick={handleNextCartShipping} className="w-full" isLoading={isLoadingContinue}>

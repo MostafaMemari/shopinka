@@ -3,7 +3,7 @@
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 
-import { Menu, Phone, X } from 'lucide-react';
+import { Menu, MenuIcon, Phone, X } from 'lucide-react';
 import { Button } from '../../ui/button';
 
 import MobileBottomNav from './MobileBottomNav';
@@ -29,10 +29,11 @@ const MobileLayout = ({ showHeader = true, showNav = true }: MobileLayoutProps) 
       {showHeader && (
         <MobileCartSticky position="top">
           <header>
-            <div className="flex items-center justify-between py-2 px-4 h-[60px]">
-              <button onClick={toggleMenu} className="cursor-pointer">
-                {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-              </button>
+            <div className="flex items-center justify-between py-2 h-[60px]">
+              <Button asChild onClick={toggleMenu} variant="ghost" size="sm" className="size-12 cursor-pointer">
+                <MenuIcon />
+              </Button>
+
               <MobileLogo />
 
               <Button asChild variant="ghost" size="sm" className="size-12 cursor-pointer">

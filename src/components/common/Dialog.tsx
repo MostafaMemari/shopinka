@@ -30,9 +30,9 @@ interface DialogProps {
 }
 
 const sizeMap: Record<DialogSize, string> = {
-  sm: 'max-w-sm',
-  md: 'max-w-md',
-  lg: 'max-w-2xl',
+  sm: 'sm:max-w-sm',
+  md: 'sm:max-w-md',
+  lg: 'sm:max-w-2xl',
 };
 
 const Dialog: FC<DialogProps> = ({
@@ -68,7 +68,7 @@ const Dialog: FC<DialogProps> = ({
             {actions}
             {showDefaultCloseButton && (
               <DialogClose asChild>
-                <Button variant="secondary" className="w-24">
+                <Button variant="outline" className="w-24">
                   بستن
                 </Button>
               </DialogClose>
