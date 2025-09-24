@@ -98,7 +98,9 @@ export function ProductStickyMobilePrice({ product }: ProductPriceProps) {
       ) : (
         <div className="flex items-center gap-1">
           <span className="font-bold text-base">{formatPrice(basePrice ?? 0)}</span>
-          <span className="text-gray-500">تومان</span>
+          <span className="text-gray-500">
+            <TomanIcon />
+          </span>
         </div>
       )}
     </div>

@@ -64,6 +64,7 @@ export const useCartLogic = ({ product }: ProductCardLogicProps) => {
         type: product.type,
         attributeValues: selectedVariant?.attributeValues ?? [],
       };
+
       addToCart(cartItem);
     }
   };

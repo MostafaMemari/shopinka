@@ -8,10 +8,10 @@ interface CartSummaryProps {
   totalPrice?: number;
   totalDiscountPrice?: number;
   payablePrice?: number;
-  points?: number; // امتیاز باشگاه مشتریان
-  shippingNote?: string; // متن یادداشت حمل‌ونقل
+  points?: number;
+  shippingNote?: string;
   shippingPrice?: number;
-  children?: ReactNode; // برای دکمه یا محتوای اضافی
+  children?: ReactNode;
 }
 
 const CartSummary: React.FC<CartSummaryProps> = ({
@@ -26,7 +26,7 @@ const CartSummary: React.FC<CartSummaryProps> = ({
   return (
     <Card>
       <CardContent className="p-0 divide-y divide-gray-200">
-        {totalQuantity && totalPrice && (
+        {totalQuantity != null && totalPrice != null && totalPrice > 0 && (
           <div className="flex justify-between items-center py-4">
             <span className="text-sm text-gray-600 font-medium">قیمت کالاها ({totalQuantity})</span>
             <div className="text-sm text-gray-900">
@@ -36,7 +36,7 @@ const CartSummary: React.FC<CartSummaryProps> = ({
           </div>
         )}
 
-        {totalDiscountPrice && totalDiscountPrice > 0 && (
+        {totalDiscountPrice != null && totalDiscountPrice > 0 && (
           <div className="flex justify-between items-center py-4">
             <span className="text-sm text-gray-600 font-medium">تخفیف کالاها</span>
             <div className="text-sm text-red-500">
@@ -46,7 +46,7 @@ const CartSummary: React.FC<CartSummaryProps> = ({
           </div>
         )}
 
-        {shippingPrice && shippingPrice > 0 && (
+        {shippingPrice != null && shippingPrice > 0 && (
           <div className="flex justify-between items-center py-4">
             <span className="text-sm text-gray-600 font-medium">هزینه ارسال</span>
             <div className="text-sm text-gray-900">
@@ -56,7 +56,7 @@ const CartSummary: React.FC<CartSummaryProps> = ({
           </div>
         )}
 
-        {payablePrice && payablePrice > 0 && (
+        {payablePrice != null && payablePrice > 0 && (
           <div className="flex justify-between items-center py-4">
             <span className="text-sm text-gray-600 font-medium">مبلغ قابل پرداخت</span>
             <div className="text-sm text-gray-900">

@@ -29,8 +29,8 @@ export function AddToCartButtonDesktop({ product }: AddToCartButtonDesktopProps)
             </div>
           )}
           <div className="hidden md:flex flex-col items-start text-sm">
-            <span className="font-medium text-primary">در سبد شما</span>
-            <Link href="/checkout/cart" className="mt-1 text-sm font-normal text-blue-600 hover:underline whitespace-nowrap">
+            <span className="font-medium text-xs md:sm text-primary">در سبد شما</span>
+            <Link href="/checkout/cart" className="mt-1 text-xs md:sm font-normal text-blue-600 hover:underline whitespace-nowrap">
               مشاهده سبد خرید
             </Link>
           </div>
