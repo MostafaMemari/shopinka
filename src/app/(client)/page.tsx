@@ -34,7 +34,7 @@ export default async function Home() {
 
       <DomingoHeroWithSwiper />
 
-      {discountProducts.success && <AmazingProducts products={discountProducts.data.items} />}
+      {discountProducts.success && <AmazingProducts products={discountProducts.data.items} viewAllLink="/shop?hasDiscount=true" />}
 
       {discountProducts.success && (
         <CarouselProduct key="discount" title="فروش ویژه" products={discountProducts.data.items} viewAllLink="/shop?hasDiscount=true" />

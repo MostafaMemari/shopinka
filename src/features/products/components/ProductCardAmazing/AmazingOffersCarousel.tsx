@@ -1,8 +1,6 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import 'swiper/css';
-import 'swiper/css/navigation';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Product } from '../../ProductType';
@@ -13,12 +11,15 @@ import ProductCardAmazing from '.';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
 import { ProductCarouselSkeleton } from './ProductCardAmazingSkeleton';
+import Link from 'next/link';
 
 interface AmazingProductsProps {
   products: Product[];
+  title?: string;
+  viewAllLink?: string;
 }
 
-export default function AmazingProducts({ products }: AmazingProductsProps) {
+export default function AmazingProducts({ products, title, viewAllLink }: AmazingProductsProps) {
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -39,12 +40,14 @@ export default function AmazingProducts({ products }: AmazingProductsProps) {
               unoptimized
             />
 
-            <h2 className="block md:hidden text-xs lg:text-md font-bold text-gray-800 w-full">محصولات تخفیف‌دار</h2>
+            <h2 className="block md:hidden text-xs lg:text-md font-bold text-gray-800 w-full">{title || 'محصولات تخفیف‌دار'}</h2>
 
             <div className="flex flex-row md:flex-col gap-3 items-center">
-              <Button variant="secondary" className="h-9 md:h-12">
-                مشاهده محصولات
-              </Button>
+              {viewAllLink && (
+                <Button asChild variant="outline" className="text-xs h-9 md:h-12 whitespace-nowrap">
+                  <Link href={viewAllLink}>مشاهده همه</Link>
+                </Button>
+              )}
 
               <div className="swiper-slider-controller flex items-center shadow-md rounded-md">
                 <button

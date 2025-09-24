@@ -3,6 +3,7 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useQueryState } from 'nuqs';
 import { FC } from 'react';
+import { Button } from '@/components/ui/button';
 
 interface PaginationProps {
   currentPage: number;
@@ -44,44 +45,46 @@ const Pagination: FC<PaginationProps> = ({ currentPage, totalPages }) => {
   }
 
   return (
-    <div className="flex items-center justify-center gap-x-4 md:justify-end">
-      <button
-        className={`flex h-8 w-8 items-center justify-center rounded-full bg-muted transition-all duration-200 cursor-pointer ${
-          currentPage === 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-primary hover:text-white hover:dark:bg-emerald-600'
-        }`}
+    <div className="flex items-center justify-center gap-2 md:justify-end">
+      <Button
+        variant="outline"
+        size="icon"
         onClick={() => currentPage > 1 && setQueryPage(String(currentPage - 1))}
         disabled={currentPage === 1}
+        className="h-8 w-8"
       >
-        <ChevronRight className="h-6 w-6" />
-      </button>
+        <ChevronLeft className="h-5 w-5" />
+      </Button>
 
-      <div className="flex items-center gap-x-2">
-        {pages.map((page, _) =>
+      <div className="flex items-center gap-1">
+        {pages.map((page, index) =>
           typeof page === 'number' ? (
-            <button
+            <Button
               key={`page-${page}`}
+              variant={page === currentPage ? 'default' : 'outline'}
+              size="sm"
               onClick={() => setQueryPage(String(page))}
-              className={`pagination-button cursor-pointer ${page === currentPage ? 'pagination-button-active' : ''}`}
+              className="h-8 w-8"
             >
               {page}
-            </button>
+            </Button>
           ) : (
-            <span key={`ellipsis-${page.id}`} className="text-sm text-text/60">
+            <span key={`ellipsis-${page.id}`} className="text-sm text-muted-foreground">
               ...
             </span>
           ),
         )}
       </div>
 
-      <button
-        className={`flex h-8 w-8 items-center justify-center rounded-full bg-muted transition-all duration-200 cursor-pointer ${
-          currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : 'hover:bg-primary hover:text-white hover:dark:bg-emerald-600'
-        }`}
+      <Button
+        variant="outline"
+        size="icon"
         onClick={() => currentPage < totalPages && setQueryPage(String(currentPage + 1))}
         disabled={currentPage === totalPages}
+        className="h-8 w-8"
       >
-        <ChevronLeft className="h-6 w-6" />
-      </button>
+        <ChevronRight className="h-5 w-5" />
+      </Button>
     </div>
   );
 };
