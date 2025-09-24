@@ -11,6 +11,7 @@ import { ApiResponse, shopApiFetch } from '@/service/api';
 export const sendOtp = async (mobile: string): Promise<ApiResponse<{ message: string }>> => {
   return await shopApiFetch('/auth/authenticate', {
     method: 'POST',
+    auth: false,
     body: {
       mobile,
     },
@@ -20,6 +21,7 @@ export const sendOtp = async (mobile: string): Promise<ApiResponse<{ message: st
 export const verifyOtp = async ({ mobile, otp }: { mobile: string; otp: string }): Promise<ApiResponse<VerifyOtpResponse>> => {
   const res = await shopApiFetch('/auth/verify-authenticate-otp', {
     method: 'POST',
+    auth: false,
     body: { mobile, otp },
   });
 

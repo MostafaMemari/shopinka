@@ -6,6 +6,7 @@ import { cleanObject } from '@/utils/cleanObject';
 export const createAddress = async (data: AddressFormValues): Promise<ApiResponse<AddressItem>> => {
   return await shopApiFetch('/address', {
     method: 'POST',
+    auth: true,
     body: cleanObject({
       ...data,
       buildingNumber: Number(data.buildingNumber),
@@ -17,6 +18,7 @@ export const createAddress = async (data: AddressFormValues): Promise<ApiRespons
 export const updateAddress = async (id: number, data: AddressFormValues): Promise<ApiResponse<AddressItem>> => {
   return await shopApiFetch(`/address/${id}`, {
     method: 'PATCH',
+    auth: true,
     body: cleanObject({
       ...data,
       buildingNumber: data.unit ? Number(data.buildingNumber) : undefined,
@@ -28,15 +30,17 @@ export const updateAddress = async (id: number, data: AddressFormValues): Promis
 export const setDefaultAddress = async (id: number): Promise<ApiResponse<AddressItem>> => {
   return await shopApiFetch(`/address/${id}/set-default`, {
     method: 'PATCH',
+    auth: true,
   });
 };
 
 export const deleteAddress = async (id: number): Promise<ApiResponse<{ message: string }>> => {
   return await shopApiFetch(`/address/${id}`, {
     method: 'DELETE',
+    auth: true,
   });
 };
 
 export const getAddress = async (): Promise<ApiResponse<{ items: AddressItem[]; pager: pager }>> => {
-  return await shopApiFetch('/address', { method: 'GET' });
+  return await shopApiFetch('/address', { method: 'GET', auth: true });
 };

@@ -10,9 +10,9 @@ export const getMe = async (): Promise<ApiResponse<User>> => {
 
   if (!accessToken) return { success: false, status: 401, message: 'No access token' };
 
-  return await shopApiFetch('/user/me', { method: 'GET' });
+  return await shopApiFetch('/user/me', { method: 'GET', auth: true });
 };
 
 export const updateFullName = async (data: { fullName: string }): Promise<ApiResponse<{ message: string; user: User }>> => {
-  return await shopApiFetch(`/user/profile`, { method: 'PATCH', body: { ...data } });
+  return await shopApiFetch(`/user/profile`, { method: 'PATCH', auth: true, body: { ...data } });
 };

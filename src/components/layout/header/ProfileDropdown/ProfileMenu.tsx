@@ -7,9 +7,12 @@ import { Button } from '@/components/ui/button';
 import { useBoolean } from '@/hooks/use-boolean';
 import { useAuth } from '@/features/auth/hooks/useAuth';
 import DropdownMenu from '@/components/common/DropdownMenu';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store';
 
 const ProfileMenu = () => {
   const { logOut, logOutStatus } = useAuth();
+  const user = useSelector((state: RootState) => state.auth.user);
 
   const dropdownOpen = useBoolean(false);
   const isLogoutLoading = logOutStatus === 'pending';
@@ -23,7 +26,7 @@ const ProfileMenu = () => {
       trigger={
         <Button variant="outline" className="flex items-center justify-center gap-2 h-10">
           <User className="h-5 w-5" />
-          کاربر گرامی
+          {user && <span className="text-gray-500">{user.full_name || 'کاربر گرامی'}</span>}
           {dropdownOpen.value ? (
             <ChevronUp className="h-5 w-5 transition-transform duration-200" />
           ) : (
