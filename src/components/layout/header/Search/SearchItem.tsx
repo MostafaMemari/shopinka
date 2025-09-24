@@ -10,7 +10,7 @@ interface SearchItemProps {
 
 function SearchItem({ product }: SearchItemProps) {
   return (
-    <li className="flex items-center gap-3 rounded-md p-2 hover:bg-background/80 transition-colors">
+    <Link href={`/product/${product.slug}`} className="flex items-center gap-3 rounded-md p-2 transition-colors hover:bg-primary/10">
       {product.mainImage && (
         <Image
           src={product.mainImage.fileUrl}
@@ -22,9 +22,7 @@ function SearchItem({ product }: SearchItemProps) {
         />
       )}
       <div className="flex-1 min-w-0">
-        <Link href={`/product/${product.slug}`} className="text-text hover:underline truncate block">
-          {product.name}
-        </Link>
+        <span className="text-text truncate block">{product.name}</span>
         <div className="text-sm text-text/60 flex items-center gap-2">
           {product.salePrice ? (
             <>
@@ -38,7 +36,7 @@ function SearchItem({ product }: SearchItemProps) {
           )}
         </div>
       </div>
-    </li>
+    </Link>
   );
 }
 
