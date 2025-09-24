@@ -1,7 +1,7 @@
 'use client';
 
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { createCart, getCart, updateQuantityItemCart, removeItemCart, clearCart } from '@/features/cart/cartsServicce';
+import { createCart, getCart, updateQuantityItemCart, removeItemCart, clearCart } from '@/features/cart/cartsService';
 import { CartData, CartItemState, CartState } from '@/types/cartType';
 import { QueryOptions } from '@/types/queryOptions';
 import { QueryKeys } from '@/types/query-keys';

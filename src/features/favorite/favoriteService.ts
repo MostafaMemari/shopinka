@@ -6,7 +6,7 @@ export const getFavorites = async (params: { page?: number; take?: number }): Pr
 };
 
 export async function isFavorite(productId: number): Promise<ApiResponse<boolean>> {
-  const res = await shopApiFetch(`/product/${productId}/favorite`);
+  const res = await shopApiFetch(`/product/${productId}/favorite`, { method: 'GET', auth: true });
 
   if (res.success) {
     return {

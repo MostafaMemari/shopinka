@@ -3,5 +3,5 @@ import { pager } from '@/types/paginationType';
 import { ShippingItem } from './ShippingType';
 
 export const getShipping = async (): Promise<ApiResponse<{ items: ShippingItem[]; pager: pager }>> => {
-  return await shopApiFetch('/shipping', { method: 'GET' });
+  return await shopApiFetch('/shipping', { method: 'GET', auth: true });
 };

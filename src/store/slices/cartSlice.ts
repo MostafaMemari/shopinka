@@ -2,7 +2,7 @@ import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { RootState } from '@/store';
 import { CartData, CartItemState, CartState } from '@/types/cartType';
 import { calculateTotals } from '@/utils/calculateTotals';
-import { createCartBulk, getCart, removeItemCart, updateQuantityItemCart } from '@/features/cart/cartsServicce';
+import { createCartBulk, getCart, removeItemCart, updateQuantityItemCart } from '@/features/cart/cartsService';
 
 const initialState: CartState = {
   items: [],

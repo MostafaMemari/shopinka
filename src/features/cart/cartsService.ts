@@ -6,6 +6,7 @@ export const createCart = async ({ cartData }: { cartData?: CartData }): Promise
   if (cartData) {
     await shopApiFetch('/cart/item', {
       method: 'POST',
+
       body: {
         quantity: cartData.quantity,
         productId: cartData.productId ?? undefined,
@@ -19,6 +20,7 @@ export const createCartBulk = async ({ items }: { items: CartData[] }): Promise<
   if (items.length > 0) {
     await shopApiFetch('/cart/items', {
       method: 'POST',
+
       body: { items },
     });
   }
@@ -28,6 +30,7 @@ export const createCartReplace = async ({ items }: { items: CartData[] }): Promi
   if (items.length > 0) {
     await shopApiFetch('/cart/items/replace', {
       method: 'POST',
+
       body: { items },
     });
   }
