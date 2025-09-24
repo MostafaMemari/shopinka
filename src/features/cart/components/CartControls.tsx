@@ -2,7 +2,7 @@
 
 import { Plus, Minus, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { CartItemState } from '@/types/cartType';
+import { CartItemState } from '@/features/cart/cartType';
 import { useCart } from '../hooks/useCart';
 import { cn } from '@/lib/utils';
 

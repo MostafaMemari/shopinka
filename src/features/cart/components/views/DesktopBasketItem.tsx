@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { CartItemState } from '@/types/cartType';
+import { CartItemState } from '@/features/cart/cartType';
 import CartControls from '@/features/cart/components/CartControls';
 import CartItemAttributes from '@/features/cart/components/CartItemAttributes';
 import BasketItemPrice from './BasketItemPrice';

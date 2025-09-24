@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { CartItemState } from '@/types/cartType';
+import { CartItemState } from '@/features/cart/cartType';
 import CartItemAttributes from '@/features/cart/components/CartItemAttributes';
 import CartControls from '@/features/cart/components/CartControls';
 import Image from 'next/image';

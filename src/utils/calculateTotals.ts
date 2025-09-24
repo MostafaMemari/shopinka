@@ -1,4 +1,4 @@
-import { CartItemState } from '@/types/cartType';
+import { CartItemState } from '@/features/cart/cartType';
 
 export const calculateTotals = (
   items: CartItemState[],

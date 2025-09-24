@@ -2,7 +2,7 @@
 
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { createCart, getCart, updateQuantityItemCart, removeItemCart, clearCart } from '@/features/cart/cartsService';
-import { CartData, CartItemState, CartState } from '@/types/cartType';
+import { AddCartType, CartData, CartItemState, CartState } from '@/features/cart/cartType';
 import { QueryOptions } from '@/types/queryOptions';
 import { QueryKeys } from '@/types/query-keys';
 import { useDispatch } from 'react-redux';
@@ -79,7 +79,7 @@ export const useCart = () => {
     onSuccess: invalidateCart,
   });
 
-  const handleAddToCart = (item: CartItemState) => {
+  const handleAddToCart = (item: AddCartType) => {
     if (isLogin) {
       addToCartMutation.mutate({
         quantity: item.count,

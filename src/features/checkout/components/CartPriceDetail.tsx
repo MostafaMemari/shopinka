@@ -7,7 +7,7 @@ import { ShippingItem } from '@/features/shippings/ShippingType';
 import { usePayment } from '@/features/payment/hooks/usePayment';
 import MobileCartSticky from '../../../components/common/MobileCartSticky';
 import { formatPrice } from '@/utils/formatter';
-import { CartState } from '@/types/cartType';
+import { CartState } from '@/features/cart/cartType';
 import TomanIcon from '@/components/common/svg/TomanIcon';
 
 interface CartPriceDetailProps {

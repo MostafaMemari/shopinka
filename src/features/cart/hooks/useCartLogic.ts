@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '@/store';
 import { setSelectedVariant } from '@/store/slices/productSlice';
-import { CartItemState } from '@/types/cartType';
+import { AddCartType, CartItemState } from '@/features/cart/cartType';
 import { useCart } from './useCart';
 import { ProductCardLogic } from '@/types/productCardLogic';
 
@@ -49,24 +49,13 @@ export const useCartLogic = ({ product }: ProductCardLogicProps) => {
   const isInCart = !!existingProduct;
 
   const addToCartHandler = () => {
-    if (existingProduct) {
-      addToCart({ ...existingProduct, count: existingProduct.count + 1 });
-    } else {
-      const cartItem: CartItemState = {
-        id: isVariableProduct ? (selectedVariant?.id ?? product.id) : product.id,
-        title: product.name,
-        slug: product.slug,
-        thumbnail: product.mainImageUrl ?? '',
-        basePrice: oldPrice ?? newPrice ?? 0,
-        salePrice: newPrice ?? 0,
-        discount: discount ?? 0,
-        count: 1,
-        type: product.type,
-        attributeValues: selectedVariant?.attributeValues ?? [],
-      };
+    const cartItem: AddCartType = {
+      id: isVariableProduct ? (selectedVariant?.id ?? product.id) : product.id,
+      count: 1,
+      type: product.type,
+    };
 
-      addToCart(cartItem);
-    }
+    addToCart(cartItem);
   };
 
   return {

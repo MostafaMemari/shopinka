@@ -1,5 +1,11 @@
 import { AttributeValues } from '@/types/attributeType';
 
+export interface AddCartType {
+  id: number;
+  count: number;
+  type: 'SIMPLE' | 'VARIABLE';
+}
+
 export interface CartItemState {
   itemId?: number;
   id: number;

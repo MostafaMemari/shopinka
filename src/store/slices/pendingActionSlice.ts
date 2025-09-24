@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { CartItemState } from '@/types/cartType';
+import { AddCartType } from '@/features/cart/cartType';
 
 interface PendingActionState {
-  addToCartItem: CartItemState | null;
+  addToCartItem: AddCartType | null;
 }
 
 const initialState: PendingActionState = {
@@ -13,7 +13,7 @@ const pendingActionSlice = createSlice({
   name: 'pendingAction',
   initialState,
   reducers: {
-    setAddToCart: (state, action: PayloadAction<CartItemState>) => {
+    setAddToCart: (state, action: PayloadAction<AddCartType>) => {
       state.addToCartItem = action.payload;
     },
     clearAddToCart: (state) => {
