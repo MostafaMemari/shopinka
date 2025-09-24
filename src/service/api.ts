@@ -1,14 +1,12 @@
 'use server';
 
 import { type MappedResponseType, ofetch, type FetchOptions } from 'ofetch';
+
 import 'server-only';
 
 import { COOKIE_NAMES } from '@/types/constants';
 import { getCookie, setCookie } from '@/utils/cookie';
 import { refreshToken } from './refreshToken';
-
-let isRefreshingPromise: Promise<string | null> | null = null;
-let pendingRequests: Array<(token: string | null) => void> = []; // برای ذخیره درخواست‌های منتظر
 
 export type ApiResponse<T> = { success: true; data: T } | { success: false; status: number; message: string };
 
@@ -22,6 +20,25 @@ const api = ofetch.create({
         const headers = new Headers(options.headers as HeadersInit);
         headers.set('Authorization', `Bearer ${accessToken}`);
         options.headers = headers;
+      } else {
+        const resRefreshToekn = await getCookie(COOKIE_NAMES.REFRESH_TOKEN);
+
+        if (resRefreshToekn) {
+          const res = await refreshToken();
+
+          if (res.accessToken) {
+            const newAccessToken = res?.accessToken;
+
+            await setCookie(COOKIE_NAMES.ACCESS_TOKEN, newAccessToken, {
+              httpOnly: true,
+              expires: new Date(Date.now() + Number(process.env.ACCESS_TOKEN_EXPIRE_TIME) * 1000),
+            });
+
+            const headers = new Headers(options.headers as HeadersInit);
+            headers.set('Authorization', `Bearer ${newAccessToken}`);
+            options.headers = headers;
+          }
+        }
       }
     }
   },
@@ -39,16 +56,20 @@ export async function shopApiFetch<T = any, R extends 'json' | 'text' = 'json'>(
     const message = err?.response?._data?.message || err?.message || 'خطای نامعلوم';
 
     if (status === 401 && message.toLowerCase().includes('expired')) {
-      const newAccessToken = await getNewAccessToken();
+      const res = await refreshToken();
 
-      if (newAccessToken) {
-        const headers = new Headers(options.headers as HeadersInit);
-        headers.set('Authorization', `Bearer ${newAccessToken}`);
-        try {
-          const retryRes = await api<T, R>(request, { ...options, headers });
-          return { success: true, data: retryRes };
-        } catch (retryErr: any) {
-          return { success: false, status: retryErr?.response?.status || 500, message: retryErr?.message || 'خطای درخواست مجدد' };
+      if (res.accessToken) {
+        const newAccessToken = res?.accessToken;
+
+        if (newAccessToken) {
+          const headers = new Headers(options.headers as HeadersInit);
+          headers.set('Authorization', `Bearer ${newAccessToken}`);
+          try {
+            const retryRes = await api<T, R>(request, { ...options, headers });
+            return { success: true, data: retryRes };
+          } catch (retryErr: any) {
+            return { success: false, status: retryErr?.response?.status || 500, message: retryErr?.message || 'خطای درخواست مجدد' };
+          }
         }
       }
     }
@@ -56,44 +77,3 @@ export async function shopApiFetch<T = any, R extends 'json' | 'text' = 'json'>(
     return { success: false, status, message };
   }
 }
-
-const getNewAccessToken = async () => {
-  // اگر در حال رفرش هستیم، به لیست انتظار اضافه شو
-  if (isRefreshingPromise) {
-    return new Promise<string | null>((resolve) => {
-      pendingRequests.push(resolve);
-    });
-  }
-
-  isRefreshingPromise = (async () => {
-    try {
-      const res = await refreshToken();
-
-      if (res.success) {
-        const newAccessToken = res?.data?.accessToken;
-
-        if (!newAccessToken) throw new Error('No access token returned');
-
-        await setCookie(COOKIE_NAMES.ACCESS_TOKEN, newAccessToken);
-
-        // پاسخ به تمام درخواست‌های منتظر
-        pendingRequests.forEach((resolve) => resolve(newAccessToken));
-        pendingRequests = []; // پاک کردن لیست انتظار
-        return newAccessToken;
-      }
-
-      // در صورت عدم موفقیت رفرش
-      pendingRequests.forEach((resolve) => resolve(null));
-      pendingRequests = [];
-      return null;
-    } catch (refreshErr) {
-      pendingRequests.forEach((resolve) => resolve(null));
-      pendingRequests = [];
-      return null;
-    } finally {
-      isRefreshingPromise = null; // ریست کردن پرامیس
-    }
-  })();
-
-  return isRefreshingPromise;
-};
