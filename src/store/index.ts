@@ -1,5 +1,4 @@
 import { configureStore } from '@reduxjs/toolkit';
-import cartReducer from './slices/cartSlice';
 import productReducer from './slices/productSlice';
 import authDialogReducer from './slices/authDialogSlice';
 import authReducer from './slices/authSlice';
@@ -8,7 +7,6 @@ import pendingActionReducer from './slices/pendingActionSlice';
 
 export const store = configureStore({
   reducer: {
-    cart: cartReducer,
     auth: authReducer,
     otp: otpReducer,
     product: productReducer,

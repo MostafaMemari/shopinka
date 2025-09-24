@@ -60,6 +60,7 @@ export const signout = async (): Promise<ApiResponse<{ status: number; data: any
 
   const res = await shopApiFetch('/auth/signout', {
     method: 'POST',
+    auth: true,
     body: { refreshToken },
   });
 

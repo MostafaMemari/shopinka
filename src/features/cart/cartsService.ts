@@ -6,7 +6,7 @@ export const createCart = async ({ cartData }: { cartData?: CartData }): Promise
   if (cartData) {
     await shopApiFetch('/cart/item', {
       method: 'POST',
-
+      auth: true,
       body: {
         quantity: cartData.quantity,
         productId: cartData.productId ?? undefined,
@@ -20,7 +20,7 @@ export const createCartBulk = async ({ items }: { items: CartData[] }): Promise<
   if (items.length > 0) {
     await shopApiFetch('/cart/items', {
       method: 'POST',
-
+      auth: true,
       body: { items },
     });
   }
@@ -30,14 +30,14 @@ export const createCartReplace = async ({ items }: { items: CartData[] }): Promi
   if (items.length > 0) {
     await shopApiFetch('/cart/items/replace', {
       method: 'POST',
-
+      auth: true,
       body: { items },
     });
   }
 };
 
 export const getCart = async (): Promise<ApiResponse<CartState>> => {
-  const res = await shopApiFetch('/cart/me', { method: 'GET' });
+  const res = await shopApiFetch('/cart/me', { method: 'GET', auth: true });
 
   if (res.success) {
     const mappedItems = mapCartResponseToCartItemState(res.data.items);
@@ -55,7 +55,7 @@ export const getCart = async (): Promise<ApiResponse<CartState>> => {
 };
 
 export const clearCart = async (): Promise<ApiResponse<CartResponse>> => {
-  return await shopApiFetch('/cart/clear', { method: 'POST' });
+  return await shopApiFetch('/cart/clear', { method: 'POST', auth: true });
 };
 
 export const updateQuantityItemCart = async ({
@@ -65,9 +65,9 @@ export const updateQuantityItemCart = async ({
   quantity: number;
   itemId: number;
 }): Promise<ApiResponse<CartResponse>> => {
-  return await shopApiFetch(`/cart/item/${itemId}`, { method: 'PATCH', body: { quantity } });
+  return await shopApiFetch(`/cart/item/${itemId}`, { method: 'PATCH', auth: true, body: { quantity } });
 };
 
 export const removeItemCart = async (itemId: number): Promise<ApiResponse<CartResponse>> => {
-  return await shopApiFetch(`/cart/item/${itemId}`, { method: 'DELETE' });
+  return await shopApiFetch(`/cart/item/${itemId}`, { method: 'DELETE', auth: true });
 };
