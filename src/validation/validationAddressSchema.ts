@@ -8,14 +8,14 @@ export const validationAddressSchema = z.object({
   buildingNumber: z
     .string()
     .trim()
-    .optional()
-    .refine((val) => !val || (/^\d+$/.test(val) && Number(val) > 0), {
+    .refine((val) => /^\d+$/.test(val) && Number(val) > 0, {
       message: 'پلاک باید عدد صحیح مثبت باشد',
     }),
   unit: z
     .string()
     .trim()
-    .refine((val) => /^\d+$/.test(val) && Number(val) > 0, {
+    .optional()
+    .refine((val) => !val || (/^\d+$/.test(val) && Number(val) > 0), {
       message: 'واحد باید عدد صحیح مثبت باشد',
     }),
   postalCode: z
