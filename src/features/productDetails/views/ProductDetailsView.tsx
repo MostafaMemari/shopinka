@@ -78,7 +78,7 @@ const ProductDetailsView: FC<ProductDetailsViewProps> = ({ product }) => {
                       </div>
 
                       {isValidProduct && (
-                        <div className="mb-6">
+                        <div className="mb-4">
                           <ProductVariants
                             variants={product.variants}
                             attributes={product.attributes}
@@ -169,8 +169,6 @@ const ProductDetailsView: FC<ProductDetailsViewProps> = ({ product }) => {
                 </div>
               )}
 
-              <ProductStatusList />
-
               {isValidProduct && (
                 <MobileCartSticky position="bottom" className="p-0">
                   <div className="flex justify-between items-center w-full">
@@ -203,6 +201,32 @@ const ProductDetailsView: FC<ProductDetailsViewProps> = ({ product }) => {
                   </div>
                 </MobileCartSticky>
               )}
+
+              {isValidProduct && (
+                <div className="hidden md:flex justify-between items-center w-full">
+                  <div className="w-1/2">
+                    <AddToCartButtonDesktop
+                      key={product.id}
+                      product={{
+                        id: product.id,
+                        name: product.name,
+                        slug: product.slug,
+                        basePrice: product.basePrice ?? 0,
+                        salePrice: product.salePrice ?? 0,
+                        mainImageUrl: product.mainImage?.fileUrl ?? null,
+                        type: product.type,
+                      }}
+                    />
+                  </div>
+                  <div className="text-end">
+                    <ProductDesktopDetailsPrice
+                      product={{ type: product.type, basePrice: product.basePrice ?? 0, salePrice: product.salePrice }}
+                    />
+                  </div>
+                </div>
+              )}
+
+              <ProductStatusList />
             </div>
           </div>
         </Card>
