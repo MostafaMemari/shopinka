@@ -1,6 +1,5 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
 import { ProductCardLogic } from '@/types/productCardLogic';
 import Link from 'next/link';
 import CartControls from '../CartControls';

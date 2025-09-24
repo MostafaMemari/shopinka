@@ -1,7 +1,6 @@
 import { COOKIE_NAMES } from '@/types/constants';
 import { getCookie } from '@/utils/cookie';
 import { ofetch } from 'ofetch';
-import { ApiResponse } from './api';
 
 const baseFetch = ofetch.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
