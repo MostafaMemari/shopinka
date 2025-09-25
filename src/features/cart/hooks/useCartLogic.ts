@@ -37,7 +37,6 @@ export const useCartLogic = ({ product }: ProductCardLogicProps) => {
   }, [cart, cartItemId, existingProduct]);
 
   return {
-    isVariableProduct,
     selectedVariant,
     existingProduct,
   };

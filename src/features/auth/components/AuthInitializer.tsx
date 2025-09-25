@@ -13,7 +13,7 @@ const AuthInitializer = () => {
   const isLogin = useAppSelector((state) => state.auth.isLogin);
   const addToCartItem = useAppSelector((state) => state.pendingAction.addToCartItem);
 
-  const { addToCart } = useCart();
+  const { addToCartMutation } = useCart();
 
   useEffect(() => {
     dispatch(checkAuth());
@@ -21,10 +21,10 @@ const AuthInitializer = () => {
 
   useEffect(() => {
     if (isLogin && addToCartItem) {
-      addToCart(addToCartItem);
+      addToCartMutation(addToCartItem);
       dispatch(clearAddToCart());
     }
-  }, [isLogin, addToCartItem, addToCart, dispatch]);
+  }, [isLogin, addToCartItem, addToCartMutation, dispatch]);
 
   return null;
 };

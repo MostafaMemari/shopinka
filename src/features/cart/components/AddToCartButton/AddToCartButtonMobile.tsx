@@ -6,28 +6,41 @@ import Link from 'next/link';
 import CartControls from '../CartControls';
 import { useCartLogic } from '../../hooks/useCartLogic';
 import { useCart } from '../../hooks/useCart';
-import { AddCartType } from '../../cartType';
+import { useAppSelector } from '@/store/hooks';
+import { useDispatch } from 'react-redux';
+import { CartData } from '../../cartType';
+import { setAddToCart } from '@/store/slices/pendingActionSlice';
+import { openAuthDialog } from '@/store/slices/authDialogSlice';
 
 interface AddToCartButtonMobileProps {
   product: ProductCardLogic;
 }
 
 export default function AddToCartButtonMobile({ product }: AddToCartButtonMobileProps) {
-  const { isVariableProduct, selectedVariant, existingProduct } = useCartLogic({ product });
+  const isLogin = useAppSelector((state) => state.auth.isLogin);
+  const dispatch = useDispatch();
 
-  const { addToCart, isAddingToCart } = useCart();
+  const { selectedVariant, existingProduct } = useCartLogic({ product });
+
+  const { addToCartMutation, isAddingToCart } = useCart();
 
   const isVariantSelected = !!selectedVariant;
   const isInCart = !!existingProduct;
+  const isVariableProduct = product.type === 'VARIABLE';
 
   const addToCartHandler = () => {
-    const cartItem: AddCartType = {
-      id: isVariableProduct ? (selectedVariant?.id ?? product.id) : product.id,
-      count: 1,
-      type: product.type,
+    const item: CartData = {
+      productId: !isVariableProduct ? product.id : null,
+      productVariantId: isVariableProduct ? selectedVariant?.id : null,
+      quantity: 1,
     };
 
-    addToCart(cartItem);
+    if (isLogin) {
+      addToCartMutation(item);
+    } else {
+      dispatch(setAddToCart(item));
+      dispatch(openAuthDialog());
+    }
   };
 
   return (

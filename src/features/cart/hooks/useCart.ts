@@ -2,13 +2,12 @@
 
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { createCart, getCart, updateQuantityItemCart, removeItemCart, clearCart } from '@/features/cart/cartsService';
-import { AddCartType, CartData, CartItemState, CartState } from '@/features/cart/cartType';
+import { CartData, CartItemState, CartState } from '@/features/cart/cartType';
 import { QueryOptions } from '@/types/queryOptions';
 import { QueryKeys } from '@/types/query-keys';
 import { useDispatch } from 'react-redux';
 import { openAuthDialog } from '@/store/slices/authDialogSlice';
 import { useAppSelector } from '@/store/hooks';
-import { setAddToCart } from '@/store/slices/pendingActionSlice';
 import { ApiResponse } from '@/service/api';
 
 export function useCartData({ enabled = true, staleTime = 60_000 }: QueryOptions) {
@@ -80,19 +79,6 @@ export const useCart = () => {
     onSuccess: invalidateCart,
   });
 
-  const handleAddToCart = (item: AddCartType) => {
-    if (isLogin) {
-      addToCartMutation.mutate({
-        quantity: item.count,
-        productId: item.type === 'SIMPLE' ? item.id : null,
-        productVariantId: item.type === 'VARIABLE' ? item.id : null,
-      });
-    } else {
-      dispatch(setAddToCart(item));
-      dispatch(openAuthDialog());
-    }
-  };
-
   const handleIncrease = (item: CartItemState) => {
     if (isLogin) updateQuantityMutation.mutate({ itemId: Number(item.itemId), quantity: item.count + 1 });
     else dispatch(openAuthDialog());
@@ -120,7 +106,7 @@ export const useCart = () => {
     cart: data,
     isLoading,
     error,
-    addToCart: handleAddToCart,
+    addToCartMutation: addToCartMutation.mutate,
     increaseCount: handleIncrease,
     decreaseCount: handleDecrease,
     deleteFromCart: handleDelete,

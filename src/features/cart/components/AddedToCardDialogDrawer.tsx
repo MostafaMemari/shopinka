@@ -2,31 +2,33 @@
 
 import { useMediaQuery } from '@/hooks/use-media-query';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '@/store';
 import Dialog from '@/components/common/Dialog';
 
 import MobileDrawer from '@/components/common/Drawer';
-import { closeAddedItem } from '@/store/slices/addedItemCartSlice';
 
-export function AddedToCardDialogDrawer() {
+interface AddedToCardDialogDrawerProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  title: string;
+  children: React.ReactNode;
+}
+
+export function AddedToCardDialogDrawer({
+  open,
+  onOpenChange,
+  title = 'محصول به سبد خرید اضافه شد',
+  children,
+}: AddedToCardDialogDrawerProps) {
   const dispatch = useDispatch();
   const isDesktop = useMediaQuery('(min-width: 768px)');
 
-  const { open } = useSelector((state: RootState) => state.addedItemCart);
-
-  const title = 'محصول به سبد خرید اضافه شد';
-
-  const handleClose = (val: boolean) => {
-    if (!val) dispatch(closeAddedItem());
-  };
-
   return isDesktop ? (
-    <Dialog open={open} onOpenChange={handleClose} title={title} size="md">
-      <></>
+    <Dialog open={open} onOpenChange={onOpenChange} title={title} size="md">
+      {children}
     </Dialog>
   ) : (
-    <MobileDrawer open={open} onOpenChange={handleClose} title={title}>
-      <></>
+    <MobileDrawer open={open} onOpenChange={onOpenChange} title={title}>
+      {children}
     </MobileDrawer>
   );
 }

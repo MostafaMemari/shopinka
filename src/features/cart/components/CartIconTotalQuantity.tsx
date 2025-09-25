@@ -15,7 +15,7 @@ function CartIconTotalQuantity({ className }: CartIconTotalQuantityProps) {
   const { cart } = useCart();
   const isMounted = useIsMounted();
 
-  const totalQuantity = Array.isArray(cart?.items) ? cart.items.reduce((sum, item) => sum + item.count, 0) : 0;
+  const totalQuantity = cart?.items?.reduce((sum, item) => sum + item.count, 0) || 0;
 
   return (
     <div className={cn('relative p-1 cursor-pointer', className)}>

@@ -1,19 +1,19 @@
-import { mapCartResponseToCartItemState } from '@/utils/mapCartResponse';
+import { mapCartResponseToCartItemsState } from '@/utils/mapCartResponse';
 import { CartData, CartResponse, CartState } from '@/features/cart/cartType';
 import { ApiResponse, shopApiFetch } from '@/service/api';
 
 export const createCart = async ({ cartData }: { cartData?: CartData }): Promise<void> => {
-  if (cartData) {
-    await shopApiFetch('/cart/item', {
-      method: 'POST',
-      auth: true,
-      body: {
-        quantity: cartData.quantity,
-        productId: cartData.productId ?? undefined,
-        productVariantId: cartData.productVariantId ?? undefined,
-      },
-    });
-  }
+  if (!cartData) return;
+
+  await shopApiFetch('/cart/item', {
+    method: 'POST',
+    auth: true,
+    body: {
+      quantity: cartData.quantity,
+      productId: cartData.productId || undefined,
+      productVariantId: cartData.productVariantId || undefined,
+    },
+  });
 };
 
 export const createCartBulk = async ({ items }: { items: CartData[] }): Promise<void> => {
@@ -40,7 +40,7 @@ export const getCart = async (): Promise<ApiResponse<CartState>> => {
   const res = await shopApiFetch('/cart/me', { method: 'GET', auth: true });
 
   if (res.success) {
-    const mappedItems = mapCartResponseToCartItemState(res.data.items);
+    const mappedItems = mapCartResponseToCartItemsState(res.data.items);
 
     return {
       ...res,
