@@ -4,7 +4,7 @@ import ProfileMenu from './ProfileMenu';
 import { useIsMounted } from '@/hooks/useIsMounted';
 import { LogIn } from 'lucide-react';
 import { useDispatch } from 'react-redux';
-import { openDialog } from '@/store/slices/authDialogSlice';
+import { openAuthDialog } from '@/store/slices/authDialogSlice';
 import { useAppSelector } from '@/store/hooks';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -16,7 +16,7 @@ const ProfileDropdown = () => {
   const dispatch = useDispatch();
 
   const handleClick = () => {
-    dispatch(openDialog());
+    dispatch(openAuthDialog());
   };
 
   if (!isMounted) {

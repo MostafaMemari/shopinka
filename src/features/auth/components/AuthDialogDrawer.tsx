@@ -4,7 +4,7 @@ import { useMediaQuery } from '@/hooks/use-media-query';
 import PhoneInputForm from '@/features/auth/components/PhoneInputForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store';
-import { closeDialog } from '@/store/slices/authDialogSlice';
+import { closeAuthDialog } from '@/store/slices/authDialogSlice';
 import { OTP_EXPIRE_SECONDS } from '@/constants';
 import { useAppSelector } from '@/store/hooks';
 import InputOTPForm from './OtpForm';
@@ -30,7 +30,7 @@ export function AuthDialogDrawer() {
   const description = otpStep ? `کد اعتبارسنجی با موفقیت به شماره ${mobile} ارسال شد` : 'لطفا شماره تلفن همراه خود را وارد کنید';
 
   const handleClose = (val: boolean) => {
-    if (!val) dispatch(closeDialog());
+    if (!val) dispatch(closeAuthDialog());
   };
 
   const phoneInputFormRef = useRef<HTMLFormElement>(null);

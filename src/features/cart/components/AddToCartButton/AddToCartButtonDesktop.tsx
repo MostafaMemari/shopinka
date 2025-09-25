@@ -5,13 +5,30 @@ import Link from 'next/link';
 import CartControls from '../CartControls';
 import { useCartLogic } from '../../hooks/useCartLogic';
 import PrimaryButton from '@/components/common/PrimaryButton';
+import { useCart } from '../../hooks/useCart';
+import { AddCartType } from '../../cartType';
 
 interface AddToCartButtonDesktopProps {
   product: ProductCardLogic;
 }
 
 export function AddToCartButtonDesktop({ product }: AddToCartButtonDesktopProps) {
-  const { isVariableProduct, isVariantSelected, isInCart, existingProduct, addToCart, isAddingToCart } = useCartLogic({ product });
+  const { isVariableProduct, selectedVariant, existingProduct } = useCartLogic({ product });
+
+  const { addToCart, isAddingToCart } = useCart();
+
+  const isVariantSelected = !!selectedVariant;
+  const isInCart = !!existingProduct;
+
+  const addToCartHandler = () => {
+    const cartItem: AddCartType = {
+      id: isVariableProduct ? (selectedVariant?.id ?? product.id) : product.id,
+      count: 1,
+      type: product.type,
+    };
+
+    addToCart(cartItem);
+  };
 
   const getButtonText = () => {
     if (isAddingToCart) return 'در حال افزودن...';
@@ -38,7 +55,7 @@ export function AddToCartButtonDesktop({ product }: AddToCartButtonDesktopProps)
       ) : (
         <PrimaryButton
           type="button"
-          onClick={addToCart}
+          onClick={addToCartHandler}
           disabled={(isVariableProduct && !isVariantSelected) || isAddingToCart}
           isLoading={isAddingToCart}
           className="flex w-full items-center justify-center gap-2

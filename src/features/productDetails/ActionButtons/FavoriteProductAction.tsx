@@ -5,7 +5,7 @@ import { useAppSelector } from '@/store/hooks';
 import { useToggleFavorite } from '@/features/favorite/hooks/useToggleFavorite';
 import { useProductFavorite } from '@/features/products/hooks/useProduct';
 import { useIsMounted } from '@/hooks/useIsMounted';
-import { openDialog } from '@/store/slices/authDialogSlice';
+import { openAuthDialog } from '@/store/slices/authDialogSlice';
 import { cn } from '@/utils/utils';
 import { Heart, Loader } from 'lucide-react';
 import React from 'react';
@@ -33,7 +33,7 @@ function FavoriteProductAction({ productId, isTooltip = false, className }: Favo
       if (isToggleFavoriteLoading) return;
       favoriteToggle(productId, refetch);
     } else {
-      dispatch(openDialog());
+      dispatch(openAuthDialog());
     }
   };
 

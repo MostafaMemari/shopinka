@@ -11,7 +11,7 @@ import { Button } from '@/components/ui/button';
 import MobileDrawer from '@/components/common/Drawer';
 import { useAppSelector } from '@/store/hooks';
 import { useDispatch } from 'react-redux';
-import { openDialog } from '@/store/slices/authDialogSlice';
+import { openAuthDialog } from '@/store/slices/authDialogSlice';
 
 function CreateComment({ productId }: { productId: number }) {
   const commentControl = useBoolean(false);
@@ -31,7 +31,7 @@ function CreateComment({ productId }: { productId: number }) {
 
   const handleButtonClick = () => {
     if (isLogin) commentControl.onTrue();
-    else dispatch(openDialog());
+    else dispatch(openAuthDialog());
   };
 
   return (

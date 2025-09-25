@@ -6,7 +6,7 @@ import { AddCartType, CartData, CartItemState, CartState } from '@/features/cart
 import { QueryOptions } from '@/types/queryOptions';
 import { QueryKeys } from '@/types/query-keys';
 import { useDispatch } from 'react-redux';
-import { openDialog } from '@/store/slices/authDialogSlice';
+import { openAuthDialog } from '@/store/slices/authDialogSlice';
 import { useAppSelector } from '@/store/hooks';
 import { setAddToCart } from '@/store/slices/pendingActionSlice';
 import { ApiResponse } from '@/service/api';
@@ -50,6 +50,7 @@ export function useCartData({ enabled = true, staleTime = 60_000 }: QueryOptions
 
 export const useCart = () => {
   const isLogin = useAppSelector((state) => state.auth.isLogin);
+
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
 
@@ -88,30 +89,30 @@ export const useCart = () => {
       });
     } else {
       dispatch(setAddToCart(item));
-      dispatch(openDialog());
+      dispatch(openAuthDialog());
     }
   };
 
   const handleIncrease = (item: CartItemState) => {
     if (isLogin) updateQuantityMutation.mutate({ itemId: Number(item.itemId), quantity: item.count + 1 });
-    else dispatch(openDialog());
+    else dispatch(openAuthDialog());
   };
 
   const handleDecrease = (item: CartItemState) => {
     if (isLogin) updateQuantityMutation.mutate({ itemId: Number(item.itemId), quantity: item.count - 1 });
-    else dispatch(openDialog());
+    else dispatch(openAuthDialog());
   };
 
   const handleDelete = (item: CartItemState) => {
     if (isLogin) removeItemMutation.mutate({ itemId: Number(item.itemId) });
-    else dispatch(openDialog());
+    else dispatch(openAuthDialog());
   };
 
   const handleClearAll = () => {
     if (isLogin) {
       clearCartMutation.mutate();
     } else {
-      dispatch(openDialog());
+      dispatch(openAuthDialog());
     }
   };
 

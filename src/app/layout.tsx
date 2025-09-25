@@ -1,5 +1,6 @@
 import './globals.css';
 import './tailwind.css';
+
 import { iranyekan } from '@/fonts/iranyekan';
 import ClientProvider from './ClientProvider';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';

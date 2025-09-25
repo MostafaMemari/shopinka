@@ -5,7 +5,7 @@ import { loginFailure, loginSuccess, logout } from '@/store/slices/authSlice';
 import { signout, sendOtp, verifyOtp } from '@/features/auth/authService';
 import { toast } from 'sonner';
 import { clearOtp, setOtpSentAt } from '@/store/slices/otpSlice';
-import { closeDialog } from '@/store/slices/authDialogSlice';
+import { closeAuthDialog } from '@/store/slices/authDialogSlice';
 import { usePathname, useRouter } from 'next/navigation';
 
 export const useAuth = () => {
@@ -38,7 +38,7 @@ export const useAuth = () => {
         );
         dispatch(setOtpSentAt(Date.now()));
         dispatch(clearOtp());
-        dispatch(closeDialog());
+        dispatch(closeAuthDialog());
 
         queryClient.invalidateQueries({ queryKey: [QueryKeys.User] });
       } else {

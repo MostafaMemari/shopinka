@@ -15,7 +15,7 @@ import { useAppSelector } from '@/store/hooks';
 import { useIsMounted } from '@/hooks/useIsMounted';
 import Link from 'next/link';
 import { useDispatch } from 'react-redux';
-import { openDialog } from '@/store/slices/authDialogSlice';
+import { openAuthDialog } from '@/store/slices/authDialogSlice';
 import { useBoolean } from '@/hooks/use-boolean';
 import { useCart } from '@/features/cart/hooks/useCart';
 import ConfirmDialog from '@/components/common/ConfirmDialog';
@@ -42,7 +42,7 @@ function CartPageView() {
     if (isLoadingContinue) return;
     setIsLoadingContinue(true);
     if (isLogin) router.push('/checkout/shipping');
-    else dispatch(openDialog());
+    else dispatch(openAuthDialog());
   };
 
   if (!isMounted || isLoading) {

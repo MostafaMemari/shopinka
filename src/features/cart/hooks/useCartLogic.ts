@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '@/store';
 import { setSelectedVariant } from '@/store/slices/productSlice';
-import { AddCartType, CartItemState } from '@/features/cart/cartType';
+import { CartItemState } from '@/features/cart/cartType';
 import { useCart } from './useCart';
 import { ProductCardLogic } from '@/types/productCardLogic';
 
@@ -16,7 +16,7 @@ export const useCartLogic = ({ product }: ProductCardLogicProps) => {
   const dispatch = useDispatch();
 
   const { selectedVariant } = useSelector((state: RootState) => state.product);
-  const { cart, addToCart, isAddingToCart } = useCart();
+  const { cart } = useCart();
   const [existingProduct, setExistingProduct] = useState<CartItemState | undefined>();
 
   const isVariableProduct = product.type === 'VARIABLE';
@@ -36,26 +36,9 @@ export const useCartLogic = ({ product }: ProductCardLogicProps) => {
     }
   }, [cart, cartItemId, existingProduct]);
 
-  const isVariantSelected = !!selectedVariant;
-  const isInCart = !!existingProduct;
-
-  const addToCartHandler = () => {
-    const cartItem: AddCartType = {
-      id: isVariableProduct ? (selectedVariant?.id ?? product.id) : product.id,
-      count: 1,
-      type: product.type,
-    };
-
-    addToCart(cartItem);
-  };
-
   return {
-    product,
     isVariableProduct,
-    isVariantSelected,
-    isInCart,
+    selectedVariant,
     existingProduct,
-    addToCart: addToCartHandler,
-    isAddingToCart,
   };
 };

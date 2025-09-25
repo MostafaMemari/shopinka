@@ -12,10 +12,12 @@ interface CartIconTotalQuantityProps {
 }
 
 function CartIconTotalQuantity({ className }: CartIconTotalQuantityProps) {
-  const { cart } = useCart();
+  const { cart, isLoading } = useCart();
   const isMounted = useIsMounted();
 
-  const totalQuantity = cart?.items?.reduce((sum, item) => sum + item.count, 0) || 0;
+  console.log(isLoading, isMounted);
+
+  const totalQuantity = Array.isArray(cart?.items) ? cart.items.reduce((sum, item) => sum + item.count, 0) : 0;
 
   return (
     <div className={cn('relative p-1 cursor-pointer', className)}>

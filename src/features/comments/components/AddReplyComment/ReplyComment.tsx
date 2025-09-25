@@ -5,7 +5,7 @@ import { useBoolean } from '@/hooks/use-boolean';
 import { ChevronLeft } from 'lucide-react';
 import CommentForm from './CommentForm';
 import { useDispatch } from 'react-redux';
-import { openDialog } from '@/store/slices/authDialogSlice';
+import { openAuthDialog } from '@/store/slices/authDialogSlice';
 import MobileDrawer from '@/components/common/Drawer';
 import Dialog from '@/components/common/Dialog';
 import PrimaryButton from '@/components/common/PrimaryButton';
@@ -29,7 +29,7 @@ function ReplyComment({ productId, parentId, commentTitle }: ReplyCommentProps) 
 
   const handleReplyComment = () => {
     if (isLogin) commentControl.onTrue();
-    else dispatch(openDialog());
+    else dispatch(openAuthDialog());
   };
 
   const handleSubmit = () => {

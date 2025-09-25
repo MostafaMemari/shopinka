@@ -5,15 +5,30 @@ import { ProductCardLogic } from '@/types/productCardLogic';
 import Link from 'next/link';
 import CartControls from '../CartControls';
 import { useCartLogic } from '../../hooks/useCartLogic';
+import { useCart } from '../../hooks/useCart';
+import { AddCartType } from '../../cartType';
 
 interface AddToCartButtonMobileProps {
   product: ProductCardLogic;
 }
 
 export default function AddToCartButtonMobile({ product }: AddToCartButtonMobileProps) {
-  const { isVariableProduct, isVariantSelected, isInCart, existingProduct, addToCart, isAddingToCart } = useCartLogic({
-    product,
-  });
+  const { isVariableProduct, selectedVariant, existingProduct } = useCartLogic({ product });
+
+  const { addToCart, isAddingToCart } = useCart();
+
+  const isVariantSelected = !!selectedVariant;
+  const isInCart = !!existingProduct;
+
+  const addToCartHandler = () => {
+    const cartItem: AddCartType = {
+      id: isVariableProduct ? (selectedVariant?.id ?? product.id) : product.id,
+      count: 1,
+      type: product.type,
+    };
+
+    addToCart(cartItem);
+  };
 
   return (
     <>
@@ -30,7 +45,7 @@ export default function AddToCartButtonMobile({ product }: AddToCartButtonMobile
       ) : (
         <PrimaryButton
           className="w-full"
-          onClick={addToCart}
+          onClick={addToCartHandler}
           isLoading={isAddingToCart}
           disabled={(isVariableProduct && !isVariantSelected) || isAddingToCart}
         >

@@ -1,4 +1,3 @@
-// store/slices/authDialogSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface AuthDialogState {
@@ -16,14 +15,14 @@ const authDialogSlice = createSlice({
     setOpen(state, action: PayloadAction<boolean>) {
       state.open = action.payload;
     },
-    openDialog(state) {
+    openAuthDialog(state) {
       state.open = true;
     },
-    closeDialog(state) {
+    closeAuthDialog(state) {
       state.open = false;
     },
   },
 });
 
-export const { setOpen, openDialog, closeDialog } = authDialogSlice.actions;
+export const { setOpen, openAuthDialog, closeAuthDialog } = authDialogSlice.actions;
 export default authDialogSlice.reducer;

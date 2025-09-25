@@ -1,7 +1,7 @@
 'use client';
 
 import { useAppSelector } from '@/store/hooks';
-import { openDialog } from '@/store/slices/authDialogSlice';
+import { openAuthDialog } from '@/store/slices/authDialogSlice';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useMemo } from 'react';
 import { useDispatch } from 'react-redux';
@@ -26,7 +26,7 @@ function MobileBottomNav() {
           if (isLogin) {
             router.push('/profile');
           } else {
-            dispatch(openDialog());
+            dispatch(openAuthDialog());
           }
         },
         icon: <UserIconMobile isLogin={isLogin} />,
