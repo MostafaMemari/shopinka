@@ -12,10 +12,8 @@ interface CartIconTotalQuantityProps {
 }
 
 function CartIconTotalQuantity({ className }: CartIconTotalQuantityProps) {
-  const { cart, isLoading } = useCart();
+  const { cart } = useCart();
   const isMounted = useIsMounted();
-
-  console.log(isLoading, isMounted);
 
   const totalQuantity = Array.isArray(cart?.items) ? cart.items.reduce((sum, item) => sum + item.count, 0) : 0;
 
