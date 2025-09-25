@@ -12,6 +12,7 @@ interface CartSummaryProps {
   shippingNote?: string;
   shippingPrice?: number;
   children?: ReactNode;
+  cartPrice?: number;
 }
 
 const CartSummary: React.FC<CartSummaryProps> = ({
@@ -21,6 +22,7 @@ const CartSummary: React.FC<CartSummaryProps> = ({
   payablePrice,
   shippingNote,
   shippingPrice,
+  cartPrice,
   children,
 }) => {
   return (
@@ -51,6 +53,16 @@ const CartSummary: React.FC<CartSummaryProps> = ({
             <span className="text-sm text-gray-600 font-medium">هزینه ارسال</span>
             <div className="text-sm text-gray-900">
               <span className="font-bold">{formatPrice(shippingPrice)}</span>
+              <span className="text-xs mr-1">تومان</span>
+            </div>
+          </div>
+        )}
+
+        {cartPrice != null && cartPrice > 0 && (
+          <div className="flex justify-between items-center py-4">
+            <span className="text-sm text-gray-600 font-medium">جمع کل سبد خرید</span>
+            <div className="text-sm text-gray-900">
+              <span className="font-bold">{formatPrice(cartPrice)}</span>
               <span className="text-xs mr-1">تومان</span>
             </div>
           </div>

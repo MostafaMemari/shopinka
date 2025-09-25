@@ -25,15 +25,6 @@ export const useCartLogic = ({ product }: ProductCardLogicProps) => {
     dispatch(setSelectedVariant(null));
   }, [product.id, dispatch]);
 
-  const newPrice = useMemo(() => (selectedVariant ? selectedVariant.salePrice : product.salePrice), [selectedVariant, product.salePrice]);
-  const oldPrice = useMemo(() => (selectedVariant ? selectedVariant.basePrice : product.basePrice), [selectedVariant, product.basePrice]);
-  const discount = useMemo(() => {
-    if (newPrice && oldPrice) {
-      return Math.round(((oldPrice - newPrice) / oldPrice) * 100);
-    }
-    return 0;
-  }, [newPrice, oldPrice]);
-
   const cartItemId = useMemo(() => {
     return isVariableProduct ? (selectedVariant?.id ?? product.id) : product.id;
   }, [isVariableProduct, selectedVariant, product.id]);
@@ -60,7 +51,6 @@ export const useCartLogic = ({ product }: ProductCardLogicProps) => {
 
   return {
     product,
-    newPrice,
     isVariableProduct,
     isVariantSelected,
     isInCart,

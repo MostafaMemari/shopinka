@@ -134,7 +134,7 @@ function CartPageView() {
       <div className="col-span-12 md:col-span-3">
         <CartSummary
           totalQuantity={totalQuantity}
-          payablePrice={cart.payablePrice}
+          cartPrice={cart.payablePrice}
           totalDiscountPrice={cart.totalDiscountPrice}
           totalPrice={cart.totalPrice}
           shippingNote="هزینه‌ی ارسال در ادامه بر اساس آدرس، زمان و نحوه‌ی ارسال انتخابی شما‌ محاسبه و به این مبلغ اضافه خواهد شد"
