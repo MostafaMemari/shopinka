@@ -12,6 +12,7 @@ export type SocialLink = {
 export type TrustBadge = {
   id: string;
   name: string;
+  description: string;
   imageSrc: string;
   href: string;
   isTest?: boolean;
@@ -46,17 +47,19 @@ export const socialLinks: SocialLink[] = [
 
 export const trustBadges: TrustBadge[] = [
   {
-    id: '1',
-    name: 'namad',
-    imageSrc: 'https://trustseal.enamad.ir/logo.aspx?id=622800&Code=cLIJRY4HL3Y3AYOJXBHINBZIOaGquUDf',
-    href: 'https://trustseal.enamad.ir/?id=622800&Code=cLIJRY4HL3Y3AYOJXBHINBZIOaGquUDf',
+    id: 'namad',
+    name: 'نماد اعتماد',
+    description: 'درگاه پرداخت زرین پال',
+    imageSrc: '/images/namad/zarinpal.webp',
+    href: 'https://www.zarinpal.com/trustPage/shopinka.ir',
     isTest: false,
   },
   {
-    id: '2',
-    name: 'samandehi',
-    imageSrc: '/images/samandehi.png',
-    href: '#',
+    id: 'zarinpal',
+    name: 'نماد اعتماد',
+    description: 'تجارت الکترونیکی',
+    imageSrc: '/images/namad/enamad.webp',
+    href: 'https://trustseal.enamad.ir/?id=563648&Code=bGFPfEEW5xEdSpdeU3GkXfJcZzVeOvDs',
     isTest: true,
   },
 ];
