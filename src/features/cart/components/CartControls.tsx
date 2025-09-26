@@ -1,6 +1,6 @@
 'use client';
 
-import { Plus, Minus, Trash2 } from 'lucide-react';
+import { Plus, Minus, Trash2, Ellipsis } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { CartItemState } from '@/features/cart/cartType';
 import { useCart } from '../hooks/useCart';
@@ -36,7 +36,7 @@ export function CartControls({ product, className }: CartControlsProps) {
 
       <div className="flex h-9 w-8 items-center justify-center">
         {isLoading ? (
-          <div className="animate-pulse rounded-full bg-primary/20 h-5 w-5" aria-label="در حال بارگذاری" />
+          <Ellipsis className="!w-10 !h-10 animate-side-to-side text-primary/50" />
         ) : (
           <span className="w-full text-center font-bold text-gray-900 dark:text-gray-100">{product.count}</span>
         )}
