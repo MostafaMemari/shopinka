@@ -23,6 +23,8 @@ export function ProductDesktopDetailsPrice({ product }: ProductPriceProps) {
   const salePrice = isVariable ? (selectedVariant?.salePrice ?? null) : product.salePrice;
   const basePrice = isVariable ? (selectedVariant?.basePrice ?? null) : product.basePrice;
 
+  const price = salePrice || basePrice;
+
   const discount = useMemo(() => {
     if (typeof salePrice === 'number' && typeof basePrice === 'number' && basePrice > 0) {
       return Math.round(((basePrice - salePrice) / basePrice) * 100);
@@ -33,6 +35,8 @@ export function ProductDesktopDetailsPrice({ product }: ProductPriceProps) {
   if (isVariable && !selectedVariant) return null;
 
   if (salePrice == null && basePrice == null) return null;
+
+  if (!price) return;
 
   return (
     <div className="space-y-2">

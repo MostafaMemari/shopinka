@@ -13,9 +13,11 @@ import PrimaryButton from '@/components/common/PrimaryButton';
 import { useRef } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import MobileDrawer from '@/components/common/Drawer';
+import { clearAddToCart } from '@/store/slices/pendingActionSlice';
 
 export function AuthDialogDrawer() {
   const dispatch = useDispatch();
+
   const isDesktop = useMediaQuery('(min-width: 768px)');
 
   const { isLogin } = useAppSelector((state) => state.auth);
@@ -30,7 +32,10 @@ export function AuthDialogDrawer() {
   const description = otpStep ? `کد اعتبارسنجی با موفقیت به شماره ${mobile} ارسال شد` : 'لطفا شماره تلفن همراه خود را وارد کنید';
 
   const handleClose = (val: boolean) => {
-    if (!val) dispatch(closeAuthDialog());
+    if (!val) {
+      dispatch(clearAddToCart());
+      dispatch(closeAuthDialog());
+    }
   };
 
   const phoneInputFormRef = useRef<HTMLFormElement>(null);

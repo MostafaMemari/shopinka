@@ -24,6 +24,8 @@ export function AddToCartButtonDesktop({ product }: AddToCartButtonDesktopProps)
   const isInCart = !!existingProduct;
   const isVariableProduct = product.type === 'VARIABLE';
 
+  const price = isVariableProduct ? selectedVariant?.basePrice || selectedVariant?.salePrice : product.basePrice || product.salePrice;
+
   const addToCartHandler = () => {
     const item: CartData = {
       productId: !isVariableProduct ? product.id : null,
@@ -41,6 +43,7 @@ export function AddToCartButtonDesktop({ product }: AddToCartButtonDesktopProps)
   const getButtonText = () => {
     if (isAddingToCart) return 'در حال افزودن...';
     if (isVariableProduct && !isVariantSelected) return 'لطفاً گزینه‌های محصول را انتخاب کنید';
+    if (!price) return 'ناموجود';
     return 'افزودن به سبد خرید';
   };
 
@@ -65,7 +68,7 @@ export function AddToCartButtonDesktop({ product }: AddToCartButtonDesktopProps)
           <PrimaryButton
             type="button"
             onClick={addToCartHandler}
-            disabled={(isVariableProduct && !isVariantSelected) || isAddingToCart}
+            disabled={(isVariableProduct && !isVariantSelected) || isAddingToCart || !price}
             isLoading={isAddingToCart}
             className="flex w-full items-center justify-center gap-2
              shadow-md shadow-primary/50 transition-all duration-300 

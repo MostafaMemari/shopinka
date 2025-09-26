@@ -24,8 +24,6 @@ const AuthInitializer = () => {
 
   useEffect(() => {
     if (isLogin && addToCartItem) {
-      console.log(addToCartItem);
-
       addToCart(addToCartItem, {
         onSuccess: () => {
           showAddToCartToast(router);
