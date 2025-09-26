@@ -21,8 +21,8 @@ export const updateAddress = async (id: number, data: AddressFormValues): Promis
     auth: true,
     body: cleanObject({
       ...data,
-      buildingNumber: data.unit ? Number(data.buildingNumber) : undefined,
-      unit: data.unit ? Number(data.unit) : undefined,
+      buildingNumber: Number(data.buildingNumber),
+      unit: data.unit ? Number(data.unit) : null,
     }),
   });
 };

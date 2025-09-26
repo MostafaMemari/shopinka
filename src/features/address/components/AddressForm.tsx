@@ -82,7 +82,6 @@ export default function AddressForm({ initialValues, className = '', onSuccess, 
           <FormInput control={form.control} name="postalCode" label="کدپستی" />
         </div>
 
-        {/* ردیف دوم */}
         <div className="grid grid-cols-2 gap-4 items-start">
           <FormSelect
             control={form.control}
@@ -108,7 +107,6 @@ export default function AddressForm({ initialValues, className = '', onSuccess, 
           />
         </div>
 
-        {/* ردیف سوم */}
         <div className="grid grid-cols-2 gap-4 items-start">
           <FormInput control={form.control} name="buildingNumber" label="پلاک" />
           <FormInput control={form.control} name="unit" label="واحد" />
