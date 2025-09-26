@@ -2,13 +2,14 @@
 
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { createCart, getCart, updateQuantityItemCart, removeItemCart, clearCart } from '@/features/cart/cartsService';
-import { CartData, CartItemState, CartState } from '@/features/cart/cartType';
+import { CartData, CartItem, CartItemState, CartState } from '@/features/cart/cartType';
 import { QueryOptions } from '@/types/queryOptions';
 import { QueryKeys } from '@/types/query-keys';
 import { useDispatch } from 'react-redux';
 import { openAuthDialog } from '@/store/slices/authDialogSlice';
 import { useAppSelector } from '@/store/hooks';
 import { ApiResponse } from '@/service/api';
+import { setAddToCart } from '@/store/slices/pendingActionSlice';
 
 export function useCartData({ enabled = true, staleTime = 60_000 }: QueryOptions) {
   const { data, isLoading, error, refetch, isFetching } = useQuery<ApiResponse<CartState>>({
@@ -64,6 +65,25 @@ export const useCart = () => {
     onSuccess: invalidateCart,
   });
 
+  const handleAddToCart = (
+    cartData: CartData,
+    options?: { onSuccess: (data: ApiResponse<{ cartItem: CartItem }>) => void; onError?: (error: any) => void },
+  ) => {
+    if (isLogin) {
+      addToCartMutation.mutate(cartData, {
+        onSuccess: (data) => {
+          options?.onSuccess?.(data);
+        },
+        onError: (error) => {
+          options?.onError?.(error);
+        },
+      });
+    } else {
+      dispatch(setAddToCart(cartData));
+      dispatch(openAuthDialog());
+    }
+  };
+
   const updateQuantityMutation = useMutation({
     mutationFn: ({ quantity, itemId }: { quantity: number; itemId: number }) => updateQuantityItemCart({ quantity, itemId }),
     onSuccess: invalidateCart,
@@ -106,7 +126,7 @@ export const useCart = () => {
     cart: data,
     isLoading,
     error,
-    addToCartMutation: addToCartMutation.mutate,
+    addToCart: handleAddToCart,
     increaseCount: handleIncrease,
     decreaseCount: handleDecrease,
     deleteFromCart: handleDelete,

@@ -7,13 +7,16 @@ import type { AppDispatch } from '@/store';
 import { checkAuth } from '@/store/slices/authSlice';
 import { clearAddToCart } from '@/store/slices/pendingActionSlice';
 import { useCart } from '@/features/cart/hooks/useCart';
+import { useRouter } from 'next/navigation';
+import { showAddToCartToast } from '@/utils/toastUtils';
 
 const AuthInitializer = () => {
   const dispatch = useDispatch<AppDispatch>();
   const isLogin = useAppSelector((state) => state.auth.isLogin);
   const addToCartItem = useAppSelector((state) => state.pendingAction.addToCartItem);
+  const router = useRouter();
 
-  const { addToCartMutation } = useCart();
+  const { addToCart } = useCart();
 
   useEffect(() => {
     dispatch(checkAuth());
@@ -21,10 +24,16 @@ const AuthInitializer = () => {
 
   useEffect(() => {
     if (isLogin && addToCartItem) {
-      addToCartMutation(addToCartItem);
-      dispatch(clearAddToCart());
+      console.log(addToCartItem);
+
+      addToCart(addToCartItem, {
+        onSuccess: () => {
+          showAddToCartToast(router);
+          dispatch(clearAddToCart());
+        },
+      });
     }
-  }, [isLogin, addToCartItem, addToCartMutation, dispatch]);
+  }, [isLogin, addToCartItem]);
 
   return null;
 };

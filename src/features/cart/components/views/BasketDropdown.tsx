@@ -56,9 +56,9 @@ export default function BasketDropdown() {
             </ScrollArea>
 
             <div className="flex items-center justify-between border-t pt-3">
-              <div className="flex flex-col items-center gap-y-1">
+              <div className="flex flex-col items-center justify-center gap-y-1">
                 <span className="text-sm text-text/60">جمع سبد خرید</span>
-                <div className="text-text/90">
+                <div className="text-text/90 flex items-center gap-1">
                   <span className="font-bold">{formatPrice(payablePrice)}</span>
 
                   <TomanIcon className="w-4 h-4" />

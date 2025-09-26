@@ -7,23 +7,18 @@ import { useCartLogic } from '../../hooks/useCartLogic';
 import PrimaryButton from '@/components/common/PrimaryButton';
 import { useCart } from '../../hooks/useCart';
 import { CartData } from '../../cartType';
-import { useAppSelector } from '@/store/hooks';
-import { useDispatch } from 'react-redux';
-import { setAddToCart } from '@/store/slices/pendingActionSlice';
-import { openAuthDialog } from '@/store/slices/authDialogSlice';
-import { AddedToCardDialogDrawer } from '../AddedToCardDialogDrawer';
+import { showAddToCartToast } from '@/utils/toastUtils';
+import { useRouter } from 'next/navigation';
 
 interface AddToCartButtonDesktopProps {
   product: ProductCardLogic;
 }
 
 export function AddToCartButtonDesktop({ product }: AddToCartButtonDesktopProps) {
-  const isLogin = useAppSelector((state) => state.auth.isLogin);
-  const dispatch = useDispatch();
-
   const { selectedVariant, existingProduct } = useCartLogic({ product });
+  const router = useRouter();
 
-  const { addToCartMutation, isAddingToCart } = useCart();
+  const { addToCart, isAddingToCart } = useCart();
 
   const isVariantSelected = !!selectedVariant;
   const isInCart = !!existingProduct;
@@ -36,12 +31,11 @@ export function AddToCartButtonDesktop({ product }: AddToCartButtonDesktopProps)
       quantity: 1,
     };
 
-    if (isLogin) {
-      addToCartMutation(item);
-    } else {
-      dispatch(setAddToCart(item));
-      dispatch(openAuthDialog());
-    }
+    addToCart(item, {
+      onSuccess: () => {
+        showAddToCartToast(router);
+      },
+    });
   };
 
   const getButtonText = () => {
@@ -81,8 +75,6 @@ export function AddToCartButtonDesktop({ product }: AddToCartButtonDesktopProps)
           </PrimaryButton>
         )}
       </div>
-
-      {/* <AddedToCardDialogDrawer /> */}
     </>
   );
 }

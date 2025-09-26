@@ -6,23 +6,19 @@ import Link from 'next/link';
 import CartControls from '../CartControls';
 import { useCartLogic } from '../../hooks/useCartLogic';
 import { useCart } from '../../hooks/useCart';
-import { useAppSelector } from '@/store/hooks';
-import { useDispatch } from 'react-redux';
 import { CartData } from '../../cartType';
-import { setAddToCart } from '@/store/slices/pendingActionSlice';
-import { openAuthDialog } from '@/store/slices/authDialogSlice';
+import { showAddToCartToast } from '@/utils/toastUtils';
+import { useRouter } from 'next/navigation';
 
 interface AddToCartButtonMobileProps {
   product: ProductCardLogic;
 }
 
 export default function AddToCartButtonMobile({ product }: AddToCartButtonMobileProps) {
-  const isLogin = useAppSelector((state) => state.auth.isLogin);
-  const dispatch = useDispatch();
-
   const { selectedVariant, existingProduct } = useCartLogic({ product });
+  const router = useRouter();
 
-  const { addToCartMutation, isAddingToCart } = useCart();
+  const { addToCart, isAddingToCart } = useCart();
 
   const isVariantSelected = !!selectedVariant;
   const isInCart = !!existingProduct;
@@ -35,12 +31,11 @@ export default function AddToCartButtonMobile({ product }: AddToCartButtonMobile
       quantity: 1,
     };
 
-    if (isLogin) {
-      addToCartMutation(item);
-    } else {
-      dispatch(setAddToCart(item));
-      dispatch(openAuthDialog());
-    }
+    addToCart(item, {
+      onSuccess: () => {
+        showAddToCartToast(router);
+      },
+    });
   };
 
   return (
