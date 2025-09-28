@@ -30,6 +30,7 @@ const ProductCard: FC<Props> = ({ product }) => {
 
   const salePrice = isVariableProduct ? defaultVariant?.salePrice : product.salePrice;
   const basePrice = isVariableProduct ? defaultVariant?.basePrice : product.basePrice;
+  const quantity = isVariableProduct ? defaultVariant?.quantity : product.quantity;
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -58,7 +59,7 @@ const ProductCard: FC<Props> = ({ product }) => {
             <h3 className="text-sm md:text-base">{productName}</h3>
           </Link>
         </div>
-        <ProductPrice salePrice={salePrice} basePrice={basePrice} />
+        <ProductPrice salePrice={salePrice} basePrice={basePrice} quantity={quantity} />
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       </div>
     </Card>
