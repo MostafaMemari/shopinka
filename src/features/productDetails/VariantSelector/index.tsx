@@ -12,14 +12,14 @@ import { findMatchingVariant } from '../utils/productVariants';
 import { Attribute, AttributeValues } from '@/types/attributeType';
 import { Card } from '@/components/ui/card';
 import { ProductVariant } from '@/features/products/ProductType';
-interface Props {
+interface ProductVariantsProps {
   variants: ProductVariant[];
   attributes: Attribute[];
   productType: 'VARIABLE' | 'SIMPLE';
   defaultVariantId?: number;
 }
 
-export default function ProductVariants({ variants, attributes, productType, defaultVariantId }: Props) {
+export default function ProductVariants({ variants, attributes, productType, defaultVariantId }: ProductVariantsProps) {
   const dispatch = useDispatch();
   const { selectedColor, selectedButton, selectedVariant } = useSelector((state: RootState) => state.product);
 

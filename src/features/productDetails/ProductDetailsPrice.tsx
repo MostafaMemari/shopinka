@@ -4,7 +4,6 @@ import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { formatPrice } from '@/utils/formatter';
-import { Badge } from '@/components/ui/badge';
 import DiscountBadge from '@/components/common/DiscountBadge';
 import TomanIcon from '@/components/common/svg/TomanIcon';
 
@@ -13,17 +12,17 @@ interface ProductPriceProps {
     type: 'VARIABLE' | 'SIMPLE';
     salePrice: number | null;
     basePrice: number | null;
+    quantity: number | null;
   };
 }
 
-export function ProductDesktopDetailsPrice({ product }: ProductPriceProps) {
+export function ProductDetailsPrice({ product }: ProductPriceProps) {
   const { selectedVariant } = useSelector((state: RootState) => state.product);
   const isVariable = product.type === 'VARIABLE';
 
   const salePrice = isVariable ? (selectedVariant?.salePrice ?? null) : product.salePrice;
   const basePrice = isVariable ? (selectedVariant?.basePrice ?? null) : product.basePrice;
-
-  const price = salePrice || basePrice;
+  const quantity = isVariable ? (selectedVariant?.quantity ?? null) : product.quantity;
 
   const discount = useMemo(() => {
     if (typeof salePrice === 'number' && typeof basePrice === 'number' && basePrice > 0) {
@@ -32,29 +31,26 @@ export function ProductDesktopDetailsPrice({ product }: ProductPriceProps) {
     return 0;
   }, [salePrice, basePrice]);
 
-  if (isVariable && !selectedVariant) return null;
-
-  if (salePrice == null && basePrice == null) return null;
-
-  if (!price) return;
-
+  if ((isVariable && !selectedVariant) || (!basePrice && !salePrice) || (quantity && quantity <= 0)) {
+    return null;
+  }
   return (
-    <div className="space-y-2">
+    <div>
       {discount > 0 && basePrice != null && salePrice ? (
-        <div className="flex flex-col items-end gap-y-1">
+        <div className="flex flex-col items-end">
           <div className="flex items-center gap-x-2">
-            <del className="text-lg font-normal text-muted-foreground">{formatPrice(basePrice)}</del>
-            <DiscountBadge discount={discount} />
+            <del className="text-xs md:text-lg font-normal text-muted-foreground">{formatPrice(basePrice)}</del>
+            <DiscountBadge discount={discount} className="px-1 py-0 text-[10px] w-7 md:w-9 md:text-sm" />
           </div>
           <div className="flex items-center gap-x-1">
-            <span className="text-2xl font-bold text-primary">{formatPrice(salePrice)}</span>
-            <TomanIcon className="w-6 h-6" />
+            <span className="text-base md:text-2xl font-bold text-primary">{formatPrice(salePrice)}</span>
+            <TomanIcon className="w-4 h-4 md:w-6 md:h-6" />
           </div>
         </div>
       ) : (
         <div className="flex items-center gap-x-1">
-          <span className="text-2xl font-bold text-primary">{formatPrice(basePrice ?? 0)}</span>
-          <TomanIcon className="w-6 h-6" />
+          <span className="text-base md:text-2xl font-bold text-primary">{formatPrice(basePrice ?? 0)}</span>
+          <TomanIcon className="w-4 h-4 md:w-6 md:h-6" />
         </div>
       )}
     </div>
@@ -66,47 +62,6 @@ interface ProductPriceProps {
     type: 'VARIABLE' | 'SIMPLE';
     salePrice: number | null;
     basePrice: number | null;
+    quantity: number | null;
   };
-}
-
-export function ProductStickyMobilePrice({ product }: ProductPriceProps) {
-  const { selectedVariant } = useSelector((state: RootState) => state.product);
-  const isVariable = product.type === 'VARIABLE';
-
-  const salePrice = isVariable ? (selectedVariant?.salePrice ?? null) : product.salePrice;
-  const basePrice = isVariable ? (selectedVariant?.basePrice ?? null) : product.basePrice;
-
-  const discount = useMemo(() => {
-    if (salePrice && basePrice && basePrice > 0) {
-      return Math.round(((basePrice - salePrice) / basePrice) * 100);
-    }
-    return 0;
-  }, [salePrice, basePrice]);
-
-  if (isVariable && !selectedVariant) return null;
-
-  return (
-    <div className="flex flex-col items-start text-xs">
-      {discount > 0 && salePrice ? (
-        <>
-          <div className="flex items-center gap-1">
-            <span className="line-through text-gray-400">{formatPrice(basePrice ?? 0)}</span>
-
-            <DiscountBadge discount={discount} className="px-1 py-0 text-[10px] w-7" />
-          </div>
-          <div className="flex items-center gap-1">
-            <span className="font-bold text-base">{formatPrice(salePrice)}</span>
-            <TomanIcon className="w-4 h-4" />
-          </div>
-        </>
-      ) : (
-        <div className="flex items-center gap-1">
-          <span className="font-bold text-base">{formatPrice(basePrice ?? 0)}</span>
-          <span className="text-gray-500">
-            <TomanIcon />
-          </span>
-        </div>
-      )}
-    </div>
-  );
 }

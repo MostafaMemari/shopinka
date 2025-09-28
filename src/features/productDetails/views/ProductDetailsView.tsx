@@ -3,9 +3,8 @@ import ProductGuarantees from '../ProductGuarantees';
 
 import ProductImageSwiper from '../ProductImageSwiper';
 import ProductVariants from '../VariantSelector';
-import AddToCartButtonMobile from '@/features/cart/components/AddToCartButton/AddToCartButtonMobile';
 import ProductProperties from '../ProductProperties';
-import AddToCartButtonDesktop from '@/features/cart/components/AddToCartButton/AddToCartButtonDesktop';
+import AddToCartButton from '@/features/cart/components/AddToCartButton';
 import { FC } from 'react';
 import ProductSku from '../ProductSku';
 import ProductCommentCount from '../../comments/components/ProductComments/ProductCommentCount';
@@ -15,7 +14,7 @@ import ShareProductAction from '../ActionButtons/ShareProductAction';
 import MobileCartSticky from '@/components/common/MobileCartSticky';
 import { Card } from '@/components/ui/card';
 import { ProductDetails } from '@/features/products/ProductType';
-import { ProductDesktopDetailsPrice, ProductStickyMobilePrice } from '../ProductDetailsPrice';
+import { ProductDetailsPrice } from '../ProductDetailsPrice';
 import { ProductStatusList } from '../ProductStatusList';
 import { Separator } from '@/components/ui/separator';
 import Breadcrumb from '@/components/common/Breadcrumb';
@@ -26,8 +25,6 @@ interface ProductDetailsViewProps {
 
 const ProductDetailsView: FC<ProductDetailsViewProps> = ({ product }) => {
   const isVariableProduct = product.type === 'VARIABLE';
-  const isEmptyVariants = !product.variants || product.variants.length === 0;
-  const isValidProduct = isVariableProduct ? !isEmptyVariants : true;
 
   const breadcrumbItems =
     product?.categories?.slice(0, 2).map((_, index) => {
@@ -40,6 +37,28 @@ const ProductDetailsView: FC<ProductDetailsViewProps> = ({ product }) => {
         href,
       };
     }) || [];
+
+  const AddToCard = (
+    <AddToCartButton
+      key={product.id}
+      product={{
+        id: product.id,
+        basePrice: product.basePrice ?? 0,
+        salePrice: product.salePrice ?? 0,
+        type: product.type,
+        quantity: product.quantity,
+      }}
+    />
+  );
+
+  const ProductVariant = (
+    <ProductVariants
+      defaultVariantId={product.defaultVariantId ?? undefined}
+      variants={product.variants}
+      attributes={product.attributes}
+      productType={product.type}
+    />
+  );
 
   return (
     <>
@@ -77,48 +96,28 @@ const ProductDetailsView: FC<ProductDetailsViewProps> = ({ product }) => {
                         <ProductCommentCount key={product.id} productId={product.id} />
                       </div>
 
-                      {isValidProduct && (
-                        <div className="mb-4">
-                          <ProductVariants
-                            variants={product.variants}
-                            attributes={product.attributes}
-                            productType={product.type}
-                            defaultVariantId={product.defaultVariantId ?? undefined}
-                          />
-                        </div>
-                      )}
+                      <div className="mb-4">{ProductVariant}</div>
 
                       <ProductProperties />
                     </div>
 
-                    <div className="col-span-5 flex flex-col justify-between gap-4">
+                    <div className="col-span-5 flex flex-col justify-between gap-4 self-start">
                       <ProductStatusList />
 
-                      {isValidProduct && (
-                        <div className="flex justify-between items-center w-full">
-                          <div></div>
-                          <div className="text-end">
-                            <ProductDesktopDetailsPrice
-                              product={{ type: product.type, basePrice: product.basePrice ?? 0, salePrice: product.salePrice }}
-                            />
-                          </div>
+                      <div className="flex items-center w-full">
+                        <div className="mr-auto text-end">
+                          <ProductDetailsPrice
+                            product={{
+                              type: product.type,
+                              basePrice: product.basePrice ?? 0,
+                              salePrice: product.salePrice,
+                              quantity: product.quantity,
+                            }}
+                          />
                         </div>
-                      )}
+                      </div>
 
-                      {isValidProduct && (
-                        <AddToCartButtonDesktop
-                          key={product.id}
-                          product={{
-                            id: product.id,
-                            name: product.name,
-                            slug: product.slug,
-                            basePrice: product.basePrice ?? 0,
-                            salePrice: product.salePrice ?? 0,
-                            mainImageUrl: product.mainImage?.fileUrl ?? null,
-                            type: product.type,
-                          }}
-                        />
-                      )}
+                      {AddToCard}
                     </div>
                   </div>
                 </div>
@@ -158,73 +157,38 @@ const ProductDetailsView: FC<ProductDetailsViewProps> = ({ product }) => {
             <Separator className="my-4" />
 
             <div className="mb-4 space-y-4">
-              {isVariableProduct && (
-                <div className="mb-4">
-                  <ProductVariants
-                    defaultVariantId={product.defaultVariantId ?? undefined}
-                    variants={product.variants}
-                    attributes={product.attributes}
-                    productType={product.type}
-                  />
-                </div>
-              )}
+              {isVariableProduct && <div className="mb-4">{ProductVariant}</div>}
 
-              {isValidProduct && (
-                <MobileCartSticky position="bottom" className="p-0">
-                  <div className="flex justify-between items-center w-full">
-                    <div className="w-1/2">
-                      <AddToCartButtonMobile
-                        key={product.id}
-                        product={{
-                          id: product.id,
-                          name: product.name,
-                          slug: product.slug,
-                          basePrice: product.basePrice ?? 0,
-                          salePrice: product.salePrice ?? 0,
-                          mainImageUrl: product.mainImage?.fileUrl ?? null,
-                          type: product.type,
-                        }}
-                      />
-                    </div>
+              <MobileCartSticky position="bottom" className="p-0">
+                <div className="flex justify-between items-center w-full">
+                  <div className="w-1/2 mx-1">{AddToCard}</div>
 
-                    {isValidProduct && (
-                      <div className="p-2">
-                        <ProductStickyMobilePrice
-                          product={{
-                            type: product.type,
-                            basePrice: product.basePrice ?? 0,
-                            salePrice: product.salePrice,
-                          }}
-                        />
-                      </div>
-                    )}
-                  </div>
-                </MobileCartSticky>
-              )}
-
-              {isValidProduct && (
-                <div className="hidden md:flex justify-between items-center w-full">
-                  <div className="w-1/2">
-                    <AddToCartButtonDesktop
-                      key={product.id}
+                  <div className="p-2">
+                    <ProductDetailsPrice
                       product={{
-                        id: product.id,
-                        name: product.name,
-                        slug: product.slug,
-                        basePrice: product.basePrice ?? 0,
-                        salePrice: product.salePrice ?? 0,
-                        mainImageUrl: product.mainImage?.fileUrl ?? null,
                         type: product.type,
+                        basePrice: product.basePrice ?? 0,
+                        salePrice: product.salePrice,
+                        quantity: product.quantity,
                       }}
                     />
                   </div>
-                  <div className="text-end">
-                    <ProductDesktopDetailsPrice
-                      product={{ type: product.type, basePrice: product.basePrice ?? 0, salePrice: product.salePrice }}
-                    />
-                  </div>
                 </div>
-              )}
+              </MobileCartSticky>
+
+              <div className="hidden md:flex justify-between items-center w-full">
+                <div className="w-1/2">{AddToCard}</div>
+                <div className="text-end">
+                  <ProductDetailsPrice
+                    product={{
+                      type: product.type,
+                      basePrice: product.basePrice ?? 0,
+                      salePrice: product.salePrice,
+                      quantity: product.quantity,
+                    }}
+                  />
+                </div>
+              </div>
 
               <ProductStatusList />
             </div>
