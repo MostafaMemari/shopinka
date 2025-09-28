@@ -4,6 +4,8 @@ import { COOKIE_NAMES } from './types/constants';
 import { refreshToken as refreshTokenResponse } from './service/refreshToken';
 
 export async function middleware(request: NextRequest) {
+  const response = NextResponse.next();
+
   const accessToken = request.cookies.get(COOKIE_NAMES.ACCESS_TOKEN)?.value;
   const refreshToken = request.cookies.get(COOKIE_NAMES.REFRESH_TOKEN)?.value;
 
@@ -11,27 +13,33 @@ export async function middleware(request: NextRequest) {
     const refreshTokenCookie = await getCookie(COOKIE_NAMES.REFRESH_TOKEN);
 
     if (refreshTokenCookie) {
-      const res = await refreshTokenResponse();
+      try {
+        const res = await refreshTokenResponse();
 
-      if (res?.accessToken) {
-        const newAccessToken = res.accessToken;
-        const expiredTime = Number(process.env.ACCESS_TOKEN_EXPIRE_TIME) || 3600;
+        if (res?.accessToken) {
+          const newAccessToken = res.accessToken;
+          const expiredTime = Number(process.env.ACCESS_TOKEN_EXPIRE_TIME) || 3600;
 
-        const response = NextResponse.next();
+          response.cookies.set(COOKIE_NAMES.ACCESS_TOKEN, newAccessToken, {
+            maxAge: expiredTime,
+            path: '/',
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+          });
 
-        response.cookies.set(COOKIE_NAMES.ACCESS_TOKEN, newAccessToken, {
-          maxAge: expiredTime,
-          path: '/',
-          httpOnly: true,
-          secure: process.env.NODE_ENV === 'production',
-        });
-
+          return response;
+        } else {
+          response.cookies.delete(COOKIE_NAMES.REFRESH_TOKEN);
+          return response;
+        }
+      } catch (error) {
+        response.cookies.delete(COOKIE_NAMES.REFRESH_TOKEN);
         return response;
       }
     }
   }
 
-  return NextResponse.next();
+  return response;
 }
 
 export const config = {

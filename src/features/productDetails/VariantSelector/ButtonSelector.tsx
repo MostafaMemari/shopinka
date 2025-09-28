@@ -21,12 +21,16 @@ interface Props {
 export default function ButtonSelector({ options, selectedOption, onOptionChange, title }: Props) {
   if (!options?.length) return null;
 
+  const sortedOptions = React.useMemo(() => {
+    return [...options].sort((a, b) => a.slug.localeCompare(b.slug));
+  }, [options]);
+
   return (
     <div>
       {title && <div className="mb-4 text-sm font-medium text-muted-foreground">{title}</div>}
 
       <RadioGroup value={selectedOption ?? ''} onValueChange={onOptionChange} className="flex flex-wrap gap-2">
-        {options.map((option) => (
+        {sortedOptions.map((option) => (
           <div key={option.slug} className="flex items-center space-x-2">
             <RadioGroupItem value={option.slug} id={option.slug} disabled={option.isDisabled} className="peer sr-only" />
             <Label

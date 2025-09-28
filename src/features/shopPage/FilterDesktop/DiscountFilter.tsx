@@ -19,15 +19,10 @@ function DiscountFilter() {
 
   return (
     <div className="flex items-center justify-between">
-      <Label htmlFor="onlyAvailableDesktop" className="cursor-pointer">
+      <Label htmlFor="hasDiscount" className="cursor-pointer w-full">
         فقط کالاهای دارای تخفیف
       </Label>
-      <Switch
-        id="onlyAvailableDesktop"
-        className="cursor-pointer"
-        checked={hasDiscount}
-        onCheckedChange={(checked) => setHasDiscount(checked)}
-      />
+      <Switch id="hasDiscount" checked={hasDiscount} onCheckedChange={(checked) => setHasDiscount(checked)} />
     </div>
   );
 }

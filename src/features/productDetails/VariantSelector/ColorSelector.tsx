@@ -16,12 +16,16 @@ interface Props {
 export default function ColorSelector({ colors, selectedColor, onColorChange, label }: Props) {
   if (!colors?.length) return null;
 
+  const sortedColors = React.useMemo(() => {
+    return [...colors].sort((a, b) => a.id.localeCompare(b.id));
+  }, [colors]);
+
   return (
     <div>
       {label && <div className="mb-4 text-sm font-medium text-muted-foreground">{label}</div>}
 
       <RadioGroup value={selectedColor ?? ''} onValueChange={onColorChange} className="flex flex-wrap gap-2">
-        {colors.map((color) => (
+        {sortedColors.map((color) => (
           <div key={color.id} className="flex items-center space-x-2">
             <RadioGroupItem value={color.id} id={color.id} disabled={color.isDisabled} className="peer sr-only" />
             <Label

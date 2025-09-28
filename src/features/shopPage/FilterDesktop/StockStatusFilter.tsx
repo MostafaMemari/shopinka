@@ -19,10 +19,10 @@ function StockStatusFilter() {
 
   return (
     <div className="flex items-center justify-between">
-      <Label htmlFor="onlyAvailableDesktop" className="cursor-pointer">
+      <Label htmlFor="inStock" className="cursor-pointer w-full">
         فقط کالاهای موجود
       </Label>
-      <Switch id="airplane-mode" className="cursor-pointer" checked={isInStock} onCheckedChange={(checked) => setIsInStock(checked)} />
+      <Switch id="inStock" checked={isInStock} onCheckedChange={(checked) => setIsInStock(checked)} />
     </div>
   );
 }
