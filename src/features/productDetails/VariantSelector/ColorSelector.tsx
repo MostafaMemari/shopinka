@@ -14,11 +14,11 @@ interface Props {
 }
 
 export default function ColorSelector({ colors, selectedColor, onColorChange, label }: Props) {
-  if (!colors?.length) return null;
-
   const sortedColors = React.useMemo(() => {
     return [...colors].sort((a, b) => a.id.localeCompare(b.id));
   }, [colors]);
+
+  if (!colors?.length) return null;
 
   return (
     <div>

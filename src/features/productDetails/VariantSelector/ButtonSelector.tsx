@@ -19,11 +19,11 @@ interface Props {
 }
 
 export default function ButtonSelector({ options, selectedOption, onOptionChange, title }: Props) {
-  if (!options?.length) return null;
-
   const sortedOptions = React.useMemo(() => {
     return [...options].sort((a, b) => a.slug.localeCompare(b.slug));
   }, [options]);
+
+  if (!options?.length) return null;
 
   return (
     <div>
