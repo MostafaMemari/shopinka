@@ -74,8 +74,6 @@ function InputOTPForm({ verifyOtp, ref }: InputOTPFormProps) {
             setTimeout(() => inputRef.current?.focus(), 0);
           }
         },
-
-        onError: (error: Error) => {},
       },
     );
   };
@@ -90,7 +88,7 @@ function InputOTPForm({ verifyOtp, ref }: InputOTPFormProps) {
 
   return (
     <>
-      {error && <Alert variant="destructive" icon="error" title={error} />}
+      {error && <Alert variant="destructive" icon="error" title={error} className="mb-1" />}
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)} ref={ref} className="flex flex-col gap-4 mt-1">
@@ -109,7 +107,13 @@ function InputOTPForm({ verifyOtp, ref }: InputOTPFormProps) {
                     inputMode="numeric"
                     maxLength={6}
                     value={field.value}
-                    onChange={(value) => field.onChange(value)}
+                    onChange={(value) => {
+                      field.onChange(value);
+
+                      if (value.length === 6) {
+                        form.handleSubmit(handleSubmit)();
+                      }
+                    }}
                     className="w-full"
                   >
                     <InputOTPGroup className="flex gap-1 sm:gap-2 flex-row-reverse [direction:ltr] justify-center">

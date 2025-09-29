@@ -47,7 +47,7 @@ function PhoneInputForm({ className, ref, sendOtp }: PhoneInputFormProps) {
 
   return (
     <>
-      {error && <Alert variant="destructive" icon="error" title={error} />}
+      {error && <Alert variant="destructive" icon="error" title={error} className="mb-1" />}
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)} ref={ref} className={cn('flex flex-col gap-4 mt-1', className)}>
           <FormField

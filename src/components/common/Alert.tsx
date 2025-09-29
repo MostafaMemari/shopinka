@@ -1,12 +1,14 @@
 import { ReactNode } from 'react';
 import { Alert as AlertShadcn, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { AlertCircleIcon, CheckCircle2Icon, PopcornIcon } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 type AlertProps = {
   variant?: 'default' | 'destructive';
   icon?: 'success' | 'error' | 'info';
   title: string;
   description?: ReactNode;
+  className?: ReactNode;
 };
 
 const iconMap = {
@@ -15,9 +17,9 @@ const iconMap = {
   info: <PopcornIcon className="h-5 w-5" />,
 };
 
-export function Alert({ variant = 'default', icon = 'info', title, description }: AlertProps) {
+export function Alert({ variant = 'default', icon = 'info', title, description, className }: AlertProps) {
   return (
-    <AlertShadcn variant={variant}>
+    <AlertShadcn variant={variant} className={cn(className)}>
       {iconMap[icon]}
       <div>
         <AlertTitle>{title}</AlertTitle>

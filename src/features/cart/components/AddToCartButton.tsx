@@ -42,7 +42,7 @@ export function AddToCartButton({ product }: AddToCartButtonProps) {
   const buttonText =
     (isAddingToCart && 'در حال افزودن...') ||
     (isVariable && !isVariantSelected && 'لطفاً گزینه‌های محصول را انتخاب کنید') ||
-    (!price && 'قیمت قابل فروش') ||
+    (!price && 'غیر قابل فروش') ||
     (!quantity && 'ناموجود') ||
     'افزودن به سبد خرید';
 
