@@ -5,25 +5,22 @@ import { getBlogs } from '@/features/blogs/blogsService';
 
 import { getCategoryBySlug } from '@/features/categories/cartService';
 import CategoryCirclesBanners from '@/features/categoryBanners';
-import BannerSlider from '@/features/carousel/BannerSlider';
 import CarouselBlog from '@/features/blogs/components/CarouselBlog';
-import { getBanners } from '@/features/banners/bannersService';
 import CarouselProduct from '@/features/products/components/ProductCarousel';
 import AmazingProducts from '@/features/products/components/ProductCardAmazing/AmazingOffersCarousel';
 import DomingoHeroWithSwiper from '@/features/heroSwiperBanner/DesignShowcase';
 
 export default async function Home() {
-  const [bannerts, discountProducts, newestProducts, blogs, categories] = await Promise.all([
-    getBanners({ includeImage: true, isActive: true }),
-    getProducts({ take: 14, hasDiscount: true }),
-    getProducts({ take: 14, sortBy: 'newest' }),
-    getBlogs({ take: 14 }),
-    getCategoryBySlug('car-sticker'),
-  ]);
+  // const [discountProducts, newestProducts, blogs, categories] = await Promise.all([
+  //   getProducts({ take: 14, hasDiscount: true }),
+  //   getProducts({ take: 14, sortBy: 'newest' }),
+  //   getBlogs({ take: 14 }),
+  //   getCategoryBySlug('car-sticker'),
+  // ]);
 
   return (
     <div className="space-y-4">
-      <DomingoHeroWithSwiper />
+      {/* <DomingoHeroWithSwiper />
 
       {discountProducts.success && <AmazingProducts products={discountProducts.data.items} viewAllLink="/shop?hasDiscount=true" />}
 
@@ -37,7 +34,7 @@ export default async function Home() {
 
       <CategoryCirclesBanners basePath={`/product-category/${categories.slug}`} categories={categories.children} />
 
-      {blogs.success && <CarouselBlog title="آخرین مقالات" blogs={blogs.data.items} viewAllLink="/shop?sortBy=newest" />}
+      {blogs.success && <CarouselBlog title="آخرین مقالات" blogs={blogs.data.items} viewAllLink="/shop?sortBy=newest" />} */}
     </div>
   );
 }
