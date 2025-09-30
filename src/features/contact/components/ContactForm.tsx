@@ -24,15 +24,9 @@ function ContactForm() {
   });
 
   const onSubmit = async (data: ContactForm) => {
-    createContact(
-      data,
-      () => {
-        form.reset();
-      },
-      (error) => {
-        console.error('خطا در ارسال پیام:', error);
-      },
-    );
+    createContact(data, () => {
+      form.reset();
+    });
   };
 
   return (

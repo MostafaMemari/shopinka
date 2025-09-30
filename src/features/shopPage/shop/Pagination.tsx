@@ -11,7 +11,7 @@ interface PaginationProps {
 }
 
 const Pagination: FC<PaginationProps> = ({ currentPage, totalPages }) => {
-  const [_, setQueryPage] = useQueryState('page', {
+  const [, setQueryPage] = useQueryState('page', {
     defaultValue: '',
     history: 'replace',
     shallow: false,
@@ -57,7 +57,7 @@ const Pagination: FC<PaginationProps> = ({ currentPage, totalPages }) => {
       </Button>
 
       <div className="flex items-center gap-1">
-        {pages.map((page, index) =>
+        {pages.map((page) =>
           typeof page === 'number' ? (
             <Button
               key={`page-${page}`}

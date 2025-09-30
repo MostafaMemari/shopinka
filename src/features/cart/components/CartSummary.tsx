@@ -1,7 +1,6 @@
 import React, { ReactNode } from 'react';
 import { formatPrice } from '@/utils/formatter';
 import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 
 interface CartSummaryProps {
   totalQuantity?: number;

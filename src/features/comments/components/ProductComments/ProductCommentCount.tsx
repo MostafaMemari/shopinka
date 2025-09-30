@@ -20,7 +20,7 @@ function ProductCommentCount({ productId }: ProductCommentCountProps) {
 
   useEffect(() => {
     if (isDesktop) drawerHandlers.onFalse();
-  }, [isDesktop]);
+  }, [isDesktop, drawerHandlers]);
 
   const CommentCount = data?.pager.totalCount || 0;
 

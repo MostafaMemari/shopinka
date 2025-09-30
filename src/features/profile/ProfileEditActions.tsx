@@ -50,15 +50,11 @@ const ProfileEditActions = () => {
 
   const handleFormSubmit = async (values: { fullName: string }) => {
     if (!user) return;
-    changeFullName(
-      values,
-      () => {
-        loginUser({ ...user, full_name: values.fullName, mobile: user.mobile || '' });
-        setModalState({ type: null, isOpen: false });
-        formRef.current?.reset();
-      },
-      (error) => console.error('خطا در ارسال فرم:', error),
-    );
+    changeFullName(values, () => {
+      loginUser({ ...user, full_name: values.fullName, mobile: user.mobile || '' });
+      setModalState({ type: null, isOpen: false });
+      formRef.current?.reset();
+    });
   };
   const handleSubmit = () => {
     formRef.current?.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));

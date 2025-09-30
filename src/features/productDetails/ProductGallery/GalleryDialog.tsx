@@ -24,7 +24,7 @@ export default function GalleryDialog({ dialogController, images, title }: Galle
     if (!isDesktop) {
       dialogController.onFalse();
     }
-  }, [isDesktop]);
+  }, [isDesktop, dialogController]);
 
   return (
     <Dialog open={dialogController.value} onOpenChange={dialogController.onToggle} title={title} size="lg" showDefaultCloseButton={false}>

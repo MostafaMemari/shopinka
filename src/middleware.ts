@@ -32,7 +32,7 @@ export async function middleware(request: NextRequest) {
           response.cookies.delete(COOKIE_NAMES.REFRESH_TOKEN);
           return response;
         }
-      } catch (error) {
+      } catch {
         response.cookies.delete(COOKIE_NAMES.REFRESH_TOKEN);
         return response;
       }

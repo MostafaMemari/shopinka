@@ -52,7 +52,6 @@ export function useAddress({ enabled = true, staleTime = 60_000 }: QueryOptions)
             onError?.(error);
           }
         },
-        onError: (error) => {},
       });
     },
 

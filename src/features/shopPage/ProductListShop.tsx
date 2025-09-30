@@ -59,7 +59,7 @@ export default function ProductListShop({ initialProducts, initialQuery, pager }
           setShowPagination(true);
         }
       }
-    } catch (error) {
+    } catch {
       setHasMore(false);
       setShowPagination(true);
     }

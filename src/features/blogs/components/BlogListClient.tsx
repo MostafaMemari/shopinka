@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { BlogItem, BlogParams } from '@/features/blogs/BlogType';
 import { getBlogs } from '@/features/blogs/blogsService';
@@ -22,13 +22,15 @@ export default function BlogListShopClient({ query, initialBlogs, pager }: Props
 
   const MAX_PAGES = 10;
 
+  const categoryIdsStr = useMemo(() => query.categoryIds?.toString() ?? '', [query.categoryIds]);
+
   useEffect(() => {
     setBlogs(initialBlogs);
     setPage(1);
     setHasMore((pager?.hasNextPage ?? false) && initialBlogs.length === (query.take ?? 10) && (pager?.currentPage ?? 1) < MAX_PAGES);
-  }, [query.categoryIds?.toString(), query.search, query.sortBy, initialBlogs, pager, query.take]);
+  }, [categoryIdsStr, query.search, query.sortBy, initialBlogs, pager, query.take]);
 
-  const fetchMoreData = async () => {
+  const fetchMoreData = useCallback(async () => {
     if (isLoading || page >= MAX_PAGES) {
       setHasMore(false);
       return;
@@ -47,12 +49,12 @@ export default function BlogListShopClient({ query, initialBlogs, pager }: Props
       setBlogs((prev) => [...prev, ...items]);
       setPage(nextPage);
       setHasMore((newPager?.hasNextPage ?? false) && items.length === (query.take ?? 10) && nextPage < MAX_PAGES);
-    } catch (error) {
+    } catch {
       setHasMore(false);
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [isLoading, page, query]);
 
   return (
     <InfiniteScroll

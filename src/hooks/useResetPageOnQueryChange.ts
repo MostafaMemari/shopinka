@@ -14,5 +14,5 @@ export const useResetPageOnQueryChange = (trigger: boolean | string | number) =>
     if (page !== null && page !== '') {
       setPage(null);
     }
-  }, [trigger]);
+  }, [trigger, page, setPage]);
 };

@@ -3,7 +3,7 @@
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 
-import { Menu, MenuIcon, Phone, X } from 'lucide-react';
+import { MenuIcon, Phone } from 'lucide-react';
 import { Button } from '../../ui/button';
 
 import MobileBottomNav from './MobileBottomNav';

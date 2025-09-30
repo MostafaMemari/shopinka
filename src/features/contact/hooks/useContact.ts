@@ -11,7 +11,7 @@ export function useContact() {
   });
 
   return {
-    createContact: (data: ContactForm, onSuccess?: (created: ContactItem) => void, onError?: (error: any) => void) => {
+    createContact: (data: ContactForm, onSuccess?: (created: ContactItem) => void) => {
       createMutation.mutate(data, {
         onSuccess: (response) => {
           if (response.success) {
@@ -21,7 +21,6 @@ export function useContact() {
             toast.error('خطا در ارسال پیام');
           }
         },
-        onError: (error) => {},
       });
     },
 

@@ -4,10 +4,8 @@ import { RootState } from '@/store';
 import { Ellipsis } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import type { ReactNode } from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useSelector } from 'react-redux';
-
-// ----------------------------------------------------------------------
 
 interface AuthGuardProps {
   children: ReactNode;
@@ -15,26 +13,24 @@ interface AuthGuardProps {
 
 export function AuthGuard({ children }: AuthGuardProps) {
   const router = useRouter();
-
   const { isLogin, isLoading } = useSelector((state: RootState) => state.auth);
 
   const [isChecking, setIsChecking] = useState(true);
 
-  const checkPermissions = async () => {
+  const checkPermissions = useCallback(async () => {
     if (isLoading) return;
 
     if (!isLogin) {
       router.replace('/');
-
       return;
     }
 
     setIsChecking(false);
-  };
+  }, [isLogin, isLoading, router]);
 
   useEffect(() => {
     checkPermissions();
-  }, [isLogin, isLoading]);
+  }, [checkPermissions]);
 
   if (isChecking) {
     return (

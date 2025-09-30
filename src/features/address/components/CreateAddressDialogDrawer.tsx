@@ -14,6 +14,7 @@ import AddressNewCard from './AddressNewCard';
 export function CreateAddressDialogDrawer() {
   const [open, setOpen] = useState(false);
   const isDesktop = useMediaQuery(`(min-width: ${COMPONENT_BREAKPOINTS.DIALOG_DRAWER})`);
+
   const [isLoadingSubmit, setIsLoadingSubmit] = useState(false);
 
   const formRef = React.useRef<HTMLFormElement>(null);

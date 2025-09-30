@@ -12,10 +12,9 @@ type Tab = {
 type ClientTabsListProps = {
   tabs: readonly Tab[];
   tabCounts: Record<string, number>;
-  activeTab: string;
 };
 
-const ClientTabsList = ({ tabs, tabCounts, activeTab }: ClientTabsListProps) => {
+const ClientTabsList = ({ tabs, tabCounts }: ClientTabsListProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
 

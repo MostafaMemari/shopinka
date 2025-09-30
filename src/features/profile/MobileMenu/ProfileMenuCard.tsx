@@ -22,7 +22,7 @@ function ProfileMenuCard() {
     if (isDesktop) {
       drawerControl.onFalse();
     }
-  }, [isDesktop]);
+  }, [isDesktop, drawerControl]);
 
   if (!isMounted) return null;
 

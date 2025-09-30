@@ -31,7 +31,7 @@ function ShareProductAction({ className }: { className?: string }) {
         document.body.removeChild(input);
         toast.success('لینک محصول با موفقیت کپی شد');
       }
-    } catch (error) {
+    } catch {
       toast.error('خطا در اشتراک‌گذاری');
     }
   };

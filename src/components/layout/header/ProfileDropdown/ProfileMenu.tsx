@@ -34,7 +34,6 @@ const ProfileMenu = () => {
           )}
         </Button>
       }
-      showChevron
       open={dropdownOpen.value}
       onOpenChange={dropdownOpen.onToggle}
       items={[

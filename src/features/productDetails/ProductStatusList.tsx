@@ -1,6 +1,6 @@
 // ProductStatusList.tsx
 import { Card } from '@/components/ui/card';
-import { Truck, ShieldCheck, Star, ShoppingBag, Store } from 'lucide-react';
+import { Truck, ShieldCheck, Star, Store } from 'lucide-react';
 import React from 'react';
 import { ProductStatusBadge } from './ProductStatusBadge';
 import { Separator } from '@/components/ui/separator';

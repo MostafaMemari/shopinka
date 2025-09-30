@@ -1,12 +1,11 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import AddressItem from './AddressCard';
 import { useAddress } from '@/features/address/useAddress';
 import { AddressCardSkeleton } from './AddressCardSkeleton';
 import { CreateAddressDialogDrawer } from './CreateAddressDialogDrawer';
 import { MapPin } from 'lucide-react';
-import AddressNewCard from './AddressNewCard';
 
 export interface Option {
   value: string;
@@ -20,11 +19,13 @@ interface AddressSectionProps {
 export default function AddressSection({ onAddressSelect }: AddressSectionProps) {
   const { data, isLoading } = useAddress({});
 
-  const addresses = data?.success ? data.data?.items : [];
+  const addresses = useMemo(() => {
+    return data?.success ? data.data?.items : [];
+  }, [data]);
 
   useEffect(() => {
-    onAddressSelect(addresses.filter((address) => address.isDefault)[0]?.id || null);
-  }, [addresses]);
+    onAddressSelect(addresses.find((address) => address.isDefault)?.id || null);
+  }, [addresses, onAddressSelect]);
 
   return (
     <div className="mb-6">

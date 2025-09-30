@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useEffect } from 'react';
+import { useMemo, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { setSelectedButton, setSelectedColor, setSelectedVariant } from '@/store/slices/productSlice';
@@ -23,9 +23,15 @@ export default function ProductVariants({ variants, attributes, productType, def
   const dispatch = useDispatch();
   const { selectedColor, selectedButton, selectedVariant } = useSelector((state: RootState) => state.product);
 
+  const resetVariant = useCallback(() => {
+    dispatch(setSelectedVariant(null));
+    dispatch(setSelectedColor(null));
+    dispatch(setSelectedButton(null));
+  }, [dispatch]);
+
   useEffect(() => {
     if (!defaultVariantId) resetVariant();
-  }, []);
+  }, [defaultVariantId, resetVariant]);
 
   useEffect(() => {
     if (productType === 'VARIABLE' && defaultVariantId && !selectedVariant) {
@@ -52,7 +58,7 @@ export default function ProductVariants({ variants, attributes, productType, def
     } else {
       dispatch(setSelectedVariant(null));
     }
-  }, [selectedColor, selectedButton, variants, attributes, productType, dispatch]);
+  }, [selectedColor, selectedButton, variants, attributes, productType, dispatch, selectedVariant?.id]);
 
   const onChangeColor = (color: string) => {
     dispatch(setSelectedColor(color));
@@ -105,12 +111,6 @@ export default function ProductVariants({ variants, attributes, productType, def
 
   const handleReset = () => {
     resetVariant();
-  };
-
-  const resetVariant = () => {
-    dispatch(setSelectedVariant(null));
-    dispatch(setSelectedColor(null));
-    dispatch(setSelectedButton(null));
   };
 
   const colorLabel = attributes.find((attr) => attr.type === 'COLOR')?.name || 'انتخاب رنگ';

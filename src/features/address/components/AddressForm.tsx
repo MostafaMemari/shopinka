@@ -56,7 +56,7 @@ export default function AddressForm({ initialValues, className = '', onSuccess, 
 
   useEffect(() => {
     onLoadingChange?.(isLoadingSubmit);
-  }, [isLoadingSubmit]);
+  }, [isLoadingSubmit, onLoadingChange]);
 
   const onSubmit: SubmitHandler<any> = (values: AddressFormValues) => {
     if (initialValues?.id) {

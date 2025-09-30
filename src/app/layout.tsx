@@ -1,6 +1,3 @@
-import './globals.css';
-import './tailwind.css';
-
 import { iranyekan } from '@/fonts/iranyekan';
 import ClientProvider from './ClientProvider';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
@@ -9,6 +6,9 @@ import { Suspense } from 'react';
 import Loading from './loading';
 import ScrollToTop from '@/components/common/ScrollToTop';
 import { Toaster } from '@/components/ui/sonner';
+
+import './globals.css';
+import './tailwind.css';
 
 export const metadata = {
   title: {

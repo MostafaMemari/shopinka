@@ -1,8 +1,8 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { ShippingItem } from '@/features/shippings/ShippingType';
 import { formatPrice } from '@/utils/formatter';
-import { Circle, CircleCheckBig, Square, SquareCheckBig, Tag, Timer } from 'lucide-react';
+import { Circle, CircleCheckBig, Tag, Timer } from 'lucide-react';
 import React from 'react';
 
 interface DeliveryItemProps {

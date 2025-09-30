@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { ShippingItem } from '@/features/shippings/ShippingType';
 import DeliveryItem from './DeliveryItem';
 import { Truck } from 'lucide-react';
@@ -14,7 +14,7 @@ interface DeliverySectionProps {
 export default function DeliverySection({ onShippingSelect }: DeliverySectionProps) {
   const { data, isLoading } = useShipping({});
 
-  const shippings = data?.success ? data.data.items : [];
+  const shippings = useMemo(() => (data?.success ? data.data.items : []), [data]);
 
   const [selected, setSelected] = useState<string | number | null>(null);
 

@@ -12,7 +12,7 @@ import { RootState } from '@/store';
 import { OTP_EXPIRE_SECONDS } from '@/constants';
 import { validationOtpSchema } from '@/validation/ValidateOtp';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { clearOtp, setOtpSentAt } from '@/store/slices/otpSlice';
+import { clearOtp } from '@/store/slices/otpSlice';
 import { OtpTimer } from './OtpTimer';
 import { Alert } from '@/components/common/Alert';
 import { UseMutateFunction } from '@tanstack/react-query';

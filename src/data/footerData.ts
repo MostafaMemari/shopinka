@@ -59,7 +59,7 @@ export const trustBadges: TrustBadge[] = [
     name: 'نماد اعتماد',
     description: 'تجارت الکترونیکی',
     imageSrc: '/images/namad/enamad.webp',
-    href: 'https://trustseal.enamad.ir/?id=563648&Code=bGFPfEEW5xEdSpdeU3GkXfJcZzVeOvDs',
+    href: '/enamad',
     isTest: true,
   },
 ];

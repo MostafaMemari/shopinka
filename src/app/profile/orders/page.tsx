@@ -39,7 +39,7 @@ async function page({ searchParams }: PageProps) {
       </div>
 
       <Tabs defaultValue={tabId} className="w-full">
-        <ClientTabsList tabs={TABS} tabCounts={tabCounts} activeTab={tabId} />
+        <ClientTabsList tabs={TABS} tabCounts={tabCounts} />
 
         {TABS.map((tab) => (
           <TabsContent key={tab.id} value={tab.id}>

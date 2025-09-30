@@ -48,7 +48,6 @@ export const useAuth = () => {
         queryClient.invalidateQueries({ queryKey: [QueryKeys.User] });
       }
     },
-    onError: (error) => {},
   });
 
   const logOutMutation = useMutation({

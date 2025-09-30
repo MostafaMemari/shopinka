@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import { Drawer, DrawerContent, DrawerHeader } from '@/components/ui/drawer';
 import { ChevronLeft } from 'lucide-react';
 import MobileDrawer from '@/components/common/Drawer';
 

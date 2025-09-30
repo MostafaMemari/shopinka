@@ -26,14 +26,13 @@ type AppDropdownMenuProps = {
   align?: 'start' | 'end' | 'center';
   className?: string;
   triggerClassName?: string;
-  showChevron?: boolean;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
   modal?: boolean;
 };
 
 const DropdownMenu = forwardRef<HTMLDivElement, AppDropdownMenuProps>(
-  ({ trigger, items, align = 'end', className, triggerClassName, showChevron = false, open, onOpenChange, modal = false }, ref) => {
+  ({ trigger, items, align = 'end', className, triggerClassName, open, onOpenChange, modal = false }, ref) => {
     return (
       <ShadcnDropdownMenu modal={modal} open={open} onOpenChange={onOpenChange}>
         <DropdownMenuTrigger asChild className={cn(triggerClassName)}>
