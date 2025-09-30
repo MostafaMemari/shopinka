@@ -208,6 +208,10 @@ body {
   font-weight: bold;
 }
 
+.swiper-button-disabled {
+  display: none !important;
+}
+
 /* .Toastify__toast {
   font-family: "IRANYekan", sans-serif;
 } */

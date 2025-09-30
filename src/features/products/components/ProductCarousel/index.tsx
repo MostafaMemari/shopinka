@@ -5,8 +5,6 @@ import Link from 'next/link';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import { productSwiperConfig } from '@/config/swiper';
-import 'swiper/css';
-import 'swiper/css/navigation';
 import ProductCard from '../ProductCard';
 import { Product } from '../../ProductType';
 import SkeletonLoader from './ProductCarouselSkeleton';

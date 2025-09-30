@@ -45,7 +45,7 @@ const CategorySelector: React.FC<Props> = ({ queryKey = 'categoryIds', title = '
       <Accordion type="single" collapsible defaultValue="categories">
         <AccordionItem value="categories">
           <AccordionTrigger className="hover:no-underline cursor-pointer">
-            <Label>{title}</Label>
+            <Label className="cursor-pointer">{title}</Label>
           </AccordionTrigger>
           <AccordionContent>
             <ul className="space-y-4.5">

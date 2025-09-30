@@ -29,7 +29,7 @@ export default function ShopPageSkeleton() {
         </div>
 
         <div className="col-span-12 md:col-span-8 lg:col-span-9 space-y-4">
-          <div className="flex items-center gap-x-2">
+          <div className="hidden md:flex items-center gap-x-2">
             <Skeleton className="h-6 w-6 rounded-full" />
             <Skeleton className="h-6 w-24" />
             <Skeleton className="h-10 w-24 rounded-lg" />

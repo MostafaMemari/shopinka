@@ -11,7 +11,7 @@ function SidebarFilters({ categories }: { categories: Category[] }) {
     <div className="col-span-4 row-span-2 hidden md:flex md:flex-col lg:col-span-3 gap-4">
       <SearchInput />
       {categories && categories.length > 0 && (
-        <Card className="px-3">
+        <Card className="px-3 py-0">
           <CategorySelector title="فیلتر بر اساس دسته‌بندی" categories={categories} />
         </Card>
       )}

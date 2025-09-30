@@ -7,6 +7,7 @@ import { formatAmount, formatDate, getRemainingTime } from '@/utils/formatter';
 import { Card } from '@/components/ui/card';
 import { CheckCircle, XCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import OrderFetchError from '@/features/payment/components/OrderFetchError';
 
 type PageProps = {
   searchParams: Promise<{ status: 'success' | 'failed'; orderId: string }>;
@@ -19,7 +20,9 @@ export default async function PaymentResult({ searchParams }: PageProps) {
     return null;
   });
 
-  if (!res?.success) return <OrderNotFound />;
+  if (!res?.success && res?.status === 404) return <OrderNotFound />;
+
+  if (!res?.success) return <OrderFetchError />;
 
   const order = res.data;
 
