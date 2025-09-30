@@ -39,14 +39,7 @@ export default function BannerSlider({ mainSliderBanners, sideBanners }: BannerS
           {mainSliderBanners.map((banner) => (
             <SwiperSlide key={banner.id}>
               <Link href={banner.link}>
-                <Image
-                  src={banner.image.fileUrl}
-                  alt=""
-                  width={800}
-                  height={450}
-                  className="max-h-[450px] w-full object-cover"
-                  unoptimized
-                />
+                <Image src={banner.image.fileUrl} alt="" width={800} height={450} className="max-h-[450px] w-full object-cover" />
               </Link>
             </SwiperSlide>
           ))}

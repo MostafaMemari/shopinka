@@ -24,7 +24,6 @@ export default function DesktopBasketItem({ item }: ItemCardBasketProp) {
             width={64}
             height={64}
             loading="lazy"
-            unoptimized
           />
         </Link>
       </div>
@@ -66,7 +65,7 @@ export default function DesktopBasketItem({ item }: ItemCardBasketProp) {
 //           width={64}
 //           height={64}
 //           loading="lazy"
-//           unoptimized
+//
 //         />
 //       </Link>
 

@@ -29,15 +29,7 @@ export default function ProductImageSwiper({ product }: ProductImageSwiperProps)
         {displayImages?.length &&
           displayImages.map((image, index) => (
             <SwiperSlide key={index}>
-              <Image
-                src={image.fileUrl}
-                alt={image?.title ?? product.name}
-                width={500}
-                height={500}
-                className="mx-auto"
-                loading="lazy"
-                unoptimized
-              />
+              <Image src={image.fileUrl} alt={image?.title ?? product.name} width={500} height={500} className="mx-auto" loading="lazy" />
             </SwiperSlide>
           ))}
       </Swiper>

@@ -42,7 +42,6 @@ const OrderItems: React.FC<OrderItemsProps> = ({ items, itemCount }) => {
                         fill
                         className="rounded-lg object-cover shadow"
                         sizes="(max-width: 640px) 80px, 96px"
-                        unoptimized
                       />
                     </Link>
 

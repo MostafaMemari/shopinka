@@ -26,7 +26,6 @@ function CartPageItem({ cartItem, isLast = false }: CartPageItemProps) {
             width={96}
             height={96}
             loading="lazy"
-            unoptimized
             className="w-24 h-24 rounded-md object-cover border"
           />
         </Link>

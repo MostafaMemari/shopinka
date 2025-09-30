@@ -27,7 +27,6 @@ export default function CategoryOverview({ name, description, thumbnailImage }: 
                 priority
                 className="w-full h-32 object-cover"
                 itemProp="image"
-                unoptimized
               />
             </div>
           )}

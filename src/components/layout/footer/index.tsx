@@ -28,7 +28,7 @@ const Footer = () => {
           <div className="col-span-12 md:col-span-6">
             <MenuLinks menuLinks1={menuLinks1} menuLinks2={menuLinks2} />
           </div>
-          <div className="col-span-12 flex items-center justify-center gap-x-2 md:col-span-6 md:justify-end">
+          <div className="col-span-12 mb-3 flex items-center justify-center gap-x-2 md:col-span-6 md:justify-end">
             <TrustBadges trustBadges={trustBadges} />
           </div>
         </div>

@@ -44,7 +44,6 @@ export default function CategoryListGridItem({
             height={80}
             className="object-contain w-full h-full"
             loading="lazy"
-            unoptimized
           />
         )}
       </div>

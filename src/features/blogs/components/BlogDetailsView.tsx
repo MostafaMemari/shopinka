@@ -23,7 +23,7 @@ const BlogDetailsView: FC<BlogDetailsViewProps> = ({ title, username, createdAt,
         <h1 className="mb-6 font-semibold text-xl md:text-2xl leading-relaxed">{title}</h1>
 
         <div className="mb-6">
-          <Image src={image || NoImage.BLOG} alt="blog" width={800} height={500} className="w-full rounded-xl object-cover" unoptimized />
+          <Image src={image || NoImage.BLOG} alt="blog" width={800} height={500} className="w-full rounded-xl object-cover" />
         </div>
 
         <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between text-sm text-muted-foreground border-b pb-4">

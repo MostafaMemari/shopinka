@@ -39,7 +39,6 @@ export default function MainBannerSlider() {
                 height={300}
                 className="max-h-[300px] w-full object-cover"
                 priority={banner.id === 1}
-                unoptimized
               />
             </Link>
           </SwiperSlide>

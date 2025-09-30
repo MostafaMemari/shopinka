@@ -31,14 +31,7 @@ export default function AmazingProducts({ products, title, viewAllLink }: Amazin
       <div className="grid grid-cols-1 md:grid-cols-12 gap-2">
         <CardHeader className="bg-gray-200 col-span-1 md:col-span-3 lg:col-span-2 flex flex-col justify-center items-start px-1">
           <div className="flex flex-row md:flex-col items-center gap-4 w-full">
-            <Image
-              src="/images/amazing-Carousel.webp"
-              alt="blog"
-              width={150}
-              height={92}
-              className="w-36 md:w-44 hidden md:block"
-              unoptimized
-            />
+            <Image src="/images/amazing-Carousel.webp" alt="blog" width={150} height={92} className="w-36 md:w-44 hidden md:block" />
 
             <h2 className="block md:hidden text-xs lg:text-md font-bold text-gray-800 w-full">{title || 'محصولات تخفیف‌دار'}</h2>
 

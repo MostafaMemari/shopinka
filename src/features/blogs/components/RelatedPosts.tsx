@@ -26,7 +26,6 @@ const RelatedPosts: FC<RelatedPosts> = ({ posts }) => {
                     width={64}
                     height={64}
                     className="w-16 rounded-xl xl:w-20"
-                    unoptimized
                   />
                 </div>
                 <div className="flex flex-col gap-y-2">
