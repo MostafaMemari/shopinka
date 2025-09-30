@@ -23,15 +23,6 @@ export default async function Home() {
 
   return (
     <div className="space-y-4">
-      {/* {bannerts.success && (
-        <div className="w-full max-w-screen-xl mx-auto">
-          <BannerSlider
-            mainSliderBanners={bannerts.data.items.filter((item) => item.type === 'MAIN_SLIDER')}
-            sideBanners={bannerts.data.items.filter((item) => item.type === 'SIDE').slice(0, 2)}
-          />
-        </div>
-      )} */}
-
       <DomingoHeroWithSwiper />
 
       {discountProducts.success && <AmazingProducts products={discountProducts.data.items} viewAllLink="/shop?hasDiscount=true" />}

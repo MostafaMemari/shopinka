@@ -29,7 +29,7 @@ export const designItems = [
     color: 'hsl(119 50% 40%)',
     heroImage: '/images/heroSwiper/03/pars.webp',
     thumbImage: '/images/heroSwiper/03/pars-thumb.webp',
-    link: '/pars',
+    link: '/product-category/car-sticker/pars-sticker',
   },
   {
     id: '359',
