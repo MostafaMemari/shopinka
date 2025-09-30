@@ -19,7 +19,7 @@ export default async function PaymentResult({ searchParams }: PageProps) {
     return null;
   });
 
-  if (!res?.success || !res.data) return <OrderNotFound />;
+  if (!res?.success) return <OrderNotFound />;
 
   const order = res.data;
 
