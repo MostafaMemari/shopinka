@@ -18,6 +18,25 @@ export default function BottomNav({ showFontGrid, toggleFontGrid, showColorGrid,
 
   const navItems = [
     {
+      label: 'رنگ',
+      onClick: toggleColorGrid,
+      icon: <Palette size={24} />,
+      isActive: showColorGrid,
+    },
+    {
+      label: 'فونت',
+      onClick: toggleFontGrid,
+      icon: <Type size={24} />,
+      isActive: showFontGrid,
+    },
+    {
+      label: 'افزودن به سبد',
+      onClick: () => router.push('/download'),
+      icon: <Download size={24} />,
+      isActive: pathname === '/download',
+      isHighlighted: true,
+    },
+    {
       label: 'تنظیمات',
       onClick: () => router.push('/settings'),
       icon: <Settings size={24} />,
@@ -29,45 +48,37 @@ export default function BottomNav({ showFontGrid, toggleFontGrid, showColorGrid,
       icon: <Shirt size={24} />,
       isActive: pathname === '/style',
     },
-    {
-      label: 'دریافت',
-      onClick: () => router.push('/download'),
-      icon: <Download size={24} />,
-      isActive: pathname === '/download',
-      isHighlighted: true,
-    },
-    {
-      label: 'فونت',
-      onClick: toggleFontGrid,
-      icon: <Type size={24} />,
-      isActive: showFontGrid,
-    },
-    {
-      label: 'رنگ',
-      onClick: toggleColorGrid,
-      icon: <Palette size={24} />,
-      isActive: showColorGrid,
-    },
   ];
 
   return (
-    <div className="flex justify-between items-center w-full p-2 py-0">
-      {navItems.map(({ label, icon, onClick, isActive, isHighlighted }) => (
-        <button
-          key={label}
-          onClick={onClick}
-          type="button"
-          className={`inline-flex items-center justify-center flex-col text-xs gap-1 p-1 font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 whitespace-nowrap
-              ${
-                isHighlighted
-                  ? 'bg-primary text-white h-[58px] w-[58px] min-w-[58px] -mt-[16px] rounded-full ring-4 ring-white'
-                  : 'h-[50px] rounded-lg hover:bg-gray-100' + (isActive ? ' text-primary font-bold' : ' text-gray-500')
-              }`}
-        >
-          {icon}
-          <span>{label}</span>
-        </button>
-      ))}
+    <div className="flex justify-center items-center w-full h-14 bg-white rounded-2xl p-2 mb-2">
+      <div className="flex justify-between items-center w-full max-w-lg">
+        {navItems.map((item, index) => {
+          const total = navItems.length;
+          const isMiddle = index === Math.floor(total / 2);
+          const isHighlighted = item.isHighlighted ?? isMiddle;
+
+          return (
+            <button
+              key={item.label}
+              onClick={item.onClick}
+              type="button"
+              className={`
+            flex flex-col items-center justify-center text-xs gap-1 font-medium
+            transition-colors focus-visible:outline-none focus-visible:ring-2
+            focus-visible:ring-ring focus-visible:ring-offset-2
+            disabled:pointer-events-none disabled:opacity-50 cursor-pointer
+            ${isHighlighted ? 'z-10 -mt-4 h-14 w-14 rounded-full bg-primary text-white ring-4 ring-white' : 'flex-1 h-12 rounded-lg'}
+            ${!isHighlighted && item.isActive ? 'text-primary font-bold' : ''}
+            ${!isHighlighted ? 'text-gray-500' : ''}
+          `}
+            >
+              {item.icon}
+              <span>{item.label}</span>
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 }

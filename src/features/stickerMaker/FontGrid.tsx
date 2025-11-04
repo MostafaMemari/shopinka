@@ -1,8 +1,14 @@
-import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
-import Image from 'next/image';
+import MobileDrawer from '@/components/common/Drawer';
+import { useBoolean } from '@/hooks/use-boolean';
+import { ScrollArea } from '@radix-ui/react-scroll-area';
 import React from 'react';
 
-function FontGrid() {
+interface FontGridProps {
+  open: boolean;
+  onClose: () => void;
+}
+
+function FontGrid({ open, onClose }: FontGridProps) {
   const fonts = [
     {
       name: 'لاله زار',
@@ -32,25 +38,16 @@ function FontGrid() {
   ];
 
   return (
-    <div className="fixed left-3 right-3 bottom-22 max-w-[500px] m-auto">
-      <ScrollArea
-        className="w-full h-[90px] bg-white rounded-md shadow-md border"
-        onWheel={(e) => {
-          const target = e.currentTarget;
-          if (e.deltaY !== 0) {
-            e.preventDefault();
-            target.scrollLeft += e.deltaY;
-          }
-        }}
-      >
-        <div className="flex gap-1.5 px-2 py-2">
-          {fonts.map((font) => (
+    <MobileDrawer open={open} onOpenChange={onClose} actions={null} title="انتخاب فونت" showClose={false} className="max-w-[500px] m-auto">
+      <ScrollArea className="h-full">
+        <div className="grid grid-cols-2 gap-2 px-3 pb-2">
+          {fonts.map((font, index) => (
             <div
-              key={font.name}
-              className="shrink-0 flex flex-col items-center cursor-pointer rounded-sm border hover:bg-gray-50 transition-colors min-w-[85px] px-1.5 py-1"
+              key={index}
+              className="flex flex-col items-center cursor-pointer rounded-sm border hover:bg-gray-50 transition-colors px-2 py-2"
             >
               <div className="w-[75px] h-9 bg-gray-100 rounded-sm overflow-hidden border">
-                <Image src={font.image} alt={font.name} width={75} height={36} className="w-full h-full object-contain" />
+                <img src={font.image} alt={font.name} width={75} height={36} className="w-full h-full object-contain" />
               </div>
               <p className="text-[10px] font-medium mt-1 truncate w-[70px] text-center" style={{ direction: 'rtl' }}>
                 {font.name}
@@ -58,9 +55,38 @@ function FontGrid() {
             </div>
           ))}
         </div>
-        <ScrollBar orientation="horizontal" />
       </ScrollArea>
-    </div>
+    </MobileDrawer>
+
+    // <div className="fixed left-3 right-3 bottom-22 max-w-[500px] m-auto">
+    //   <ScrollArea
+    //     className="w-full h-[90px] bg-white rounded-md shadow-md border"
+    //     onWheel={(e) => {
+    //       const target = e.currentTarget;
+    //       if (e.deltaY !== 0) {
+    //         e.preventDefault();
+    //         target.scrollLeft += e.deltaY;
+    //       }
+    //     }}
+    //   >
+    //     <div className="flex gap-1.5 px-2 py-2">
+    //       {fonts.map((font) => (
+    //         <div
+    //           key={font.name}
+    //           className="shrink-0 flex flex-col items-center cursor-pointer rounded-sm border hover:bg-gray-50 transition-colors min-w-[85px] px-1.5 py-1"
+    //         >
+    //           <div className="w-[75px] h-9 bg-gray-100 rounded-sm overflow-hidden border">
+    //             <Image src={font.image} alt={font.name} width={75} height={36} className="w-full h-full object-contain" />
+    //           </div>
+    //           <p className="text-[10px] font-medium mt-1 truncate w-[70px] text-center" style={{ direction: 'rtl' }}>
+    //             {font.name}
+    //           </p>
+    //         </div>
+    //       ))}
+    //     </div>
+    //     <ScrollBar orientation="horizontal" />
+    //   </ScrollArea>
+    // </div>
   );
 }
 
