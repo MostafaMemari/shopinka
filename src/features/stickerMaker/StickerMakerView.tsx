@@ -4,9 +4,16 @@ import React, { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import FontGrid from './FontGrid';
 import BottomNav from './BottomNav';
+import { Card } from '@/components/ui/card';
+import ColorGrid from './ColorGrid';
+
+type OpenPanel = 'font' | 'color' | null;
 
 function StickerMakerView() {
-  const [showFontGrid, setShowFontGrid] = useState(false);
+  const [openPanel, setOpenPanel] = useState<OpenPanel>(null);
+
+  const toggleFontGrid = () => setOpenPanel((prev) => (prev === 'font' ? null : 'font'));
+  const toggleColorGrid = () => setOpenPanel((prev) => (prev === 'color' ? null : 'color'));
 
   return (
     <div className="relative flex flex-col items-center justify-center min-h-screen w-full overflow-hidden bg-red-700">
@@ -14,23 +21,41 @@ function StickerMakerView() {
         <h1 className="text-2xl font-bold">استیکر ساز</h1>
         <p>اینجا محتوای اصلی شماست...</p>
       </div>
+      <Card className="fixed right-3 left-3 bottom-3 z-50 px-2 h-14 flex justify-center shadow-lg max-w-[500px] m-auto" role="region">
+        <AnimatePresence>
+          {openPanel === 'font' && (
+            <motion.div
+              key="fontgrid"
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: 20, opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              className="fixed left-0 right-0 bottom-0 z-40"
+            >
+              <FontGrid />
+            </motion.div>
+          )}
 
-      <AnimatePresence>
-        {showFontGrid && (
-          <motion.div
-            key="fontgrid"
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: 20, opacity: 0 }}
-            transition={{ duration: 0.25 }}
-            className="fixed left-0 right-0 bottom-0 z-40"
-          >
-            <FontGrid />
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      <BottomNav showFontGrid={showFontGrid} toggleFontGrid={() => setShowFontGrid((prev) => !prev)} />
+          {openPanel === 'color' && (
+            <motion.div
+              key="colorgrid"
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: 20, opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              className="fixed left-0 right-0 bottom-0 z-40"
+            >
+              <ColorGrid />
+            </motion.div>
+          )}
+        </AnimatePresence>
+        <BottomNav
+          showFontGrid={openPanel === 'font'}
+          toggleFontGrid={toggleFontGrid}
+          showColorGrid={openPanel === 'color'}
+          toggleColorGrid={toggleColorGrid}
+        />
+      </Card>
     </div>
   );
 }

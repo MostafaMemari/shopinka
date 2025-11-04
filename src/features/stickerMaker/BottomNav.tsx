@@ -8,9 +8,11 @@ import { Card } from '@/components/ui/card';
 interface BottomNavProps {
   showFontGrid: boolean;
   toggleFontGrid: () => void;
+  showColorGrid: boolean;
+  toggleColorGrid: () => void;
 }
 
-export default function BottomNav({ showFontGrid, toggleFontGrid }: BottomNavProps) {
+export default function BottomNav({ showFontGrid, toggleFontGrid, showColorGrid, toggleColorGrid }: BottomNavProps) {
   const pathname = usePathname();
   const router = useRouter();
 
@@ -42,32 +44,30 @@ export default function BottomNav({ showFontGrid, toggleFontGrid }: BottomNavPro
     },
     {
       label: 'رنگ',
-      onClick: () => router.push('/color'),
+      onClick: toggleColorGrid,
       icon: <Palette size={24} />,
-      isActive: pathname === '/color',
+      isActive: showColorGrid,
     },
   ];
 
   return (
-    <Card className="fixed right-3 left-3 bottom-3 z-50 px-2 h-14 flex justify-center shadow-lg" role="region">
-      <div className="flex justify-between items-center w-full p-2 py-0">
-        {navItems.map(({ label, icon, onClick, isActive, isHighlighted }) => (
-          <button
-            key={label}
-            onClick={onClick}
-            type="button"
-            className={`inline-flex items-center justify-center flex-col text-xs gap-1 p-1 font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 whitespace-nowrap
+    <div className="flex justify-between items-center w-full p-2 py-0">
+      {navItems.map(({ label, icon, onClick, isActive, isHighlighted }) => (
+        <button
+          key={label}
+          onClick={onClick}
+          type="button"
+          className={`inline-flex items-center justify-center flex-col text-xs gap-1 p-1 font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 whitespace-nowrap
               ${
                 isHighlighted
                   ? 'bg-primary text-white h-[58px] w-[58px] min-w-[58px] -mt-[16px] rounded-full ring-4 ring-white'
                   : 'h-[50px] rounded-lg hover:bg-gray-100' + (isActive ? ' text-primary font-bold' : ' text-gray-500')
               }`}
-          >
-            {icon}
-            <span>{label}</span>
-          </button>
-        ))}
-      </div>
-    </Card>
+        >
+          {icon}
+          <span>{label}</span>
+        </button>
+      ))}
+    </div>
   );
 }

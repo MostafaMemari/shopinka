@@ -32,7 +32,7 @@ function FontGrid() {
   ];
 
   return (
-    <div className="fixed left-3 right-3 bottom-22 z-40">
+    <div className="fixed left-3 right-3 bottom-22 max-w-[500px] m-auto">
       <ScrollArea
         className="w-full h-[90px] bg-white rounded-md shadow-md border"
         onWheel={(e) => {
@@ -43,7 +43,7 @@ function FontGrid() {
           }
         }}
       >
-        <div className="flex w-max gap-1.5 px-2 py-2">
+        <div className="flex gap-1.5 px-2 py-2">
           {fonts.map((font) => (
             <div
               key={font.name}
