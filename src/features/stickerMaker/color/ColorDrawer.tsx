@@ -27,7 +27,7 @@ const colors: ColorItem[] = [
 interface ColorDrawerProps {
   open: boolean;
   onClose: () => void;
-  onSelect?: (result: { color: ColorItem; finish?: string }) => void; // برای ارسال انتخاب نهایی به parent
+  onSelect?: (result: { color: ColorItem; finish?: string }) => void;
 }
 
 export default function ColorDrawer({ open, onClose, onSelect }: ColorDrawerProps) {

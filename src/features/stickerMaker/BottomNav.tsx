@@ -9,9 +9,18 @@ interface BottomNavProps {
   toggleFontGrid: () => void;
   showColorGrid: boolean;
   toggleColorGrid: () => void;
+  showSettingsPanel: boolean;
+  toggleSettingsPanel: () => void;
 }
 
-export default function BottomNav({ showFontGrid, toggleFontGrid, showColorGrid, toggleColorGrid }: BottomNavProps) {
+export default function BottomNav({
+  showFontGrid,
+  toggleFontGrid,
+  showColorGrid,
+  toggleColorGrid,
+  showSettingsPanel,
+  toggleSettingsPanel,
+}: BottomNavProps) {
   const pathname = usePathname();
   const router = useRouter();
 
@@ -37,9 +46,9 @@ export default function BottomNav({ showFontGrid, toggleFontGrid, showColorGrid,
     },
     {
       label: 'تنظیمات',
-      onClick: () => router.push('/settings'),
+      onClick: toggleSettingsPanel,
       icon: <Settings size={24} />,
-      isActive: pathname === '/settings',
+      isActive: showSettingsPanel,
     },
     {
       label: 'استایل',

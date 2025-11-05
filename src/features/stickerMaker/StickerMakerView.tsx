@@ -8,14 +8,16 @@ import ColorGrid from './color/ColorGrid';
 import FontDrawer from './font/FontDrawer';
 import MobileDrawer from '@/components/common/Drawer';
 import ColorDrawer from './color/ColorDrawer';
+import SettingsDrawer from './setting/SettingsDrawer';
 
-type OpenPanel = 'font' | 'color' | null;
+type OpenPanel = 'font' | 'color' | 'settings' | null;
 
 function StickerMakerView() {
   const [openPanel, setOpenPanel] = useState<OpenPanel>(null);
 
   const toggleFontGrid = () => setOpenPanel((prev) => (prev === 'font' ? null : 'font'));
   const toggleColorGrid = () => setOpenPanel((prev) => (prev === 'color' ? null : 'color'));
+  const toggleSettingsPanel = () => setOpenPanel((prev) => (prev === 'settings' ? null : 'settings'));
 
   return (
     <div className="relative flex flex-col items-center justify-center min-h-screen w-full overflow-hidden bg-red-700">
@@ -28,6 +30,8 @@ function StickerMakerView() {
         {/* <FontDrawer open={openPanel === 'font'} onClose={() => setOpenPanel(null)} /> */}
 
         {/* <ColorDrawer open={openPanel === 'color'} onClose={() => setOpenPanel(null)} /> */}
+
+        <SettingsDrawer open={openPanel === 'settings'} onClose={() => setOpenPanel(null)} />
 
         <AnimatePresence>
           <motion.div
@@ -48,6 +52,8 @@ function StickerMakerView() {
           toggleFontGrid={toggleFontGrid}
           showColorGrid={openPanel === 'color'}
           toggleColorGrid={toggleColorGrid}
+          showSettingsPanel={openPanel === 'settings'}
+          toggleSettingsPanel={toggleSettingsPanel}
         />
       </div>
     </div>
