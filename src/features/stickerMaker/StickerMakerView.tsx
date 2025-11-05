@@ -2,10 +2,10 @@
 
 import React, { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import FontGrid from './FontGrid';
+import FontGrid from './font/FontGrid';
 import BottomNav from './BottomNav';
-import { Card } from '@/components/ui/card';
 import ColorGrid from './ColorGrid';
+import FontDrawer from './font/FontDrawer';
 
 type OpenPanel = 'font' | 'color' | null;
 
@@ -23,7 +23,7 @@ function StickerMakerView() {
       </div>
 
       <div className="fixed right-3 left-3 bottom-3 z-50 h-14 flex justify-center max-w-[500px] m-auto" role="region">
-        {openPanel === 'font' && <FontGrid open={openPanel === 'font'} onClose={() => setOpenPanel(null)} />}
+        {openPanel === 'font' && <FontDrawer open={openPanel === 'font'} onClose={() => setOpenPanel(null)} />}
 
         <AnimatePresence>
           {openPanel && (

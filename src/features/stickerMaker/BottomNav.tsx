@@ -3,7 +3,6 @@
 import { Download, Palette, Settings, Type, Shirt } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
 import React from 'react';
-import { Card } from '@/components/ui/card';
 
 interface BottomNavProps {
   showFontGrid: boolean;
