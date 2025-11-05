@@ -4,8 +4,10 @@ import React, { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import FontGrid from './font/FontGrid';
 import BottomNav from './BottomNav';
-import ColorGrid from './ColorGrid';
+import ColorGrid from './color/ColorGrid';
 import FontDrawer from './font/FontDrawer';
+import MobileDrawer from '@/components/common/Drawer';
+import ColorDrawer from './color/ColorDrawer';
 
 type OpenPanel = 'font' | 'color' | null;
 
@@ -23,21 +25,22 @@ function StickerMakerView() {
       </div>
 
       <div className="fixed right-3 left-3 bottom-3 z-50 h-14 flex justify-center max-w-[500px] m-auto" role="region">
-        {openPanel === 'font' && <FontDrawer open={openPanel === 'font'} onClose={() => setOpenPanel(null)} />}
+        {/* <FontDrawer open={openPanel === 'font'} onClose={() => setOpenPanel(null)} /> */}
+
+        {/* <ColorDrawer open={openPanel === 'color'} onClose={() => setOpenPanel(null)} /> */}
 
         <AnimatePresence>
-          {openPanel && (
-            <motion.div
-              key={openPanel}
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: 20, opacity: 0 }}
-              transition={{ duration: 0.25 }}
-              className="fixed left-0 right-0 bottom-0 z-40"
-            >
-              {openPanel === 'color' && <ColorGrid />}
-            </motion.div>
-          )}
+          <motion.div
+            key={openPanel}
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 20, opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="fixed left-0 right-0 bottom-0 z-40"
+          >
+            {openPanel === 'font' && <FontGrid />}
+            {openPanel === 'color' && <ColorGrid />}
+          </motion.div>
         </AnimatePresence>
 
         <BottomNav

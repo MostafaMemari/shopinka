@@ -1,5 +1,6 @@
 import { ScrollBar } from '@/components/ui/scroll-area';
 import { ScrollArea } from '@radix-ui/react-scroll-area';
+import { AnimatePresence, motion } from 'framer-motion';
 import Image from 'next/image';
 import React from 'react';
 
