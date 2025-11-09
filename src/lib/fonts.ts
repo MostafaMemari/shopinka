@@ -2,11 +2,11 @@ import localFont from 'next/font/local';
 
 export const iranyekan = localFont({
   src: [
-    { path: '../fonts/iranyekan/IRANYekanXFaNum-Light.woff2', weight: '300', style: 'normal' },
-    { path: '../fonts/iranyekan/IRANYekanXFaNum-Regular.woff2', weight: '400', style: 'normal' },
-    { path: '../fonts/iranyekan/IRANYekanXFaNum-Medium.woff2', weight: '500', style: 'normal' },
-    { path: '../fonts/iranyekan/IRANYekanXFaNum-DemiBold.woff2', weight: '600', style: 'normal' },
-    { path: '../fonts/iranyekan/IRANYekanXFaNum-Bold.woff2', weight: '700', style: 'normal' },
+    { path: '../fonts/iranyekan/IRANYekan-Light.woff2', weight: '300', style: 'normal' },
+    { path: '../fonts/iranyekan/IRANYekan-Regular.woff2', weight: '400', style: 'normal' },
+    { path: '../fonts/iranyekan/IRANYekan-Medium.woff2', weight: '500', style: 'normal' },
+    { path: '../fonts/iranyekan/IRANYekan-DemiBold.woff2', weight: '600', style: 'normal' },
+    { path: '../fonts/iranyekan/IRANYekan-Bold.woff2', weight: '700', style: 'normal' },
   ],
   variable: '--font-iranyekan',
   display: 'swap',
@@ -31,6 +31,12 @@ export const bTitrBold = localFont({
   display: 'swap',
 });
 
+export const bMorvaridBold = localFont({
+  src: '../fonts/bMorvarid/BMORVARD.woff2',
+  variable: '--font-BMorvaridBold',
+  display: 'swap',
+});
+
 export const iranNastaliq = localFont({
   src: '../fonts/IranNastaliq/IranNastaliq.woff2',
   variable: '--font-iranNastaliq',
@@ -40,5 +46,23 @@ export const iranNastaliq = localFont({
 export const farJadid = localFont({
   src: '../fonts/farJadid/FarJadid.woff2',
   variable: '--font-farJadid',
+  display: 'swap',
+});
+
+export const shekasteh = localFont({
+  src: '../fonts/shekasteh/Shekasteh.woff2',
+  variable: '--font-shekasteh',
+  display: 'swap',
+});
+
+export const dastnevis = localFont({
+  src: '../fonts/dastnevis/Dastnevis.woff2',
+  variable: '--font-dastnevis',
+  display: 'swap',
+});
+
+export const digiSarvenaz = localFont({
+  src: '../fonts/digiSarvenaz/DigiSarvenaz.woff2',
+  variable: '--font-digiSarvenaz',
   display: 'swap',
 });

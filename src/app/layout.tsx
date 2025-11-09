@@ -5,7 +5,7 @@ import { Suspense } from 'react';
 import Loading from './loading';
 import ScrollToTop from '@/components/common/ScrollToTop';
 import { Toaster } from '@/components/ui/sonner';
-import { bTitrBold, dimaShekasteh, iranNastaliq, iranyekan, vazir } from '@/lib/fonts';
+import { bMorvaridBold, bTitrBold, dastnevis, digiSarvenaz, dimaShekasteh, iranNastaliq, iranyekan, shekasteh, vazir } from '@/lib/fonts';
 import { cn } from '@/lib/utils';
 
 import './globals.css';
@@ -36,7 +36,18 @@ export default function RootLayout({
   return (
     <html lang={lang} dir={dir} suppressHydrationWarning>
       <body
-        className={cn(iranyekan.variable, vazir.variable, dimaShekasteh.variable, bTitrBold.variable, iranNastaliq.variable, 'antialiased')}
+        className={cn(
+          iranyekan.variable,
+          vazir.variable,
+          dimaShekasteh.variable,
+          bTitrBold.variable,
+          iranNastaliq.variable,
+          shekasteh.variable,
+          dastnevis.variable,
+          digiSarvenaz.variable,
+          bMorvaridBold.variable,
+          'antialiased',
+        )}
       >
         <NextTopLoader showSpinner={false} color="#b22222" />
 

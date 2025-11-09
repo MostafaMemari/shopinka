@@ -70,8 +70,12 @@
   --font-vazir: Vazir;
   --font-dimaShekasteh: DimaShekasteh;
   --font-bTitrBold: BTitrBold;
+  --font-bMorvaridBold: BMorvaridBold;
   --font-iranNastaliq: IranNastaliq;
   --font-farJadid: farJadid;
+  --font-shekasteh: shekasteh;
+  --font-dastnevis: dastnevis;
+  --font-digiSarvenaz: digiSarvenaz;
 }
 
 @utility container {

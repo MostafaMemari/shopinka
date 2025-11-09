@@ -32,7 +32,7 @@ const EditableText: React.FC<EditableTextProps> = ({ text, setText, selectedFont
   const editableStyle: React.CSSProperties = {
     fontSize: '40px',
     color: selectedColor ? selectedColor.value : '#000000',
-    fontFamily: 'farJadid, sans-serif',
+    fontFamily: 'BMorvaridBold, sans-serif',
     WebkitTextStroke: '0',
     filter: 'drop-shadow(0.015em 0.015em 0.01em rgba(4, 8, 15, 0.3))',
     background: 'transparent',
