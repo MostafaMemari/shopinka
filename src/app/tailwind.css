@@ -69,6 +69,9 @@
   --font-iranyekan: IRANYekan;
   --font-vazir: Vazir;
   --font-dimaShekasteh: DimaShekasteh;
+  --font-bTitrBold: BTitrBold;
+  --font-iranNastaliq: IranNastaliq;
+  --font-farJadid: farJadid;
 }
 
 @utility container {

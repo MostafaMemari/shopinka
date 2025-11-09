@@ -20,7 +20,25 @@ export const vazir = localFont({
 });
 
 export const dimaShekasteh = localFont({
-  src: '../fonts/dima-shekasteh/DimaShekastehFree.woff2',
+  src: '../fonts/dimaShekasteh/DimaShekasteh.woff2',
   variable: '--font-dimaShekasteh',
+  display: 'swap',
+});
+
+export const bTitrBold = localFont({
+  src: '../fonts/bTitr/BTITRBD.woff2',
+  variable: '--font-bTitrBold',
+  display: 'swap',
+});
+
+export const iranNastaliq = localFont({
+  src: '../fonts/IranNastaliq/IranNastaliq.woff2',
+  variable: '--font-iranNastaliq',
+  display: 'swap',
+});
+
+export const farJadid = localFont({
+  src: '../fonts/farJadid/FarJadid.woff2',
+  variable: '--font-farJadid',
   display: 'swap',
 });
