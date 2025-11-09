@@ -67,6 +67,8 @@
   --color-sidebar-ring: var(--sidebar-ring);
 
   --font-iranyekan: IRANYekan;
+  --font-vazir: Vazir;
+  --font-dimaShekasteh: DimaShekasteh;
 }
 
 @utility container {

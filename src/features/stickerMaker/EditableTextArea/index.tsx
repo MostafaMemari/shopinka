@@ -38,6 +38,7 @@ const EditableTextArea: React.FC<EditableTextAreaProps> = ({ text, setText, sele
       onClick={() => setIsEditing(true)}
     >
       <EditableSurface />
+
       <EditableText
         text={text}
         setText={setText}

@@ -1,0 +1,26 @@
+import localFont from 'next/font/local';
+
+export const iranyekan = localFont({
+  src: [
+    { path: '../fonts/iranyekan/IRANYekanXFaNum-Light.woff2', weight: '300', style: 'normal' },
+    { path: '../fonts/iranyekan/IRANYekanXFaNum-Regular.woff2', weight: '400', style: 'normal' },
+    { path: '../fonts/iranyekan/IRANYekanXFaNum-Medium.woff2', weight: '500', style: 'normal' },
+    { path: '../fonts/iranyekan/IRANYekanXFaNum-DemiBold.woff2', weight: '600', style: 'normal' },
+    { path: '../fonts/iranyekan/IRANYekanXFaNum-Bold.woff2', weight: '700', style: 'normal' },
+  ],
+  variable: '--font-iranyekan',
+  display: 'swap',
+  preload: true,
+});
+
+export const vazir = localFont({
+  src: '../fonts/lalezar/Lalezar-Regular.woff2',
+  variable: '--font-vazir',
+  display: 'swap',
+});
+
+export const dimaShekasteh = localFont({
+  src: '../fonts/dima-shekasteh/DimaShekastehFree.woff2',
+  variable: '--font-dimaShekasteh',
+  display: 'swap',
+});
