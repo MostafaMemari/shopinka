@@ -19,6 +19,11 @@ export const metadata = {
     'خرید آنلاین انواع برچسب ماشین با طراحی خاص و کیفیت بالا از فروشگاه شاپینکا! انواع استیکر بدنه، شیشه، داخل خودرو، برچسب نوشته‌دار، اسپرت، خفن و فانتزی با امکان ارسال سریع، قیمت مناسب و قابلیت سفارشی‌سازی.',
 };
 
+export const viewport = {
+  maximumScale: 1, // جلوگیری از زوم
+  interactiveWidget: 'resizes-content' as const,
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{

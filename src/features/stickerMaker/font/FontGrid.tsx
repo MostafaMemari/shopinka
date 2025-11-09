@@ -1,10 +1,14 @@
-import { ScrollBar } from '@/components/ui/scroll-area';
-import { ScrollArea } from '@radix-ui/react-scroll-area';
-import { AnimatePresence, motion } from 'framer-motion';
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import Image from 'next/image';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 
-function FontGrid() {
+interface FontGridProps {
+  selectedFont: string;
+  onFontSelect: (font: string) => void;
+  onClose: () => void;
+}
+
+function FontGrid({ selectedFont, onFontSelect, onClose }: FontGridProps) {
   const fonts = [
     {
       name: 'لاله زار',
@@ -33,8 +37,21 @@ function FontGrid() {
     },
   ];
 
+  const gridRef = useRef<HTMLDivElement>(null);
+
+  // 🔹 بستن وقتی بیرون کلیک میشه
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (gridRef.current && !gridRef.current.contains(event.target as Node)) {
+        onClose();
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [onClose]);
+
   return (
-    <div className="fixed left-3 right-3 bottom-22 max-w-[500px] m-auto">
+    <div ref={gridRef} className="m-2">
       <ScrollArea
         className="w-full h-[90px] bg-white rounded-md shadow-md border"
         onWheel={(e) => {
@@ -49,7 +66,13 @@ function FontGrid() {
           {fonts.map((font) => (
             <div
               key={font.name}
-              className="shrink-0 flex flex-col items-center cursor-pointer rounded-sm border hover:bg-gray-50 transition-colors min-w-[85px] px-1.5 py-1"
+              onClick={() => {
+                onFontSelect(font.name);
+                onClose();
+              }}
+              className={`shrink-0 flex flex-col items-center cursor-pointer rounded-sm border transition-colors min-w-[85px] px-1.5 py-1 ${
+                selectedFont === font.name ? 'bg-gray-100 border-gray-400' : 'hover:bg-gray-50'
+              }`}
             >
               <div className="w-[75px] h-9 bg-gray-100 rounded-sm overflow-hidden border">
                 <Image src={font.image} alt={font.name} width={75} height={36} className="w-full h-full object-contain" />

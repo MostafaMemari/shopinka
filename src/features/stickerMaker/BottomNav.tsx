@@ -1,6 +1,7 @@
 'use client';
 
-import { Download, Palette, Settings, Type, Shirt } from 'lucide-react';
+import PrimaryButton from '@/components/common/PrimaryButton';
+import { Download, Palette, Settings, Type } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
 import React from 'react';
 
@@ -11,6 +12,7 @@ interface BottomNavProps {
   toggleColorGrid: () => void;
   showSettingsPanel: boolean;
   toggleSettingsPanel: () => void;
+  onAddToCart?: () => void; // برای هندل کردن کلیک روی افزودن به سبد خرید
 }
 
 export default function BottomNav({
@@ -20,10 +22,8 @@ export default function BottomNav({
   toggleColorGrid,
   showSettingsPanel,
   toggleSettingsPanel,
+  onAddToCart,
 }: BottomNavProps) {
-  const pathname = usePathname();
-  const router = useRouter();
-
   const navItems = [
     {
       label: 'رنگ',
@@ -38,37 +38,27 @@ export default function BottomNav({
       isActive: showFontGrid,
     },
     {
-      label: 'افزودن به سبد',
-      onClick: () => router.push('/download'),
-      icon: <Download size={24} />,
-      isActive: pathname === '/download',
-      isHighlighted: true,
-    },
-    {
       label: 'تنظیمات',
       onClick: toggleSettingsPanel,
       icon: <Settings size={24} />,
       isActive: showSettingsPanel,
     },
-    {
-      label: 'استایل',
-      onClick: () => router.push('/style'),
-      icon: <Shirt size={24} />,
-      isActive: pathname === '/style',
-    },
   ];
 
   return (
-    <div className="flex justify-center items-center w-full h-14 bg-white rounded-2xl p-2 mb-2">
-      <div className="flex justify-between items-center w-full max-w-lg">
-        {navItems.map((item, index) => {
-          const total = navItems.length;
-          const isMiddle = index === Math.floor(total / 2);
-          const isHighlighted = item.isHighlighted ?? isMiddle;
-
-          return (
+    <div className="grid grid-cols-12 items-center w-full h-14 bg-white rounded-2xl shadow-md">
+      <div className="col-span-6 flex justify-end px-1">
+        <PrimaryButton
+          onClick={onAddToCart}
+          className="flex w-full items-center justify-center gap-2 shadow-md shadow-primary/50 transition-all duration-300 hover:shadow-none"
+        >
+          افزودن به سبد خرید
+        </PrimaryButton>
+      </div>
+      <div className="col-span-6 grid grid-cols-12">
+        {navItems.map((item, index) => (
+          <div key={item.label} className="col-span-4 flex justify-center">
             <button
-              key={item.label}
               onClick={item.onClick}
               type="button"
               className={`
@@ -76,16 +66,14 @@ export default function BottomNav({
             transition-colors focus-visible:outline-none focus-visible:ring-2
             focus-visible:ring-ring focus-visible:ring-offset-2
             disabled:pointer-events-none disabled:opacity-50 cursor-pointer
-            ${isHighlighted ? 'z-10 -mt-4 h-14 w-14 rounded-full bg-primary text-white ring-4 ring-white' : 'flex-1 h-12 rounded-lg'}
-            ${!isHighlighted && item.isActive ? 'text-primary font-bold' : ''}
-            ${!isHighlighted ? 'text-gray-500' : ''}
+            ${item.isActive ? 'text-blue-600' : 'text-gray-700'}
           `}
             >
               {item.icon}
               <span>{item.label}</span>
             </button>
-          );
-        })}
+          </div>
+        ))}
       </div>
     </div>
   );
