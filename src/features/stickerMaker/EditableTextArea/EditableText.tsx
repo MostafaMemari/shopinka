@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { cn } from '@/lib/utils';
 import { ColorItem } from '../StickerMakerView';
 
@@ -38,7 +38,7 @@ const EditableText: React.FC<EditableTextProps> = ({ text, setText, selectedFont
     background: 'transparent',
     maxWidth: '90%',
     textAlign: 'center' as const,
-    caretColor: isEditing ? '#fff' : 'transparent',
+    caretColor: isEditing ? 'var(--color-primary)' : 'transparent',
   };
 
   return (
