@@ -1,0 +1,10 @@
+export { bMorvaridBold } from './persian/BMorvaridBold';
+export { bTitrBold } from './persian/bTitrBold';
+export { farJadid } from './persian/farJadid';
+export { dastnevis } from './persian/dastnevis';
+export { digiSarvenaz } from './persian/digiSarvenaz';
+export { dimaShekasteh } from './persian/dimaShekasteh';
+export { iranNastaliq } from './persian/iranNastaliq';
+export { shekasteh } from './persian/shekasteh';
+export { vazir } from './persian/vazir';
+export { lalezar } from './persian/lalezar';

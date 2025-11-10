@@ -67,7 +67,7 @@
   --color-sidebar-ring: var(--sidebar-ring);
 
   --font-iranyekan: IRANYekan;
-  --font-vazir: Vazir;
+  /* --font-vazir: Vazir;
   --font-dimaShekasteh: DimaShekasteh;
   --font-bTitrBold: BTitrBold;
   --font-bMorvaridBold: BMorvaridBold;
@@ -75,7 +75,7 @@
   --font-farJadid: farJadid;
   --font-shekasteh: shekasteh;
   --font-dastnevis: dastnevis;
-  --font-digiSarvenaz: digiSarvenaz;
+  --font-digiSarvenaz: digiSarvenaz; */
 }
 
 @utility container {

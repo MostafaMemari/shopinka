@@ -1,6 +1,5 @@
 'use client';
-
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { ColorItem } from '../StickerMakerView';
 
@@ -15,6 +14,32 @@ interface EditableTextProps {
 
 const EditableText: React.FC<EditableTextProps> = ({ text, setText, selectedFont, selectedColor, isEditing, setIsEditing }) => {
   const editableRef = useRef<HTMLDivElement>(null);
+  const [fontClass, setFontClass] = useState('');
+
+  useEffect(() => {
+    async function loadFont() {
+      try {
+        const fontMap: Record<string, () => Promise<any>> = {
+          vazir: () => import('@/fonts/persian/vazir'),
+          dimaShekasteh: () => import('@/fonts/persian/dimaShekasteh'),
+          lalezar: () => import('@/fonts/persian/lalezar'),
+          bTitrBold: () => import('@/fonts/persian/bTitrBold'),
+          farJadid: () => import('@/fonts/persian/farJadid'),
+          dastnevis: () => import('@/fonts/persian/dastnevis'),
+          digiSarvenaz: () => import('@/fonts/persian/digiSarvenaz'),
+        };
+
+        const loader = fontMap[selectedFont] || fontMap['farJadid'];
+        const fontModule = await loader();
+        const font = Object.values(fontModule)[0] as { className: string };
+        setFontClass(font.className);
+      } catch (err) {
+        console.error('Font load error:', err);
+      }
+    }
+
+    loadFont();
+  }, [selectedFont]);
 
   useEffect(() => {
     if (isEditing && editableRef.current) {
@@ -32,7 +57,6 @@ const EditableText: React.FC<EditableTextProps> = ({ text, setText, selectedFont
   const editableStyle: React.CSSProperties = {
     fontSize: '40px',
     color: selectedColor ? selectedColor.value : '#000000',
-    fontFamily: 'BMorvaridBold, sans-serif',
     WebkitTextStroke: '0',
     filter: 'drop-shadow(0.015em 0.015em 0.01em rgba(4, 8, 15, 0.3))',
     background: 'transparent',
@@ -51,6 +75,7 @@ const EditableText: React.FC<EditableTextProps> = ({ text, setText, selectedFont
         dir="rtl"
         onBlur={() => setIsEditing(false)}
         className={cn(
+          fontClass,
           'break-words whitespace-pre-wrap outline-none caret-gray-400 text-center select-text empty:before:content-["متن_را_اینجا_وارد_کنید_..."]',
           isEditing ? 'cursor-none empty:before:opacity-0' : 'cursor-pointer empty:before:opacity-50',
         )}

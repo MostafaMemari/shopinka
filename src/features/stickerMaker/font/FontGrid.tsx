@@ -1,6 +1,6 @@
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
-import Image from 'next/image';
 import React, { useEffect, useRef } from 'react';
+import { fonts } from './fontData';
 
 interface FontGridProps {
   selectedFont: string;
@@ -9,37 +9,8 @@ interface FontGridProps {
 }
 
 function FontGrid({ selectedFont, onFontSelect, onClose }: FontGridProps) {
-  const fonts = [
-    {
-      name: 'لاله زار',
-      image: 'https://api.domingo.ir/Files/PredefinedFont_Medias/a018b3f1-8364-477a-82e9-8bad882b54f2/Thumbnail/DFEBAC.svg',
-      isPremium: false,
-    },
-    {
-      name: 'شتاب',
-      image: 'https://api.domingo.ir/Files/PredefinedFont_Medias/c73a3729-27e0-40ff-831f-b17dc7990ea7/Thumbnail/dk81c1cf.svg',
-      isPremium: true,
-    },
-    {
-      name: 'افرا',
-      image: 'https://api.domingo.ir/Files/PredefinedFont_Medias/89f3121b-09ad-45eb-b84b-b2db6e6108ae/Thumbnail/DEBCBB.svg',
-      isPremium: false,
-    },
-    {
-      name: 'ذوالفنون',
-      image: 'https://api.domingo.ir/Files/PredefinedFont_Medias/de2b2e65-5d18-4a26-9061-b405d3851043/Thumbnail/uf_1025.png',
-      isPremium: true,
-    },
-    {
-      name: 'قاهره',
-      image: 'https://api.domingo.ir/Files/PredefinedFont_Medias/77930c89-9eca-40e8-ae3a-b9e9e40086fe/Thumbnail/CCAEAC.svg',
-      isPremium: false,
-    },
-  ];
-
   const gridRef = useRef<HTMLDivElement>(null);
 
-  // 🔹 بستن وقتی بیرون کلیک میشه
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (gridRef.current && !gridRef.current.contains(event.target as Node)) {
@@ -67,7 +38,7 @@ function FontGrid({ selectedFont, onFontSelect, onClose }: FontGridProps) {
             <div
               key={font.name}
               onClick={() => {
-                onFontSelect(font.name);
+                onFontSelect(font.variable);
                 onClose();
               }}
               className={`shrink-0 flex flex-col items-center cursor-pointer rounded-sm border transition-colors min-w-[85px] px-1.5 py-1 ${
@@ -75,7 +46,7 @@ function FontGrid({ selectedFont, onFontSelect, onClose }: FontGridProps) {
               }`}
             >
               <div className="w-[75px] h-9 bg-gray-100 rounded-sm overflow-hidden border">
-                <Image src={font.image} alt={font.name} width={75} height={36} className="w-full h-full object-contain" />
+                {/* {font.image && <Image src={font.image} alt={font.name} width={75} height={36} className="object-cover w-full h-full" />} */}
               </div>
               <p className="text-[10px] font-medium mt-1 truncate w-[70px] text-center" style={{ direction: 'rtl' }}>
                 {font.name}

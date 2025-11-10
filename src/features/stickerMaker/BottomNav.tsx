@@ -12,7 +12,7 @@ interface BottomNavProps {
   toggleColorGrid: () => void;
   showSettingsPanel: boolean;
   toggleSettingsPanel: () => void;
-  onAddToCart?: () => void; // برای هندل کردن کلیک روی افزودن به سبد خرید
+  onAddToCart?: () => void;
 }
 
 export default function BottomNav({
