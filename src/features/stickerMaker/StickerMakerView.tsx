@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useCallback } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import FontGrid from './font/FontGrid';
 import ColorGrid from './color/ColorGrid';
@@ -36,6 +36,12 @@ function StickerMakerView() {
     setTimeout(() => dispatch(setColorSuccess(color)), 400);
   };
 
+  const togglePanel = useCallback((panel: 'font' | 'color' | 'settings') => {
+    setOpenPanel((prev) => (prev === panel ? null : panel));
+  }, []);
+
+  console.log('openPanel:', openPanel);
+
   return (
     <div className="relative w-full p-0 overflow-hidden rounded-none touch-none m-auto h-screen">
       <EditableTextArea text={text} setText={setText} selectedFont={selectedFont} selectedColor={selectedColor} />
@@ -59,22 +65,18 @@ function StickerMakerView() {
               transition={{ duration: 0.25 }}
               className="absolute left-0 right-0 bottom-16 z-40"
             >
-              {openPanel === 'font' && (
-                <FontGrid selectedFont={selectedFont} onFontSelect={handleFontChange} onClose={() => setOpenPanel(null)} />
-              )}
-              {openPanel === 'color' && (
-                <ColorGrid selectedColor={selectedColor} onColorSelect={handleColorChange} onClose={() => setOpenPanel(null)} />
-              )}
+              {openPanel === 'font' && <FontGrid selectedFont={selectedFont} onFontSelect={handleFontChange} />}
+              {openPanel === 'color' && <ColorGrid selectedColor={selectedColor} onColorSelect={handleColorChange} />}
             </motion.div>
           </AnimatePresence>
 
           <BottomNav
             showFontGrid={openPanel === 'font'}
-            toggleFontGrid={() => setOpenPanel(openPanel === 'font' ? null : 'font')}
+            toggleFontGrid={() => togglePanel('font')}
             showColorGrid={openPanel === 'color'}
-            toggleColorGrid={() => setOpenPanel(openPanel === 'color' ? null : 'color')}
+            toggleColorGrid={() => togglePanel('color')}
             showSettingsPanel={openPanel === 'settings'}
-            toggleSettingsPanel={() => setOpenPanel(openPanel === 'settings' ? null : 'settings')}
+            toggleSettingsPanel={() => togglePanel('settings')}
           />
         </div>
       </div>

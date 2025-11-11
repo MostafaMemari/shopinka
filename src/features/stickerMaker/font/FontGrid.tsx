@@ -1,25 +1,16 @@
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { fonts } from './fontData';
 
 interface FontGridProps {
   selectedFont: string;
   onFontSelect: (font: string) => void;
-  onClose: () => void;
 }
 
-function FontGrid({ selectedFont, onFontSelect, onClose }: FontGridProps) {
+function FontGrid({ selectedFont, onFontSelect }: FontGridProps) {
   const gridRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (gridRef.current && !gridRef.current.contains(event.target as Node)) {
-        onClose();
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [onClose]);
+  const handleFontSelect = (font: string) => onFontSelect(font);
 
   return (
     <div ref={gridRef} className="m-2">
@@ -37,10 +28,7 @@ function FontGrid({ selectedFont, onFontSelect, onClose }: FontGridProps) {
           {fonts.map((font) => (
             <div
               key={font.name}
-              onClick={() => {
-                onFontSelect(font.variable);
-                onClose();
-              }}
+              onClick={() => handleFontSelect(font.name)}
               className={`shrink-0 flex flex-col items-center cursor-pointer rounded-sm border transition-colors min-w-[85px] px-1.5 py-1 ${
                 selectedFont === font.name ? 'bg-gray-100 border-gray-400' : 'hover:bg-gray-50'
               }`}

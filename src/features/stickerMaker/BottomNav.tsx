@@ -1,8 +1,7 @@
 'use client';
 
 import PrimaryButton from '@/components/common/PrimaryButton';
-import { Download, Palette, Settings, Type } from 'lucide-react';
-import { usePathname, useRouter } from 'next/navigation';
+import { Palette, Settings, Type } from 'lucide-react';
 import React from 'react';
 
 interface BottomNavProps {
