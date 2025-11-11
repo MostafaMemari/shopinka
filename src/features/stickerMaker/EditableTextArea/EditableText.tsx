@@ -18,17 +18,16 @@ const EditableText: React.FC<EditableTextProps> = ({ text, setText, selectedFont
   const [isFontLoaded, setIsFontLoaded] = useState(false);
   const [isClient, setIsClient] = useState(false);
 
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
+  useEffect(() => setIsClient(true), []);
 
   useEffect(() => {
     if (!isClient) return;
-
     let isMounted = true;
+
     async function loadFont() {
       try {
         setIsFontLoaded(false);
+
         const fontMap: Record<string, () => Promise<any>> = {
           vazir: () => import('@/fonts/persian/vazir'),
           dimaShekasteh: () => import('@/fonts/persian/dimaShekasteh'),
@@ -37,16 +36,19 @@ const EditableText: React.FC<EditableTextProps> = ({ text, setText, selectedFont
           farJadid: () => import('@/fonts/persian/farJadid'),
           dastnevis: () => import('@/fonts/persian/dastnevis'),
           digiSarvenaz: () => import('@/fonts/persian/digiSarvenaz'),
+          iranNastaliq: () => import('@/fonts/persian/iranNastaliq'),
+          shekasteh: () => import('@/fonts/persian/shekasteh'),
+          bMorvaridBold: () => import('@/fonts/persian/BMorvaridBold'),
         };
 
-        const loader = fontMap[selectedFont] || fontMap['farJadid'];
+        const loader = fontMap[selectedFont] || fontMap['iranYekan'];
         const fontModule = await loader();
         if (!isMounted) return;
 
         const font = Object.values(fontModule)[0] as { className: string };
         setFontClass(font.className);
 
-        setTimeout(() => setIsFontLoaded(true), 100);
+        setIsFontLoaded(true);
       } catch (err) {
         console.error('Font load error:', err);
         setIsFontLoaded(true);
@@ -80,23 +82,19 @@ const EditableText: React.FC<EditableTextProps> = ({ text, setText, selectedFont
     filter: 'drop-shadow(0.015em 0.015em 0.01em rgba(4, 8, 15, 0.3))',
     background: 'transparent',
     maxWidth: '90%',
-    textAlign: 'center' as const,
+    textAlign: 'center',
     caretColor: isEditing ? 'var(--color-primary)' : 'transparent',
+    transition: 'opacity 0.25s ease, transform 0.25s ease',
   };
-
-  if (!isClient) {
-    return (
-      <div className="flex items-center justify-center w-full h-full">
-        <div className="w-10 h-10 border-4 border-gray-300 border-t-gray-600 rounded-full animate-spin" />
-      </div>
-    );
-  }
 
   return (
     <div className="flex items-center justify-center w-full h-full relative">
-      {!isFontLoaded && (
-        <div className="absolute inset-0 bg-white/30 backdrop-blur-sm flex items-center justify-center z-20">
-          {/* <div className="w-10 h-10 border-4 border-gray-300 border-t-gray-600 rounded-full animate-spin" /> */}
+      {!isFontLoaded && !isClient && (
+        <div className="absolute inset-0 bg-white/40 backdrop-blur-sm flex items-center justify-center z-20">
+          <div className="relative w-10 h-10">
+            <div className="absolute inset-0 border-4 border-gray-300 rounded-full opacity-40" />
+            <div className="absolute inset-0 border-4 border-t-[#1d4ed8] rounded-full animate-spin" />
+          </div>
         </div>
       )}
 
@@ -109,9 +107,10 @@ const EditableText: React.FC<EditableTextProps> = ({ text, setText, selectedFont
         onBlur={() => setIsEditing(false)}
         className={cn(
           fontClass,
-          'break-words whitespace-pre-wrap outline-none caret-gray-400 transition-all duration-200 ease-in-out text-center select-text  empty:before:content-["متن_را_اینجا_وارد_کنید_..."]',
+          'break-words whitespace-pre-wrap outline-none transition-all ease-in-out text-center select-text',
+          'empty:before:content-["متن_را_اینجا_وارد_کنید_..."]',
           isEditing ? 'cursor-none empty:before:opacity-0' : 'cursor-pointer empty:before:opacity-50',
-          isFontLoaded ? 'opacity-100' : 'opacity-0',
+          isFontLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-95',
         )}
         style={editableStyle}
       >

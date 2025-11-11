@@ -14,14 +14,14 @@ interface ColorItem {
 }
 
 const colors: ColorItem[] = [
-  { name: 'قرمز', value: '#ef4444', finishes: ['مات', 'براق', 'شبرنگ', 'شب‌تاب'] },
-  { name: 'آبی', value: '#3b82f6', finishes: ['مات', 'براق'] },
-  { name: 'سبز', value: '#22c55e', finishes: ['مات', 'براق'] },
-  { name: 'زرد', value: '#eab308', finishes: ['مات', 'شبرنگ'] },
-  { name: 'نارنجی', value: '#f97316', finishes: ['مات', 'براق', 'شب‌تاب'] },
+  { name: 'قرمز', value: '#ef4444' },
+  { name: 'آبی', value: '#3b82f6' },
+  { name: 'سبز', value: '#22c55e' },
+  { name: 'زرد', value: '#eab308' },
+  { name: 'نارنجی', value: '#f97316' },
   { name: 'بنفش', value: '#a855f7' },
-  { name: 'صورتی', value: '#ec4899', finishes: ['براق'] },
-  { name: 'آبی آسمانی', value: '#38bdf8', finishes: ['مات'] },
+  { name: 'صورتی', value: '#ec4899' },
+  { name: 'آبی آسمانی', value: '#38bdf8' },
   { name: 'خاکستری', value: '#9ca3af' },
   { name: 'مشکی', value: '#000000', finishes: ['مات', 'براق'] },
 ];

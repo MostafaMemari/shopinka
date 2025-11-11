@@ -13,7 +13,7 @@ export const fonts = [
   },
   {
     name: 'مروارید',
-    variable: 'BMorvaridBold',
+    variable: 'bMorvaridBold',
   },
   {
     name: 'نستعلیق',
