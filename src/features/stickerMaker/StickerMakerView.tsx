@@ -23,7 +23,7 @@ function StickerMakerView() {
   const [openPanel, setOpenPanel] = React.useState<OpenPanel>(null);
   const [text, setText] = React.useState('');
 
-  const { selectedFont, selectedColor, loading } = useSelector((state: RootState) => state.sticker);
+  const { selectedColor, loading } = useSelector((state: RootState) => state.sticker);
 
   const togglePanel = useCallback((panel: 'font' | 'color' | 'settings') => {
     setOpenPanel((prev) => (prev === panel ? null : panel));
@@ -35,13 +35,7 @@ function StickerMakerView() {
 
   return (
     <div className="relative w-full p-0 overflow-hidden rounded-none touch-none m-auto h-screen">
-      <EditableTextArea
-        onStartEditing={handleStartEditing}
-        text={text}
-        setText={setText}
-        selectedFont={selectedFont}
-        selectedColor={selectedColor}
-      />
+      <EditableTextArea onStartEditing={handleStartEditing} text={text} setText={setText} />
 
       {loading && (
         <div className="absolute inset-0 bg-black/20 flex items-center justify-center z-50">
@@ -62,7 +56,7 @@ function StickerMakerView() {
               transition={{ duration: 0.25 }}
               className="absolute left-0 right-0 bottom-16 z-40"
             >
-              {openPanel === 'font' && <FontGrid selectedFont={selectedFont} />}
+              {openPanel === 'font' && <FontGrid />}
               {openPanel === 'color' && <ColorGrid selectedColor={selectedColor} />}
             </motion.div>
           </AnimatePresence>

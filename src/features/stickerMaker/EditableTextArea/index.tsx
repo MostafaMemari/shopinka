@@ -3,18 +3,19 @@
 import React, { useEffect, useState } from 'react';
 import EditableText from './EditableText';
 import EditableSurface from './EditableSurface';
-import { ColorItem } from '../StickerMakerView';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store';
 
 interface EditableTextAreaProps {
   text: string;
   setText: (value: string) => void;
-  selectedFont: string;
-  selectedColor: ColorItem | null;
   onStartEditing?: () => void;
 }
 
-const EditableTextArea: React.FC<EditableTextAreaProps> = ({ text, setText, selectedFont, selectedColor, onStartEditing }) => {
+const EditableTextArea: React.FC<EditableTextAreaProps> = ({ text, setText, onStartEditing }) => {
   const [isEditing, setIsEditing] = useState(false);
+
+  const { selectedColor, selectedFont } = useSelector((state: RootState) => state.sticker);
 
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
