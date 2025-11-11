@@ -16,14 +16,14 @@ const EditableText: React.FC<EditableTextProps> = ({ text, setText, selectedFont
   const editableRef = useRef<HTMLDivElement>(null);
   const [fontClass, setFontClass] = useState('');
   const [isFontLoaded, setIsFontLoaded] = useState(false);
-  const [isClient, setIsClient] = useState(false); // 👈 برای جلوگیری از mismatch
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
     setIsClient(true);
   }, []);
 
   useEffect(() => {
-    if (!isClient) return; // تا قبل از mount فونت لود نکن
+    if (!isClient) return;
 
     let isMounted = true;
     async function loadFont() {
@@ -72,7 +72,6 @@ const EditableText: React.FC<EditableTextProps> = ({ text, setText, selectedFont
     }
   }, [isEditing]);
 
-  // 🚫 در SSR مقدار رنگ رو ثابت نگه می‌داریم تا mismatch نده
   const colorValue = isClient && selectedColor ? selectedColor.value : '#000000';
 
   const editableStyle: React.CSSProperties = {
@@ -86,7 +85,6 @@ const EditableText: React.FC<EditableTextProps> = ({ text, setText, selectedFont
   };
 
   if (!isClient) {
-    // تا زمان hydration چیزی رندر نکن → از mismatch کامل جلوگیری می‌کنه
     return (
       <div className="flex items-center justify-center w-full h-full">
         <div className="w-10 h-10 border-4 border-gray-300 border-t-gray-600 rounded-full animate-spin" />
@@ -97,8 +95,8 @@ const EditableText: React.FC<EditableTextProps> = ({ text, setText, selectedFont
   return (
     <div className="flex items-center justify-center w-full h-full relative">
       {!isFontLoaded && (
-        <div className="absolute inset-0 bg-white/80 backdrop-blur-sm flex items-center justify-center z-20">
-          <div className="w-10 h-10 border-4 border-gray-300 border-t-gray-600 rounded-full animate-spin" />
+        <div className="absolute inset-0 bg-white/30 backdrop-blur-sm flex items-center justify-center z-20">
+          {/* <div className="w-10 h-10 border-4 border-gray-300 border-t-gray-600 rounded-full animate-spin" /> */}
         </div>
       )}
 
