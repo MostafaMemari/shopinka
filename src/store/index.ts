@@ -4,6 +4,7 @@ import authDialogReducer from './slices/authDialogSlice';
 import authReducer from './slices/authSlice';
 import otpReducer from './slices/otpSlice';
 import pendingActionReducer from './slices/pendingActionSlice';
+import stickerReducer from './slices/stickerSlice';
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     product: productReducer,
     authDialog: authDialogReducer,
     pendingAction: pendingActionReducer,
+    sticker: stickerReducer,
   },
 });
 

@@ -15,10 +15,20 @@ interface EditableTextProps {
 const EditableText: React.FC<EditableTextProps> = ({ text, setText, selectedFont, selectedColor, isEditing, setIsEditing }) => {
   const editableRef = useRef<HTMLDivElement>(null);
   const [fontClass, setFontClass] = useState('');
+  const [isFontLoaded, setIsFontLoaded] = useState(false);
+  const [isClient, setIsClient] = useState(false); // 👈 برای جلوگیری از mismatch
 
   useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isClient) return; // تا قبل از mount فونت لود نکن
+
+    let isMounted = true;
     async function loadFont() {
       try {
+        setIsFontLoaded(false);
         const fontMap: Record<string, () => Promise<any>> = {
           vazir: () => import('@/fonts/persian/vazir'),
           dimaShekasteh: () => import('@/fonts/persian/dimaShekasteh'),
@@ -31,15 +41,23 @@ const EditableText: React.FC<EditableTextProps> = ({ text, setText, selectedFont
 
         const loader = fontMap[selectedFont] || fontMap['farJadid'];
         const fontModule = await loader();
+        if (!isMounted) return;
+
         const font = Object.values(fontModule)[0] as { className: string };
         setFontClass(font.className);
+
+        setTimeout(() => setIsFontLoaded(true), 100);
       } catch (err) {
         console.error('Font load error:', err);
+        setIsFontLoaded(true);
       }
     }
 
     loadFont();
-  }, [selectedFont]);
+    return () => {
+      isMounted = false;
+    };
+  }, [selectedFont, isClient]);
 
   useEffect(() => {
     if (isEditing && editableRef.current) {
@@ -54,10 +72,12 @@ const EditableText: React.FC<EditableTextProps> = ({ text, setText, selectedFont
     }
   }, [isEditing]);
 
+  // 🚫 در SSR مقدار رنگ رو ثابت نگه می‌داریم تا mismatch نده
+  const colorValue = isClient && selectedColor ? selectedColor.value : '#000000';
+
   const editableStyle: React.CSSProperties = {
     fontSize: '40px',
-    color: selectedColor ? selectedColor.value : '#000000',
-    WebkitTextStroke: '0',
+    color: colorValue,
     filter: 'drop-shadow(0.015em 0.015em 0.01em rgba(4, 8, 15, 0.3))',
     background: 'transparent',
     maxWidth: '90%',
@@ -65,8 +85,23 @@ const EditableText: React.FC<EditableTextProps> = ({ text, setText, selectedFont
     caretColor: isEditing ? 'var(--color-primary)' : 'transparent',
   };
 
+  if (!isClient) {
+    // تا زمان hydration چیزی رندر نکن → از mismatch کامل جلوگیری می‌کنه
+    return (
+      <div className="flex items-center justify-center w-full h-full">
+        <div className="w-10 h-10 border-4 border-gray-300 border-t-gray-600 rounded-full animate-spin" />
+      </div>
+    );
+  }
+
   return (
-    <div className="flex items-center justify-center w-full h-full">
+    <div className="flex items-center justify-center w-full h-full relative">
+      {!isFontLoaded && (
+        <div className="absolute inset-0 bg-white/80 backdrop-blur-sm flex items-center justify-center z-20">
+          <div className="w-10 h-10 border-4 border-gray-300 border-t-gray-600 rounded-full animate-spin" />
+        </div>
+      )}
+
       <div
         ref={editableRef}
         contentEditable={isEditing}
@@ -76,8 +111,9 @@ const EditableText: React.FC<EditableTextProps> = ({ text, setText, selectedFont
         onBlur={() => setIsEditing(false)}
         className={cn(
           fontClass,
-          'break-words whitespace-pre-wrap outline-none caret-gray-400 text-center select-text empty:before:content-["متن_را_اینجا_وارد_کنید_..."]',
+          'break-words whitespace-pre-wrap outline-none caret-gray-400 transition-all duration-200 ease-in-out text-center select-text  empty:before:content-["متن_را_اینجا_وارد_کنید_..."]',
           isEditing ? 'cursor-none empty:before:opacity-0' : 'cursor-pointer empty:before:opacity-50',
+          isFontLoaded ? 'opacity-100' : 'opacity-0',
         )}
         style={editableStyle}
       >
