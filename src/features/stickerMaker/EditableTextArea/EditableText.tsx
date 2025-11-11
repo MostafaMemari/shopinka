@@ -21,7 +21,7 @@ const EditableText: React.FC<EditableTextProps> = ({ text, setText, selectedFont
   useEffect(() => setIsClient(true), []);
 
   useEffect(() => {
-    if (!isClient) return;
+    // if (!isClient) return;
     let isMounted = true;
 
     async function loadFont() {
@@ -41,7 +41,7 @@ const EditableText: React.FC<EditableTextProps> = ({ text, setText, selectedFont
           bMorvaridBold: () => import('@/fonts/persian/BMorvaridBold'),
         };
 
-        const loader = fontMap[selectedFont] || fontMap['iranYekan'];
+        const loader = fontMap[selectedFont] || fontMap['vazir'];
         const fontModule = await loader();
         if (!isMounted) return;
 
@@ -84,16 +84,18 @@ const EditableText: React.FC<EditableTextProps> = ({ text, setText, selectedFont
     maxWidth: '90%',
     textAlign: 'center',
     caretColor: isEditing ? 'var(--color-primary)' : 'transparent',
-    transition: 'opacity 0.25s ease, transform 0.25s ease',
+    transition: 'opacity 0.2s ease',
+    opacity: isFontLoaded ? 1 : 0,
+    fontFamily: fontClass ? undefined : 'Arial',
   };
 
   return (
     <div className="flex items-center justify-center w-full h-full relative">
-      {!isFontLoaded && !isClient && (
-        <div className="absolute inset-0 bg-white/40 backdrop-blur-sm flex items-center justify-center z-20">
-          <div className="relative w-10 h-10">
-            <div className="absolute inset-0 border-4 border-gray-300 rounded-full opacity-40" />
-            <div className="absolute inset-0 border-4 border-t-[#1d4ed8] rounded-full animate-spin" />
+      {!isFontLoaded && isClient && (
+        <div className="absolute flex items-center justify-center w-full h-full pointer-events-none">
+          <div className="relative w-6 h-6">
+            <div className="absolute inset-0 border-2 border-gray-300 rounded-full opacity-40" />
+            <div className="absolute inset-0 border-2 border-t-blue-600 rounded-full animate-spin" />
           </div>
         </div>
       )}
