@@ -10,9 +10,10 @@ interface EditableTextAreaProps {
   setText: (value: string) => void;
   selectedFont: string;
   selectedColor: ColorItem | null;
+  onStartEditing?: () => void;
 }
 
-const EditableTextArea: React.FC<EditableTextAreaProps> = ({ text, setText, selectedFont, selectedColor }) => {
+const EditableTextArea: React.FC<EditableTextAreaProps> = ({ text, setText, selectedFont, selectedColor, onStartEditing }) => {
   const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
@@ -32,13 +33,17 @@ const EditableTextArea: React.FC<EditableTextAreaProps> = ({ text, setText, sele
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  const startEditing = () => {
+    setIsEditing(true);
+    onStartEditing?.();
+  };
+
   return (
     <div
       className="relative w-full h-svh overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center p-8"
-      onClick={() => setIsEditing(true)}
+      onClick={startEditing}
     >
       <EditableSurface />
-
       <EditableText
         text={text}
         setText={setText}

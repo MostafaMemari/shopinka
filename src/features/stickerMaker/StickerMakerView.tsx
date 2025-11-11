@@ -40,11 +40,19 @@ function StickerMakerView() {
     setOpenPanel((prev) => (prev === panel ? null : panel));
   }, []);
 
-  console.log('openPanel:', openPanel);
+  const handleStartEditing = () => {
+    setOpenPanel(null);
+  };
 
   return (
     <div className="relative w-full p-0 overflow-hidden rounded-none touch-none m-auto h-screen">
-      <EditableTextArea text={text} setText={setText} selectedFont={selectedFont} selectedColor={selectedColor} />
+      <EditableTextArea
+        onStartEditing={handleStartEditing}
+        text={text}
+        setText={setText}
+        selectedFont={selectedFont}
+        selectedColor={selectedColor}
+      />
 
       {loading && (
         <div className="absolute inset-0 bg-black/20 flex items-center justify-center z-50">
