@@ -4,6 +4,8 @@ import React, { useRef, useState } from 'react';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { Button } from '@/components/ui/button';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useDispatch } from 'react-redux';
+import { setColorStart, setColorSuccess } from '@/store/slices/stickerSlice';
 
 interface ColorItem {
   name: string;
@@ -26,23 +28,26 @@ const colors: ColorItem[] = [
 
 interface ColorGridProps {
   selectedColor: ColorItem | null;
-  onColorSelect: (color: ColorItem | null) => void;
   onFinishSelect?: (finish: string | null) => void;
 }
 
-export default function ColorGrid({ selectedColor, onColorSelect, onFinishSelect }: ColorGridProps) {
+export default function ColorGrid({ selectedColor, onFinishSelect }: ColorGridProps) {
   const [selectedFinish, setSelectedFinish] = useState<string | null>(null);
   const gridRef = useRef<HTMLDivElement>(null);
+
+  const dispatch = useDispatch();
 
   // انتخاب رنگ
   const handleColorClick = (color: ColorItem) => {
     if (color.finishes && color.finishes.length > 0) {
-      onColorSelect(color);
+      dispatch(setColorStart());
+      dispatch(setColorSuccess(color));
       setSelectedFinish(null);
       console.log('🎨 رنگ انتخاب شد (منتظر finish):', color);
     } else {
       console.log('✅ رنگ نهایی بدون finish:', color);
-      onColorSelect(color);
+      dispatch(setColorStart());
+      dispatch(setColorSuccess(color));
     }
   };
 
@@ -119,7 +124,8 @@ export default function ColorGrid({ selectedColor, onColorSelect, onFinishSelect
               size="sm"
               onClick={() => {
                 console.log('🔙 بازگشت به انتخاب رنگ');
-                onColorSelect(null);
+                dispatch(setColorStart());
+                dispatch(setColorSuccess(null));
                 setSelectedFinish(null);
               }}
             >

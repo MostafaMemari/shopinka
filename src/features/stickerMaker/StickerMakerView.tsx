@@ -23,18 +23,7 @@ function StickerMakerView() {
   const [openPanel, setOpenPanel] = React.useState<OpenPanel>(null);
   const [text, setText] = React.useState('');
 
-  const dispatch = useDispatch();
   const { selectedFont, selectedColor, loading } = useSelector((state: RootState) => state.sticker);
-
-  const handleFontChange = (font: string) => {
-    dispatch(setFontStart());
-    setTimeout(() => dispatch(setFontSuccess(font)), 400);
-  };
-
-  const handleColorChange = (color: any) => {
-    dispatch(setColorStart());
-    setTimeout(() => dispatch(setColorSuccess(color)), 400);
-  };
 
   const togglePanel = useCallback((panel: 'font' | 'color' | 'settings') => {
     setOpenPanel((prev) => (prev === panel ? null : panel));
@@ -73,8 +62,8 @@ function StickerMakerView() {
               transition={{ duration: 0.25 }}
               className="absolute left-0 right-0 bottom-16 z-40"
             >
-              {openPanel === 'font' && <FontGrid selectedFont={selectedFont} onFontSelect={handleFontChange} />}
-              {openPanel === 'color' && <ColorGrid selectedColor={selectedColor} onColorSelect={handleColorChange} />}
+              {openPanel === 'font' && <FontGrid selectedFont={selectedFont} />}
+              {openPanel === 'color' && <ColorGrid selectedColor={selectedColor} />}
             </motion.div>
           </AnimatePresence>
 

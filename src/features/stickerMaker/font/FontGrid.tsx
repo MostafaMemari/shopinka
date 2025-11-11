@@ -1,16 +1,21 @@
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import React, { useRef } from 'react';
 import { fonts } from './fontData';
+import { useDispatch } from 'react-redux';
+import { setFontStart, setFontSuccess } from '@/store/slices/stickerSlice';
 
 interface FontGridProps {
   selectedFont: string;
-  onFontSelect: (font: string) => void;
 }
 
-function FontGrid({ selectedFont, onFontSelect }: FontGridProps) {
+function FontGrid({ selectedFont }: FontGridProps) {
   const gridRef = useRef<HTMLDivElement>(null);
+  const dispatch = useDispatch();
 
-  const handleFontSelect = (font: string) => onFontSelect(font);
+  const handleFontSelect = (font: string) => {
+    dispatch(setFontStart());
+    dispatch(setFontSuccess(font));
+  };
 
   return (
     <div ref={gridRef} className="m-2">
@@ -28,7 +33,7 @@ function FontGrid({ selectedFont, onFontSelect }: FontGridProps) {
           {fonts.map((font) => (
             <div
               key={font.name}
-              onClick={() => handleFontSelect(font.name)}
+              onClick={() => handleFontSelect(font.variable)}
               className={`shrink-0 flex flex-col items-center cursor-pointer rounded-sm border transition-colors min-w-[85px] px-1.5 py-1 ${
                 selectedFont === font.name ? 'bg-gray-100 border-gray-400' : 'hover:bg-gray-50'
               }`}

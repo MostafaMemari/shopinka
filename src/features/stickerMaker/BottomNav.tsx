@@ -65,7 +65,7 @@ export default function BottomNav({
             transition-colors focus-visible:outline-none focus-visible:ring-2
             focus-visible:ring-ring focus-visible:ring-offset-2
             disabled:pointer-events-none disabled:opacity-50 cursor-pointer
-            ${item.isActive ? 'text-blue-600' : 'text-gray-700'}
+            ${item.isActive ? 'text-primary' : 'text-gray-700'}
           `}
             >
               {item.icon}
