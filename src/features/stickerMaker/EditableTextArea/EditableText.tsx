@@ -16,6 +16,7 @@ const EditableText: React.FC<EditableTextProps> = ({ selectedFont, selectedColor
   const [fontClass, setFontClass] = useState('');
   const [isFontLoaded, setIsFontLoaded] = useState(false);
   const [isClient, setIsClient] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
 
   const dispatch = useDispatch();
   const { text } = useSelector((state: RootState) => state.sticker);
@@ -75,7 +76,6 @@ const EditableText: React.FC<EditableTextProps> = ({ selectedFont, selectedColor
     transition: 'opacity 0.2s ease',
     opacity: isFontLoaded ? 1 : 0,
     fontFamily: fontClass ? undefined : 'Arial',
-    minHeight: '1em',
   };
 
   if (!isClient)
@@ -105,6 +105,7 @@ const EditableText: React.FC<EditableTextProps> = ({ selectedFont, selectedColor
         suppressContentEditableWarning
         spellCheck={false}
         dir="rtl"
+        onFocus={() => setIsFocused(true)}
         onInput={(e) => {
           const el = e.target as HTMLDivElement;
           let value = el.innerText;
@@ -115,6 +116,8 @@ const EditableText: React.FC<EditableTextProps> = ({ selectedFont, selectedColor
           }
         }}
         onBlur={(e) => {
+          setIsFocused(false);
+
           const newText = (e.target as HTMLDivElement).innerText.trim();
 
           dispatch(setText(newText));
@@ -122,14 +125,11 @@ const EditableText: React.FC<EditableTextProps> = ({ selectedFont, selectedColor
         className={cn(
           fontClass,
           'whitespace-pre-wrap outline-none transition-all ease-in-out text-center select-text',
-          'empty:before:content-["متن_را_اینجا_وارد_کنید_..."]',
           'empty:before:text-gray-400 empty:before:pointer-events-none',
           isFontLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-95',
+          !isFocused && text === '' ? 'empty:before:content-["متن_را_اینجا_وارد_کنید_..."]' : '',
         )}
-        style={{
-          ...editableStyle,
-          minHeight: '1em',
-        }}
+        style={editableStyle}
       >
         {text}
       </div>
