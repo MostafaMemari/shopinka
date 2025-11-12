@@ -7,9 +7,8 @@ import ColorGrid from './color/ColorGrid';
 import BottomNav from './BottomNav';
 import SettingsDrawer from './setting/SettingsDrawer';
 import EditableTextArea from './EditableTextArea';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
-import { setFontStart, setFontSuccess, setColorStart, setColorSuccess } from '@/store/slices/stickerSlice';
 
 type OpenPanel = 'font' | 'color' | 'settings' | null;
 
@@ -21,9 +20,8 @@ export interface ColorItem {
 
 function StickerMakerView() {
   const [openPanel, setOpenPanel] = React.useState<OpenPanel>(null);
-  const [text, setText] = React.useState('');
 
-  const { selectedColor, loading } = useSelector((state: RootState) => state.sticker);
+  const { loading } = useSelector((state: RootState) => state.sticker);
 
   const togglePanel = useCallback((panel: 'font' | 'color' | 'settings') => {
     setOpenPanel((prev) => (prev === panel ? null : panel));
@@ -35,7 +33,7 @@ function StickerMakerView() {
 
   return (
     <div className="relative w-full p-0 overflow-hidden rounded-none touch-none m-auto h-screen">
-      <EditableTextArea onStartEditing={handleStartEditing} text={text} setText={setText} />
+      <EditableTextArea onStartEditing={handleStartEditing} />
 
       {loading && (
         <div className="absolute inset-0 bg-black/20 flex items-center justify-center z-50">
@@ -57,7 +55,7 @@ function StickerMakerView() {
               className="absolute left-0 right-0 bottom-16 z-40"
             >
               {openPanel === 'font' && <FontGrid />}
-              {openPanel === 'color' && <ColorGrid selectedColor={selectedColor} />}
+              {openPanel === 'color' && <ColorGrid />}
             </motion.div>
           </AnimatePresence>
 

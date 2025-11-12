@@ -2,26 +2,27 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { ColorItem } from '../StickerMakerView';
+import { useDispatch, useSelector } from 'react-redux';
+import { setText } from '@/store/slices/stickerSlice';
+import { RootState } from '@/store';
 
 interface EditableTextProps {
-  text: string;
-  setText: (value: string) => void;
   selectedFont: string;
   selectedColor: ColorItem | null;
-  isEditing: boolean;
-  setIsEditing: (value: boolean) => void;
 }
 
-const EditableText: React.FC<EditableTextProps> = ({ text, setText, selectedFont, selectedColor, isEditing, setIsEditing }) => {
+const EditableText: React.FC<EditableTextProps> = ({ selectedFont, selectedColor }) => {
   const editableRef = useRef<HTMLDivElement>(null);
   const [fontClass, setFontClass] = useState('');
   const [isFontLoaded, setIsFontLoaded] = useState(false);
   const [isClient, setIsClient] = useState(false);
 
+  const dispatch = useDispatch();
+  const { text } = useSelector((state: RootState) => state.sticker);
+
   useEffect(() => setIsClient(true), []);
 
   useEffect(() => {
-    // if (!isClient) return;
     let isMounted = true;
 
     async function loadFont() {
@@ -61,19 +62,6 @@ const EditableText: React.FC<EditableTextProps> = ({ text, setText, selectedFont
     };
   }, [selectedFont, isClient]);
 
-  useEffect(() => {
-    if (isEditing && editableRef.current) {
-      const el = editableRef.current;
-      el.focus();
-      const range = document.createRange();
-      const sel = window.getSelection();
-      range.selectNodeContents(el);
-      range.collapse(false);
-      sel?.removeAllRanges();
-      sel?.addRange(range);
-    }
-  }, [isEditing]);
-
   const colorValue = isClient && selectedColor ? selectedColor.value : '#000000';
 
   const editableStyle: React.CSSProperties = {
@@ -83,15 +71,26 @@ const EditableText: React.FC<EditableTextProps> = ({ text, setText, selectedFont
     background: 'transparent',
     maxWidth: '90%',
     textAlign: 'center',
-    caretColor: isEditing ? 'var(--color-primary)' : 'transparent',
+    caretColor: 'var(--color-primary)',
     transition: 'opacity 0.2s ease',
     opacity: isFontLoaded ? 1 : 0,
     fontFamily: fontClass ? undefined : 'Arial',
+    minHeight: '1em',
   };
+
+  if (!isClient)
+    return (
+      <div className="absolute flex items-center justify-center w-full h-full pointer-events-none">
+        <div className="relative w-6 h-6">
+          <div className="absolute inset-0 border-2 border-gray-300 rounded-full opacity-40" />
+          <div className="absolute inset-0 border-2 border-t-blue-600 rounded-full animate-spin" />
+        </div>
+      </div>
+    );
 
   return (
     <div className="flex items-center justify-center w-full h-full relative">
-      {!isFontLoaded && isClient && (
+      {!isFontLoaded && (
         <div className="absolute flex items-center justify-center w-full h-full pointer-events-none">
           <div className="relative w-6 h-6">
             <div className="absolute inset-0 border-2 border-gray-300 rounded-full opacity-40" />
@@ -102,19 +101,35 @@ const EditableText: React.FC<EditableTextProps> = ({ text, setText, selectedFont
 
       <div
         ref={editableRef}
-        contentEditable={isEditing}
+        contentEditable
         suppressContentEditableWarning
         spellCheck={false}
         dir="rtl"
-        onBlur={() => setIsEditing(false)}
+        onInput={(e) => {
+          const el = e.target as HTMLDivElement;
+          let value = el.innerText;
+
+          if (value === '\n' || value === '') {
+            value = '';
+            el.innerHTML = '';
+          }
+        }}
+        onBlur={(e) => {
+          const newText = (e.target as HTMLDivElement).innerText.trim();
+
+          dispatch(setText(newText));
+        }}
         className={cn(
           fontClass,
-          'break-words whitespace-pre-wrap outline-none transition-all ease-in-out text-center select-text',
+          'whitespace-pre-wrap outline-none transition-all ease-in-out text-center select-text',
           'empty:before:content-["متن_را_اینجا_وارد_کنید_..."]',
-          isEditing ? 'cursor-none empty:before:opacity-0' : 'cursor-pointer empty:before:opacity-50',
+          'empty:before:text-gray-400 empty:before:pointer-events-none',
           isFontLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-95',
         )}
-        style={editableStyle}
+        style={{
+          ...editableStyle,
+          minHeight: '1em',
+        }}
       >
         {text}
       </div>

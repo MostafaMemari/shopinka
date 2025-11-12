@@ -3,8 +3,9 @@
 import React, { useRef } from 'react';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setColorStart, setColorSuccess } from '@/store/slices/stickerSlice';
+import { RootState } from '@/store';
 
 interface ColorItem {
   name: string;
@@ -24,13 +25,11 @@ const colors: ColorItem[] = [
   { name: 'مشکی', value: '#000000' },
 ];
 
-interface ColorGridProps {
-  selectedColor: ColorItem | null;
-}
-
-export default function ColorGrid({ selectedColor }: ColorGridProps) {
+export default function ColorGrid() {
   const gridRef = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();
+
+  const { options } = useSelector((state: RootState) => state.sticker);
 
   const handleColorClick = (color: ColorItem) => {
     dispatch(setColorStart());
@@ -60,7 +59,7 @@ export default function ColorGrid({ selectedColor }: ColorGridProps) {
           >
             <div className="flex gap-2 px-3 py-2">
               {colors.map((color) => {
-                const isSelected = selectedColor?.value === color.value;
+                const isSelected = options.color?.value === color.value;
                 return (
                   <button
                     key={color.value}
