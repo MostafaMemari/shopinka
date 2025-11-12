@@ -4,6 +4,9 @@ import React, { useState } from 'react';
 import MobileDrawer from '@/components/common/Drawer';
 import { cn } from '@/lib/utils';
 import { Slider } from '@/components/ui/slider';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@/store';
+import { setLetterSpacing, setLineHeight } from '@/store/slices/stickerSlice';
 
 interface SettingsDrawerProps {
   open: boolean;
@@ -11,8 +14,9 @@ interface SettingsDrawerProps {
 }
 
 export default function SettingsDrawer({ open, onClose }: SettingsDrawerProps) {
-  const [lineHeight, setLineHeight] = useState(1.5);
-  const [letterSpacing, setLetterSpacing] = useState(0);
+  const dispatch = useDispatch();
+
+  const { text, options } = useSelector((state: RootState) => state.sticker);
 
   return (
     <MobileDrawer open={open} onOpenChange={onClose} showClose={false} title="تنظیمات" className="max-w-[500px] m-auto" isModal={false}>
@@ -20,11 +24,11 @@ export default function SettingsDrawer({ open, onClose }: SettingsDrawerProps) {
         <div className="flex flex-col gap-2">
           <label className="font-medium">فاصله بین خطوط</label>
           <Slider
-            value={[lineHeight]}
+            value={[options.lineHeight]}
             min={1.2}
             max={2}
             step={0.05}
-            onValueChange={(val) => setLineHeight(val[0])}
+            onValueChange={(val) => dispatch(setLineHeight(val[0]))}
             className={cn('w-full')}
           />
         </div>
@@ -32,11 +36,11 @@ export default function SettingsDrawer({ open, onClose }: SettingsDrawerProps) {
         <div className="flex flex-col gap-2">
           <label className="font-medium">فاصله بین حروف</label>
           <Slider
-            value={[letterSpacing]}
+            value={[options.letterSpacing]}
             min={0}
             max={6}
             step={0.1}
-            onValueChange={(val) => setLetterSpacing(val[0])}
+            onValueChange={(val) => dispatch(setLetterSpacing(val[0]))}
             className={cn('w-full')}
           />
         </div>

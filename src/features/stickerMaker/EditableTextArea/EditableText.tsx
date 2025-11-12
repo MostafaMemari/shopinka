@@ -14,12 +14,11 @@ interface EditableTextProps {
 const EditableText: React.FC<EditableTextProps> = ({ selectedFont, selectedColor }) => {
   const editableRef = useRef<HTMLDivElement>(null);
   const [fontClass, setFontClass] = useState('');
-  const [isFontLoaded, setIsFontLoaded] = useState(false);
   const [isClient, setIsClient] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
 
   const dispatch = useDispatch();
-  const { text } = useSelector((state: RootState) => state.sticker);
+  const { text, options } = useSelector((state: RootState) => state.sticker);
 
   useEffect(() => setIsClient(true), []);
 
@@ -28,8 +27,6 @@ const EditableText: React.FC<EditableTextProps> = ({ selectedFont, selectedColor
 
     async function loadFont() {
       try {
-        setIsFontLoaded(false);
-
         const fontMap: Record<string, () => Promise<any>> = {
           vazir: () => import('@/fonts/persian/vazir'),
           dimaShekasteh: () => import('@/fonts/persian/dimaShekasteh'),
@@ -49,11 +46,8 @@ const EditableText: React.FC<EditableTextProps> = ({ selectedFont, selectedColor
 
         const font = Object.values(fontModule)[0] as { className: string };
         setFontClass(font.className);
-
-        setIsFontLoaded(true);
       } catch (err) {
         console.error('Font load error:', err);
-        setIsFontLoaded(true);
       }
     }
 
@@ -74,8 +68,8 @@ const EditableText: React.FC<EditableTextProps> = ({ selectedFont, selectedColor
     textAlign: 'center',
     caretColor: 'var(--color-primary)',
     transition: 'opacity 0.2s ease',
-    opacity: isFontLoaded ? 1 : 0,
     fontFamily: fontClass ? undefined : 'Arial',
+    lineHeight: options.lineHeight,
   };
 
   if (!isClient)
@@ -90,15 +84,6 @@ const EditableText: React.FC<EditableTextProps> = ({ selectedFont, selectedColor
 
   return (
     <div className="flex items-center justify-center w-full h-full relative">
-      {!isFontLoaded && (
-        <div className="absolute flex items-center justify-center w-full h-full pointer-events-none">
-          <div className="relative w-6 h-6">
-            <div className="absolute inset-0 border-2 border-gray-300 rounded-full opacity-40" />
-            <div className="absolute inset-0 border-2 border-t-blue-600 rounded-full animate-spin" />
-          </div>
-        </div>
-      )}
-
       <div
         ref={editableRef}
         contentEditable
@@ -126,7 +111,6 @@ const EditableText: React.FC<EditableTextProps> = ({ selectedFont, selectedColor
           fontClass,
           'whitespace-pre-wrap outline-none transition-all ease-in-out text-center select-text',
           'empty:before:text-gray-400 empty:before:pointer-events-none',
-          isFontLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-95',
           !isFocused && text === '' ? 'empty:before:content-["متن_را_اینجا_وارد_کنید_..."]' : '',
         )}
         style={editableStyle}
