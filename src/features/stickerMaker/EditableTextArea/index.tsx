@@ -1,10 +1,13 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import EditableText from './EditableText';
 import EditableSurface from './EditableSurface';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
+import { FontItemType } from '@/types/font';
+import { ColorItem } from '../StickerMakerView';
+import { useFontByTitle } from '@/hooks/useFontByTitle';
 
 interface EditableTextAreaProps {
   onStartEditing?: () => void;
@@ -13,10 +16,18 @@ interface EditableTextAreaProps {
 const EditableTextArea: React.FC<EditableTextAreaProps> = ({ onStartEditing }) => {
   const { options } = useSelector((state: RootState) => state.sticker);
 
+  const selectedFontObj = useFontByTitle(options.fontFamily);
+
+  const selectedColor: ColorItem | null = options.color || null;
+
   return (
-    <div className="relative w-full h-svh overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center p-8">
+    <div
+      className="relative w-full h-svh overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center p-8"
+      onClick={onStartEditing}
+    >
       <EditableSurface />
-      <EditableText selectedFont={options.fontFamily} selectedColor={options.color} />
+
+      <EditableText selectedFont={selectedFontObj} selectedColor={selectedColor} />
     </div>
   );
 };
