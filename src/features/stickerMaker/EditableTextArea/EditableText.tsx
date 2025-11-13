@@ -10,9 +10,10 @@ import { FontItemType } from '@/types/font';
 interface EditableTextProps {
   selectedFont: FontItemType | null;
   selectedColor: ColorItem | null;
+  onStartEditing: () => void;
 }
 
-const EditableText: React.FC<EditableTextProps> = ({ selectedFont, selectedColor }) => {
+const EditableText: React.FC<EditableTextProps> = ({ selectedFont, selectedColor, onStartEditing }) => {
   const editableRef = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();
   const { text, options } = useSelector((state: RootState) => state.sticker);
@@ -50,8 +51,6 @@ const EditableText: React.FC<EditableTextProps> = ({ selectedFont, selectedColor
   const colorValue = selectedColor?.value || '#000000';
   const fontFamily = fontLoaded && selectedFont ? selectedFont.name : 'Arial';
 
-  console.log(fontFamily);
-
   const editableStyle: React.CSSProperties = {
     fontSize: '40px',
     color: colorValue,
@@ -66,7 +65,6 @@ const EditableText: React.FC<EditableTextProps> = ({ selectedFont, selectedColor
   };
 
   if (!isClient) {
-    // 🌀 Spinner فقط تا mount شدن در مرورگر
     return (
       <div className="absolute flex items-center justify-center w-full h-full pointer-events-none">
         <div className="relative w-6 h-6">
@@ -93,7 +91,10 @@ const EditableText: React.FC<EditableTextProps> = ({ selectedFont, selectedColor
           suppressContentEditableWarning
           spellCheck={false}
           dir="rtl"
-          onFocus={() => setIsFocused(true)}
+          onFocus={() => {
+            setIsFocused(true);
+            onStartEditing();
+          }}
           onBlur={(e) => {
             setIsFocused(false);
             const newText = (e.target as HTMLDivElement).innerText.trim();
