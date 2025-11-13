@@ -17,7 +17,6 @@ export default function TextStyleToggleGroup() {
 
   return (
     <div className="flex justify-between items-center pb-4 border-b border-border">
-      {/* چینش متن */}
       <ToggleGroup
         type="single"
         value={options.textAlign}

@@ -68,6 +68,8 @@ const EditableText: React.FC<EditableTextProps> = ({ selectedFont, selectedColor
     filter: 'drop-shadow(0.015em 0.015em 0.01em rgba(4, 8, 15, 0.3))',
     maxWidth: '90%',
     transition: 'opacity 0.2s ease',
+    fontWeight: options.fontWeight,
+    fontStyle: options.fontStyle,
   };
 
   if (!isClient) {
