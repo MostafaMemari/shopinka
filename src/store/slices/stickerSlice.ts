@@ -26,6 +26,8 @@ interface StickerOptions {
   lineHeight: number;
   letterSpacing: number;
   textAlign: 'left' | 'center' | 'right';
+  fontWeight: 'normal' | 'bold';
+  fontStyle: 'normal' | 'italic';
   effect: EffectOption | null;
   bodyBackground: string;
 }
@@ -37,7 +39,6 @@ interface StickerState {
   options: StickerOptions;
 }
 
-// 🔸 توابع کمکی برای ذخیره و لود از localStorage
 const STORAGE_KEY = 'stickerState';
 
 const loadStateFromLocalStorage = (): StickerState | null => {
@@ -65,12 +66,13 @@ const defaultOptions: StickerOptions = {
   fontSize: 52,
   lineHeight: 1.2,
   letterSpacing: 3,
-  textAlign: 'right',
+  textAlign: 'center',
+  fontWeight: 'normal',
+  fontStyle: 'normal',
   effect: null,
   bodyBackground: '#ffffff',
 };
 
-// 🔸 بارگذاری اولیه از localStorage (در صورت وجود)
 const persistedState = loadStateFromLocalStorage();
 
 const initialState: StickerState = persistedState || {
@@ -132,6 +134,16 @@ const stickerSlice = createSlice({
       saveStateToLocalStorage(state);
     },
 
+    // وزن و استایل فونت 🔥
+    toggleFontWeight(state) {
+      state.options.fontWeight = state.options.fontWeight === 'bold' ? 'normal' : 'bold';
+      saveStateToLocalStorage(state);
+    },
+    toggleFontStyle(state) {
+      state.options.fontStyle = state.options.fontStyle === 'italic' ? 'normal' : 'italic';
+      saveStateToLocalStorage(state);
+    },
+
     // پس‌زمینه
     setBodyBackground(state, action: PayloadAction<string>) {
       state.options.bodyBackground = action.payload;
@@ -168,6 +180,8 @@ export const {
   setLetterSpacing,
   setLineHeight,
   setTextAlign,
+  toggleFontWeight,
+  toggleFontStyle,
   setBodyBackground,
   setEffect,
   resetStickerState,

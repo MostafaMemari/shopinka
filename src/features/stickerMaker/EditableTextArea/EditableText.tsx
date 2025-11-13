@@ -43,6 +43,12 @@ const EditableText: React.FC<EditableTextProps> = ({ selectedFont, selectedColor
   }, [selectedFont, isClient]);
 
   useEffect(() => {
+    if (editableRef.current) {
+      editableRef.current.style.textAlign = options.textAlign;
+    }
+  }, [options.textAlign]);
+
+  useEffect(() => {
     if (editableRef.current && text !== editableRef.current.innerText) {
       editableRef.current.innerText = text;
     }
@@ -57,7 +63,7 @@ const EditableText: React.FC<EditableTextProps> = ({ selectedFont, selectedColor
     fontFamily,
     lineHeight: options.lineHeight,
     background: 'transparent',
-    textAlign: 'center',
+    textAlign: options.textAlign,
     caretColor: 'var(--color-primary)',
     filter: 'drop-shadow(0.015em 0.015em 0.01em rgba(4, 8, 15, 0.3))',
     maxWidth: '90%',
