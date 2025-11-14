@@ -72,6 +72,7 @@ export function AuthDialogDrawer() {
     <MobileDrawer
       open={open}
       onOpenChange={handleClose}
+      showClose={false}
       title={title}
       description={description}
       actions={

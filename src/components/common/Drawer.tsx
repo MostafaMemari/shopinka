@@ -24,7 +24,7 @@ interface MobileDrawerProps {
   className?: string;
   trigger?: ReactNode;
   showClose?: boolean;
-  isModal?: boolean; // کنترل حالت modal
+  isModal?: boolean;
 }
 
 const MobileDrawer: FC<MobileDrawerProps> = ({
@@ -66,10 +66,8 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
   return (
     <Drawer open={open} onOpenChange={onOpenChange} repositionInputs={false} modal={isModal}>
       {isModal && <DrawerOverlay className="inset-0 bg-transparent shadow-none backdrop-blur-none" />}
-
+      {trigger && <DrawerTrigger asChild>{trigger}</DrawerTrigger>}
       <DrawerContent ref={drawerRef} className={cn('inset-x-0 !h-auto mt-0 mb-0', className)}>
-        {trigger && <DrawerTrigger asChild>{trigger}</DrawerTrigger>}
-
         <DrawerHeader className="text-left pb-3 border-b mb-3">
           <DrawerTitle>{title}</DrawerTitle>
           {description && <p className="text-sm text-muted-foreground">{description}</p>}

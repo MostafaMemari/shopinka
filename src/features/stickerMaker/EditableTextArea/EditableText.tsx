@@ -27,7 +27,7 @@ const EditableText: React.FC<EditableTextProps> = ({ selectedFont, selectedColor
   useEffect(() => {
     if (!selectedFont?.base64Content || !isClient) return;
 
-    const fontFace = new FontFace(selectedFont.name, `url(data:font/woff2;base64,${selectedFont.base64Content}) format('woff2')`);
+    const fontFace = new FontFace(selectedFont.code, `url(data:font/woff2;base64,${selectedFont.base64Content}) format('woff2')`);
 
     setFontLoaded(false);
     fontFace
@@ -55,10 +55,11 @@ const EditableText: React.FC<EditableTextProps> = ({ selectedFont, selectedColor
   }, [text, isClient]);
 
   const colorValue = selectedColor?.value || '#000000';
-  const fontFamily = fontLoaded && selectedFont ? selectedFont.name : 'Arial';
+
+  const fontFamily = fontLoaded && selectedFont ? selectedFont.code : 'Arial';
 
   const editableStyle: React.CSSProperties = {
-    fontSize: '40px',
+    fontSize: '2rem',
     color: colorValue,
     fontFamily,
     lineHeight: options.lineHeight,

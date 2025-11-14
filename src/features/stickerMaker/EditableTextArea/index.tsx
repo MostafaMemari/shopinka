@@ -20,7 +20,7 @@ const EditableTextArea: React.FC<EditableTextAreaProps> = ({ onStartEditing }) =
   const selectedColor: ColorItem | null = options.color || null;
 
   return (
-    <div className="relative w-full h-svh overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center p-8">
+    <div className="relative w-full h-svh overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center">
       <EditableSurface />
 
       <EditableText selectedFont={selectedFontObj} selectedColor={selectedColor} onStartEditing={onStartEditing} />

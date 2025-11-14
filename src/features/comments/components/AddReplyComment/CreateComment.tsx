@@ -59,23 +59,22 @@ function CreateComment({ productId }: { productId: number }) {
           />
         </Dialog>
       ) : (
-        <MobileDrawer
-          open={commentControl.value}
-          onOpenChange={commentControl.onToggle}
-          title={commentFormTitle}
-          actions={
-            <PrimaryButton onClick={handleSubmit} disabled={isCreateCommentLoading} isLoading={isCreateCommentLoading} className="flex-1">
-              ثبت دیدگاه
-            </PrimaryButton>
-          }
-        >
+        <MobileDrawer open={commentControl.value} onOpenChange={commentControl.onToggle} title={commentFormTitle} showClose={false}>
           <CommentForm
-            className="px-4"
+            className="px-4 mb-4"
             ref={formRef}
             createComment={createComment}
             productId={productId}
             onSuccess={commentControl.onFalse}
           />
+          <PrimaryButton
+            onClick={handleSubmit}
+            disabled={isCreateCommentLoading}
+            isLoading={isCreateCommentLoading}
+            className="w-full flex-1 mb-2"
+          >
+            ثبت دیدگاه
+          </PrimaryButton>
         </MobileDrawer>
       )}
     </>

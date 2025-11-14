@@ -4,12 +4,12 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --breakpoint-xs: 480px;
-  --breakpoint-sm: 640px;
-  --breakpoint-md: 768px;
-  --breakpoint-lg: 1024px;
-  --breakpoint-xl: 1280px;
-  --breakpoint-2xl: 1400px;
+  --breakpoint-xs: 480px; /* موبایل کوچک */
+  --breakpoint-sm: 640px; /* موبایل بزرگ */
+  --breakpoint-md: 768px; /* تبلت */
+  --breakpoint-lg: 1024px; /* لپ‌تاپ */
+  --breakpoint-xl: 1280px; /* دسکتاپ */
+  --breakpoint-2xl: 1400px; /* مانیتور بزرگ */
 
   --shadow-base: 0px 1px 10px rgba(0, 0, 0, 0.05);
 
@@ -18,26 +18,32 @@
   --color-white: #fefeff;
   --color-black: #0d0d0d;
 
+  /* اصلی */
   --color-border: var(--border);
   --color-ring: var(--ring);
   --color-background: var(--background);
   --color-text: var(--text);
 
+  /* رنگ‌های هشدار و اطلاع‌رسانی */
   --color-warning: var(--warning);
   --color-alert: var(--alert);
   --color-blue: var(--blue);
   --color-cyan: var(--cyan);
 
+  /* موفقیت و خطا */
   --color-success: var(--success);
   --color-success-secondary: var(--success-secondary);
   --color-destructive: var(--destructive);
 
+  /* پرایمری */
   --color-primary: var(--primary);
   --color-primary-btn: var(--primary-btn);
 
+  /* سکندری و میوت */
   --color-secondary: var(--secondary);
   --color-muted: var(--muted);
 
+  /* جدید اضافه‌شده‌ها */
   --color-foreground: var(--foreground);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
@@ -51,12 +57,14 @@
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
 
+  /* چارت‌ها */
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
 
+  /* سایدبار */
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
@@ -66,12 +74,13 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
+  /* فونت */
   --font-iranyekan: IRANYekan;
 }
 
 @utility container {
   margin-inline: auto;
-  padding-inline: 1rem;
+  padding-inline: 1rem; /* پیشفرض برای موبایل */
 
   @media (width >= theme(--breakpoint-sm)) {
     max-width: 640px;
@@ -103,10 +112,10 @@
   }
   .selector-label-checked {
     border-width: 4px;
-    border-color: hsl(var(--primary));
+    border-color: hsl(var(--primary)); /* قرمز-نارنجی برای حالت انتخاب‌شده */
   }
   .selector-label-hover {
-    border-color: hsl(var(--primary));
+    border-color: hsl(var(--primary)); /* قرمز-نارنجی برای هاور */
   }
 }
 /*
@@ -264,10 +273,4 @@
 
 @utility profile-menu-active {
   @apply bg-primary/10 hover:bg-primary/10 text-primary hover:text-primary;
-}
-
-.bg-grid-pattern {
-  background-image:
-    linear-gradient(rgba(0, 0, 0, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 0, 0, 0.1) 1px, transparent 1px);
-  background-size: 50px 50px;
 }

@@ -21,7 +21,7 @@ export const metadata = {
 };
 
 export const viewport = {
-  maximumScale: 1, // جلوگیری از زوم
+  maximumScale: 1,
   interactiveWidget: 'resizes-content' as const,
 };
 

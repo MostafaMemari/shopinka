@@ -46,18 +46,11 @@ export function CreateAddressDialogDrawer() {
   }
 
   return (
-    <MobileDrawer
-      trigger={<AddressNewCard />}
-      open={open}
-      onOpenChange={setOpen}
-      title="افزودن آدرس جدید"
-      actions={
-        <PrimaryButton className="flex-1" onClick={handleSubmit} isLoading={isLoadingSubmit}>
-          ثبت
-        </PrimaryButton>
-      }
-    >
-      <AddressForm className="px-4" onSuccess={handleSuccess} ref={formRef} onLoadingChange={setIsLoadingSubmit} />
+    <MobileDrawer trigger={<AddressNewCard />} open={open} showClose={false} onOpenChange={setOpen} title="افزودن آدرس جدید">
+      <AddressForm className="px-4 mb-4" onSuccess={handleSuccess} ref={formRef} onLoadingChange={setIsLoadingSubmit} />
+      <PrimaryButton className="w-full mb-2" onClick={handleSubmit} isLoading={isLoadingSubmit}>
+        ثبت
+      </PrimaryButton>
     </MobileDrawer>
   );
 }
