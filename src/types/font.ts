@@ -1,18 +1,11 @@
 export type fontType = {
-  title: string;
-  isPersian: boolean;
-  code: string;
-  alias: string;
-  isPremium: boolean;
-  price: number;
-  isThick: boolean;
-  isOutline: boolean;
-  isUserFont: boolean;
+  id: number;
   name: string;
-  tags: string;
-  priority: number;
-  id: string;
-  thumbnail: string;
+  displayName: string;
+  file: string;
+  ratio?: number;
+  isPersian: boolean;
+  thumbnail: string | null;
 };
 
 export interface FontItemType {

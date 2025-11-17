@@ -5,10 +5,10 @@ import { ColorItem } from '../StickerMakerView';
 import { useDispatch, useSelector } from 'react-redux';
 import { setText } from '@/store/slices/stickerSlice';
 import { RootState } from '@/store';
-import { FontItemType } from '@/types/font';
+import { fontType } from '@/types/font';
 
 interface EditableTextProps {
-  selectedFont: FontItemType | null;
+  selectedFont: fontType | null;
   selectedColor: ColorItem | null;
   onStartEditing: () => void;
 }
@@ -24,30 +24,29 @@ const EditableText: React.FC<EditableTextProps> = ({ selectedFont, selectedColor
 
   useEffect(() => setIsClient(true), []);
 
+  // لود فونت با FontFace API
   useEffect(() => {
-    if (!selectedFont?.base64Content || !isClient) return;
-
-    const fontFace = new FontFace(selectedFont.code, `url(data:font/woff2;base64,${selectedFont.base64Content}) format('woff2')`);
+    if (!selectedFont?.file) return;
 
     setFontLoaded(false);
+    const fontFace = new FontFace(selectedFont.name, `url(${selectedFont.file})`);
     fontFace
       .load()
       .then((loadedFont) => {
         document.fonts.add(loadedFont);
         setFontLoaded(true);
       })
-      .catch((err) => {
-        console.error('Error loading font:', err);
-        setFontLoaded(true);
-      });
-  }, [selectedFont, isClient]);
+      .catch(() => setFontLoaded(true));
+  }, [selectedFont]);
 
+  // همگام‌سازی textAlign
   useEffect(() => {
     if (editableRef.current) {
       editableRef.current.style.textAlign = options.textAlign;
     }
   }, [options.textAlign]);
 
+  // همگام‌سازی متن
   useEffect(() => {
     if (editableRef.current && text !== editableRef.current.innerText) {
       editableRef.current.innerText = text;
@@ -55,8 +54,7 @@ const EditableText: React.FC<EditableTextProps> = ({ selectedFont, selectedColor
   }, [text, isClient]);
 
   const colorValue = selectedColor?.value || '#000000';
-
-  const fontFamily = fontLoaded && selectedFont ? selectedFont.code : 'Arial';
+  const fontFamily = fontLoaded && selectedFont ? selectedFont.name : 'Arial';
 
   const editableStyle: React.CSSProperties = {
     fontSize: '2rem',
@@ -68,59 +66,48 @@ const EditableText: React.FC<EditableTextProps> = ({ selectedFont, selectedColor
     caretColor: 'var(--color-primary)',
     filter: 'drop-shadow(0.015em 0.015em 0.01em rgba(4, 8, 15, 0.3))',
     maxWidth: '90%',
-    transition: 'opacity 0.2s ease',
     fontWeight: options.fontWeight,
     fontStyle: options.fontStyle,
+    transition: 'opacity 0.2s ease',
   };
 
-  if (!isClient) {
+  // Loader ساده
+  if (!isClient || !fontLoaded) {
     return (
       <div className="absolute flex items-center justify-center w-full h-full pointer-events-none">
-        <div className="relative w-6 h-6">
-          <div className="absolute inset-0 border-2 border-gray-300 rounded-full opacity-40" />
-          <div className="absolute inset-0 border-2 border-t-blue-600 rounded-full animate-spin" />
-        </div>
+        <div className="w-6 h-6 border-2 border-gray-300 rounded-full opacity-40 animate-spin border-t-blue-600" />
       </div>
     );
   }
 
   return (
     <div className="flex items-center justify-center w-full h-full relative">
-      {!fontLoaded ? (
-        <div className="absolute inset-0 flex items-center justify-center bg-transparent">
-          <div className="relative w-6 h-6">
-            <div className="absolute inset-0 border-2 border-gray-300 rounded-full opacity-40" />
-            <div className="absolute inset-0 border-2 border-t-blue-600 rounded-full animate-spin" />
-          </div>
-        </div>
-      ) : (
-        <div
-          ref={editableRef}
-          contentEditable
-          suppressContentEditableWarning
-          spellCheck={false}
-          dir="rtl"
-          onFocus={() => {
-            setIsFocused(true);
-            onStartEditing();
-          }}
-          onBlur={(e) => {
-            setIsFocused(false);
-            const newText = (e.target as HTMLDivElement).innerText.trim();
-            dispatch(setText(newText));
-          }}
-          className={cn(
-            'whitespace-pre-wrap outline-none text-center select-text transition-opacity ease-in-out relative min-h-[1.2em]',
-            isFocused ? 'opacity-100' : 'opacity-90',
-            !isFocused && !text
-              ? "before:content-['متن_را_اینجا_وارد_کنید_...'] before:text-gray-400 before:opacity-40 before:pointer-events-none before:select-none"
-              : '',
-          )}
-          style={editableStyle}
-        >
-          {text}
-        </div>
-      )}
+      <div
+        ref={editableRef}
+        contentEditable
+        suppressContentEditableWarning
+        spellCheck={false}
+        dir="rtl"
+        onFocus={() => {
+          setIsFocused(true);
+          onStartEditing();
+        }}
+        onBlur={(e) => {
+          setIsFocused(false);
+          const newText = (e.target as HTMLDivElement).innerText.trim();
+          dispatch(setText(newText));
+        }}
+        className={cn(
+          'whitespace-pre-wrap outline-none text-center select-text relative min-h-[1.2em]',
+          isFocused ? 'opacity-100' : 'opacity-90',
+          !isFocused && !text
+            ? "before:content-['متن_را_اینجا_وارد_کنید_...'] before:text-gray-400 before:opacity-40 before:pointer-events-none before:select-none"
+            : '',
+        )}
+        style={editableStyle}
+      >
+        {text}
+      </div>
     </div>
   );
 };

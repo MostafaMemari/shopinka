@@ -56,7 +56,7 @@ function FontGrid() {
             return (
               <div
                 key={font.name}
-                onClick={() => handleFontSelect(font.code)}
+                onClick={() => handleFontSelect(font.name)}
                 className="Cell relative shrink-0"
                 style={{ width: '134px' }}
               >

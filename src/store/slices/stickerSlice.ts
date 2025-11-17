@@ -22,7 +22,6 @@ interface EffectOption {
 interface StickerOptions {
   color: ColorItem | null;
   fontFamily: string;
-  fontSize: number;
   lineHeight: number;
   letterSpacing: number;
   textAlign: 'left' | 'center' | 'right';
@@ -63,7 +62,6 @@ const saveStateToLocalStorage = (state: StickerState) => {
 const defaultOptions: StickerOptions = {
   color: null,
   fontFamily: 'x_uf_1037',
-  fontSize: 52,
   lineHeight: 1.2,
   letterSpacing: 3,
   textAlign: 'center',
@@ -114,11 +112,6 @@ const stickerSlice = createSlice({
       saveStateToLocalStorage(state);
     },
 
-    // اندازه و فاصله
-    setFontSize(state, action: PayloadAction<number>) {
-      state.options.fontSize = action.payload;
-      saveStateToLocalStorage(state);
-    },
     setLetterSpacing(state, action: PayloadAction<number>) {
       state.options.letterSpacing = action.payload;
       saveStateToLocalStorage(state);
@@ -176,7 +169,6 @@ export const {
   setColorSuccess,
   setFontStart,
   setFontSuccess,
-  setFontSize,
   setLetterSpacing,
   setLineHeight,
   setTextAlign,

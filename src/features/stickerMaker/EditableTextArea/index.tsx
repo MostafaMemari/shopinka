@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { ColorItem } from '../StickerMakerView';
 import { useFontByTitle } from '@/hooks/useFontByTitle';
+import { fontsList } from '@/data/font/fontsList';
 
 interface EditableTextAreaProps {
   onStartEditing: () => void;
@@ -15,7 +16,11 @@ interface EditableTextAreaProps {
 const EditableTextArea: React.FC<EditableTextAreaProps> = ({ onStartEditing }) => {
   const { options } = useSelector((state: RootState) => state.sticker);
 
-  const selectedFontObj = useFontByTitle(options.fontFamily);
+  // const selectedFontObj = useFontByTitle(options.fontFamily);
+
+  const font = fontsList.find((f) => f.name === options.fontFamily);
+
+  const selectedFontObj = font || null;
 
   const selectedColor: ColorItem | null = options.color || null;
 

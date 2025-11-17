@@ -1,12 +1,12 @@
 'use client';
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
 import MobileDrawer from '@/components/common/Drawer';
 import { ArrowUp, ArrowLeft } from 'lucide-react';
-import { Textarea } from '@/components/ui/textarea';
+import StickerDimensionForm from './StickerDimensionForm';
+import { usePersianTextRatio } from '@/hooks/useCanvasTextMetrics';
 
 interface FinalizeStickerDrawerProps {
   isOpen: boolean;
@@ -16,93 +16,90 @@ interface FinalizeStickerDrawerProps {
 export default function FinalizeStickerDrawer({ isOpen, onClose }: FinalizeStickerDrawerProps) {
   const { text, options } = useSelector((state: RootState) => state.sticker);
 
-  const [width, setWidth] = useState(''); // عرض (عمودی)
-  const [height, setHeight] = useState(''); // طول (افقی)
+  const [width, setWidth] = useState('');
+  const [height, setHeight] = useState('');
   const [note, setNote] = useState('');
-  const [price, setPrice] = useState<number | null>(null);
+
+  const ratio = usePersianTextRatio(text, options.fontFamily);
+
+  const handleDimensionChange = (e: React.ChangeEvent<HTMLInputElement>, setter: React.Dispatch<React.SetStateAction<number | ''>>) => {
+    const value = e.target.value;
+
+    if (value !== '' && (isNaN(Number(value)) || Number(value) <= 0)) return;
+
+    const parsed = value === '' ? '' : Number(value);
+    setter(parsed);
+
+    if (setter === setWidth && parsed !== '' && ratio) {
+      const calculatedHeight = parsed / ratio;
+      setHeight(calculatedHeight.toFixed(1));
+    }
+  };
 
   const displayWidth = width ? `${width} سانتی‌متر` : '?? سانتی‌متر';
   const displayHeight = height ? `${height} سانتی‌متر` : '?? سانتی‌متر';
 
   const dimensionLineClasses = 'absolute text-[10px] text-gray-500 font-medium whitespace-nowrap bg-white px-1 z-10';
 
-  const handleDimensionChange = (e: React.ChangeEvent<HTMLInputElement>, setter: React.Dispatch<React.SetStateAction<string>>) => {
-    const value = e.target.value;
-    if (value === '' || (Number(value) > 0 && !isNaN(Number(value)))) {
-      setter(value);
-    }
-  };
-
   return (
     <MobileDrawer open={isOpen} onOpenChange={onClose} showClose={false} title="تنظیمات" className="max-w-[500px] m-auto">
-      <div className="relative p-4 border-b min-h-[150px] flex items-center justify-center">
-        {height && (
-          <div className={`${dimensionLineClasses} bottom-0 left-1/2 -translate-x-1/2 flex items-center`}>
+      {/* پیش‌نمایش استیکر */}
+      <div className="relative p-2 border-b min-h-[120px] flex items-center justify-center">
+        {/* خط و ابعاد width */}
+        {width && (
+          <div className={`${dimensionLineClasses} top-0 left-1/2 -translate-x-1/2 flex items-center`}>
             <ArrowLeft className="w-2 h-2 text-red-500 mr-1 rotate-180" />
-            <span className="text-red-500">{displayHeight}</span>
+            <span className="text-red-500">{displayWidth}</span>
             <ArrowLeft className="w-2 h-2 text-red-500 ml-1" />
           </div>
         )}
 
-        {width && (
-          <div className={`${dimensionLineClasses} -left-8 top-1/2 -translate-y-1/2 flex items-center transform -rotate-90`}>
+        {/* خط و ابعاد height */}
+        {height && (
+          <div className={`${dimensionLineClasses} -left-9 top-1/2 -translate-y-1/2 flex items-center transform -rotate-90`}>
             <ArrowUp className="w-2 h-2 text-red-500 mr-1 rotate-90" />
-            <span className="text-red-500">{displayWidth}</span>
+            <span className="text-red-500">{displayHeight}</span>
             <ArrowUp className="w-2 h-2 text-red-500 ml-1 -rotate-90" />
           </div>
         )}
 
-        {height && <div className="absolute left-0 right-0 bottom-2 border-b border-dashed border-red-300 pointer-events-none"></div>}
-        {width && <div className="absolute top-0 bottom-0 left-2 border-l border-dashed border-red-300 pointer-events-none"></div>}
+        {/* خطوط راهنما */}
+        {width && <div className="absolute left-0 right-0 top-2 border-b border-dashed border-red-300 pointer-events-none"></div>}
+        {height && <div className="absolute top-0 bottom-0 left-2 border-l border-dashed border-red-300 pointer-events-none"></div>}
 
+        {/* متن استیکر */}
         <div
           style={{
-            fontFamily: options.fontFamily,
-            lineHeight: options.lineHeight,
-            textAlign: options.textAlign,
-            fontWeight: options.fontWeight,
-            fontStyle: options.fontStyle,
-            color: options.color?.value || '#000000',
-            whiteSpace: 'pre-wrap',
-            fontSize: '1.5rem',
+            border: '1px dashed #ccc',
+            display: 'inline-block',
           }}
-          className="p-4 relative z-0"
         >
-          {text}
+          <div
+            style={{
+              fontFamily: options.fontFamily,
+              fontWeight: options.fontWeight,
+              fontStyle: options.fontStyle,
+              color: options.color?.value || '#000000',
+              whiteSpace: 'pre-wrap',
+              fontSize: '1.6rem',
+            }}
+            className="relative z-0"
+          >
+            {text}
+          </div>
         </div>
       </div>
 
-      <div className="p-4 space-y-4">
-        <div className="flex gap-4">
-          <Input
-            type="number"
-            placeholder="عرض (cm)"
-            value={width}
-            onChange={(e) => handleDimensionChange(e, setWidth)}
-            className="flex-1 text-right"
-            dir="rtl"
-          />
-
-          <Input
-            type="number"
-            placeholder="طول (cm)"
-            value={height}
-            onChange={(e) => handleDimensionChange(e, setHeight)}
-            className="flex-1 text-right"
-            dir="rtl"
-          />
-        </div>
-
-        <Textarea
-          placeholder="توضیحات اضافی"
-          value={note}
-          onChange={(e) => setNote(e.target.value)}
-          className="w-full text-right"
-          dir="rtl"
-        />
-
-        <Button className="w-full">محاسبه قیمت</Button>
-      </div>
+      {/* فرم تغییر ابعاد */}
+      <StickerDimensionForm
+        width={width}
+        height={height}
+        note={note}
+        setWidth={setWidth}
+        setHeight={setHeight}
+        setNote={setNote}
+        handleDimensionChange={handleDimensionChange}
+      />
     </MobileDrawer>
   );
 }
