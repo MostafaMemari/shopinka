@@ -24,7 +24,6 @@ const EditableText: React.FC<EditableTextProps> = ({ selectedFont, selectedColor
 
   useEffect(() => setIsClient(true), []);
 
-  // لود فونت با FontFace API
   useEffect(() => {
     if (!selectedFont?.file) return;
 
@@ -39,14 +38,12 @@ const EditableText: React.FC<EditableTextProps> = ({ selectedFont, selectedColor
       .catch(() => setFontLoaded(true));
   }, [selectedFont]);
 
-  // همگام‌سازی textAlign
   useEffect(() => {
     if (editableRef.current) {
       editableRef.current.style.textAlign = options.textAlign;
     }
   }, [options.textAlign]);
 
-  // همگام‌سازی متن
   useEffect(() => {
     if (editableRef.current && text !== editableRef.current.innerText) {
       editableRef.current.innerText = text;
@@ -71,7 +68,6 @@ const EditableText: React.FC<EditableTextProps> = ({ selectedFont, selectedColor
     transition: 'opacity 0.2s ease',
   };
 
-  // Loader ساده
   if (!isClient || !fontLoaded) {
     return (
       <div className="absolute flex items-center justify-center w-full h-full pointer-events-none">

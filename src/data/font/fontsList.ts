@@ -7,7 +7,6 @@ export const fontsList: fontType[] = [
     displayName: 'مروارید',
     file: 'https://node-bucket.storage.c2.liara.space/fonts/BMORVARD.woff2',
     isPersian: true,
-    ratio: 7.084,
     thumbnail: null,
   },
   {
@@ -16,7 +15,6 @@ export const fontsList: fontType[] = [
     displayName: 'تیتر',
     file: 'https://node-bucket.storage.c2.liara.space/fonts/BTITRBD.woff2',
     isPersian: true,
-    ratio: 7.267,
     thumbnail: null,
   },
   {
@@ -25,7 +23,6 @@ export const fontsList: fontType[] = [
     displayName: 'دیجی‌ نگاره',
     file: 'https://node-bucket.storage.c2.liara.space/fonts/Dastnevis.woff2',
     isPersian: true,
-    ratio: 6.753,
     thumbnail: null,
   },
   {
@@ -34,7 +31,6 @@ export const fontsList: fontType[] = [
     displayName: 'دیجی سرویناز',
     file: 'https://node-bucket.storage.c2.liara.space/fonts/DigiSarvenaz.woff2',
     isPersian: true,
-    ratio: 7.381,
     thumbnail: null,
   },
   {
@@ -43,7 +39,6 @@ export const fontsList: fontType[] = [
     displayName: 'فار جدید',
     file: 'https://node-bucket.storage.c2.liara.space/fonts/FarJadid.woff2',
     isPersian: true,
-    ratio: 8.541,
     thumbnail: null,
   },
   {
@@ -52,7 +47,6 @@ export const fontsList: fontType[] = [
     displayName: 'ایران نستعلیق',
     file: 'https://node-bucket.storage.c2.liara.space/fonts/IranNastaliq.woff2',
     isPersian: true,
-    ratio: 4.342,
     thumbnail: null,
   },
   {
@@ -61,7 +55,6 @@ export const fontsList: fontType[] = [
     displayName: 'شبنم',
     file: 'https://node-bucket.storage.c2.liara.space/fonts/Shabnam.woff2',
     isPersian: true,
-    ratio: 8.663,
     thumbnail: null,
   },
   {
@@ -70,7 +63,6 @@ export const fontsList: fontType[] = [
     displayName: 'شکسته',
     file: 'https://node-bucket.storage.c2.liara.space/fonts/Shekasteh.woff2',
     isPersian: true,
-    ratio: 3.06,
     thumbnail: null,
   },
 ];

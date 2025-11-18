@@ -3,7 +3,6 @@ export type fontType = {
   name: string;
   displayName: string;
   file: string;
-  ratio?: number;
   isPersian: boolean;
   thumbnail: string | null;
 };
