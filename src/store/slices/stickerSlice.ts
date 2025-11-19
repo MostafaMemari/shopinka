@@ -61,7 +61,7 @@ const saveStateToLocalStorage = (state: StickerState) => {
 
 const defaultOptions: StickerOptions = {
   color: null,
-  fontFamily: 'x_uf_1037',
+  fontFamily: 'IRANYekan',
   lineHeight: 1.2,
   letterSpacing: 3,
   textAlign: 'center',
@@ -92,7 +92,6 @@ const stickerSlice = createSlice({
       state.downloading = action.payload;
     },
 
-    // رنگ
     setColorStart(state) {
       state.loading = true;
     },
@@ -102,7 +101,6 @@ const stickerSlice = createSlice({
       saveStateToLocalStorage(state);
     },
 
-    // فونت
     setFontStart(state) {
       state.loading = true;
     },
@@ -121,35 +119,31 @@ const stickerSlice = createSlice({
       saveStateToLocalStorage(state);
     },
 
-    // چینش
     setTextAlign(state, action: PayloadAction<'left' | 'center' | 'right'>) {
       state.options.textAlign = action.payload;
       saveStateToLocalStorage(state);
     },
 
-    // وزن و استایل فونت 🔥
     toggleFontWeight(state) {
       state.options.fontWeight = state.options.fontWeight === 'bold' ? 'normal' : 'bold';
       saveStateToLocalStorage(state);
     },
+
     toggleFontStyle(state) {
       state.options.fontStyle = state.options.fontStyle === 'italic' ? 'normal' : 'italic';
       saveStateToLocalStorage(state);
     },
 
-    // پس‌زمینه
     setBodyBackground(state, action: PayloadAction<string>) {
       state.options.bodyBackground = action.payload;
       saveStateToLocalStorage(state);
     },
 
-    // افکت
     setEffect(state, action: PayloadAction<EffectOption | null>) {
       state.options.effect = action.payload;
       saveStateToLocalStorage(state);
     },
 
-    // حذف همه داده‌ها
     resetStickerState() {
       if (typeof window !== 'undefined') localStorage.removeItem(STORAGE_KEY);
       return {

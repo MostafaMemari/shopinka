@@ -21,7 +21,11 @@ export default function FinalizeStickerDrawer({ isOpen, onClose }: FinalizeStick
   const [note, setNote] = useState('');
 
   useEffect(() => {
-    if (!text) return;
+    if (!text) {
+      setHeight('');
+      setWidth('');
+      return;
+    }
     if (!options.fontFamily) return;
     if (!width) setHeight('');
 
@@ -62,7 +66,7 @@ export default function FinalizeStickerDrawer({ isOpen, onClose }: FinalizeStick
 
         <div
           style={{
-            fontFamily: options.fontFamily,
+            fontFamily: options.fontFamily || 'inherit',
             fontWeight: options.fontWeight,
             fontStyle: options.fontStyle,
             color: options.color?.value || '#000000',

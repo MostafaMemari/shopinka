@@ -25,7 +25,10 @@ const EditableText: React.FC<EditableTextProps> = ({ selectedFont, selectedColor
   useEffect(() => setIsClient(true), []);
 
   useEffect(() => {
-    if (!selectedFont?.file) return;
+    if (!selectedFont?.file) {
+      setFontLoaded(true);
+      return;
+    }
 
     setFontLoaded(false);
     const fontFace = new FontFace(selectedFont.name, `url(${selectedFont.file})`);
@@ -51,7 +54,7 @@ const EditableText: React.FC<EditableTextProps> = ({ selectedFont, selectedColor
   }, [text, isClient]);
 
   const colorValue = selectedColor?.value || '#000000';
-  const fontFamily = fontLoaded && selectedFont ? selectedFont.name : 'Arial';
+  const fontFamily = fontLoaded && selectedFont ? selectedFont.name : 'IranYekan';
 
   const editableStyle: React.CSSProperties = {
     fontSize: '2rem',
