@@ -1,15 +1,15 @@
 'use client';
 import React, { useEffect, useRef, useState } from 'react';
 import { cn } from '@/lib/utils';
-import { ColorItem } from '../StickerMakerView';
 import { useDispatch, useSelector } from 'react-redux';
 import { setText } from '@/store/slices/stickerSlice';
 import { RootState } from '@/store';
 import { fontType } from '@/types/font';
+import { ColorItemType } from '../color/ColorGrid';
 
 interface EditableTextProps {
   selectedFont: fontType | null;
-  selectedColor: ColorItem | null;
+  selectedColor: ColorItemType | null;
   onStartEditing: () => void;
 }
 
@@ -55,16 +55,16 @@ const EditableText: React.FC<EditableTextProps> = ({ selectedFont, selectedColor
 
   const colorValue = selectedColor?.value || '#000000';
   const fontFamily = fontLoaded && selectedFont ? selectedFont.name : 'IranYekan';
+  const isGold = colorValue === 'gold';
 
   const editableStyle: React.CSSProperties = {
     fontSize: '2rem',
-    color: colorValue,
+    color: isGold ? '#FFD700' : colorValue,
     fontFamily,
     lineHeight: options.lineHeight,
-    background: 'transparent',
     textAlign: options.textAlign,
     caretColor: 'var(--color-primary)',
-    filter: 'drop-shadow(0.015em 0.015em 0.01em rgba(4, 8, 15, 0.3))',
+    filter: isGold ? 'drop-shadow(0 0 2px rgba(255, 215, 0, 0.7))' : 'drop-shadow(0.015em 0.015em 0.01em rgba(4, 8, 15, 0.3))',
     maxWidth: '90%',
     fontWeight: options.fontWeight,
     fontStyle: options.fontStyle,
@@ -98,7 +98,9 @@ const EditableText: React.FC<EditableTextProps> = ({ selectedFont, selectedColor
         }}
         className={cn(
           'whitespace-pre-wrap outline-none text-center select-text relative min-h-[1.2em]',
+
           isFocused ? 'opacity-100' : 'opacity-90',
+
           !isFocused && !text
             ? "before:content-['متن_را_اینجا_وارد_کنید_...'] before:text-gray-400 before:opacity-40 before:pointer-events-none before:select-none"
             : '',

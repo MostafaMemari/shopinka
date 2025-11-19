@@ -3,20 +3,14 @@
 import React, { useCallback } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import FontGrid from './font/FontGrid';
-import ColorGrid from './color/ColorGrid';
 import BottomNav from './BottomNav';
 import SettingsDrawer from './setting/SettingsDrawer';
 import EditableTextArea from './EditableTextArea';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
+import { ColorGrid } from './color/ColorGrid';
 
 type OpenPanel = 'font' | 'color' | 'settings' | null;
-
-export interface ColorItem {
-  name: string;
-  value: string;
-  finishes?: string[];
-}
 
 function StickerMakerView() {
   const [openPanel, setOpenPanel] = React.useState<OpenPanel>(null);

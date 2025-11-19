@@ -1,5 +1,5 @@
+import { ColorItemType } from '@/features/stickerMaker/color/ColorGrid';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ColorItem } from '@/features/stickerMaker/StickerMakerView';
 
 interface EffectValue {
   stroke?: { color: string; width: number };
@@ -20,7 +20,7 @@ interface EffectOption {
 }
 
 interface StickerOptions {
-  color: ColorItem | null;
+  color: ColorItemType | null;
   fontFamily: string;
   lineHeight: number;
   letterSpacing: number;
@@ -95,7 +95,7 @@ const stickerSlice = createSlice({
     setColorStart(state) {
       state.loading = true;
     },
-    setColorSuccess(state, action: PayloadAction<ColorItem | null>) {
+    setColorSuccess(state, action: PayloadAction<ColorItemType | null>) {
       state.options.color = action.payload;
       state.loading = false;
       saveStateToLocalStorage(state);
