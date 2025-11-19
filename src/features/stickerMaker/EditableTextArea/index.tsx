@@ -5,8 +5,8 @@ import EditableText from './EditableText';
 import EditableSurface from './EditableSurface';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
-import { ColorItem } from '../StickerMakerView';
 import { fontsList } from '@/data/font/fontsList';
+import { ColorItemType } from '../color/ColorGrid';
 
 interface EditableTextAreaProps {
   onStartEditing: () => void;
@@ -18,7 +18,7 @@ const EditableTextArea: React.FC<EditableTextAreaProps> = ({ onStartEditing }) =
   const font = fontsList.find((f) => f.name === options.fontFamily);
 
   const selectedFont = font || null;
-  const selectedColor: ColorItem | null = options.color || null;
+  const selectedColor: ColorItemType | null = options.color || null;
 
   return (
     <div className="relative w-full h-svh overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center">

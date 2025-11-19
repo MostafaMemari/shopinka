@@ -56,6 +56,7 @@ const EditableText: React.FC<EditableTextProps> = ({ selectedFont, selectedColor
   const colorValue = selectedColor?.value || '#000000';
   const fontFamily = fontLoaded && selectedFont ? selectedFont.name : 'IranYekan';
   const isGold = colorValue === 'gold';
+  const isWhite = colorValue === 'white';
 
   const editableStyle: React.CSSProperties = {
     fontSize: '2rem',
@@ -64,7 +65,11 @@ const EditableText: React.FC<EditableTextProps> = ({ selectedFont, selectedColor
     lineHeight: options.lineHeight,
     textAlign: options.textAlign,
     caretColor: 'var(--color-primary)',
-    filter: isGold ? 'drop-shadow(0 0 2px rgba(255, 215, 0, 0.7))' : 'drop-shadow(0.015em 0.015em 0.01em rgba(4, 8, 15, 0.3))',
+    filter: isGold
+      ? 'drop-shadow(0 0 2px rgba(255, 215, 0, 0.7))'
+      : isWhite
+        ? 'drop-shadow(0 0 2px rgba(0,0,0,0.5))'
+        : 'drop-shadow(0.015em 0.015em 0.01em rgba(4, 8, 15, 0.3))',
     maxWidth: '90%',
     fontWeight: options.fontWeight,
     fontStyle: options.fontStyle,

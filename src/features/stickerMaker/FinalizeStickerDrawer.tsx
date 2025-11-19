@@ -69,7 +69,7 @@ export default function FinalizeStickerDrawer({ isOpen, onClose }: FinalizeStick
             fontFamily: options.fontFamily || 'inherit',
             fontWeight: options.fontWeight,
             fontStyle: options.fontStyle,
-            color: options.color?.value || '#000000',
+            color: '#000000',
             whiteSpace: 'pre-wrap',
             fontSize: '1.6rem',
           }}

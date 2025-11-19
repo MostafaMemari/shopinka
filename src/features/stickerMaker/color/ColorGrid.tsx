@@ -14,11 +14,11 @@ export interface ColorItemType {
 }
 
 const colors: ColorItemType[] = [
-  { name: 'سفید', value: '#ffffff' },
-  { name: 'مشکی', value: '#000000' },
+  { name: 'سفید', value: 'white' },
+  { name: 'مشکی', value: 'black' },
   { name: 'طلایی', value: 'gold' },
-  { name: 'قرمز', value: '#ef4444' },
-  { name: 'زرد', value: '#FFEA00 ' },
+  { name: 'قرمز', value: 'red' },
+  { name: 'زرد', value: 'yellow' },
 ];
 
 export function ColorGrid() {
