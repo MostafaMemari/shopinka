@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils';
 import { Slider } from '@/components/ui/slider';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store';
-import { setLetterSpacing, setLineHeight, setText } from '@/store/slices/stickerSlice';
+import { setLetterSpacing, setText } from '@/store/slices/stickerSlice';
 import { addSpacerBetweenChars } from '@/utils/addSpacerBetweenChars';
 import TextStyleToolbar from './TextStyleToolbar';
 
@@ -25,17 +25,6 @@ export default function SettingsDrawer({ open, onClose }: SettingsDrawerProps) {
       <div className="flex flex-col gap-6 max-h-[70vh] overflow-y-auto px-4 pb-8 text-sm">
         <TextStyleToolbar />
 
-        <div className="flex flex-col gap-2">
-          <label className="font-medium">فاصله بین خطوط</label>
-          <Slider
-            value={[options.lineHeight]}
-            min={1.2}
-            max={2}
-            step={0.05}
-            onValueChange={(val) => dispatch(setLineHeight(val[0]))}
-            className={cn('w-full')}
-          />
-        </div>
         <div className="flex flex-col gap-2">
           <label className="font-medium">فاصله بین حروف</label>
           <Slider

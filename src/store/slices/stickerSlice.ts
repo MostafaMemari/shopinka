@@ -1,39 +1,18 @@
 import { ColorItemType } from '@/features/stickerMaker/color/ColorGrid';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface EffectValue {
-  stroke?: { color: string; width: number };
-  shadow?: {
-    color: string;
-    blur: number;
-    offsetX: number;
-    offsetY: number;
-    affectStroke: boolean;
-    nonScaling: boolean;
-  };
-}
-
-interface EffectOption {
-  id: string;
-  title: string;
-  value: EffectValue;
-}
-
 interface StickerOptions {
   color: ColorItemType | null;
   fontFamily: string;
-  lineHeight: number;
   letterSpacing: number;
   textAlign: 'left' | 'center' | 'right';
   fontWeight: 'normal' | 'bold';
   fontStyle: 'normal' | 'italic';
-  effect: EffectOption | null;
   bodyBackground: string;
 }
 
 interface StickerState {
   text: string;
-  downloading: boolean;
   loading: boolean;
   options: StickerOptions;
 }
@@ -60,22 +39,19 @@ const saveStateToLocalStorage = (state: StickerState) => {
 };
 
 const defaultOptions: StickerOptions = {
-  color: null,
+  color: { name: 'سفید', value: 'white' },
   fontFamily: 'IRANYekan',
-  lineHeight: 1.2,
   letterSpacing: 3,
   textAlign: 'center',
   fontWeight: 'normal',
   fontStyle: 'normal',
-  effect: null,
-  bodyBackground: '#ffffff',
+  bodyBackground: 'white lightgray',
 };
 
 const persistedState = loadStateFromLocalStorage();
 
 const initialState: StickerState = persistedState || {
   text: '',
-  downloading: false,
   loading: false,
   options: defaultOptions,
 };
@@ -87,9 +63,6 @@ const stickerSlice = createSlice({
     setText(state, action: PayloadAction<string>) {
       state.text = action.payload;
       saveStateToLocalStorage(state);
-    },
-    setDownloading(state, action: PayloadAction<boolean>) {
-      state.downloading = action.payload;
     },
 
     setColorStart(state) {
@@ -114,10 +87,6 @@ const stickerSlice = createSlice({
       state.options.letterSpacing = action.payload;
       saveStateToLocalStorage(state);
     },
-    setLineHeight(state, action: PayloadAction<number>) {
-      state.options.lineHeight = action.payload;
-      saveStateToLocalStorage(state);
-    },
 
     setTextAlign(state, action: PayloadAction<'left' | 'center' | 'right'>) {
       state.options.textAlign = action.payload;
@@ -139,16 +108,10 @@ const stickerSlice = createSlice({
       saveStateToLocalStorage(state);
     },
 
-    setEffect(state, action: PayloadAction<EffectOption | null>) {
-      state.options.effect = action.payload;
-      saveStateToLocalStorage(state);
-    },
-
     resetStickerState() {
       if (typeof window !== 'undefined') localStorage.removeItem(STORAGE_KEY);
       return {
         text: '',
-        downloading: false,
         loading: false,
         options: defaultOptions,
       };
@@ -158,18 +121,15 @@ const stickerSlice = createSlice({
 
 export const {
   setText,
-  setDownloading,
   setColorStart,
   setColorSuccess,
   setFontStart,
   setFontSuccess,
   setLetterSpacing,
-  setLineHeight,
   setTextAlign,
   toggleFontWeight,
   toggleFontStyle,
   setBodyBackground,
-  setEffect,
   resetStickerState,
 } = stickerSlice.actions;
 

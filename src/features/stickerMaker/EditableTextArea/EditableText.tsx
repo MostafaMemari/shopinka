@@ -55,21 +55,15 @@ const EditableText: React.FC<EditableTextProps> = ({ selectedFont, selectedColor
 
   const colorValue = selectedColor?.value || '#000000';
   const fontFamily = fontLoaded && selectedFont ? selectedFont.name : 'IranYekan';
-  const isGold = colorValue === 'gold';
-  const isWhite = colorValue === 'white';
 
   const editableStyle: React.CSSProperties = {
-    fontSize: '2rem',
-    color: isGold ? '#FFD700' : colorValue,
+    fontSize: `${selectedFont?.fontSize}rem` ? `${selectedFont?.fontSize}rem` : '2rem',
+    color: colorValue,
     fontFamily,
-    lineHeight: options.lineHeight,
+    lineHeight: selectedFont?.lineHeight ? selectedFont.lineHeight : 1.2,
     textAlign: options.textAlign,
     caretColor: 'var(--color-primary)',
-    filter: isGold
-      ? 'drop-shadow(0 0 2px rgba(255, 215, 0, 0.7))'
-      : isWhite
-        ? 'drop-shadow(0 0 2px rgba(0,0,0,0.5))'
-        : 'drop-shadow(0.015em 0.015em 0.01em rgba(4, 8, 15, 0.3))',
+    filter: 'drop-shadow(0.015em 0.015em 0.01em rgba(4, 8, 15, 0.3))',
     maxWidth: '90%',
     fontWeight: options.fontWeight,
     fontStyle: options.fontStyle,
@@ -85,7 +79,7 @@ const EditableText: React.FC<EditableTextProps> = ({ selectedFont, selectedColor
   }
 
   return (
-    <div className="flex items-center justify-center w-full h-full relative">
+    <div className="flex items-center justify-center p-0.5 w-full h-full relative">
       <div
         ref={editableRef}
         contentEditable
@@ -103,9 +97,7 @@ const EditableText: React.FC<EditableTextProps> = ({ selectedFont, selectedColor
         }}
         className={cn(
           'whitespace-pre-wrap outline-none text-center select-text relative min-h-[1.2em]',
-
           isFocused ? 'opacity-100' : 'opacity-90',
-
           !isFocused && !text
             ? "before:content-['متن_را_اینجا_وارد_کنید_...'] before:text-gray-400 before:opacity-40 before:pointer-events-none before:select-none"
             : '',

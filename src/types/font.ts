@@ -4,6 +4,8 @@ export type fontType = {
   displayName: string;
   file: string;
   isPersian: boolean;
+  lineHeight?: number | null;
+  fontSize?: number | null;
   thumbnail: string | null;
 };
 

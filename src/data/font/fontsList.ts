@@ -7,6 +7,8 @@ export const fontsList: fontType[] = [
     displayName: 'مروارید',
     file: 'https://node-bucket.storage.c2.liara.space/fonts/BMORVARD.woff2',
     thumbnail: 'https://node-bucket.storage.c2.liara.space/fonts/BMORVARD.svg',
+    lineHeight: 1.6,
+    fontSize: 1.5,
     isPersian: true,
   },
   {
@@ -15,6 +17,8 @@ export const fontsList: fontType[] = [
     displayName: 'تیتر',
     file: 'https://node-bucket.storage.c2.liara.space/fonts/BTITRBD.woff2',
     thumbnail: 'https://node-bucket.storage.c2.liara.space/fonts/BTITRBD.svg',
+    lineHeight: 1.6,
+    fontSize: 1.4,
     isPersian: true,
   },
   {
@@ -23,6 +27,8 @@ export const fontsList: fontType[] = [
     displayName: 'دیجی‌ نگاره',
     file: 'https://node-bucket.storage.c2.liara.space/fonts/Dastnevis.woff2',
     thumbnail: 'https://node-bucket.storage.c2.liara.space/fonts/Dastnevis.svg',
+    lineHeight: 1.5,
+    fontSize: 1.8,
     isPersian: true,
   },
   {
@@ -31,14 +37,18 @@ export const fontsList: fontType[] = [
     displayName: 'دیجی سرویناز',
     file: 'https://node-bucket.storage.c2.liara.space/fonts/DigiSarvenaz.woff2',
     thumbnail: 'https://node-bucket.storage.c2.liara.space/fonts/DigiSarvenaz.svg',
+    lineHeight: 1.7,
+    fontSize: 1.6,
     isPersian: true,
   },
   {
     id: 5,
-    name: 'Far.Jadid',
+    name: 'Far Jadid',
     displayName: 'فار جدید',
     file: 'https://node-bucket.storage.c2.liara.space/fonts/FarJadid.woff2',
     thumbnail: 'https://node-bucket.storage.c2.liara.space/fonts/FarJadid.svg',
+    lineHeight: 1.6,
+    fontSize: 1.4,
     isPersian: true,
   },
   {
@@ -47,6 +57,8 @@ export const fontsList: fontType[] = [
     displayName: 'ایران نستعلیق',
     file: 'https://node-bucket.storage.c2.liara.space/fonts/IranNastaliq.woff2',
     thumbnail: 'https://node-bucket.storage.c2.liara.space/fonts/IranNastaliq.svg',
+    lineHeight: 2.4,
+    fontSize: 1.9,
     isPersian: true,
   },
   {
@@ -55,6 +67,8 @@ export const fontsList: fontType[] = [
     displayName: 'شبنم',
     file: 'https://node-bucket.storage.c2.liara.space/fonts/Shabnam.woff2',
     thumbnail: 'https://node-bucket.storage.c2.liara.space/fonts/Shabnam.svg',
+    lineHeight: 1.6,
+    fontSize: 1.4,
     isPersian: true,
   },
   {
@@ -63,6 +77,8 @@ export const fontsList: fontType[] = [
     displayName: 'شکسته',
     file: 'https://node-bucket.storage.c2.liara.space/fonts/Shekasteh.woff2',
     thumbnail: 'https://node-bucket.storage.c2.liara.space/fonts/Shekasteh.svg',
+    lineHeight: 2.5,
+    fontSize: 2,
     isPersian: true,
   },
 ];
