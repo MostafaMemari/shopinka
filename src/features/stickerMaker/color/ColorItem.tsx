@@ -2,8 +2,8 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ColorItemType } from './ColorGrid';
 import { cn } from '@/lib/utils';
+import { ColorItemType } from '@/types/color/colorType';
 
 interface ColorItemProps {
   item: ColorItemType;

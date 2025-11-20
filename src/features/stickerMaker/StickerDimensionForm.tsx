@@ -20,11 +20,9 @@ export default function StickerDimensionForm({ width, height, note, setWidth, se
   const dispatch = useDispatch();
   const { text } = useSelector((state: RootState) => state.sticker);
 
-  // تابع هندلر برای اعمال محدودیت 10 تا 30
   const handleWidthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
 
-    // اجازه می‌دهیم که فیلد خالی باشد یا عدد وارد شود
     if (value === '') {
       setWidth('');
       return;
@@ -32,19 +30,11 @@ export default function StickerDimensionForm({ width, height, note, setWidth, se
 
     const numValue = Number(value);
 
-    // اگر ورودی عددی معتبر است
     if (!isNaN(numValue)) {
-      // فقط در صورتی که عدد وارد شده در محدوده 10 تا 30 باشد، آن را تنظیم می‌کنیم.
-      // یا اگر عدد بین 0 تا 9 باشد، اجازه می‌دهیم تایپ کند تا به 10 برسد.
-      // برای سخت‌گیری بیشتر می‌توان از Math.max و Math.min استفاده کرد.
       if (numValue >= 10 && numValue <= 30) {
         setWidth(value);
       } else if (numValue > 30) {
-        // در صورت بزرگتر از 30، آن را به 30 محدود کنید (اختیاری: برای UX بهتر)
-        // setWidth('30');
-        // در غیر این صورت، ورودی را نادیده بگیرید
       } else if (numValue < 10 && numValue > 0) {
-        // برای اعدادی مثل 1 تا 9 اجازه می‌دهیم وارد شود تا کاربر بتواند 10 تا 30 را وارد کند.
         setWidth(value);
       }
     }

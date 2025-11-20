@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setText } from '@/store/slices/stickerSlice';
 import { RootState } from '@/store';
 import { fontType } from '@/types/font';
-import { ColorItemType } from '../color/ColorGrid';
+import { ColorItemType } from '@/types/color/colorType';
 
 interface EditableTextProps {
   selectedFont: fontType | null;
@@ -65,8 +65,8 @@ const EditableText: React.FC<EditableTextProps> = ({ selectedFont, selectedColor
     caretColor: 'var(--color-primary)',
     filter: 'drop-shadow(0.015em 0.015em 0.01em rgba(4, 8, 15, 0.3))',
     maxWidth: '90%',
-    fontWeight: options.fontWeight,
-    fontStyle: options.fontStyle,
+    fontWeight: options.font.weight,
+    fontStyle: options.font.style,
     transition: 'opacity 0.2s ease',
   };
 

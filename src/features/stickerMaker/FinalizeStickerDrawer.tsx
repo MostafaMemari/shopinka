@@ -26,16 +26,16 @@ export default function FinalizeStickerDrawer({ isOpen, onClose }: FinalizeStick
       setWidth('');
       return;
     }
-    if (!options.fontFamily) return;
+    if (!options.font.family) return;
     if (!width) setHeight('');
 
-    const ratio = measureText(text, { fontFamily: options.fontFamily });
+    const ratio = measureText(text, { fontFamily: options.font.family });
 
     if (width && ratio) {
       const calculatedHeight = Number(width) / ratio;
       setHeight(calculatedHeight.toFixed(1));
     }
-  }, [options.fontFamily, width, text]);
+  }, [options.font.family, width, text]);
 
   const displayWidth = width ? `${width} سانتی‌متر` : '?? سانتی‌متر';
   const displayHeight = height ? `${height} سانتی‌متر` : '?? سانتی‌متر';
@@ -66,9 +66,9 @@ export default function FinalizeStickerDrawer({ isOpen, onClose }: FinalizeStick
 
         <div
           style={{
-            fontFamily: options.fontFamily || 'inherit',
-            fontWeight: options.fontWeight,
-            fontStyle: options.fontStyle,
+            fontFamily: options.font.family || 'inherit',
+            fontWeight: options.font.weight,
+            fontStyle: options.font.style,
             color: '#000000',
             whiteSpace: 'pre-wrap',
             fontSize: '1.6rem',

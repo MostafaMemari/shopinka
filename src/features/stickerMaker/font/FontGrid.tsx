@@ -37,7 +37,7 @@ function FontGrid() {
             <FontItem
               key={font.name}
               font={font}
-              isSelected={options.fontFamily === font.name}
+              isSelected={options.font.family === font.name}
               onSelect={() => handleFontSelect(font.name)}
             />
           ))}

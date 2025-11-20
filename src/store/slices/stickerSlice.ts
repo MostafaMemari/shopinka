@@ -1,14 +1,22 @@
-import { ColorItemType } from '@/features/stickerMaker/color/ColorGrid';
+import { ColorItemType } from '@/types/color/colorType';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
+// -----------------------------
+// Interfaces
+// -----------------------------
+
+interface FontOptions {
+  family: string;
+  weight: 'normal' | 'bold';
+  style: 'normal' | 'italic';
+  lineHeight: number;
+}
 
 interface StickerOptions {
   color: ColorItemType | null;
-  fontFamily: string;
+  font: FontOptions;
   letterSpacing: number;
   textAlign: 'left' | 'center' | 'right';
-  fontWeight: 'normal' | 'bold';
-  fontStyle: 'normal' | 'italic';
-  bodyBackground: string;
 }
 
 interface StickerState {
@@ -16,6 +24,10 @@ interface StickerState {
   loading: boolean;
   options: StickerOptions;
 }
+
+// -----------------------------
+// LocalStorage
+// -----------------------------
 
 const STORAGE_KEY = 'stickerState';
 
@@ -38,14 +50,22 @@ const saveStateToLocalStorage = (state: StickerState) => {
   }
 };
 
+// -----------------------------
+// Default Options
+// -----------------------------
+
 const defaultOptions: StickerOptions = {
-  color: { name: 'سفید', value: 'white' },
-  fontFamily: 'IRANYekan',
+  color: { name: 'سفید', value: 'white', backgroundMode: { from: 'rgba(0,0,0,0.25)', to: 'rgba(0,0,0,0.1)' } },
+
+  font: {
+    family: 'IRANYekan',
+    weight: 'normal',
+    style: 'normal',
+    lineHeight: 1.5,
+  },
+
   letterSpacing: 3,
   textAlign: 'center',
-  fontWeight: 'normal',
-  fontStyle: 'normal',
-  bodyBackground: 'white lightgray',
 };
 
 const persistedState = loadStateFromLocalStorage();
@@ -56,15 +76,21 @@ const initialState: StickerState = persistedState || {
   options: defaultOptions,
 };
 
+// -----------------------------
+// Slice
+// -----------------------------
+
 const stickerSlice = createSlice({
   name: 'sticker',
   initialState,
   reducers: {
+    // Text
     setText(state, action: PayloadAction<string>) {
       state.text = action.payload;
       saveStateToLocalStorage(state);
     },
 
+    // Color
     setColorStart(state) {
       state.loading = true;
     },
@@ -74,40 +100,47 @@ const stickerSlice = createSlice({
       saveStateToLocalStorage(state);
     },
 
+    // Font Family
     setFontStart(state) {
       state.loading = true;
     },
     setFontSuccess(state, action: PayloadAction<string>) {
-      state.options.fontFamily = action.payload;
+      state.options.font.family = action.payload;
       state.loading = false;
       saveStateToLocalStorage(state);
     },
 
+    // Font Weight
+    toggleFontWeight(state) {
+      state.options.font.weight = state.options.font.weight === 'bold' ? 'normal' : 'bold';
+      saveStateToLocalStorage(state);
+    },
+
+    // Font Style
+    toggleFontStyle(state) {
+      state.options.font.style = state.options.font.style === 'italic' ? 'normal' : 'italic';
+      saveStateToLocalStorage(state);
+    },
+
+    // Line height
+    setFontLineHeight(state, action: PayloadAction<number>) {
+      state.options.font.lineHeight = action.payload;
+      saveStateToLocalStorage(state);
+    },
+
+    // Letter spacing
     setLetterSpacing(state, action: PayloadAction<number>) {
       state.options.letterSpacing = action.payload;
       saveStateToLocalStorage(state);
     },
 
+    // Text align
     setTextAlign(state, action: PayloadAction<'left' | 'center' | 'right'>) {
       state.options.textAlign = action.payload;
       saveStateToLocalStorage(state);
     },
 
-    toggleFontWeight(state) {
-      state.options.fontWeight = state.options.fontWeight === 'bold' ? 'normal' : 'bold';
-      saveStateToLocalStorage(state);
-    },
-
-    toggleFontStyle(state) {
-      state.options.fontStyle = state.options.fontStyle === 'italic' ? 'normal' : 'italic';
-      saveStateToLocalStorage(state);
-    },
-
-    setBodyBackground(state, action: PayloadAction<string>) {
-      state.options.bodyBackground = action.payload;
-      saveStateToLocalStorage(state);
-    },
-
+    // Reset
     resetStickerState() {
       if (typeof window !== 'undefined') localStorage.removeItem(STORAGE_KEY);
       return {
@@ -119,17 +152,21 @@ const stickerSlice = createSlice({
   },
 });
 
+// -----------------------------
+// Exports
+// -----------------------------
+
 export const {
   setText,
   setColorStart,
   setColorSuccess,
   setFontStart,
   setFontSuccess,
-  setLetterSpacing,
-  setTextAlign,
   toggleFontWeight,
   toggleFontStyle,
-  setBodyBackground,
+  setFontLineHeight,
+  setLetterSpacing,
+  setTextAlign,
   resetStickerState,
 } = stickerSlice.actions;
 

@@ -7,19 +7,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { setColorStart, setColorSuccess } from '@/store/slices/stickerSlice';
 import { ColorItem } from './ColorItem';
-
-export interface ColorItemType {
-  name: string;
-  value: string;
-}
-
-const colors: ColorItemType[] = [
-  { name: 'سفید', value: 'white' },
-  { name: 'مشکی', value: 'black' },
-  { name: 'طلایی', value: 'gold' },
-  { name: 'قرمز', value: 'red' },
-  { name: 'زرد', value: 'yellow' },
-];
+import { ColorItemType } from '@/types/color/colorType';
+import { colorsList } from '@/data/color/colorList';
 
 export function ColorGrid() {
   const gridRef = useRef<HTMLDivElement>(null);
@@ -54,12 +43,12 @@ export function ColorGrid() {
             }}
           >
             <div className="flex gap-3 px-4 py-3">
-              {(colors ?? []).map((item) => (
+              {(colorsList ?? []).map((item) => (
                 <ColorItem
                   key={item.value}
                   item={item}
                   isSelected={options.color?.value === item.value}
-                  onClick={handleColorClick.bind(null, { name: item.name, value: item.value })}
+                  onClick={handleColorClick.bind(null, item)}
                 />
               ))}
             </div>
