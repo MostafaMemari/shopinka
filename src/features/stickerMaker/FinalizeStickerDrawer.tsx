@@ -70,10 +70,15 @@ export default function FinalizeStickerDrawer({ isOpen, onClose }: FinalizeStick
             fontWeight: options.font.weight,
             fontStyle: options.font.style,
             color: '#000000',
+            fontSize: `${options.font.size}rem`,
+            lineHeight: options.font.lineHeight || 1.2,
+            width: '100%',
+            maxWidth: '100%',
             whiteSpace: 'pre-wrap',
-            fontSize: options.font.size,
+            wordBreak: 'break-word',
+            overflowWrap: 'break-word',
           }}
-          className="relative z-0"
+          className="relative z-0 text-center"
         >
           {text}
         </div>
