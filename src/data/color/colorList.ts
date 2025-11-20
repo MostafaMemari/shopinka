@@ -1,6 +1,6 @@
-import { ColorItemType } from '@/types/color/colorType';
+import { ColorOptions } from '@/types/color/colorType';
 
-export const colorsList: ColorItemType[] = [
+export const colorsList: ColorOptions[] = [
   {
     name: 'سفید',
     value: 'white',
