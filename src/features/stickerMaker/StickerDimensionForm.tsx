@@ -55,13 +55,11 @@ export default function StickerDimensionForm({ width, height, note, setWidth, se
           type="number"
           placeholder="عرض (cm)"
           value={width}
-          onChange={handleWidthChange} // استفاده از هندلر جدید
+          onChange={handleWidthChange}
           className="flex-1 text-right"
           dir="rtl"
-          // **ویژگی‌های HTML برای محدودیت ورودی**
           min="10"
           max="30"
-          // **نکته:** برخی مرورگرها محدودیت min/max را در ورودی‌های type="number" اعمال می‌کنند، اما برای اطمینان، باید منطق را در onChange نیز بررسی کنید.
         />
         <Input type="number" placeholder="طول (cm)" value={height} disabled className="flex-1 text-right" dir="rtl" />
       </div>

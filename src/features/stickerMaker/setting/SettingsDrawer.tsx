@@ -30,7 +30,7 @@ export default function SettingsDrawer({ open, onClose }: SettingsDrawerProps) {
           <Slider
             value={[options.letterSpacing]}
             min={0}
-            max={6}
+            max={2}
             step={1}
             onValueChange={(val) => {
               const count = Math.round(val[0]);

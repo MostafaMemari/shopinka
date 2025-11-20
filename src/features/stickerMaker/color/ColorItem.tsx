@@ -3,10 +3,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import { ColorItemType } from '@/types/color/colorType';
+import { ColorOptions } from '@/types/color/colorType';
 
 interface ColorItemProps {
-  item: ColorItemType;
+  item: ColorOptions;
   isSelected: boolean;
   onClick: () => void;
 }

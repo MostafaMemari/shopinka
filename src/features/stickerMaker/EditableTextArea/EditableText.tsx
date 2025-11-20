@@ -4,12 +4,12 @@ import { cn } from '@/lib/utils';
 import { useDispatch, useSelector } from 'react-redux';
 import { setText } from '@/store/slices/stickerSlice';
 import { RootState } from '@/store';
-import { fontType } from '@/types/font';
-import { ColorItemType } from '@/types/color/colorType';
+import { FontType } from '@/types/font';
+import { ColorOptions } from '@/types/color/colorType';
 
 interface EditableTextProps {
-  selectedFont: fontType | null;
-  selectedColor: ColorItemType | null;
+  selectedFont: FontType | null;
+  selectedColor: ColorOptions | null;
   onStartEditing: () => void;
 }
 
@@ -57,7 +57,9 @@ const EditableText: React.FC<EditableTextProps> = ({ selectedFont, selectedColor
   const fontFamily = fontLoaded && selectedFont ? selectedFont.name : 'IranYekan';
 
   const editableStyle: React.CSSProperties = {
-    fontSize: `${selectedFont?.fontSize}rem` ? `${selectedFont?.fontSize}rem` : '2rem',
+    fontSize: selectedFont?.size
+      ? `clamp(${selectedFont.size * 0.8}rem, ${selectedFont.size}rem + 1vw, ${selectedFont.size * 1.8}rem)`
+      : 'clamp(1rem, 2vw, 3rem)',
     color: colorValue,
     fontFamily,
     lineHeight: selectedFont?.lineHeight ? selectedFont.lineHeight : 1.2,

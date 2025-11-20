@@ -71,7 +71,7 @@ export default function FinalizeStickerDrawer({ isOpen, onClose }: FinalizeStick
             fontStyle: options.font.style,
             color: '#000000',
             whiteSpace: 'pre-wrap',
-            fontSize: '1.6rem',
+            fontSize: options.font.size,
           }}
           className="relative z-0"
         >

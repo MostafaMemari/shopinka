@@ -1,19 +1,9 @@
-import { ColorItemType } from '@/types/color/colorType';
+import { ColorOptions } from '@/types/color/colorType';
+import { FontOptions } from '@/types/font/fontType';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-// -----------------------------
-// Interfaces
-// -----------------------------
-
-interface FontOptions {
-  family: string;
-  weight: 'normal' | 'bold';
-  style: 'normal' | 'italic';
-  lineHeight: number;
-}
-
 interface StickerOptions {
-  color: ColorItemType | null;
+  color: ColorOptions;
   font: FontOptions;
   letterSpacing: number;
   textAlign: 'left' | 'center' | 'right';
@@ -62,6 +52,7 @@ const defaultOptions: StickerOptions = {
     weight: 'normal',
     style: 'normal',
     lineHeight: 1.5,
+    size: 1.6,
   },
 
   letterSpacing: 3,
@@ -94,7 +85,7 @@ const stickerSlice = createSlice({
     setColorStart(state) {
       state.loading = true;
     },
-    setColorSuccess(state, action: PayloadAction<ColorItemType | null>) {
+    setColorSuccess(state, action: PayloadAction<ColorOptions>) {
       state.options.color = action.payload;
       state.loading = false;
       saveStateToLocalStorage(state);
@@ -104,27 +95,9 @@ const stickerSlice = createSlice({
     setFontStart(state) {
       state.loading = true;
     },
-    setFontSuccess(state, action: PayloadAction<string>) {
-      state.options.font.family = action.payload;
+    setFontSuccess(state, action: PayloadAction<FontOptions>) {
+      state.options.font = action.payload;
       state.loading = false;
-      saveStateToLocalStorage(state);
-    },
-
-    // Font Weight
-    toggleFontWeight(state) {
-      state.options.font.weight = state.options.font.weight === 'bold' ? 'normal' : 'bold';
-      saveStateToLocalStorage(state);
-    },
-
-    // Font Style
-    toggleFontStyle(state) {
-      state.options.font.style = state.options.font.style === 'italic' ? 'normal' : 'italic';
-      saveStateToLocalStorage(state);
-    },
-
-    // Line height
-    setFontLineHeight(state, action: PayloadAction<number>) {
-      state.options.font.lineHeight = action.payload;
       saveStateToLocalStorage(state);
     },
 
@@ -140,6 +113,16 @@ const stickerSlice = createSlice({
       saveStateToLocalStorage(state);
     },
 
+    toggleFontWeight(state) {
+      state.options.font.weight = state.options.font.weight === 'bold' ? 'normal' : 'bold';
+      saveStateToLocalStorage(state);
+    },
+
+    toggleFontStyle(state) {
+      state.options.font.style = state.options.font.style === 'italic' ? 'normal' : 'italic';
+      saveStateToLocalStorage(state);
+    },
+
     // Reset
     resetStickerState() {
       if (typeof window !== 'undefined') localStorage.removeItem(STORAGE_KEY);
@@ -152,21 +135,16 @@ const stickerSlice = createSlice({
   },
 });
 
-// -----------------------------
-// Exports
-// -----------------------------
-
 export const {
   setText,
   setColorStart,
   setColorSuccess,
   setFontStart,
   setFontSuccess,
-  toggleFontWeight,
-  toggleFontStyle,
-  setFontLineHeight,
   setLetterSpacing,
   setTextAlign,
+  toggleFontWeight,
+  toggleFontStyle,
   resetStickerState,
 } = stickerSlice.actions;
 

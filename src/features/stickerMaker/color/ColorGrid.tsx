@@ -7,8 +7,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { setColorStart, setColorSuccess } from '@/store/slices/stickerSlice';
 import { ColorItem } from './ColorItem';
-import { ColorItemType } from '@/types/color/colorType';
 import { colorsList } from '@/data/color/colorList';
+import { ColorOptions } from '@/types/color/colorType';
 
 export function ColorGrid() {
   const gridRef = useRef<HTMLDivElement>(null);
@@ -17,7 +17,7 @@ export function ColorGrid() {
 
   const { options } = useSelector((state: RootState) => state.sticker);
 
-  const handleColorClick = (color: ColorItemType) => {
+  const handleColorClick = (color: ColorOptions) => {
     dispatch(setColorStart());
     dispatch(setColorSuccess(color));
   };

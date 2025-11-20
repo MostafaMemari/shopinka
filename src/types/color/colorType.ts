@@ -1,4 +1,4 @@
-export interface ColorItemType {
+export interface ColorOptions {
   name: string;
   value: string;
   backgroundMode: {
