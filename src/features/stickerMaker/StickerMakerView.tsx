@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import FontGrid from './font/FontGrid';
 import BottomNav from './BottomNav';
@@ -9,13 +9,12 @@ import EditableTextArea from './EditableTextArea';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { ColorGrid } from './color/ColorGrid';
-import { RotateCcw, Sparkles } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import ResetButton from './reset/ResetButton';
 
 type OpenPanel = 'font' | 'color' | 'settings' | null;
 
 function StickerMakerView() {
-  const [openPanel, setOpenPanel] = React.useState<OpenPanel>(null);
+  const [openPanel, setOpenPanel] = useState<OpenPanel>(null);
 
   const { loading } = useSelector((state: RootState) => state.sticker);
 
@@ -50,20 +49,7 @@ function StickerMakerView() {
               transition={{ duration: 0.25 }}
               className="absolute left-0 right-0 bottom-16 z-40"
             >
-              {openPanel === null && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 10 }}
-                  transition={{ duration: 0.25 }}
-                  className="flex justify-center py-4 m-auto w-1/4"
-                >
-                  <Button variant="secondary" className="">
-                    <RotateCcw className="w-4 h-4" />
-                    بازنشانی همه تنظیمات
-                  </Button>
-                </motion.div>
-              )}
+              {openPanel === null && <ResetButton />}
 
               {openPanel === 'font' && <FontGrid />}
               {openPanel === 'color' && <ColorGrid />}

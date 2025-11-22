@@ -17,7 +17,7 @@ import { Button } from '../ui/button';
 interface MobileDrawerProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  title: string;
+  title?: string;
   description?: string;
   children?: ReactNode;
   actions?: ReactNode;
@@ -68,10 +68,12 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
       {isModal && <DrawerOverlay className="inset-0 bg-transparent shadow-none backdrop-blur-none" />}
       {trigger && <DrawerTrigger asChild>{trigger}</DrawerTrigger>}
       <DrawerContent ref={drawerRef} className={cn('inset-x-0 !h-auto mt-0 mb-0', className)}>
-        <DrawerHeader className="text-left pb-3 border-b mb-3">
-          <DrawerTitle>{title}</DrawerTitle>
-          {description && <p className="text-sm text-muted-foreground">{description}</p>}
-        </DrawerHeader>
+        {(title || description) && (
+          <DrawerHeader className="sticky top-0 bg-white/95 backdrop-blur-sm z-10 border-b">
+            {title && <DrawerTitle className="text-lg font-medium">{title}</DrawerTitle>}
+            {description && <p className="text-sm text-gray-500 mt-1">{description}</p>}
+          </DrawerHeader>
+        )}
 
         <div className={cn('flex-1 overflow-y-auto px-4')}>{children}</div>
 

@@ -15,10 +15,6 @@ interface StickerState {
   options: StickerOptions;
 }
 
-// -----------------------------
-// LocalStorage
-// -----------------------------
-
 const STORAGE_KEY = 'stickerState';
 
 const loadStateFromLocalStorage = (): StickerState | null => {
@@ -40,10 +36,6 @@ const saveStateToLocalStorage = (state: StickerState) => {
   }
 };
 
-// -----------------------------
-// Default Options
-// -----------------------------
-
 const defaultOptions: StickerOptions = {
   color: { name: 'سفید', value: 'white', backgroundMode: { from: 'rgba(0,0,0,0.25)', to: 'rgba(0,0,0,0.1)' } },
 
@@ -51,8 +43,8 @@ const defaultOptions: StickerOptions = {
     family: 'IRANYekan',
     weight: 'normal',
     style: 'normal',
-    lineHeight: 1.5,
-    size: 1.6,
+    lineHeight: 1.6,
+    size: 1.4,
   },
 
   letterSpacing: 3,
@@ -67,21 +59,15 @@ const initialState: StickerState = persistedState || {
   options: defaultOptions,
 };
 
-// -----------------------------
-// Slice
-// -----------------------------
-
 const stickerSlice = createSlice({
   name: 'sticker',
   initialState,
   reducers: {
-    // Text
     setText(state, action: PayloadAction<string>) {
       state.text = action.payload;
       saveStateToLocalStorage(state);
     },
 
-    // Color
     setColorStart(state) {
       state.loading = true;
     },
@@ -91,7 +77,6 @@ const stickerSlice = createSlice({
       saveStateToLocalStorage(state);
     },
 
-    // Font Family
     setFontStart(state) {
       state.loading = true;
     },
@@ -101,13 +86,11 @@ const stickerSlice = createSlice({
       saveStateToLocalStorage(state);
     },
 
-    // Letter spacing
     setLetterSpacing(state, action: PayloadAction<number>) {
       state.options.letterSpacing = action.payload;
       saveStateToLocalStorage(state);
     },
 
-    // Text align
     setTextAlign(state, action: PayloadAction<'left' | 'center' | 'right'>) {
       state.options.textAlign = action.payload;
       saveStateToLocalStorage(state);
@@ -123,7 +106,6 @@ const stickerSlice = createSlice({
       saveStateToLocalStorage(state);
     },
 
-    // Reset
     resetStickerState() {
       if (typeof window !== 'undefined') localStorage.removeItem(STORAGE_KEY);
       return {

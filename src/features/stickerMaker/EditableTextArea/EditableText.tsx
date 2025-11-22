@@ -62,7 +62,7 @@ const EditableText: React.FC<EditableTextProps> = ({ selectedFont, selectedColor
       : 'clamp(1rem, 2vw, 3rem)',
     color: colorValue,
     fontFamily,
-    lineHeight: selectedFont?.lineHeight ? selectedFont.lineHeight : 1.2,
+    lineHeight: options.font.lineHeight ? options.font.lineHeight : 1.4,
     textAlign: options.textAlign,
     caretColor: 'var(--color-primary)',
     filter: 'drop-shadow(0.015em 0.015em 0.01em rgba(4, 8, 15, 0.3))',
