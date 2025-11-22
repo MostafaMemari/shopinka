@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import MobileDrawer from '@/components/common/Drawer';
@@ -10,10 +10,11 @@ import { measureText } from '@/utils/measureText';
 
 interface FinalizeStickerDrawerProps {
   isOpen: boolean;
-  onClose: () => void;
+  onOpenChange: (open: boolean) => void;
+  trigger?: ReactNode;
 }
 
-export default function FinalizeStickerDrawer({ isOpen, onClose }: FinalizeStickerDrawerProps) {
+export default function FinalizeStickerDrawer({ isOpen, onOpenChange, trigger }: FinalizeStickerDrawerProps) {
   const { text, options } = useSelector((state: RootState) => state.sticker);
 
   const [width, setWidth] = useState('');
@@ -45,7 +46,14 @@ export default function FinalizeStickerDrawer({ isOpen, onClose }: FinalizeStick
   const dimensionLineClasses = 'absolute text-[10px] text-gray-500 font-medium whitespace-nowrap bg-white px-1 z-10';
 
   return (
-    <MobileDrawer open={isOpen} onOpenChange={onClose} showClose={false} title="پیش نمایش" className="max-w-[500px] m-auto">
+    <MobileDrawer
+      open={isOpen}
+      onOpenChange={onOpenChange}
+      trigger={trigger}
+      showClose={false}
+      title="پیش نمایش"
+      className="max-w-[500px] m-auto"
+    >
       <div className="relative border-b min-h-[120px] flex items-center justify-center">
         {width && (
           <div className={`${dimensionLineClasses} top-0 left-1/2 -translate-x-1/2 flex items-center`}>

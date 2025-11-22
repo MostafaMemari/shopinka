@@ -71,15 +71,17 @@ export default function BottomNav({
         </div>
 
         <div className="col-span-4 flex justify-end px-1">
-          <PrimaryButton
-            onClick={() => setIsDrawerOpen(true)}
-            className="flex w-full items-center justify-center gap-2 shadow-md shadow-primary/50 transition-all duration-300 hover:shadow-none"
-          >
-            نهایی سازی
-          </PrimaryButton>
+          <FinalizeStickerDrawer
+            isOpen={isDrawerOpen}
+            onOpenChange={setIsDrawerOpen}
+            trigger={
+              <PrimaryButton className="flex w-full items-center justify-center gap-2 shadow-md shadow-primary/50 transition-all duration-300 hover:shadow-none">
+                نهایی سازی
+              </PrimaryButton>
+            }
+          />
         </div>
       </div>
-      <FinalizeStickerDrawer isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)} />
     </>
   );
 }
