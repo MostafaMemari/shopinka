@@ -42,19 +42,11 @@ export default function StickerDimensionForm({ width, height, note, setWidth, se
 
   return (
     <div className="p-4 space-y-4">
-      {/* <Input
-        type="text"
-        placeholder="لطفا متن خود را اینجا وارد کنید"
-        value={text}
-        onChange={(e) => dispatch(setText(e.target.value))}
-        className="flex-1 text-right"
-        dir="rtl"
-      /> */}
       <Textarea
         placeholder="متن..."
         value={text}
         onChange={(e) => dispatch(setText(e.target.value))}
-        className="flex-1 text-right h-24 resize-none"
+        className="flex-1 text-right h-24 resize-none text-sm"
         dir="rtl"
       />
       <div className="flex gap-4">
