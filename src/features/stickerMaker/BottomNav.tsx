@@ -3,7 +3,7 @@
 import PrimaryButton from '@/components/common/PrimaryButton';
 import { Palette, Settings, Type } from 'lucide-react';
 import React, { useState } from 'react';
-import FinalizeStickerDrawer from './FinalizeStickerDrawer';
+import FinalizeStickerDrawer from './preview/FinalizeStickerDrawer';
 
 interface BottomNavProps {
   showFontGrid: boolean;
