@@ -4,11 +4,11 @@ import { cn } from '@/lib/utils';
 import { useDispatch, useSelector } from 'react-redux';
 import { setText } from '@/store/slices/stickerSlice';
 import { RootState } from '@/store';
-import { FontType } from '@/types/font';
 import { ColorOptions } from '@/types/color/colorType';
+import { FontItem } from '@/types/fontType';
 
 interface EditableTextProps {
-  selectedFont: FontType | null;
+  selectedFont: FontItem | null;
   selectedColor: ColorOptions | null;
   onStartEditing: () => void;
 }
@@ -31,7 +31,7 @@ const EditableText: React.FC<EditableTextProps> = ({ selectedFont, selectedColor
     }
 
     setFontLoaded(false);
-    const fontFace = new FontFace(selectedFont.name, `url(${selectedFont.file})`);
+    const fontFace = new FontFace(selectedFont.name, `url(${selectedFont.file.fileUrl})`);
     fontFace
       .load()
       .then((loadedFont) => {

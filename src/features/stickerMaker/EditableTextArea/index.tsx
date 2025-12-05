@@ -5,8 +5,8 @@ import EditableText from './EditableText';
 import EditableSurface from './EditableSurface';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
-import { fontsList } from '@/data/font/fontsList';
 import { ColorOptions } from '@/types/color/colorType';
+import { useFont } from '@/features/font/hooks/useFont';
 
 interface EditableTextAreaProps {
   onStartEditing: () => void;
@@ -15,7 +15,9 @@ interface EditableTextAreaProps {
 const EditableTextArea: React.FC<EditableTextAreaProps> = ({ onStartEditing }) => {
   const { options } = useSelector((state: RootState) => state.sticker);
 
-  const font = fontsList.find((f) => f.name === options.font.family);
+  const { data } = useFont({ params: { includeThumbnail: true, includeFile: true } });
+
+  const font = data?.items.find((f) => f.name === options.font.family);
 
   const selectedFont = font || null;
   const selectedColor: ColorOptions | null = options.color || null;

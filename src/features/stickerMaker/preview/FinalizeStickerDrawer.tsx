@@ -39,8 +39,6 @@ export default function FinalizeStickerDrawer({ isOpen, onOpenChange, trigger }:
     }
   }, [options.font.family, width, text]);
 
-  console.log(text);
-
   const displayWidth = width ? `${width} سانتی‌متر` : '?? سانتی‌متر';
   const displayHeight = height ? `${height} سانتی‌متر` : '?? سانتی‌متر';
 
