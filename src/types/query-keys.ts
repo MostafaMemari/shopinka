@@ -12,4 +12,5 @@ export enum QueryKeys {
   Blogs = 'blogs',
   Contacts = 'contacts',
   Fonts = 'fonts',
+  MaterialStickers = 'material-stickers',
 }
