@@ -3,17 +3,17 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import { ColorOptions } from '@/types/color/colorType';
+import { MaterialStickerItem } from '@/types/materialStickerType';
 
 interface ColorItemProps {
-  item: ColorOptions;
+  item: MaterialStickerItem;
   isSelected: boolean;
   onClick: () => void;
 }
 
 export function ColorItem({ item, isSelected, onClick }: ColorItemProps) {
-  const { name, value } = item;
-  const isGold = value === 'gold';
+  const { name, colorCode } = item;
+  const isGold = name === 'طلایی';
 
   return (
     <motion.button
@@ -27,7 +27,7 @@ export function ColorItem({ item, isSelected, onClick }: ColorItemProps) {
           'border-blue-500 ring-2 ring-blue-300 scale-110': isSelected,
           'border-gray-300 hover:border-gray-500 hover:scale-105': !isSelected,
         })}
-        style={{ background: isGold ? undefined : value }}
+        style={{ background: isGold ? undefined : colorCode }}
       />
 
       <p

@@ -7,11 +7,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { setColorStart, setColorSuccess } from '@/store/slices/stickerSlice';
 import { ColorItem } from './ColorItem';
-import { colorsList } from '@/data/color/colorList';
 import { ColorOptions } from '@/types/color/colorType';
+import { useMaterialSticker } from '@/features/material-sticker/hooks/useMaterialSticker';
 
 export function ColorGrid() {
   const gridRef = useRef<HTMLDivElement>(null);
+
+  const { data } = useMaterialSticker({});
 
   const dispatch = useDispatch();
 
@@ -43,12 +45,17 @@ export function ColorGrid() {
             }}
           >
             <div className="flex gap-3 px-4 py-3">
-              {(colorsList ?? []).map((item) => (
+              {(data?.items ?? []).map((item) => (
                 <ColorItem
-                  key={item.value}
+                  key={item.id}
                   item={item}
-                  isSelected={options.color?.value === item.value}
-                  onClick={handleColorClick.bind(null, item)}
+                  isSelected={options.color?.value === item.colorCode}
+                  onClick={handleColorClick.bind(null, {
+                    backgroundMode: { from: item.backgroundFrom, to: item.backgroundTo },
+                    value: item.colorCode,
+                    name: item.name,
+                    displayName: item.name,
+                  })}
                 />
               ))}
             </div>

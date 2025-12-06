@@ -1,9 +1,10 @@
 'use server';
 
 import { ApiResponse, shopApiFetch } from '@/service/api';
-import { FontParams, FontResponse } from '@/types/fontType';
+import { FontResponse } from '@/types/fontType';
+import { MaterialStickerResponse, MaterialStickersParams } from '@/types/materialStickerType';
 
-export const getMaterialSticker = async (params?: FontParams): Promise<ApiResponse<FontResponse>> => {
+export const getMaterialSticker = async (params?: MaterialStickersParams): Promise<ApiResponse<MaterialStickerResponse>> => {
   return await shopApiFetch(`/material-sticker`, {
     auth: true,
     query: { repliesDepth: 1, includeReplies: true, ...params },
