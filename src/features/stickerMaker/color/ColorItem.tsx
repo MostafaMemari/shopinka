@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { MaterialStickerItem } from '@/types/materialStickerType';
 
@@ -16,17 +15,14 @@ export function ColorItem({ item, isSelected, onClick }: ColorItemProps) {
   const isGold = name === 'طلایی';
 
   return (
-    <motion.button
-      whileTap={{ scale: 0.92 }}
+    <button
       onClick={onClick}
-      className="shrink-0 flex flex-col items-center cursor-pointer transition-all min-w-[64px]"
+      className="shrink-0 flex flex-col items-center cursor-pointer transition-transform duration-150 active:scale-95 min-w-[64px]"
     >
       <div
         className={cn('w-12 h-12 rounded-full border transition-all shadow-sm', {
           'bg-gradient-to-br from-yellow-300 via-amber-300 to-yellow-500 shadow-md': isGold,
-
           'border-blue-500 ring-2 ring-blue-300 scale-110 shadow-md': isSelected,
-
           'border-gray-300 hover:border-gray-500 hover:scale-105': !isSelected,
         })}
         style={{
@@ -43,6 +39,6 @@ export function ColorItem({ item, isSelected, onClick }: ColorItemProps) {
       >
         {name}
       </p>
-    </motion.button>
+    </button>
   );
 }

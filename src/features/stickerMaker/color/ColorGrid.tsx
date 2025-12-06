@@ -9,7 +9,6 @@ import { setColorStart, setColorSuccess } from '@/store/slices/stickerSlice';
 import { ColorItem } from './ColorItem';
 import { ColorOptions } from '@/types/color/colorType';
 import { useMaterialSticker } from '@/features/material-sticker/hooks/useMaterialSticker';
-import { Skeleton } from '@/components/ui/skeleton';
 
 export function ColorGrid() {
   const gridRef = useRef<HTMLDivElement>(null);
@@ -44,12 +43,14 @@ export function ColorGrid() {
               }
             }}
           >
-            <div className="flex gap-3 px-4 py-3">
-              {!isLoading
+            <div className="flex gap-3 px-2 py-2">
+              {isLoading
                 ? [...Array(5)].map((_, i) => (
-                    <motion.div key={i} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: i * 0.03 }}>
-                      <Skeleton className="w-12 h-12 rounded-full" />
-                    </motion.div>
+                    <div key={i} className="flex flex-col items-center min-w-[64px]">
+                      <div className="w-12 h-12 rounded-full border bg-gray-200 animate-pulse shadow-sm mb-1.5" />
+
+                      <div className="w-10 h-[11px] bg-gray-200 rounded animate-pulse" />
+                    </div>
                   ))
                 : (data?.items ?? []).map((item) => (
                     <ColorItem
