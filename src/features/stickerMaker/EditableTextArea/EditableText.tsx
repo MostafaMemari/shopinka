@@ -43,9 +43,9 @@ const EditableText: React.FC<EditableTextProps> = ({ selectedFont, selectedColor
 
   useEffect(() => {
     if (editableRef.current) {
-      editableRef.current.style.textAlign = options.textAlign;
+      editableRef.current.style.textAlign = options?.textAlign || 'center';
     }
-  }, [options.textAlign]);
+  }, [options?.textAlign]);
 
   useEffect(() => {
     if (editableRef.current && text !== editableRef.current.innerText) {
@@ -62,13 +62,13 @@ const EditableText: React.FC<EditableTextProps> = ({ selectedFont, selectedColor
       : 'clamp(1rem, 2vw, 3rem)',
     color: colorValue,
     fontFamily,
-    lineHeight: options.font.lineHeight ? options.font.lineHeight : 1.4,
-    textAlign: options.textAlign,
+    lineHeight: options?.font?.lineHeight ? options.font.lineHeight : 1.4,
+    textAlign: 'center',
     caretColor: 'var(--color-primary)',
     filter: 'drop-shadow(0.015em 0.015em 0.01em rgba(4, 8, 15, 0.3))',
     maxWidth: '90%',
-    fontWeight: options.font.weight,
-    fontStyle: options.font.style,
+    fontWeight: options?.font?.weight,
+    fontStyle: options?.font?.style,
     transition: 'opacity 0.2s ease',
   };
 

@@ -59,12 +59,12 @@ export function ColorGrid({ data, isLoading }: Props) {
                     <ColorItem
                       key={item.id}
                       item={item}
-                      isSelected={options.color?.value === item.colorCode}
+                      isSelected={options?.color?.value === item.colorCode}
                       onClick={handleColorClick.bind(null, {
+                        id: item.id,
                         backgroundMode: { from: item.backgroundFrom, to: item.backgroundTo },
                         value: item.colorCode,
                         name: item.name,
-                        displayName: item.name,
                       })}
                     />
                   ))}

@@ -3,8 +3,8 @@ import { FontOptions } from '@/types/font/fontType';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface StickerOptions {
-  color: ColorOptions;
-  font: FontOptions;
+  color: ColorOptions & { id?: number };
+  font: FontOptions & { id?: number };
   letterSpacing: number;
   textAlign: 'left' | 'center' | 'right';
 }
@@ -12,10 +12,12 @@ interface StickerOptions {
 interface StickerState {
   text: string;
   loading: boolean;
-  options: StickerOptions;
+  options: StickerOptions | null;
 }
 
 const STORAGE_KEY = 'stickerState';
+
+// ---------------- LOCAL STORAGE --------------------
 
 const loadStateFromLocalStorage = (): StickerState | null => {
   if (typeof window === 'undefined') return null;
@@ -36,33 +38,27 @@ const saveStateToLocalStorage = (state: StickerState) => {
   }
 };
 
-const defaultOptions: StickerOptions = {
-  color: { name: 'سفید', value: 'white', backgroundMode: { from: 'rgba(0,0,0,0.25)', to: 'rgba(0,0,0,0.1)' } },
-
-  font: {
-    family: 'IRANYekan',
-    weight: 'normal',
-    style: 'normal',
-    lineHeight: 1.6,
-    size: 1.4,
-  },
-
-  letterSpacing: 3,
-  textAlign: 'center',
-};
+// ---------------- INITIAL STATE --------------------
 
 const persistedState = loadStateFromLocalStorage();
 
 const initialState: StickerState = persistedState || {
   text: '',
   loading: false,
-  options: defaultOptions,
+  options: null,
 };
+
+// ---------------- SLICE ----------------------------
 
 const stickerSlice = createSlice({
   name: 'sticker',
   initialState,
   reducers: {
+    setInitialOptions(state, action: PayloadAction<StickerOptions>) {
+      state.options = action.payload;
+      saveStateToLocalStorage(state);
+    },
+
     setText(state, action: PayloadAction<string>) {
       state.text = action.payload;
       saveStateToLocalStorage(state);
@@ -71,8 +67,10 @@ const stickerSlice = createSlice({
     setColorStart(state) {
       state.loading = true;
     },
-    setColorSuccess(state, action: PayloadAction<ColorOptions>) {
-      state.options.color = action.payload;
+    setColorSuccess(state, action: PayloadAction<ColorOptions & { id: number }>) {
+      if (state.options) {
+        state.options.color = action.payload;
+      }
       state.loading = false;
       saveStateToLocalStorage(state);
     },
@@ -80,29 +78,39 @@ const stickerSlice = createSlice({
     setFontStart(state) {
       state.loading = true;
     },
-    setFontSuccess(state, action: PayloadAction<FontOptions>) {
-      state.options.font = action.payload;
+    setFontSuccess(state, action: PayloadAction<FontOptions & { id: number }>) {
+      if (state.options) {
+        state.options.font = action.payload;
+      }
       state.loading = false;
       saveStateToLocalStorage(state);
     },
 
     setLetterSpacing(state, action: PayloadAction<number>) {
-      state.options.letterSpacing = action.payload;
+      if (state.options) {
+        state.options.letterSpacing = action.payload;
+      }
       saveStateToLocalStorage(state);
     },
 
     setTextAlign(state, action: PayloadAction<'left' | 'center' | 'right'>) {
-      state.options.textAlign = action.payload;
+      if (state.options) {
+        state.options.textAlign = action.payload;
+      }
       saveStateToLocalStorage(state);
     },
 
     toggleFontWeight(state) {
-      state.options.font.weight = state.options.font.weight === 'bold' ? 'normal' : 'bold';
+      if (state.options) {
+        state.options.font.weight = state.options.font.weight === 'bold' ? 'normal' : 'bold';
+      }
       saveStateToLocalStorage(state);
     },
 
     toggleFontStyle(state) {
-      state.options.font.style = state.options.font.style === 'italic' ? 'normal' : 'italic';
+      if (state.options) {
+        state.options.font.style = state.options.font.style === 'italic' ? 'normal' : 'italic';
+      }
       saveStateToLocalStorage(state);
     },
 
@@ -111,13 +119,14 @@ const stickerSlice = createSlice({
       return {
         text: '',
         loading: false,
-        options: defaultOptions,
+        options: null,
       };
     },
   },
 });
 
 export const {
+  setInitialOptions,
   setText,
   setColorStart,
   setColorSuccess,

@@ -25,10 +25,11 @@ function FontGrid({ data, isLoading }: Props) {
     dispatch(setFontStart());
     dispatch(
       setFontSuccess({
+        id: font.id,
         family: font.name,
         size: font.size,
+        lineHeight: font.lineHeight,
         style: 'normal',
-        lineHeight: font.lineHeight ?? 1.5,
         weight: 'normal',
       }),
     );
@@ -64,7 +65,7 @@ function FontGrid({ data, isLoading }: Props) {
                 <FontItem
                   key={font.name}
                   font={font}
-                  isSelected={options.font.family === font.name}
+                  isSelected={options?.font?.family === font.name}
                   onSelect={() => handleFontSelect(font)}
                 />
               ))}

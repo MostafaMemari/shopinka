@@ -1,27 +1,31 @@
 'use client';
 
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import FontGrid from './font/FontGrid';
 import BottomNav from './BottomNav';
 import SettingsDrawer from './setting/SettingsDrawer';
 import EditableTextArea from './EditableTextArea';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { ColorGrid } from './color/ColorGrid';
 import ResetButton from './reset/ResetButton';
 import { useMaterialSticker } from '../material-sticker/hooks/useMaterialSticker';
 import { useFont } from '../font/hooks/useFont';
+import { setInitialOptions } from '@/store/slices/stickerSlice';
 
 type OpenPanel = 'font' | 'color' | 'settings' | null;
 
 function StickerMakerView() {
+  const dispatch = useDispatch();
   const [openPanel, setOpenPanel] = useState<OpenPanel>(null);
 
-  const { loading } = useSelector((state: RootState) => state.sticker);
+  const { loading, options } = useSelector((state: RootState) => state.sticker);
 
   const { data: materialData, isLoading: materialLoading } = useMaterialSticker({});
-  const { data: fontData, isLoading: fontLoading } = useFont({ params: { includeThumbnail: true, includeFile: true } });
+  const { data: fontData, isLoading: fontLoading } = useFont({
+    params: { includeThumbnail: true, includeFile: true },
+  });
 
   const togglePanel = useCallback((panel: 'font' | 'color' | 'settings') => {
     setOpenPanel((prev) => (prev === panel ? null : panel));
@@ -30,6 +34,39 @@ function StickerMakerView() {
   const handleStartEditing = () => {
     setOpenPanel(null);
   };
+
+  useEffect(() => {
+    if (!fontLoading && !materialLoading && fontData && materialData && (!options?.font || !options.color)) {
+      const defaultFont = fontData.items.find((f) => f.isDefault);
+      const defaultMaterial = materialData.items.find((m) => m.isDefault);
+
+      dispatch(
+        setInitialOptions({
+          color: {
+            id: defaultMaterial?.id ?? 0,
+            backgroundMode: {
+              from: defaultMaterial?.backgroundFrom || '#000',
+              to: defaultMaterial?.backgroundTo || '#000',
+            },
+            value: defaultMaterial?.colorCode || '#000',
+            name: defaultMaterial?.name || 'Default',
+          },
+
+          font: {
+            id: defaultFont?.id ?? 0,
+            family: defaultFont?.name || 'DefaultFont',
+            size: defaultFont?.size || 24,
+            lineHeight: defaultFont?.lineHeight || 1.4,
+            style: 'normal',
+            weight: 'normal',
+          },
+
+          letterSpacing: 3,
+          textAlign: 'center',
+        }),
+      );
+    }
+  }, [fontLoading, materialLoading, fontData, materialData, dispatch]);
 
   return (
     <div className="relative w-full p-0 overflow-hidden rounded-none touch-none m-auto h-screen">
@@ -57,6 +94,7 @@ function StickerMakerView() {
               {openPanel === null && <ResetButton />}
 
               {openPanel === 'font' && <FontGrid data={fontData} isLoading={fontLoading} />}
+
               {openPanel === 'color' && <ColorGrid data={materialData} isLoading={materialLoading} />}
             </motion.div>
           </AnimatePresence>

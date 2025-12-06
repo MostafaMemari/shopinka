@@ -15,6 +15,8 @@ export interface FontItem {
 
   thumbnailId: number | null;
   thumbnail: Image | undefined;
+
+  isDefault: boolean;
 }
 
 export interface FontParams {

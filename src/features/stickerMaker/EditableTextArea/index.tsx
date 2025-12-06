@@ -17,10 +17,10 @@ const EditableTextArea: React.FC<EditableTextAreaProps> = ({ onStartEditing }) =
 
   const { data } = useFont({ params: { includeThumbnail: true, includeFile: true } });
 
-  const font = data?.items.find((f) => f.name === options.font.family);
+  const font = data?.items.find((f) => f.name === options?.font?.family);
 
   const selectedFont = font || null;
-  const selectedColor: ColorOptions | null = options.color || null;
+  const selectedColor: ColorOptions | null = options?.color || null;
 
   return (
     <div className="relative w-full h-svh overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center">

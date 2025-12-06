@@ -1,4 +1,5 @@
 export interface FontOptions {
+  id: number;
   family: string;
   weight: 'normal' | 'bold';
   style: 'normal' | 'italic';

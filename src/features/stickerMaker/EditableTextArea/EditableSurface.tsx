@@ -12,7 +12,7 @@ const EditableSurface = () => {
   );
 
   useEffect(() => {
-    const bg = options.color?.backgroundMode;
+    const bg = options?.color?.backgroundMode;
 
     const from = bg?.from || 'white';
     const to = bg?.to || 'lightgray';
@@ -20,7 +20,7 @@ const EditableSurface = () => {
     const gradient = `linear-gradient(to bottom right, ${from}, ${to})`;
 
     setBackgroundGradient(gradient);
-  }, [options.color]);
+  }, [options?.color]);
 
   return (
     <div

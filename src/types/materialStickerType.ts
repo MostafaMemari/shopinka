@@ -18,6 +18,7 @@ export interface MaterialStickerItem {
   backgroundFrom: string;
   backgroundTo: string;
   customStickers?: User | null;
+  isDefault: boolean;
 }
 
 export interface MaterialStickersParams {

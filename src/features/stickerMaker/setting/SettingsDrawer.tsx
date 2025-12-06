@@ -28,7 +28,7 @@ export default function SettingsDrawer({ open, onClose }: SettingsDrawerProps) {
         <div className="flex flex-col gap-2">
           <label className="font-medium">فاصله بین حروف</label>
           <Slider
-            value={[options.letterSpacing]}
+            value={[options?.letterSpacing || 0]}
             min={0}
             max={2}
             step={1}
