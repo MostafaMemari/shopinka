@@ -2,7 +2,13 @@ import { type FontItem } from '@/types/fontType';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 
-export function FontItem({ font, isSelected, onSelect }: { font: FontItem; isSelected: boolean; onSelect: () => void }) {
+interface Props {
+  font: FontItem;
+  isSelected: boolean;
+  onSelect: () => void;
+}
+
+export function FontItem({ font, isSelected, onSelect }: Props) {
   const itemRef = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
 

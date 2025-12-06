@@ -46,7 +46,7 @@ export function ColorGrid() {
           >
             <div className="flex gap-3 px-4 py-3">
               {!isLoading
-                ? [...Array(12)].map((_, i) => (
+                ? [...Array(5)].map((_, i) => (
                     <motion.div key={i} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: i * 0.03 }}>
                       <Skeleton className="w-12 h-12 rounded-full" />
                     </motion.div>
