@@ -10,6 +10,8 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { ColorGrid } from './color/ColorGrid';
 import ResetButton from './reset/ResetButton';
+import { useMaterialSticker } from '../material-sticker/hooks/useMaterialSticker';
+import { useFont } from '../font/hooks/useFont';
 
 type OpenPanel = 'font' | 'color' | 'settings' | null;
 
@@ -17,6 +19,9 @@ function StickerMakerView() {
   const [openPanel, setOpenPanel] = useState<OpenPanel>(null);
 
   const { loading } = useSelector((state: RootState) => state.sticker);
+
+  const { data: materialData, isLoading: materialLoading } = useMaterialSticker({});
+  const { data: fontData, isLoading: fontLoading } = useFont({ params: { includeThumbnail: true, includeFile: true } });
 
   const togglePanel = useCallback((panel: 'font' | 'color' | 'settings') => {
     setOpenPanel((prev) => (prev === panel ? null : panel));
@@ -51,8 +56,8 @@ function StickerMakerView() {
             >
               {openPanel === null && <ResetButton />}
 
-              {openPanel === 'font' && <FontGrid />}
-              {openPanel === 'color' && <ColorGrid />}
+              {openPanel === 'font' && <FontGrid data={fontData} isLoading={fontLoading} />}
+              {openPanel === 'color' && <ColorGrid data={materialData} isLoading={materialLoading} />}
             </motion.div>
           </AnimatePresence>
 

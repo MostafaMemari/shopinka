@@ -7,15 +7,16 @@ import { setFontStart, setFontSuccess } from '@/store/slices/stickerSlice';
 import { RootState } from '@/store';
 import { FontItem } from './FontItem';
 import { detectLanguage } from './detectLanguage';
-import { useFont } from '@/features/font/hooks/useFont';
 import { FontItem as FontItemType } from '@/types/fontType';
-import { motion } from 'framer-motion';
 import { Skeleton } from '@/components/ui/skeleton';
 
-function FontGrid() {
-  const gridRef = useRef<HTMLDivElement>(null);
+interface Props {
+  data: { items: FontItemType[] } | undefined;
+  isLoading: boolean;
+}
 
-  const { data, isLoading } = useFont({ params: { includeThumbnail: true, includeFile: true } });
+function FontGrid({ data, isLoading }: Props) {
+  const gridRef = useRef<HTMLDivElement>(null);
 
   const dispatch = useDispatch();
   const { options, text } = useSelector((state: RootState) => state.sticker);

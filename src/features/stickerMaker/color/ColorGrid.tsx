@@ -8,12 +8,15 @@ import { RootState } from '@/store';
 import { setColorStart, setColorSuccess } from '@/store/slices/stickerSlice';
 import { ColorItem } from './ColorItem';
 import { ColorOptions } from '@/types/color/colorType';
-import { useMaterialSticker } from '@/features/material-sticker/hooks/useMaterialSticker';
+import { MaterialStickerItem } from '@/types/materialStickerType';
 
-export function ColorGrid() {
+interface Props {
+  data: { items: MaterialStickerItem[] } | undefined;
+  isLoading: boolean;
+}
+
+export function ColorGrid({ data, isLoading }: Props) {
   const gridRef = useRef<HTMLDivElement>(null);
-
-  const { data, isLoading } = useMaterialSticker({});
 
   const dispatch = useDispatch();
   const { options } = useSelector((state: RootState) => state.sticker);
