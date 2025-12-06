@@ -12,8 +12,8 @@ function ResetButton() {
   };
 
   return (
-    <div className="flex justify-center py-4 w-12 mr-2">
-      <Button variant="secondary" onClick={handleReset}>
+    <div className="flex justify-center mb-2 w-12 mr-2 secondary:bg-white bg-white rounded-2xl shadow-md">
+      <Button variant="ghost" onClick={handleReset}>
         <RotateCcw />
       </Button>
     </div>
