@@ -13,7 +13,7 @@ import { FontItem as FontItemType } from '@/types/fontType';
 function FontGrid() {
   const gridRef = useRef<HTMLDivElement>(null);
 
-  const { data } = useFont({ params: { includeThumbnail: true, includeFile: true } });
+  const { data, isLoading } = useFont({ params: { includeThumbnail: true, includeFile: true } });
 
   const dispatch = useDispatch();
   const { options, text } = useSelector((state: RootState) => state.sticker);
@@ -37,7 +37,15 @@ function FontGrid() {
       if (lang === 'mixed') return true;
       return lang === 'persian' ? font.isPersian : !font.isPersian;
     });
-  }, [text]);
+  }, [text, data?.items]);
+
+  if (isLoading) {
+    return (
+      <div className="absolute inset-0 bg-black/20 flex items-center justify-center z-50">
+        <div className="w-10 h-10 border-4 border-white border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div ref={gridRef} className="m-2">

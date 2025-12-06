@@ -9,14 +9,14 @@ import { setColorStart, setColorSuccess } from '@/store/slices/stickerSlice';
 import { ColorItem } from './ColorItem';
 import { ColorOptions } from '@/types/color/colorType';
 import { useMaterialSticker } from '@/features/material-sticker/hooks/useMaterialSticker';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export function ColorGrid() {
   const gridRef = useRef<HTMLDivElement>(null);
 
-  const { data } = useMaterialSticker({});
+  const { data, isLoading } = useMaterialSticker({});
 
   const dispatch = useDispatch();
-
   const { options } = useSelector((state: RootState) => state.sticker);
 
   const handleColorClick = (color: ColorOptions) => {
@@ -35,7 +35,7 @@ export function ColorGrid() {
           transition={{ duration: 0.25 }}
         >
           <ScrollArea
-            className={`w-full  bg-white rounded-md shadow-md border`}
+            className="w-full bg-white rounded-md shadow-md border"
             onWheel={(e) => {
               const target = e.currentTarget as HTMLElement;
               if (e.deltaY !== 0) {
@@ -45,20 +45,27 @@ export function ColorGrid() {
             }}
           >
             <div className="flex gap-3 px-4 py-3">
-              {(data?.items ?? []).map((item) => (
-                <ColorItem
-                  key={item.id}
-                  item={item}
-                  isSelected={options.color?.value === item.colorCode}
-                  onClick={handleColorClick.bind(null, {
-                    backgroundMode: { from: item.backgroundFrom, to: item.backgroundTo },
-                    value: item.colorCode,
-                    name: item.name,
-                    displayName: item.name,
-                  })}
-                />
-              ))}
+              {!isLoading
+                ? [...Array(12)].map((_, i) => (
+                    <motion.div key={i} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: i * 0.03 }}>
+                      <Skeleton className="w-12 h-12 rounded-full" />
+                    </motion.div>
+                  ))
+                : (data?.items ?? []).map((item) => (
+                    <ColorItem
+                      key={item.id}
+                      item={item}
+                      isSelected={options.color?.value === item.colorCode}
+                      onClick={handleColorClick.bind(null, {
+                        backgroundMode: { from: item.backgroundFrom, to: item.backgroundTo },
+                        value: item.colorCode,
+                        name: item.name,
+                        displayName: item.name,
+                      })}
+                    />
+                  ))}
             </div>
+
             <ScrollBar orientation="horizontal" />
           </ScrollArea>
         </motion.div>

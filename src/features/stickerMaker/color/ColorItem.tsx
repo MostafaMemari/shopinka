@@ -17,23 +17,28 @@ export function ColorItem({ item, isSelected, onClick }: ColorItemProps) {
 
   return (
     <motion.button
-      whileTap={{ scale: 0.95 }}
+      whileTap={{ scale: 0.92 }}
       onClick={onClick}
-      className="shrink-0 flex flex-col items-center cursor-pointer transition-all min-w-[60px]"
+      className="shrink-0 flex flex-col items-center cursor-pointer transition-all min-w-[64px]"
     >
       <div
-        className={cn('w-10 h-10 rounded-full border-2 transition-all shadow-sm', {
-          'bg-gradient-to-r from-amber-200 to-yellow-500': isGold,
-          'border-blue-500 ring-2 ring-blue-300 scale-110': isSelected,
+        className={cn('w-12 h-12 rounded-full border transition-all shadow-sm', {
+          'bg-gradient-to-br from-yellow-300 via-amber-300 to-yellow-500 shadow-md': isGold,
+
+          'border-blue-500 ring-2 ring-blue-300 scale-110 shadow-md': isSelected,
+
           'border-gray-300 hover:border-gray-500 hover:scale-105': !isSelected,
         })}
-        style={{ background: isGold ? undefined : colorCode }}
+        style={{
+          background: isGold ? undefined : colorCode,
+        }}
       />
 
       <p
-        className={`text-[10px] font-medium mt-1.5 text-center transition-colors ${
-          isSelected ? 'text-primary font-bold' : 'text-gray-700'
-        }`}
+        className={cn('text-[11px] font-medium mt-1.5 text-center transition-colors leading-tight', {
+          'text-primary font-semibold': isSelected,
+          'text-gray-700': !isSelected,
+        })}
         style={{ direction: 'rtl' }}
       >
         {name}
