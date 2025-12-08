@@ -1,18 +1,18 @@
-import { ColorOptions } from '@/types/color/colorType';
-import { FontOptions } from '@/types/font/fontType';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface StickerOptions {
-  color: ColorOptions & { id?: number };
-  font: FontOptions & { id?: number };
   letterSpacing: number;
   textAlign: 'left' | 'center' | 'right';
+  weight: 'normal' | 'bold';
+  style: 'normal' | 'italic';
 }
 
 interface StickerState {
   text: string;
   loading: boolean;
-  options: StickerOptions | null;
+  materialId: number | null;
+  fontId: number | null;
+  options: StickerOptions;
 }
 
 const STORAGE_KEY = 'stickerState';
@@ -45,7 +45,14 @@ const persistedState = loadStateFromLocalStorage();
 const initialState: StickerState = persistedState || {
   text: '',
   loading: false,
-  options: null,
+  materialId: null,
+  fontId: null,
+  options: {
+    letterSpacing: 0,
+    textAlign: 'left',
+    weight: 'normal',
+    style: 'normal',
+  },
 };
 
 // ---------------- SLICE ----------------------------
@@ -55,7 +62,7 @@ const stickerSlice = createSlice({
   initialState,
   reducers: {
     setInitialOptions(state, action: PayloadAction<StickerOptions>) {
-      state.options = action.payload;
+      state.options = { ...action.payload };
       saveStateToLocalStorage(state);
     },
 
@@ -67,10 +74,8 @@ const stickerSlice = createSlice({
     setColorStart(state) {
       state.loading = true;
     },
-    setColorSuccess(state, action: PayloadAction<ColorOptions & { id: number }>) {
-      if (state.options) {
-        state.options.color = action.payload;
-      }
+    setColorSuccess(state, action: PayloadAction<number>) {
+      state.materialId = action.payload;
       state.loading = false;
       saveStateToLocalStorage(state);
     },
@@ -78,49 +83,50 @@ const stickerSlice = createSlice({
     setFontStart(state) {
       state.loading = true;
     },
-    setFontSuccess(state, action: PayloadAction<FontOptions & { id: number }>) {
-      if (state.options) {
-        state.options.font = action.payload;
-      }
+    setFontSuccess(state, action: PayloadAction<number>) {
+      state.fontId = action.payload;
       state.loading = false;
       saveStateToLocalStorage(state);
     },
 
     setLetterSpacing(state, action: PayloadAction<number>) {
-      if (state.options) {
-        state.options.letterSpacing = action.payload;
-      }
+      state.options.letterSpacing = action.payload;
       saveStateToLocalStorage(state);
     },
 
     setTextAlign(state, action: PayloadAction<'left' | 'center' | 'right'>) {
-      if (state.options) {
-        state.options.textAlign = action.payload;
-      }
+      state.options.textAlign = action.payload;
       saveStateToLocalStorage(state);
     },
 
     toggleFontWeight(state) {
-      if (state.options) {
-        state.options.font.weight = state.options.font.weight === 'bold' ? 'normal' : 'bold';
-      }
+      state.options.weight = state.options.weight === 'bold' ? 'normal' : 'bold';
       saveStateToLocalStorage(state);
     },
 
     toggleFontStyle(state) {
-      if (state.options) {
-        state.options.font.style = state.options.font.style === 'italic' ? 'normal' : 'italic';
-      }
+      state.options.style = state.options.style === 'italic' ? 'normal' : 'italic';
       saveStateToLocalStorage(state);
     },
 
-    resetStickerState() {
-      if (typeof window !== 'undefined') localStorage.removeItem(STORAGE_KEY);
-      return {
+    resetStickerState(state, action: PayloadAction<{ materialId?: number; fontId?: number } | undefined>) {
+      if (state.loading) return state;
+
+      const newState: StickerState = {
         text: '',
         loading: false,
-        options: null,
+        materialId: action?.payload?.materialId ?? 0,
+        fontId: action?.payload?.fontId ?? 0,
+        options: {
+          letterSpacing: 0,
+          textAlign: 'left',
+          weight: 'normal',
+          style: 'normal',
+        },
       };
+
+      saveStateToLocalStorage(newState);
+      return newState;
     },
   },
 });

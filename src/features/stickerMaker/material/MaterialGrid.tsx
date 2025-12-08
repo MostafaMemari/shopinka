@@ -3,34 +3,38 @@
 import React, { useRef } from 'react';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '@/store';
+import { useDispatch } from 'react-redux';
 import { setColorStart, setColorSuccess } from '@/store/slices/stickerSlice';
-import { ColorItem } from './ColorItem';
-import { ColorOptions } from '@/types/color/colorType';
+import { ColorItem } from './Materialitem';
 import { MaterialStickerItem } from '@/types/materialStickerType';
+import { useSelectedStickerAssets } from '@/hooks/useSelectedStickerAssets';
 
 interface Props {
   data: { items: MaterialStickerItem[] } | undefined;
   isLoading: boolean;
 }
 
-export function ColorGrid({ data, isLoading }: Props) {
+export function MaterialGrid({ data, isLoading }: Props) {
+  const { selectedMaterial } = useSelectedStickerAssets();
+
   const gridRef = useRef<HTMLDivElement>(null);
 
   const dispatch = useDispatch();
-  const { options } = useSelector((state: RootState) => state.sticker);
 
-  const handleColorClick = (color: ColorOptions) => {
+  const handleMaterialClick = (material: MaterialStickerItem) => {
     dispatch(setColorStart());
-    dispatch(setColorSuccess(color));
+    dispatch(setColorSuccess(material.id));
+  };
+
+  const isSelected = (materialId: number) => {
+    return selectedMaterial?.id === materialId;
   };
 
   return (
     <div ref={gridRef} className="m-2">
       <AnimatePresence mode="wait">
         <motion.div
-          key="color-grid"
+          key="material-grid"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 20 }}
@@ -56,17 +60,7 @@ export function ColorGrid({ data, isLoading }: Props) {
                     </div>
                   ))
                 : (data?.items ?? []).map((item) => (
-                    <ColorItem
-                      key={item.id}
-                      item={item}
-                      isSelected={options?.color?.value === item.colorCode}
-                      onClick={handleColorClick.bind(null, {
-                        id: item.id,
-                        backgroundMode: { from: item.backgroundFrom, to: item.backgroundTo },
-                        value: item.colorCode,
-                        name: item.name,
-                      })}
-                    />
+                    <ColorItem key={item.id} item={item} isSelected={isSelected(item.id)} onClick={handleMaterialClick.bind(null, item)} />
                   ))}
             </div>
 

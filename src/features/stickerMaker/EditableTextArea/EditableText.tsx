@@ -1,22 +1,20 @@
 'use client';
 import React, { useEffect, useRef, useState } from 'react';
 import { cn } from '@/lib/utils';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setText } from '@/store/slices/stickerSlice';
-import { RootState } from '@/store';
-import { ColorOptions } from '@/types/color/colorType';
-import { FontItem } from '@/types/fontType';
+import { useSelectedStickerAssets } from '@/hooks/useSelectedStickerAssets';
 
 interface EditableTextProps {
-  selectedFont: FontItem | null;
-  selectedColor: ColorOptions | null;
   onStartEditing: () => void;
 }
 
-const EditableText: React.FC<EditableTextProps> = ({ selectedFont, selectedColor, onStartEditing }) => {
-  const editableRef = useRef<HTMLDivElement>(null);
+const EditableText: React.FC<EditableTextProps> = ({ onStartEditing }) => {
+  const { selectedFont, selectedMaterial, text, options } = useSelectedStickerAssets();
+
   const dispatch = useDispatch();
-  const { text, options } = useSelector((state: RootState) => state.sticker);
+
+  const editableRef = useRef<HTMLDivElement>(null);
 
   const [isClient, setIsClient] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
@@ -53,7 +51,7 @@ const EditableText: React.FC<EditableTextProps> = ({ selectedFont, selectedColor
     }
   }, [text, isClient]);
 
-  const colorValue = selectedColor?.value || '#000000';
+  const colorValue = selectedMaterial?.colorCode || '#000000';
   const fontFamily = fontLoaded && selectedFont ? selectedFont.name : 'IranYekan';
 
   const editableStyle: React.CSSProperties = {
@@ -62,13 +60,13 @@ const EditableText: React.FC<EditableTextProps> = ({ selectedFont, selectedColor
       : 'clamp(1rem, 2vw, 3rem)',
     color: colorValue,
     fontFamily,
-    lineHeight: options?.font?.lineHeight ? options.font.lineHeight : 1.4,
+    lineHeight: selectedFont?.lineHeight,
     textAlign: 'center',
     caretColor: 'var(--color-primary)',
     filter: 'drop-shadow(0.015em 0.015em 0.01em rgba(4, 8, 15, 0.3))',
     maxWidth: '90%',
-    fontWeight: options?.font?.weight,
-    fontStyle: options?.font?.style,
+    fontWeight: options?.weight,
+    fontStyle: options?.style,
     transition: 'opacity 0.2s ease',
   };
 

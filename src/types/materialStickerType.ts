@@ -18,8 +18,12 @@ export interface MaterialStickerItem {
   backgroundFrom: string;
   backgroundTo: string;
   customStickers?: User | null;
+  displayOrder: number;
   isDefault: boolean;
 }
+
+export type SortByFontParams = 'createdAt' | 'updatedAt' | 'size' | 'displayOrder' | 'lineHeight' | 'isPersian';
+export type SortDirection = 'asc' | 'desc';
 
 export interface MaterialStickersParams {
   page?: number;

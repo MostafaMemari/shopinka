@@ -9,6 +9,7 @@ export interface FontItem {
   size: number;
   isPersian: boolean;
   difficultyRatio: number;
+  displayOrder: number;
 
   fileId: number | null;
   file: Image | undefined;
@@ -24,7 +25,12 @@ export interface FontParams {
   take?: number;
   includeThumbnail?: boolean;
   includeFile?: boolean;
+  sortBy?: SortByFontParams;
+  sortDirection?: SortDirection;
 }
+
+export type SortByFontParams = 'createdAt' | 'updatedAt' | 'size' | 'displayOrder' | 'lineHeight' | 'isPersian';
+export type SortDirection = 'asc' | 'desc';
 
 export interface FontResponse {
   items: FontItem[];

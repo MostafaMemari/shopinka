@@ -1,12 +1,11 @@
 'use client';
 
 import React, { ReactNode, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
 import MobileDrawer from '@/components/common/Drawer';
 import { ArrowUp, ArrowLeft } from 'lucide-react';
 import StickerDimensionForm from './StickerDimensionForm';
-import { measureMultilineText, measureText } from '@/utils/measureText';
+import { measureMultilineText } from '@/utils/measureText';
+import { useSelectedStickerAssets } from '@/hooks/useSelectedStickerAssets';
 
 interface FinalizeStickerDrawerProps {
   isOpen: boolean;
@@ -15,7 +14,7 @@ interface FinalizeStickerDrawerProps {
 }
 
 export default function FinalizeStickerDrawer({ isOpen, onOpenChange, trigger }: FinalizeStickerDrawerProps) {
-  const { text, options } = useSelector((state: RootState) => state.sticker);
+  const { selectedFont, selectedMaterial, text, options } = useSelectedStickerAssets();
 
   const [width, setWidth] = useState('');
   const [height, setHeight] = useState('');
@@ -27,17 +26,16 @@ export default function FinalizeStickerDrawer({ isOpen, onOpenChange, trigger }:
       setWidth('');
       return;
     }
-    if (!options?.font.family) return;
+    if (!selectedFont) return;
     if (!width) setHeight('');
 
-    // const ratio = measureText(text, { fontFamily: options.font.family });
-    const { ratio } = measureMultilineText(text, { fontFamily: options.font.family });
+    const { ratio } = measureMultilineText(text, { fontFamily: selectedFont.name });
 
     if (width && ratio) {
       const calculatedHeight = Number(width) / ratio;
       setHeight(calculatedHeight.toFixed(1));
     }
-  }, [options?.font.family, width, text]);
+  }, [selectedFont, width, text]);
 
   const displayWidth = width ? `${width} سانتی‌متر` : '?? سانتی‌متر';
   const displayHeight = height ? `${height} سانتی‌متر` : '?? سانتی‌متر';
@@ -76,12 +74,12 @@ export default function FinalizeStickerDrawer({ isOpen, onOpenChange, trigger }:
 
           <div
             style={{
-              fontFamily: options?.font.family || 'inherit',
-              fontWeight: options?.font.weight,
-              fontStyle: options?.font.style,
+              fontFamily: selectedFont?.name || 'inherit',
+              fontWeight: options.weight,
+              fontStyle: options.style,
               color: '#000000',
-              fontSize: `${options?.font.size ? options.font.size * 0.8 : 1}rem`,
-              lineHeight: options?.font.lineHeight || 1.2,
+              fontSize: `${selectedFont?.size ? selectedFont.size * 0.8 : 1}rem`,
+              lineHeight: selectedFont?.lineHeight || 1.2,
               width: '100%',
               maxWidth: '100%',
               whiteSpace: 'pre',

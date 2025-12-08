@@ -2,13 +2,13 @@
 
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import React, { useRef, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setFontStart, setFontSuccess } from '@/store/slices/stickerSlice';
-import { RootState } from '@/store';
 import { FontItem } from './FontItem';
 import { detectLanguage } from './detectLanguage';
 import { FontItem as FontItemType } from '@/types/fontType';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useSelectedStickerAssets } from '@/hooks/useSelectedStickerAssets';
 
 interface Props {
   data: { items: FontItemType[] } | undefined;
@@ -16,23 +16,19 @@ interface Props {
 }
 
 function FontGrid({ data, isLoading }: Props) {
+  const { selectedFont, text } = useSelectedStickerAssets();
+
   const gridRef = useRef<HTMLDivElement>(null);
 
   const dispatch = useDispatch();
-  const { options, text } = useSelector((state: RootState) => state.sticker);
 
   const handleFontSelect = (font: FontItemType) => {
     dispatch(setFontStart());
-    dispatch(
-      setFontSuccess({
-        id: font.id,
-        family: font.name,
-        size: font.size,
-        lineHeight: font.lineHeight,
-        style: 'normal',
-        weight: 'normal',
-      }),
-    );
+    dispatch(setFontSuccess(font.id));
+  };
+
+  const isSelected = (fontId: number) => {
+    return selectedFont?.id === fontId;
   };
 
   const filteredFonts = useMemo(() => {
@@ -62,12 +58,7 @@ function FontGrid({ data, isLoading }: Props) {
                 </div>
               ))
             : (filteredFonts ?? []).map((font: FontItemType) => (
-                <FontItem
-                  key={font.name}
-                  font={font}
-                  isSelected={options?.font?.family === font.name}
-                  onSelect={() => handleFontSelect(font)}
-                />
+                <FontItem key={font.name} font={font} isSelected={isSelected(font.id)} onSelect={() => handleFontSelect(font)} />
               ))}
         </div>
 
