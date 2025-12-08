@@ -1,17 +1,13 @@
-export async function renderStickerImage({
-  text,
-  fontFamily,
-  color,
-  weight,
-  style,
-}: {
+interface StickerRenderParams {
   text: string;
   fontFamily: string;
   color: string;
   weight: 'normal' | 'bold';
   style: 'normal' | 'italic';
   textAlign?: CanvasTextAlign;
-}) {
+}
+
+export async function renderStickerImage({ text, fontFamily, color, weight, style }: StickerRenderParams) {
   const canvas = document.createElement('canvas');
   canvas.width = 1000;
   canvas.height = 1000;
