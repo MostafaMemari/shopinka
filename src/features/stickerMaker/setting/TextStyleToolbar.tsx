@@ -8,18 +8,20 @@ import { setTextAlign, toggleFontStyle, toggleFontWeight } from '@/store/slices/
 
 export default function TextStyleToggleGroup() {
   const dispatch = useDispatch();
-  const { options } = useSelector((state: RootState) => state.sticker);
+  const {
+    options: { weight, style, textAlign },
+  } = useSelector((state: RootState) => state.sticker);
 
   const itemClass =
     'data-[state=on]:bg-[var(--primary)] data-[state=on]:text-[white] cursor-pointer text-muted-foreground hover:bg-muted transition-colors rounded-md';
 
-  const activeStyles = [...(options.font.weight === 'bold' ? ['bold'] : []), ...(options.font.style === 'italic' ? ['italic'] : [])];
+  const activeStyles = [...(weight === 'bold' ? ['bold'] : []), ...(style === 'italic' ? ['italic'] : [])];
 
   return (
     <div className="flex justify-between items-center pb-4 border-b border-border">
       <ToggleGroup
         type="single"
-        value={options.textAlign}
+        value={textAlign}
         onValueChange={(value) => value && dispatch(setTextAlign(value as 'left' | 'center' | 'right'))}
         className="gap-1"
         dir="rtl"
@@ -41,8 +43,8 @@ export default function TextStyleToggleGroup() {
         className="gap-1"
         dir="rtl"
         onValueChange={(values) => {
-          if (values.includes('bold') !== (options.font.weight === 'bold')) dispatch(toggleFontWeight());
-          if (values.includes('italic') !== (options.font.style === 'italic')) dispatch(toggleFontStyle());
+          if (values.includes('bold') !== (weight === 'bold')) dispatch(toggleFontWeight());
+          if (values.includes('italic') !== (style === 'italic')) dispatch(toggleFontStyle());
         }}
       >
         <ToggleGroupItem value="bold" aria-label="بولد" className={itemClass}>

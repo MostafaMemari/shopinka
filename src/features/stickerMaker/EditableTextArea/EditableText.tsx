@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils';
 import { useDispatch } from 'react-redux';
 import { setText } from '@/store/slices/stickerSlice';
 import { useSelectedStickerAssets } from '@/hooks/useSelectedStickerAssets';
+import { useLoadFont } from '@/hooks/useLoadFont';
 
 interface EditableTextProps {
   onStartEditing: () => void;
@@ -11,6 +12,7 @@ interface EditableTextProps {
 
 const EditableText: React.FC<EditableTextProps> = ({ onStartEditing }) => {
   const { selectedFont, selectedMaterial, text, options } = useSelectedStickerAssets();
+  const { fontLoaded, fontFamily } = useLoadFont(selectedFont);
 
   const dispatch = useDispatch();
 
@@ -18,26 +20,8 @@ const EditableText: React.FC<EditableTextProps> = ({ onStartEditing }) => {
 
   const [isClient, setIsClient] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
-  const [fontLoaded, setFontLoaded] = useState(false);
 
   useEffect(() => setIsClient(true), []);
-
-  useEffect(() => {
-    if (!selectedFont?.file) {
-      setFontLoaded(true);
-      return;
-    }
-
-    setFontLoaded(false);
-    const fontFace = new FontFace(selectedFont.name, `url(${selectedFont.file.fileUrl})`);
-    fontFace
-      .load()
-      .then((loadedFont) => {
-        document.fonts.add(loadedFont);
-        setFontLoaded(true);
-      })
-      .catch(() => setFontLoaded(true));
-  }, [selectedFont]);
 
   useEffect(() => {
     if (editableRef.current) {
@@ -52,7 +36,6 @@ const EditableText: React.FC<EditableTextProps> = ({ onStartEditing }) => {
   }, [text, isClient]);
 
   const colorValue = selectedMaterial?.colorCode || '#000000';
-  const fontFamily = fontLoaded && selectedFont ? selectedFont.name : 'IranYekan';
 
   const editableStyle: React.CSSProperties = {
     fontSize: selectedFont?.size

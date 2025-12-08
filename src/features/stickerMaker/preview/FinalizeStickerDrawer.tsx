@@ -14,7 +14,7 @@ interface FinalizeStickerDrawerProps {
 }
 
 export default function FinalizeStickerDrawer({ isOpen, onOpenChange, trigger }: FinalizeStickerDrawerProps) {
-  const { selectedFont, selectedMaterial, text, options } = useSelectedStickerAssets();
+  const { selectedFont, text, options } = useSelectedStickerAssets();
 
   const [width, setWidth] = useState('');
   const [height, setHeight] = useState('');
