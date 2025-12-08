@@ -6,6 +6,8 @@ import { Button } from '@/components/ui/button';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { setText } from '@/store/slices/stickerSlice';
+import { useSelectedStickerAssets } from '@/hooks/useSelectedStickerAssets';
+import { renderStickerImage } from './renderStickerImage';
 
 interface Props {
   width: string;
@@ -18,7 +20,7 @@ interface Props {
 
 export default function StickerDimensionForm({ width, height, note, setWidth, setNote }: Props) {
   const dispatch = useDispatch();
-  const { text } = useSelector((state: RootState) => state.sticker);
+  const { text, options, selectedMaterial, selectedFont } = useSelectedStickerAssets();
 
   const handleWidthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -38,6 +40,23 @@ export default function StickerDimensionForm({ width, height, note, setWidth, se
         setWidth(value);
       }
     }
+  };
+
+  const handleAddToCart = async () => {
+    if (!selectedFont) return;
+
+    const png = await renderStickerImage({
+      text,
+      fontFamily: selectedFont.name,
+      color: '#000',
+      weight: options.weight,
+      style: options.style,
+    });
+
+    const link = document.createElement('a');
+    link.href = png;
+    link.download = `sticker-preview-${Date.now()}.webp`;
+    link.click();
   };
 
   return (
@@ -72,7 +91,9 @@ export default function StickerDimensionForm({ width, height, note, setWidth, se
       />
 
       <div className="grid grid-cols-12 gap-2">
-        <Button className="col-span-6 w-full">افزودن به سبد خرید</Button>
+        <Button onClick={handleAddToCart} className="col-span-6 w-full">
+          افزودن به سبد خرید
+        </Button>
         <div className="col-span-6 flex items-center justify-center font-medium">۲۳۰۰ تومان</div>
       </div>
     </div>

@@ -2,7 +2,6 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface StickerOptions {
   letterSpacing: number;
-  textAlign: 'left' | 'center' | 'right';
   weight: 'normal' | 'bold';
   style: 'normal' | 'italic';
 }
@@ -49,7 +48,6 @@ const initialState: StickerState = persistedState || {
   fontId: null,
   options: {
     letterSpacing: 0,
-    textAlign: 'left',
     weight: 'normal',
     style: 'normal',
   },
@@ -94,11 +92,6 @@ const stickerSlice = createSlice({
       saveStateToLocalStorage(state);
     },
 
-    setTextAlign(state, action: PayloadAction<'left' | 'center' | 'right'>) {
-      state.options.textAlign = action.payload;
-      saveStateToLocalStorage(state);
-    },
-
     toggleFontWeight(state) {
       state.options.weight = state.options.weight === 'bold' ? 'normal' : 'bold';
       saveStateToLocalStorage(state);
@@ -119,7 +112,6 @@ const stickerSlice = createSlice({
         fontId: action?.payload?.fontId ?? 0,
         options: {
           letterSpacing: 0,
-          textAlign: 'left',
           weight: 'normal',
           style: 'normal',
         },
@@ -139,7 +131,6 @@ export const {
   setFontStart,
   setFontSuccess,
   setLetterSpacing,
-  setTextAlign,
   toggleFontWeight,
   toggleFontStyle,
   resetStickerState,

@@ -24,12 +24,6 @@ const EditableText: React.FC<EditableTextProps> = ({ onStartEditing }) => {
   useEffect(() => setIsClient(true), []);
 
   useEffect(() => {
-    if (editableRef.current) {
-      editableRef.current.style.textAlign = options?.textAlign || 'center';
-    }
-  }, [options?.textAlign]);
-
-  useEffect(() => {
     if (editableRef.current && text !== editableRef.current.innerText) {
       editableRef.current.innerText = text;
     }

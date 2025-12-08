@@ -1,15 +1,15 @@
 'use client';
 
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
-import { Bold, Italic, AlignLeft, AlignCenter, AlignRight } from 'lucide-react';
+import { Bold, Italic, AlignCenter } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store';
-import { setTextAlign, toggleFontStyle, toggleFontWeight } from '@/store/slices/stickerSlice';
+import { toggleFontStyle, toggleFontWeight } from '@/store/slices/stickerSlice';
 
 export default function TextStyleToggleGroup() {
   const dispatch = useDispatch();
   const {
-    options: { weight, style, textAlign },
+    options: { weight, style },
   } = useSelector((state: RootState) => state.sticker);
 
   const itemClass =
@@ -19,21 +19,9 @@ export default function TextStyleToggleGroup() {
 
   return (
     <div className="flex justify-between items-center pb-4 border-b border-border">
-      <ToggleGroup
-        type="single"
-        value={textAlign}
-        onValueChange={(value) => value && dispatch(setTextAlign(value as 'left' | 'center' | 'right'))}
-        className="gap-1"
-        dir="rtl"
-      >
-        <ToggleGroupItem value="left" aria-label="چپ‌چین" className={itemClass}>
-          <AlignLeft className="h-4 w-4" />
-        </ToggleGroupItem>
+      <ToggleGroup type="single" value="center" className="gap-1" dir="rtl">
         <ToggleGroupItem value="center" aria-label="وسط‌چین" className={itemClass}>
           <AlignCenter className="h-4 w-4" />
-        </ToggleGroupItem>
-        <ToggleGroupItem value="right" aria-label="راست‌چین" className={itemClass}>
-          <AlignRight className="h-4 w-4" />
         </ToggleGroupItem>
       </ToggleGroup>
 
