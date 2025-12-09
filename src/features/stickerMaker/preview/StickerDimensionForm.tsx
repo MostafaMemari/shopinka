@@ -1,10 +1,7 @@
 'use client';
 import React from 'react';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Button } from '@/components/ui/button';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '@/store';
+import { useDispatch } from 'react-redux';
 import { setText } from '@/store/slices/stickerSlice';
 import { useSelectedStickerAssets } from '@/hooks/useSelectedStickerAssets';
 import { renderStickerImage } from './renderStickerImage';
@@ -62,11 +59,11 @@ export default function StickerDimensionForm({ width, height, note, setWidth, se
 
   return (
     <div className="p-4 space-y-4">
-      <Textarea
+      <Input
         placeholder="متن..."
         value={text}
         onChange={(e) => dispatch(setText(e.target.value))}
-        className="flex-1 text-right h-24 resize-none text-sm"
+        className="flex-1 text-right"
         dir="rtl"
       />
       <div className="flex gap-4">
@@ -81,21 +78,6 @@ export default function StickerDimensionForm({ width, height, note, setWidth, se
           max="30"
         />
         <Input type="number" placeholder="طول (cm)" value={height} disabled className="flex-1 text-right" dir="rtl" />
-      </div>
-
-      <Textarea
-        placeholder="توضیحات اضافی"
-        value={note}
-        onChange={(e) => setNote(e.target.value)}
-        className="w-full text-right"
-        dir="rtl"
-      />
-
-      <div className="grid grid-cols-12 gap-2">
-        <Button onClick={handleAddToCart} className="col-span-6 w-full">
-          افزودن به سبد خرید
-        </Button>
-        <div className="col-span-6 flex items-center justify-center font-medium">۲۳۰۰ تومان</div>
       </div>
     </div>
   );
