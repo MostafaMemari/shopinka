@@ -1,3 +1,4 @@
+import { sanitizeInput } from '@/utils/sanitizeInput';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface StickerOptions {
@@ -65,10 +66,10 @@ const stickerSlice = createSlice({
     },
 
     setText(state, action: PayloadAction<string>) {
-      state.text = action.payload;
+      const cleaned = sanitizeInput(action.payload);
+      state.text = cleaned;
       saveStateToLocalStorage(state);
     },
-
     setColorStart(state) {
       state.loading = true;
     },

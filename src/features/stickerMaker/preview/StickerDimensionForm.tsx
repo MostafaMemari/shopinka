@@ -3,7 +3,8 @@ import React from 'react';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@/store';
 import { setText } from '@/store/slices/stickerSlice';
 import { useSelectedStickerAssets } from '@/hooks/useSelectedStickerAssets';
 import { renderStickerImage } from './renderStickerImage';
@@ -19,7 +20,7 @@ interface Props {
 
 export default function StickerDimensionForm({ width, height, note, setWidth, setNote }: Props) {
   const dispatch = useDispatch();
-  const { text, options, selectedMaterial, selectedFont } = useSelectedStickerAssets();
+  const { text, options, selectedFont } = useSelectedStickerAssets();
 
   const handleWidthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -59,29 +60,15 @@ export default function StickerDimensionForm({ width, height, note, setWidth, se
     link.click();
   };
 
-  function sanitizeInput(v: string) {
-    v = v.replace(/^\n+/, '');
-
-    v = v.replace(/\n{2,}/g, '\n');
-
-    v = v.replace(/\n+$/, '\n');
-
-    return v;
-  }
-
   return (
     <div className="p-4 space-y-4">
       <Textarea
         placeholder="متن..."
         value={text}
-        onChange={(e) => {
-          const cleaned = sanitizeInput(e.target.value);
-          dispatch(setText(cleaned));
-        }}
+        onChange={(e) => dispatch(setText(e.target.value))}
         className="flex-1 text-right h-24 resize-none text-sm"
         dir="rtl"
       />
-
       <div className="flex gap-4">
         <Input
           type="number"

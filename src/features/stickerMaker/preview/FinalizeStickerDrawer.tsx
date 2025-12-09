@@ -29,10 +29,10 @@ export default function FinalizeStickerDrawer({ isOpen, onOpenChange, trigger }:
     if (!selectedFont) return;
     if (!width) setHeight('');
 
-    const { ratio } = measureMultilineText(text, { fontFamily: selectedFont.name });
+    const { total, lines } = measureMultilineText(text, { fontFamily: selectedFont.name });
 
-    if (width && ratio) {
-      const calculatedHeight = Number(width) / ratio;
+    if (width && total.ratio) {
+      const calculatedHeight = Number(width) / total.ratio;
       setHeight(calculatedHeight.toFixed(1));
     }
   }, [selectedFont, width, text]);
