@@ -30,7 +30,12 @@ export function measureMultilineText(
   ctx.font = `${fontWeight} ${fontSize}px "${fontFamily}"`;
   ctx.direction = 'rtl';
 
-  const lines = text.split('\n');
+  const rawLines = text.split('\n');
+  let lines = [...rawLines];
+
+  while (lines.length > 1 && lines[lines.length - 1].trim() === '') {
+    lines.pop();
+  }
 
   let maxWidth = 0;
   let lineHeightPx = 0;
