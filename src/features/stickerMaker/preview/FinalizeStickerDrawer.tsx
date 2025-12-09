@@ -7,6 +7,9 @@ import { measureMultilineText } from '@/utils/measureText';
 import { useSelectedStickerAssets } from '@/hooks/useSelectedStickerAssets';
 import PreviewLines from './PreviewLines';
 import { Button } from '@/components/ui/button';
+import { useDispatch, useSelector } from 'react-redux';
+import { setLines } from '@/store/slices/stickerSlice';
+import { RootState } from '@/store';
 
 interface FinalizeStickerDrawerProps {
   isOpen: boolean;
@@ -16,32 +19,40 @@ interface FinalizeStickerDrawerProps {
 
 export default function FinalizeStickerDrawer({ isOpen, onOpenChange, trigger }: FinalizeStickerDrawerProps) {
   const { selectedFont, text, options } = useSelectedStickerAssets();
+  const { lines } = useSelector((state: RootState) => state.sticker);
+
+  const dispatch = useDispatch();
 
   const [width, setWidth] = useState('');
-  const [height, setHeight] = useState('');
-  const [note, setNote] = useState('');
-  const [lines, setLines] = useState<{ text: string; width: number; height: number }[]>([]);
   const [currentLineIndex, setCurrentLineIndex] = useState(0);
+
+  console.log('object');
 
   useEffect(() => {
     if (!text || !selectedFont) {
-      setLines([]);
-      setHeight('');
+      dispatch(setLines([]));
       setWidth('');
       return;
     }
 
     const { total, lines } = measureMultilineText(text, { fontFamily: selectedFont.name });
-    setLines(lines);
 
-    if (width && !isNaN(Number(width)) && total.ratio) {
-      const calculatedHeight = Number(width) / total.ratio;
-      setHeight(calculatedHeight.toFixed(1));
-    } else {
-      setHeight('');
-    }
+    // if (width && !isNaN(Number(width)) && total.ratio) {
+    //   const calculatedHeight = Number(width) / total.ratio;
+    //   setHeight(calculatedHeight.toFixed(1));
+    // } else {
+    //   setHeight('');
+    // }
 
-    setCurrentLineIndex(0);
+    dispatch(
+      setLines(
+        lines.map((line, index) => ({
+          text: line.text,
+          ratio: line.width / line.height,
+          lineNumber: index,
+        })),
+      ),
+    );
   }, [text, selectedFont, width]);
 
   const currentLine = lines[currentLineIndex];
@@ -81,7 +92,7 @@ export default function FinalizeStickerDrawer({ isOpen, onOpenChange, trigger }:
             fontStyle={options.style}
             lineHeight={selectedFont?.lineHeight}
           />
-          <StickerDimensionForm width={width} height={height} note={note} setWidth={setWidth} setNote={setNote} />
+          <StickerDimensionForm line={currentLine} />
         </>
       ) : (
         <div className="text-center py-4 text-gray-500">هیچ متنی برای پیش‌نمایش وجود ندارد</div>

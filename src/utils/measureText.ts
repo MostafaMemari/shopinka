@@ -26,12 +26,13 @@ export function measureMultilineText(
     text: string;
     width: number;
     height: number;
+    lineNumber: number;
   }[] = [];
 
   let maxWidth = 0;
   let totalHeight = 0;
 
-  for (const line of lines) {
+  lines.forEach((line, index) => {
     const metrics = ctx.measureText(line);
 
     const width = metrics.width;
@@ -41,11 +42,12 @@ export function measureMultilineText(
       text: line,
       width,
       height,
+      lineNumber: index + 1,
     });
 
     if (width > maxWidth) maxWidth = width;
     totalHeight += height;
-  }
+  });
 
   return {
     lines: lineResults,

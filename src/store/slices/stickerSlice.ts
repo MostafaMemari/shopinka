@@ -7,8 +7,17 @@ interface StickerOptions {
   style: 'normal' | 'italic';
 }
 
+export interface Line {
+  text: string;
+  width?: number | null;
+  height?: number | null;
+  ratio: number;
+  lineNumber: number;
+}
+
 interface StickerState {
   text: string;
+  lines: Line[];
   loading: boolean;
   materialId: number | null;
   fontId: number | null;
@@ -18,7 +27,6 @@ interface StickerState {
 const STORAGE_KEY = 'stickerState';
 
 // ---------------- LOCAL STORAGE --------------------
-
 const loadStateFromLocalStorage = (): StickerState | null => {
   if (typeof window === 'undefined') return null;
   try {
@@ -39,11 +47,11 @@ const saveStateToLocalStorage = (state: StickerState) => {
 };
 
 // ---------------- INITIAL STATE --------------------
-
 const persistedState = loadStateFromLocalStorage();
 
 const initialState: StickerState = persistedState || {
   text: '',
+  lines: [],
   loading: false,
   materialId: null,
   fontId: null,
@@ -55,7 +63,6 @@ const initialState: StickerState = persistedState || {
 };
 
 // ---------------- SLICE ----------------------------
-
 const stickerSlice = createSlice({
   name: 'sticker',
   initialState,
@@ -70,6 +77,15 @@ const stickerSlice = createSlice({
       state.text = cleaned;
       saveStateToLocalStorage(state);
     },
+
+    setLines(state, action: PayloadAction<Line[]>) {
+      state.lines = action.payload.map((line) => ({
+        ...line,
+        text: sanitizeInput(line.text),
+      }));
+      saveStateToLocalStorage(state);
+    },
+
     setColorStart(state) {
       state.loading = true;
     },
@@ -103,11 +119,12 @@ const stickerSlice = createSlice({
       saveStateToLocalStorage(state);
     },
 
-    resetStickerState(state, action: PayloadAction<{ materialId?: number; fontId?: number } | undefined>) {
+    resetStickerState(state, action?: PayloadAction<{ materialId?: number; fontId?: number }>) {
       if (state.loading) return state;
 
       const newState: StickerState = {
         text: '',
+        lines: [],
         loading: false,
         materialId: action?.payload?.materialId ?? 0,
         fontId: action?.payload?.fontId ?? 0,
@@ -127,6 +144,7 @@ const stickerSlice = createSlice({
 export const {
   setInitialOptions,
   setText,
+  setLines,
   setColorStart,
   setColorSuccess,
   setFontStart,

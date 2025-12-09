@@ -2,9 +2,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { useDispatch } from 'react-redux';
-import { setText } from '@/store/slices/stickerSlice';
 import { useSelectedStickerAssets } from '@/hooks/useSelectedStickerAssets';
 import { useLoadFont } from '@/hooks/useLoadFont';
+import { setText } from '@/store/slices/stickerSlice';
 
 interface EditableTextProps {
   onStartEditing: () => void;
