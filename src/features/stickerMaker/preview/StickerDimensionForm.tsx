@@ -51,6 +51,8 @@ export default function StickerDimensionForm({ width, height, note, setWidth, se
       color: '#000',
       weight: options.weight,
       style: options.style,
+      fontSize: selectedFont.size,
+      lineHeight: selectedFont.lineHeight,
     });
 
     const link = document.createElement('a');
