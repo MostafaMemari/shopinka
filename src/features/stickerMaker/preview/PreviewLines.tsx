@@ -6,32 +6,61 @@ interface PreviewLinesProps {
   fontFamily?: string;
   fontWeight?: number | string;
   fontStyle?: string;
-  lineHeight?: number;
+  fontSize?: number;
 }
 
-export default function PreviewLines({ line, fontFamily, fontWeight, fontStyle, lineHeight = 1.2 }: PreviewLinesProps) {
+export default function PreviewLines({ line, fontSize, fontFamily, fontWeight, fontStyle }: PreviewLinesProps) {
+  const hasWidth = Boolean(line.width);
+  const hasHeight = Boolean(line.height);
+
+  const displayWidth = line.width ? `${line.width} سانتی‌متر` : '?? سانتی‌متر';
+  const displayHeight = line.height ? `${line.height} سانتی‌متر` : '?? سانتی‌متر';
+  const dimensionLineClasses = 'absolute text-[10px] text-gray-500 font-medium whitespace-nowrap bg-white px-1 z-10';
+
   return (
-    <div className="space-y-4 py-4">
-      <div className="relative px-3 pt-6 pb-4">
-        <div className="absolute top-2 left-1/2 -translate-x-1/2 flex items-center text-[11px] text-red-500 font-medium">
-          <ArrowLeft className="w-3 h-3 rotate-180 mr-1" />
-          {line.width} سانتی‌متر
-          <ArrowLeft className="w-3 h-3 ml-1" />
-        </div>
+    <>
+      {line.text && (
+        <div className="relative min-h-[120px] border-b flex items-center justify-center">
+          {hasWidth && (
+            <>
+              <div className={`${dimensionLineClasses} absolute top-0 left-1/2 -translate-x-1/2 flex items-center`}>
+                <ArrowLeft className="w-2 h-2 text-red-500 rotate-180 mr-1" />
+                <span className="text-red-500">{displayWidth}</span>
+                <ArrowLeft className="w-2 h-2 text-red-500 ml-1" />
+              </div>
 
-        <div className="absolute -left-8 top-1/2 -translate-y-1/2 flex items-center rotate-[-90deg] text-[11px] text-red-500 font-medium">
-          <ArrowUp className="w-3 h-3 mr-1 rotate-90" />
-          {line.height} سانتی‌متر
-          <ArrowUp className="w-3 h-3 ml-1 -rotate-90" />
-        </div>
+              <div className="absolute left-0 right-0 top-2 border-b border-dashed border-red-300 pointer-events-none" />
+            </>
+          )}
 
-        <div
-          style={{ fontFamily, fontWeight, fontStyle, lineHeight, color: '#000000' }}
-          className="mx-auto flex items-center justify-center border-dashed px-2 text-center text-black"
-        >
-          {line.text}
+          {hasHeight && (
+            <>
+              <div className={`${dimensionLineClasses} absolute -left-9 top-1/2 -translate-y-1/2 flex items-center -rotate-90`}>
+                <ArrowUp className="w-2 h-2 text-red-500 rotate-90 mr-1" />
+                <span className="text-red-500">{displayHeight}</span>
+                <ArrowUp className="w-2 h-2 text-red-500 -rotate-90 ml-1" />
+              </div>
+
+              <div className="absolute top-0 bottom-0 left-2 border-l border-dashed border-red-300 pointer-events-none mb-3" />
+            </>
+          )}
+
+          <div
+            className="relative z-0 text-center p-2 pt-4 mb-3 w-full max-w-full"
+            style={{
+              fontFamily: fontFamily || 'inherit',
+              fontWeight: fontWeight,
+              fontStyle: fontStyle,
+              color: '#000',
+              fontSize: `${fontSize ? fontSize : 1}rem`,
+              lineHeight: 1.2,
+              whiteSpace: 'pre',
+            }}
+          >
+            {line.text}
+          </div>
         </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 }

@@ -6,6 +6,7 @@ import { Line, setLines, setText } from '@/store/slices/stickerSlice';
 import { useSelectedStickerAssets } from '@/hooks/useSelectedStickerAssets';
 import { renderStickerImage } from './renderStickerImage';
 import { RootState } from '@/store';
+import { Textarea } from '@/components/ui/textarea';
 
 interface Props {
   line: Line;
@@ -106,6 +107,9 @@ export default function StickerDimensionForm({ line }: Props) {
           className="flex-1 text-right"
           dir="rtl"
         />
+      </div>
+      <div>
+        <Textarea placeholder="توضیحات..." className="flex-1 text-right" dir="rtl" />
       </div>
     </div>
   );

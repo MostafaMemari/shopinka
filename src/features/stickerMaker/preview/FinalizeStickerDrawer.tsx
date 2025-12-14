@@ -26,8 +26,6 @@ export default function FinalizeStickerDrawer({ isOpen, onOpenChange, trigger }:
   const [width, setWidth] = useState('');
   const [currentLineIndex, setCurrentLineIndex] = useState(0);
 
-  console.log('object');
-
   useEffect(() => {
     if (!text || !selectedFont) {
       dispatch(setLines([]));
@@ -55,8 +53,9 @@ export default function FinalizeStickerDrawer({ isOpen, onOpenChange, trigger }:
     );
   }, [text, selectedFont, width]);
 
-  const currentLine = lines[currentLineIndex];
+  const isFirstLine = currentLineIndex === 0;
   const isLastLine = currentLineIndex === lines.length - 1;
+  const currentLine = lines[currentLineIndex];
 
   return (
     <MobileDrawer
@@ -67,20 +66,36 @@ export default function FinalizeStickerDrawer({ isOpen, onOpenChange, trigger }:
       title="پیش نمایش"
       className="max-w-[500px] m-auto"
       actions={
-        lines.length > 0 ? (
-          <div className="grid grid-cols-12 gap-2">
-            {!isLastLine ? (
-              <Button className="col-span-6 w-full" onClick={() => setCurrentLineIndex((prev) => prev + 1)}>
-                بعدی
-              </Button>
-            ) : (
-              <Button className="col-span-6 w-full" onClick={() => setCurrentLineIndex(0)}>
-                بازگشت به خط اول
-              </Button>
-            )}
-            <div className="col-span-6 flex items-center justify-center font-medium">۲۳۰۰ تومان</div>
+        lines.length > 0 && (
+          <div className="flex w-full items-center justify-between">
+            <div className="flex w-1/2 gap-2">
+              {!isLastLine ? (
+                <Button className="flex-1" onClick={() => setCurrentLineIndex((i) => i + 1)}>
+                  خط بعدی
+                </Button>
+              ) : (
+                <Button
+                  className="flex-1"
+                  variant="default"
+                  onClick={() => {
+                    // TODO: نهایی سازی
+                    console.log('Finalize sticker');
+                  }}
+                >
+                  نهایی‌سازی
+                </Button>
+              )}
+
+              {!isFirstLine && (
+                <Button variant="outline" className="flex-1" onClick={() => setCurrentLineIndex((i) => i - 1)}>
+                  خط قبلی
+                </Button>
+              )}
+            </div>
+
+            <div className="w-1/2 text-left font-semibold">۲٬۳۰۰ تومان</div>
           </div>
-        ) : null
+        )
       }
     >
       {lines.length > 0 && currentLine ? (
@@ -90,7 +105,7 @@ export default function FinalizeStickerDrawer({ isOpen, onOpenChange, trigger }:
             fontFamily={selectedFont?.name}
             fontWeight={options.weight}
             fontStyle={options.style}
-            lineHeight={selectedFont?.lineHeight}
+            fontSize={selectedFont?.size}
           />
           <StickerDimensionForm line={currentLine} />
         </>
