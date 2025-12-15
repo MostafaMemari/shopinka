@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLines } from '@/store/slices/stickerSlice';
 import { RootState } from '@/store';
+import FinalizePreview from './FinalizePreview';
 
 interface FinalizeStickerDrawerProps {
   isOpen: boolean;
@@ -18,8 +19,10 @@ interface FinalizeStickerDrawerProps {
 }
 
 export default function FinalizeStickerDrawer({ isOpen, onOpenChange, trigger }: FinalizeStickerDrawerProps) {
-  const { selectedFont, text, options } = useSelectedStickerAssets();
   const { lines } = useSelector((state: RootState) => state.sticker);
+
+  const { selectedFont, text, options } = useSelectedStickerAssets();
+  const [isFinalized, setIsFinalized] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -57,6 +60,8 @@ export default function FinalizeStickerDrawer({ isOpen, onOpenChange, trigger }:
   const isLastLine = currentLineIndex === lines.length - 1;
   const currentLine = lines[currentLineIndex];
 
+  // <div className="w-1/2 text-left font-semibold">۲٬۳۰۰ تومان</div>
+
   return (
     <MobileDrawer
       open={isOpen}
@@ -66,49 +71,58 @@ export default function FinalizeStickerDrawer({ isOpen, onOpenChange, trigger }:
       title="پیش نمایش"
       className="max-w-[500px] m-auto"
       actions={
-        lines.length > 0 && (
-          <div className="flex w-full items-center justify-between">
-            <div className="flex w-1/2 gap-2">
-              {!isLastLine ? (
-                <Button className="flex-1" onClick={() => setCurrentLineIndex((i) => i + 1)}>
-                  خط بعدی
-                </Button>
-              ) : (
-                <Button
-                  className="flex-1"
-                  variant="default"
-                  onClick={() => {
-                    // TODO: نهایی سازی
-                    console.log('Finalize sticker');
-                  }}
-                >
-                  نهایی‌سازی
-                </Button>
-              )}
+        isFinalized ? (
+          <Button
+            size="lg"
+            className="w-full"
+            onClick={() => {
+              console.log('Add to cart');
+            }}
+          >
+            افزودن به سبد خرید
+          </Button>
+        ) : (
+          lines.length > 0 && (
+            <div className="flex w-full items-center justify-between gap-2">
+              <div className="flex w-1/2">
+                {!isLastLine ? (
+                  <Button className="flex-1" onClick={() => setCurrentLineIndex((i) => i + 1)}>
+                    خط بعدی
+                  </Button>
+                ) : (
+                  <Button className="flex-1" onClick={() => setIsFinalized(true)}>
+                    نهایی‌سازی
+                  </Button>
+                )}
+              </div>
 
               {!isFirstLine && (
-                <Button variant="outline" className="flex-1" onClick={() => setCurrentLineIndex((i) => i - 1)}>
-                  خط قبلی
-                </Button>
+                <div className="flex w-1/2">
+                  <Button variant="outline" className="flex-1" onClick={() => setCurrentLineIndex((i) => i - 1)}>
+                    خط قبلی
+                  </Button>
+                </div>
               )}
             </div>
-
-            <div className="w-1/2 text-left font-semibold">۲٬۳۰۰ تومان</div>
-          </div>
+          )
         )
       }
     >
-      {lines.length > 0 && currentLine ? (
-        <>
-          <PreviewLines
-            line={currentLine}
-            fontFamily={selectedFont?.name}
-            fontWeight={options.weight}
-            fontStyle={options.style}
-            fontSize={selectedFont?.size}
-          />
-          <StickerDimensionForm line={currentLine} />
-        </>
+      {lines.length > 0 ? (
+        isFinalized ? (
+          <FinalizePreview lines={lines} />
+        ) : currentLine ? (
+          <>
+            <PreviewLines
+              line={currentLine}
+              fontFamily={selectedFont?.name}
+              fontWeight={options.weight}
+              fontStyle={options.style}
+              fontSize={selectedFont?.size}
+            />
+            <StickerDimensionForm line={currentLine} />
+          </>
+        ) : null
       ) : (
         <div className="text-center py-4 text-gray-500">هیچ متنی برای پیش‌نمایش وجود ندارد</div>
       )}

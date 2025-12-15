@@ -8,6 +8,13 @@ export enum SurfaceType {
   REFLECTIVE = 'REFLECTIVE',
 }
 
+export const surfaceLabelMap: Record<SurfaceType, string> = {
+  MATTE: 'مات',
+  GLOSSY: 'براق',
+  RAINBOW: 'رنگ رنگ',
+  REFLECTIVE: 'شب تاب',
+};
+
 export interface MaterialStickerItem {
   id: number;
   name: string;
