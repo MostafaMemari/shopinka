@@ -2,6 +2,7 @@ import { useSelectedStickerAssets } from '@/hooks/useSelectedStickerAssets';
 import React, { useEffect, useState } from 'react';
 import { renderStickerImage } from './renderStickerImage';
 import StickerSelectionSummary from './StickerSelectionSummary';
+import StickerLineDimensions from './StickerLineDimensions';
 
 interface Props {
   lines: any[];
@@ -48,11 +49,10 @@ function FinalizePreview({ lines }: Props) {
       <div className="flex flex-col gap-2">
         {lines.map((line, index) => (
           <div key={index} className="flex items-center justify-between rounded-lg border p-3 text-sm">
-            <div className="flex flex-col">
+            <div className="flex flex-col gap-1">
               <span className="font-medium">{line.text}</span>
-              <span className="text-xs text-gray-500">
-                عرض: {line.width}cm × ارتفاع: {line.height}cm
-              </span>
+
+              <StickerLineDimensions width={line.width} height={line.height} />
             </div>
 
             <span className="text-xs text-gray-400">خط {line.lineNumber + 1}</span>
