@@ -1,38 +1,34 @@
 import { Badge } from '@/components/ui/badge';
 import { surfaceLabelMap } from '@/types/materialStickerType';
-import { FontItem } from '@/types/fontType';
-import { MaterialStickerItem } from '@/types/materialStickerType';
+import { useSelectedStickerAssets } from '@/hooks/useSelectedStickerAssets';
 
-interface StickerSelectionSummaryProps {
-  font?: FontItem | null;
-  material?: MaterialStickerItem | null;
-}
+export default function StickerSelectionSummary() {
+  const { selectedFont, selectedMaterial } = useSelectedStickerAssets();
 
-export default function StickerSelectionSummary({ font, material }: StickerSelectionSummaryProps) {
-  if (!font && !material) return null;
+  if (!selectedFont && !selectedMaterial) return null;
 
   return (
     <div className="flex flex-wrap items-center gap-2">
-      {font && (
+      {selectedFont && (
         <Badge variant="secondary" className="gap-1.5 px-2.5 py-0.5 font-normal">
           <span className="text-muted-foreground">فونت</span>
-          <span className="font-medium">{font.displayName || font.name}</span>
+          <span className="font-medium">{selectedFont.displayName || selectedFont.name}</span>
         </Badge>
       )}
 
-      {material && (
+      {selectedMaterial && (
         <Badge variant="outline" className="flex items-center gap-1.5 px-2.5 py-0.5">
           <span className="relative flex h-3.5 w-3.5 items-center justify-center rounded-full bg-background">
-            <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: material.colorCode }} />
+            <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: selectedMaterial.colorCode }} />
           </span>
 
-          <span className="font-medium">{material.name}</span>
+          <span className="font-medium">{selectedMaterial.name}</span>
         </Badge>
       )}
 
-      {material?.surface && (
+      {selectedMaterial?.surface && (
         <Badge variant="outline" className="px-2.5 py-0.5 text-muted-foreground">
-          {surfaceLabelMap[material.surface]}
+          {surfaceLabelMap[selectedMaterial.surface]}
         </Badge>
       )}
     </div>
