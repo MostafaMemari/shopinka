@@ -178,6 +178,7 @@ const ProductDetailsView: FC<ProductDetailsViewProps> = ({ product }) => {
 
               <div className="hidden md:flex justify-between items-center w-full">
                 <div className="w-1/2">{AddToCard}</div>
+
                 <div className="text-end">
                   <ProductDetailsPrice
                     product={{
