@@ -31,27 +31,48 @@ export default function StickerDimensionForm({ line, onValidityChange }: Props) 
     },
   });
 
+  const formatNumber = (num: number) => {
+    const str = num.toFixed(1);
+    return str.endsWith('.0') ? str.slice(0, -2) : str;
+  };
+
   const handleWidthChange = (value: string) => {
     const width = Number(value);
+
+    if (value === '') {
+      form.setValue('width', '', { shouldValidate: true });
+      form.setValue('height', '', { shouldValidate: true });
+      return;
+    }
+
     if (Number.isNaN(width)) return;
 
     form.setValue('width', value, { shouldValidate: true });
 
     if (line.ratio) {
-      const newHeight = (width / line.ratio).toFixed(1);
-      form.setValue('height', newHeight, { shouldValidate: true });
+      const newHeight = width / line.ratio;
+      form.setValue('height', formatNumber(newHeight), { shouldValidate: true });
     }
   };
 
   const handleHeightChange = (value: string) => {
     const height = Number(value);
+
+    if (value === '') {
+      form.setValue('height', '', { shouldValidate: true });
+      form.setValue('width', '', { shouldValidate: true });
+      return;
+    }
+
     if (Number.isNaN(height)) return;
 
     form.setValue('height', value, { shouldValidate: true });
 
     if (line.ratio) {
-      const newWidth = (height * line.ratio).toFixed(1);
-      form.setValue('width', newWidth, { shouldValidate: true });
+      const newWidth = height * line.ratio;
+      console.log(formatNumber(newWidth));
+
+      form.setValue('width', formatNumber(newWidth), { shouldValidate: true });
     }
   };
 
@@ -100,38 +121,10 @@ export default function StickerDimensionForm({ line, onValidityChange }: Props) 
       <form className="p-4 space-y-4">
         <FormInput control={form.control} name="text" label="متن" className="text-right" />
 
-        <div className="flex gap-4">
-          <FormInput
-            control={form.control}
-            name="width"
-            label="عرض (cm)"
-            className="flex-1 text-right"
-            onChange={(value) => {
-              const width = Number(value);
-              if (Number.isNaN(width)) return;
+        <div className="grid grid-cols-2 gap-4 items-start">
+          <FormInput control={form.control} name="width" label="عرض (cm)" className="flex-1 text-right" onChange={handleWidthChange} />
 
-              if (line.ratio) {
-                const newHeight = (width / line.ratio).toFixed(1);
-                form.setValue('height', newHeight, { shouldValidate: true });
-              }
-            }}
-          />
-
-          <FormInput
-            control={form.control}
-            name="height"
-            label="طول (cm)"
-            className="flex-1 text-right"
-            onChange={(value) => {
-              const height = Number(value);
-              if (Number.isNaN(height)) return;
-
-              if (line.ratio) {
-                const newWidth = (height * line.ratio).toFixed(1);
-                form.setValue('width', newWidth, { shouldValidate: true });
-              }
-            }}
-          />
+          <FormInput control={form.control} name="height" label="طول (cm)" className="flex-1 text-right" onChange={handleHeightChange} />
         </div>
       </form>
     </Form>
