@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store';
-import { setLines, setText, Line } from '@/store/slices/stickerSlice';
+import { setLines, Line } from '@/store/slices/stickerSlice';
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';

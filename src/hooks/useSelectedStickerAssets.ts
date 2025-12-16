@@ -8,7 +8,7 @@ import { MaterialStickerItem } from '@/types/materialStickerType';
 import { useStickerData } from '@/features/stickerMaker/StickerDataContext';
 
 export const useSelectedStickerAssets = () => {
-  const { fontId, materialId, text, options } = useSelector((state: RootState) => state.sticker);
+  const { fontId, materialId, text, options, lines } = useSelector((state: RootState) => state.sticker);
 
   const { fontData, materialData } = useStickerData();
 
@@ -31,5 +31,6 @@ export const useSelectedStickerAssets = () => {
     materialData,
     selectedFont,
     selectedMaterial,
+    lines,
   };
 };

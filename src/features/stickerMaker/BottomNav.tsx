@@ -4,6 +4,7 @@ import PrimaryButton from '@/components/common/PrimaryButton';
 import { Palette, Settings, Type } from 'lucide-react';
 import React, { useState } from 'react';
 import FinalizeStickerDrawer from './preview/FinalizeStickerDrawer';
+import FinalizeSummaryDrawer from './preview/FinalizeSummaryDrawer';
 
 interface BottomNavProps {
   showFontGrid: boolean;
@@ -24,6 +25,7 @@ export default function BottomNav({
   toggleSettingsPanel,
 }: BottomNavProps) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isFinalDrawerOpen, setIsFinalDrawerOpen] = useState(false);
 
   const navItems = [
     {
@@ -78,7 +80,11 @@ export default function BottomNav({
             نهایی سازی
           </PrimaryButton>
 
-          {isDrawerOpen && <FinalizeStickerDrawer isOpen={isDrawerOpen} onOpenChange={setIsDrawerOpen} />}
+          {isDrawerOpen && (
+            <FinalizeStickerDrawer isOpen={isDrawerOpen} onOpenChange={setIsDrawerOpen} onFinalize={() => setIsFinalDrawerOpen(true)} />
+          )}
+
+          {isFinalDrawerOpen && <FinalizeSummaryDrawer isOpen={isFinalDrawerOpen} onOpenChange={setIsFinalDrawerOpen} />}
         </div>
       </div>
     </>

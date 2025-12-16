@@ -6,26 +6,22 @@ import StickerDimensionForm from './StickerDimensionForm';
 import { measureMultilineText } from '@/utils/measureText';
 import { useSelectedStickerAssets } from '@/hooks/useSelectedStickerAssets';
 import PreviewLines from './PreviewLines';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setLines } from '@/store/slices/stickerSlice';
-import { RootState } from '@/store';
-import FinalizeSummaryDrawer from './FinalizeSummaryDrawer';
 import LineNavigationButtons from './LineNavigationButtons';
 
 interface FinalizeStickerDrawerProps {
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
   trigger?: ReactNode;
+  onFinalize?: () => void;
 }
 
-export default function FinalizeStickerDrawer({ isOpen, onOpenChange, trigger }: FinalizeStickerDrawerProps) {
+export default function FinalizeStickerDrawer({ isOpen, onOpenChange, onFinalize, trigger }: FinalizeStickerDrawerProps) {
   const dispatch = useDispatch();
 
-  const { lines } = useSelector((state: RootState) => state.sticker);
+  const { selectedFont, text, options, lines } = useSelectedStickerAssets();
 
-  const { selectedFont, text, options } = useSelectedStickerAssets();
-
-  const [isFinalDrawerOpen, setIsFinalDrawerOpen] = useState(false);
   const [isCurrentLineValid, setIsCurrentLineValid] = useState(false);
 
   const [width, setWidth] = useState('');
@@ -38,14 +34,16 @@ export default function FinalizeStickerDrawer({ isOpen, onOpenChange, trigger }:
       return;
     }
 
-    const { total, lines } = measureMultilineText(text, { fontFamily: selectedFont.name });
+    const { lines: measuredLines } = measureMultilineText(text, { fontFamily: selectedFont.name });
 
     dispatch(
       setLines(
-        lines.map((line, index) => ({
+        measuredLines.map((line, index) => ({
           text: line.text,
           ratio: line.width / line.height,
           lineNumber: index,
+          width: lines[index]?.width || null,
+          height: lines[index]?.height || null,
         })),
       ),
     );
@@ -57,8 +55,6 @@ export default function FinalizeStickerDrawer({ isOpen, onOpenChange, trigger }:
 
   return (
     <>
-      <FinalizeSummaryDrawer isOpen={isFinalDrawerOpen} onOpenChange={setIsFinalDrawerOpen} lines={lines} />
-
       <MobileDrawer
         open={isOpen}
         onOpenChange={onOpenChange}
@@ -74,7 +70,7 @@ export default function FinalizeStickerDrawer({ isOpen, onOpenChange, trigger }:
             disabledFinalize={!isCurrentLineValid}
             onNextLine={() => setCurrentLineIndex((i) => i + 1)}
             onPrevLine={() => setCurrentLineIndex((i) => i - 1)}
-            onFinalize={() => setIsFinalDrawerOpen(true)}
+            onFinalize={onFinalize || (() => {})}
           />
         }
       >

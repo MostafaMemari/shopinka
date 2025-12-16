@@ -19,7 +19,7 @@ export function useInitializeStickerOptions({
   materialLoading: boolean;
 }) {
   const dispatch = useDispatch();
-  const { options, materialId, fontId } = useSelector((state: RootState) => state.sticker);
+  const { options, materialId, fontId, lines } = useSelector((state: RootState) => state.sticker);
 
   useEffect(() => {
     if (fontLoading || materialLoading || !fontData || !materialData) return;
@@ -37,6 +37,10 @@ export function useInitializeStickerOptions({
     if (finalMaterial) {
       const exists = materialData?.some((material: MaterialStickerItem) => material.id === finalMaterial?.id);
       if (!exists) finalMaterial = null;
+    }
+
+    if (lines.length === 0) {
+      dispatch(setLines([]));
     }
 
     if (!finalFont || !finalMaterial) {

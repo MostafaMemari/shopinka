@@ -10,11 +10,10 @@ import { useSelectedStickerAssets } from '@/hooks/useSelectedStickerAssets';
 interface FinalizeSummaryDrawerProps {
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
-  lines: any[];
 }
 
-export default function FinalizeSummaryDrawer({ isOpen, onOpenChange, lines }: FinalizeSummaryDrawerProps) {
-  const { materialId, fontId } = useSelectedStickerAssets();
+export default function FinalizeSummaryDrawer({ isOpen, onOpenChange }: FinalizeSummaryDrawerProps) {
+  const { materialId, fontId, text, selectedFont, lines } = useSelectedStickerAssets();
 
   const [price, setPrice] = useState(0);
 
@@ -25,11 +24,13 @@ export default function FinalizeSummaryDrawer({ isOpen, onOpenChange, lines }: F
     customStickerPricing({
       fontId: fontId,
       materialId: materialId,
-      lines: lines.map((line, index) => ({
-        lineNumber: index,
-        width: line.width,
-        height: line.height,
-      })),
+      lines: lines
+        .filter((line) => line.width != null && line.height != null)
+        .map((line, index) => ({
+          lineNumber: index,
+          width: line?.width!,
+          height: line?.height!,
+        })),
     }).then((response) => {
       if (response.success && response.data) {
         setPrice(response.data.pricing);
