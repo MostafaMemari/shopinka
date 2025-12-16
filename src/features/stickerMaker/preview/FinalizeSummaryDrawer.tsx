@@ -3,6 +3,9 @@ import FinalizePreview from './FinalizePreview';
 import TomanIcon from '@/components/common/svg/TomanIcon';
 import { formatPrice } from '@/utils/formatter';
 import PrimaryButton from '@/components/common/PrimaryButton';
+import { useEffect, useState } from 'react';
+import { customStickerPricing } from '@/features/custom-sticker/services/customStickerService';
+import { useSelectedStickerAssets } from '@/hooks/useSelectedStickerAssets';
 
 interface FinalizeSummaryDrawerProps {
   isOpen: boolean;
@@ -11,6 +14,29 @@ interface FinalizeSummaryDrawerProps {
 }
 
 export default function FinalizeSummaryDrawer({ isOpen, onOpenChange, lines }: FinalizeSummaryDrawerProps) {
+  const { materialId, fontId } = useSelectedStickerAssets();
+
+  const [price, setPrice] = useState(0);
+
+  useEffect(() => {
+    if (!lines || lines.length === 0) return;
+    if (!fontId || !materialId) return;
+
+    customStickerPricing({
+      fontId: fontId,
+      materialId: materialId,
+      lines: lines.map((line, index) => ({
+        lineNumber: index,
+        width: line.width,
+        height: line.height,
+      })),
+    }).then((response) => {
+      if (response.success && response.data) {
+        setPrice(response.data.pricing);
+      }
+    });
+  }, []);
+
   return (
     <MobileDrawer
       open={isOpen}
@@ -30,7 +56,7 @@ export default function FinalizeSummaryDrawer({ isOpen, onOpenChange, lines }: F
           </div>
 
           <div className="flex items-center gap-1 text-left font-semibold text-primary text-base">
-            <span className="text-base font-semibold lg:text-lg lg:font-bold">{formatPrice(250000)}</span>
+            <span className="text-base font-semibold lg:text-lg lg:font-bold">{formatPrice(price / 100)}</span>
             <TomanIcon className="w-4 h-4" />
           </div>
         </div>

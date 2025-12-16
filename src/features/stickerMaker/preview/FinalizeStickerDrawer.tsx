@@ -26,6 +26,7 @@ export default function FinalizeStickerDrawer({ isOpen, onOpenChange, trigger }:
   const { selectedFont, text, options } = useSelectedStickerAssets();
 
   const [isFinalDrawerOpen, setIsFinalDrawerOpen] = useState(false);
+  const [isCurrentLineValid, setIsCurrentLineValid] = useState(false);
 
   const [width, setWidth] = useState('');
   const [currentLineIndex, setCurrentLineIndex] = useState(0);
@@ -69,6 +70,8 @@ export default function FinalizeStickerDrawer({ isOpen, onOpenChange, trigger }:
           <LineNavigationButtons
             isFirstLine={isFirstLine}
             isLastLine={isLastLine}
+            disabledNext={!isCurrentLineValid}
+            disabledFinalize={!isCurrentLineValid}
             onNextLine={() => setCurrentLineIndex((i) => i + 1)}
             onPrevLine={() => setCurrentLineIndex((i) => i - 1)}
             onFinalize={() => setIsFinalDrawerOpen(true)}
@@ -79,13 +82,14 @@ export default function FinalizeStickerDrawer({ isOpen, onOpenChange, trigger }:
           currentLine ? (
             <>
               <PreviewLines
+                key={currentLine.lineNumber}
                 line={currentLine}
                 fontFamily={selectedFont?.name}
                 fontWeight={options.weight}
                 fontStyle={options.style}
                 fontSize={selectedFont?.size}
               />
-              <StickerDimensionForm line={currentLine} />
+              <StickerDimensionForm line={currentLine} onValidityChange={setIsCurrentLineValid} />
             </>
           ) : null
         ) : (

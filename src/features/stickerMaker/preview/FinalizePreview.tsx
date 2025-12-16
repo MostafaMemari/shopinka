@@ -9,7 +9,7 @@ interface Props {
 }
 
 function FinalizePreview({ lines }: Props) {
-  const { text, options, selectedFont, selectedMaterial } = useSelectedStickerAssets();
+  const { text, options, selectedFont } = useSelectedStickerAssets();
 
   return (
     <div className="flex flex-col gap-4">

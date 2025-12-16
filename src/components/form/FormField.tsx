@@ -9,10 +9,11 @@ interface BaseFieldProps {
   name: string;
   label: string;
   className?: string;
+  onChange?: (value: string) => void;
 }
 
 // Input Field
-export function FormInput({ control, name, label, className }: BaseFieldProps & { type?: string }) {
+export function FormInput({ control, name, label, className, onChange, type = 'text' }: BaseFieldProps & { type?: string }) {
   return (
     <FormField
       control={control}
@@ -20,9 +21,20 @@ export function FormInput({ control, name, label, className }: BaseFieldProps & 
       render={({ field }) => (
         <FormItem className={className}>
           <FormLabel>{label}</FormLabel>
+
           <FormControl>
-            <Input {...field} id={name} />
+            <Input
+              {...field}
+              id={name}
+              type={type}
+              value={field.value ?? ''}
+              onChange={(e) => {
+                field.onChange(e);
+                onChange?.(e.target.value);
+              }}
+            />
           </FormControl>
+
           <FormMessage />
         </FormItem>
       )}

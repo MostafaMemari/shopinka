@@ -1,91 +1,139 @@
 'use client';
-import React from 'react';
-import { Input } from '@/components/ui/input';
+
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Line, setLines, setText } from '@/store/slices/stickerSlice';
 import { RootState } from '@/store';
+import { setLines, setText, Line } from '@/store/slices/stickerSlice';
+
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+
+import { Form } from '@/components/ui/form';
+import { StickerLineFormValues, stickerLineSchema } from '@/validation/validationStickerLineSchema';
+import { FormInput } from '@/components/form/FormField';
 
 interface Props {
   line: Line;
+  onValidityChange: (isValid: boolean) => void;
 }
 
-export default function StickerDimensionForm({ line }: Props) {
+export default function StickerDimensionForm({ line, onValidityChange }: Props) {
+  const dispatch = useDispatch();
   const { lines } = useSelector((state: RootState) => state.sticker);
 
-  const dispatch = useDispatch();
+  const form = useForm<StickerLineFormValues>({
+    resolver: zodResolver(stickerLineSchema),
+    mode: 'onChange',
+    defaultValues: {
+      text: line.text ?? '',
+      width: line.width != null ? String(line.width) : '',
+      height: line.height != null ? String(line.height) : '',
+    },
+  });
 
-  const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
+  const handleWidthChange = (value: string) => {
+    const width = Number(value);
+    if (Number.isNaN(width)) return;
 
-    dispatch(setLines(lines.map((l) => (l.lineNumber === line.lineNumber ? { ...l, text: value } : l))));
-    dispatch(
-      setText(
-        lines
-          .map((l) => (l.lineNumber === line.lineNumber ? { ...l, text: value } : l))
-          .map((l) => l.text)
-          .join('\n'),
-      ),
-    );
+    form.setValue('width', value, { shouldValidate: true });
+
+    if (line.ratio) {
+      const newHeight = (width / line.ratio).toFixed(1);
+      form.setValue('height', newHeight, { shouldValidate: true });
+    }
   };
 
-  const handleWidthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
+  const handleHeightChange = (value: string) => {
+    const height = Number(value);
+    if (Number.isNaN(height)) return;
 
-    dispatch(
-      setLines(
-        lines.map((l) =>
-          l.lineNumber === line.lineNumber
-            ? {
-                ...l,
-                width: Number(value),
-                height: line.ratio ? Number((Number(value) / line.ratio).toFixed(1)) : null,
-              }
-            : l,
-        ),
-      ),
-    );
+    form.setValue('height', value, { shouldValidate: true });
+
+    if (line.ratio) {
+      const newWidth = (height * line.ratio).toFixed(1);
+      form.setValue('width', newWidth, { shouldValidate: true });
+    }
   };
 
-  const handleHeightChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    dispatch(
-      setLines(
-        lines.map((l) =>
-          l.lineNumber === line.lineNumber
-            ? {
-                ...l,
-                width: line.ratio ? Number((Number(value) * line.ratio).toFixed(1)) : null,
-                height: Number(value),
-              }
-            : l,
-        ),
-      ),
+  const {
+    watch,
+    formState: { isValid },
+  } = form;
+
+  const text = watch('text');
+  const width = watch('width');
+  const height = watch('height');
+
+  useEffect(() => {
+    onValidityChange(isValid);
+  }, [isValid]);
+
+  useEffect(() => {
+    form.reset({
+      text: line.text ?? '',
+      width: line.width != null ? String(line.width) : '',
+      height: line.height != null ? String(line.height) : '',
+    });
+  }, [line.lineNumber]);
+
+  useEffect(() => {
+    if (!isValid) return;
+
+    const toNumber = (v?: string) => (v ? Number(v) : undefined);
+
+    const newLines = lines.map((l) =>
+      l.lineNumber === line.lineNumber
+        ? {
+            ...l,
+            text,
+            width: toNumber(width),
+            height: toNumber(height),
+          }
+        : l,
     );
-  };
+
+    dispatch(setLines(newLines));
+  }, [text, width, height, isValid]);
 
   return (
-    <div className="p-4 space-y-4">
-      <Input placeholder="متن..." value={line.text} onChange={handleTextChange} className="flex-1 text-right" dir="rtl" />
-      <div className="flex gap-4">
-        <Input
-          type="number"
-          placeholder="عرض (cm)"
-          value={line.width ? line.width.toString() : ''}
-          onChange={handleWidthChange}
-          className="flex-1 text-right"
-          dir="rtl"
-          min="10"
-          max="30"
-        />
-        <Input
-          type="number"
-          placeholder="طول (cm)"
-          value={line.height ? line.height.toString() : ''}
-          onChange={handleHeightChange}
-          className="flex-1 text-right"
-          dir="rtl"
-        />
-      </div>
-    </div>
+    <Form {...form}>
+      <form className="p-4 space-y-4">
+        <FormInput control={form.control} name="text" label="متن" className="text-right" />
+
+        <div className="flex gap-4">
+          <FormInput
+            control={form.control}
+            name="width"
+            label="عرض (cm)"
+            className="flex-1 text-right"
+            onChange={(value) => {
+              const width = Number(value);
+              if (Number.isNaN(width)) return;
+
+              if (line.ratio) {
+                const newHeight = (width / line.ratio).toFixed(1);
+                form.setValue('height', newHeight, { shouldValidate: true });
+              }
+            }}
+          />
+
+          <FormInput
+            control={form.control}
+            name="height"
+            label="طول (cm)"
+            className="flex-1 text-right"
+            onChange={(value) => {
+              const height = Number(value);
+              if (Number.isNaN(height)) return;
+
+              if (line.ratio) {
+                const newWidth = (height * line.ratio).toFixed(1);
+                form.setValue('width', newWidth, { shouldValidate: true });
+              }
+            }}
+          />
+        </div>
+      </form>
+    </Form>
   );
 }
