@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-const positiveNumberString = (label: string) =>
+const numberStringWithRange = (label: string, min: number, max: number) =>
   z
     .string()
     .trim()
@@ -8,17 +8,17 @@ const positiveNumberString = (label: string) =>
     .refine(
       (val) => {
         const num = Number(val);
-        return !isNaN(num) && num > 0;
+        return !isNaN(num) && num >= min && num <= max;
       },
       {
-        message: `${label} باید عدد مثبت باشد`,
+        message: `${label} باید بین ${min} تا ${max} سانتی‌متر باشد`,
       },
     );
 
 export const stickerLineSchema = z.object({
   text: z.string().min(1, 'متن الزامی است'),
-  width: positiveNumberString('عرض'),
-  height: positiveNumberString('طول'),
+  width: numberStringWithRange('عرض', 10, 60),
+  height: numberStringWithRange('طول', 3, 20),
 });
 
 export type StickerLineFormValues = z.infer<typeof stickerLineSchema>;

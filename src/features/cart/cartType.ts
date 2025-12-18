@@ -65,5 +65,6 @@ export interface CartResponse {
 export interface CartData {
   productId: number | null | undefined;
   productVariantId: number | null | undefined;
+  customStickerId: number | null | undefined;
   quantity: number;
 }

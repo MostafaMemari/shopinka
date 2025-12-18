@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store';
-import { setLines, Line } from '@/store/slices/stickerSlice';
+import { setLines, Line, setText } from '@/store/slices/stickerSlice';
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -19,7 +19,7 @@ interface Props {
 
 export default function StickerDimensionForm({ line, onValidityChange }: Props) {
   const dispatch = useDispatch();
-  const { lines } = useSelector((state: RootState) => state.sticker);
+  const { lines, text: textState } = useSelector((state: RootState) => state.sticker);
 
   const form = useForm<StickerLineFormValues>({
     resolver: zodResolver(stickerLineSchema),
@@ -70,9 +70,26 @@ export default function StickerDimensionForm({ line, onValidityChange }: Props) 
 
     if (line.ratio) {
       const newWidth = height * line.ratio;
-      console.log(formatNumber(newWidth));
 
       form.setValue('width', formatNumber(newWidth), { shouldValidate: true });
+    }
+  };
+
+  const handleTextChange = (value: string) => {
+    if (value === textState) return;
+
+    dispatch(setLines(lines.map((l) => (l.lineNumber === line.lineNumber ? { ...l, text: value } : l))));
+    dispatch(
+      setText(
+        lines
+          .map((l) => (l.lineNumber === line.lineNumber ? { ...l, text: value } : l))
+          .map((l) => l.text)
+          .join('\n'),
+      ),
+    );
+
+    if (line.ratio) {
+      handleWidthChange(form.getValues('width'));
     }
   };
 
@@ -119,7 +136,7 @@ export default function StickerDimensionForm({ line, onValidityChange }: Props) 
   return (
     <Form {...form}>
       <form className="p-4 space-y-4">
-        <FormInput control={form.control} name="text" label="متن" className="text-right" />
+        <FormInput control={form.control} name="text" label="متن" className="text-right" onChange={handleTextChange} />
 
         <div className="grid grid-cols-2 gap-4 items-start">
           <FormInput control={form.control} name="width" label="عرض (cm)" className="flex-1 text-right" onChange={handleWidthChange} />

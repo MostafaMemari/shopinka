@@ -6,6 +6,10 @@ import PrimaryButton from '@/components/common/PrimaryButton';
 import { useEffect, useState } from 'react';
 import { customStickerPricing } from '@/features/custom-sticker/services/customStickerService';
 import { useSelectedStickerAssets } from '@/hooks/useSelectedStickerAssets';
+import { useAppSelector } from '@/store/hooks';
+import { useBoolean } from '@/hooks/use-boolean';
+import { openAuthDialog } from '@/store/slices/authDialogSlice';
+import { useDispatch } from 'react-redux';
 
 interface FinalizeSummaryDrawerProps {
   isOpen: boolean;
@@ -13,9 +17,16 @@ interface FinalizeSummaryDrawerProps {
 }
 
 export default function FinalizeSummaryDrawer({ isOpen, onOpenChange }: FinalizeSummaryDrawerProps) {
-  const { materialId, fontId, text, selectedFont, lines } = useSelectedStickerAssets();
+  const { materialId, fontId, lines } = useSelectedStickerAssets();
+  const isLogin = useAppSelector((state) => state.auth.isLogin);
+  const dispatch = useDispatch();
 
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [price, setPrice] = useState(0);
+
+  console.log(previewImage);
+
+  const finalizeControl = useBoolean(false);
 
   useEffect(() => {
     if (!lines || lines.length === 0) return;
@@ -38,6 +49,10 @@ export default function FinalizeSummaryDrawer({ isOpen, onOpenChange }: Finalize
     });
   }, []);
 
+  const handleAddToCart = () => {
+    if (isLogin) finalizeControl.onTrue();
+    else dispatch(openAuthDialog());
+  };
   return (
     <MobileDrawer
       open={isOpen}
@@ -49,6 +64,7 @@ export default function FinalizeSummaryDrawer({ isOpen, onOpenChange }: Finalize
         <div className="flex justify-between items-center w-full">
           <div className="w-1/2 mx-1">
             <PrimaryButton
+              onClick={handleAddToCart}
               type="button"
               className="flex w-full items-center justify-center gap-2 shadow-md shadow-primary/50 transition-all duration-300 hover:shadow-none"
             >
@@ -57,14 +73,14 @@ export default function FinalizeSummaryDrawer({ isOpen, onOpenChange }: Finalize
           </div>
 
           <div className="flex items-center gap-1 text-left font-semibold text-primary text-base">
-            <span className="text-base font-semibold lg:text-lg lg:font-bold">{formatPrice(price / 100)}</span>
+            <span className="text-base font-semibold lg:text-lg lg:font-bold">{formatPrice(price)}</span>
             <TomanIcon className="w-4 h-4" />
           </div>
         </div>
       }
     >
       <div className="mt-4">
-        <FinalizePreview lines={lines} />
+        <FinalizePreview lines={lines} onPreviewImageChange={setPreviewImage} />
       </div>
     </MobileDrawer>
   );

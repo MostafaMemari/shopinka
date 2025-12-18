@@ -6,15 +6,17 @@ import StickerImagePreview from './StickerImagePreview';
 
 interface Props {
   lines: any[];
+  onPreviewImageChange?: (image: string | null) => void;
 }
 
-function FinalizePreview({ lines }: Props) {
+function FinalizePreview({ lines, onPreviewImageChange }: Props) {
   const { text, options, selectedFont } = useSelectedStickerAssets();
 
   return (
     <div className="flex flex-col gap-4">
       <StickerImagePreview
         text={text}
+        onPreviewImageChange={onPreviewImageChange}
         fontFamily={selectedFont?.name || ''}
         weight={options.weight}
         style={options.style}

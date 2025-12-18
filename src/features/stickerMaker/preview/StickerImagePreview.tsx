@@ -7,9 +7,10 @@ interface StickerPreviewProps {
   weight?: 'normal' | 'bold' | undefined;
   style?: 'normal' | 'italic' | undefined;
   lineHeight?: number;
+  onPreviewImageChange?: (image: string | null) => void;
 }
 
-export default function StickerImagePreview({ text, fontFamily, weight, style, lineHeight }: StickerPreviewProps) {
+export default function StickerImagePreview({ text, onPreviewImageChange, fontFamily, weight, style, lineHeight }: StickerPreviewProps) {
   const [prewImage, setPrewImage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -27,6 +28,7 @@ export default function StickerImagePreview({ text, fontFamily, weight, style, l
       lineHeight,
     }).then((dataUrl) => {
       setPrewImage(dataUrl);
+      onPreviewImageChange?.(dataUrl);
       setIsLoading(false);
     });
   }, [text, fontFamily, weight, style, lineHeight]);
