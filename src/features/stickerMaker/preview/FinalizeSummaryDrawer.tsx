@@ -16,11 +16,9 @@ import { useAppSelector } from '@/store/hooks';
 import { useBoolean } from '@/hooks/use-boolean';
 import { openAuthDialog } from '@/store/slices/authDialogSlice';
 import { useDispatch } from 'react-redux';
-import AddToCartButton from '@/features/cart/components/AddToCartButton';
 import { useCart } from '@/features/cart/hooks/useCart';
 import { showAddToCartToast } from '@/utils/toastUtils';
 import { useRouter } from 'next/navigation';
-import { CartData } from '@/features/cart/cartType';
 
 interface FinalizeSummaryDrawerProps {
   isOpen: boolean;
@@ -33,15 +31,6 @@ export default function FinalizeSummaryDrawer({ isOpen, onOpenChange }: Finalize
   const dispatch = useDispatch();
   const { addToCart, isAddingToCart } = useCart();
   const router = useRouter();
-
-  const addToCartHandler = () => {
-    const item: CartData = {
-      productId: null,
-      productVariantId: null,
-      customStickerId: null,
-      quantity: 1,
-    };
-  };
 
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [pendingAddToCart, setPendingAddToCart] = useState(false);
@@ -151,7 +140,7 @@ export default function FinalizeSummaryDrawer({ isOpen, onOpenChange }: Finalize
         <div className="flex justify-between items-center w-full">
           <div className="w-1/2 mx-1">
             <PrimaryButton onClick={handleAddToCart} disabled={loading} className="flex w-full items-center justify-center gap-2">
-              {loading ? 'در حال پردازش...' : 'افزودن به سبد خرید'}
+              {loading || isAddingToCart ? 'در حال پردازش...' : 'افزودن به سبد خرید'}
             </PrimaryButton>
           </div>
 

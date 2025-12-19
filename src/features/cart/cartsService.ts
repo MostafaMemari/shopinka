@@ -10,6 +10,7 @@ export const createCart = async ({ cartData }: { cartData: CartData }): Promise<
       quantity: cartData.quantity,
       productId: cartData.productId || undefined,
       productVariantId: cartData.productVariantId || undefined,
+      customStickerId: cartData.customStickerId || undefined,
     },
   });
 };

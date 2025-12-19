@@ -21,6 +21,13 @@ export interface CartState {
   totalPrice: number;
 }
 
+interface Lines {
+  text: string;
+  ratio: number;
+  width: number;
+  height: number;
+  lineNumber: number;
+}
 export interface CartItem {
   id: number;
   cartId: number;
@@ -38,6 +45,33 @@ export interface CartItem {
     type: 'SIMPLE' | 'VARIABLE';
     mainImage: { fileUrl: string | null } | null;
   } | null;
+  customSticker: {
+    id: number;
+    userId: number;
+    fontId: number;
+    materialId: number;
+    previewImageId: number;
+    style: 'normal' | 'bold';
+    weight: 'regular' | 'italic';
+    letterSpacing: number;
+    finalPrice: number;
+    lines: Lines[];
+    description: string;
+    status: 'PENDING' | 'APPROVED' | 'REJECTED' | 'PUBLISHED';
+    createdAt: string;
+    updatedAt: string;
+    previewImage: {
+      fileUrl: string;
+    } | null;
+    material: {
+      name: string;
+      surface: 'MATTE' | 'GLOSSY' | 'RAINBOW' | 'REFLECTIVE';
+      colorCode: string;
+    };
+    font: {
+      displayName: string;
+    };
+  };
   productVariant: {
     id: number;
     salePrice: number;

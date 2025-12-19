@@ -5,14 +5,15 @@ export const mapCartResponseToCartItemsState = (cartItems: CartItem[] = []): Car
     const isSimple = item.product?.type === 'SIMPLE';
     const product = item.product || item.productVariant?.product;
     const variant = item.productVariant;
+    const custom = item.customSticker;
 
-    const id = item.product?.id ?? variant?.id ?? 0;
+    const id = item.product?.id ?? variant?.id ?? custom?.id ?? 0;
     const type: 'SIMPLE' | 'VARIABLE' = isSimple ? 'SIMPLE' : 'VARIABLE';
-    const title = product?.name ?? '';
-    const thumbnail = product?.mainImage?.fileUrl ?? '';
+    const title = product?.name ?? `برچسب ${custom.lines.map((line) => line.text).join(' - ')}`;
+    const thumbnail = product?.mainImage?.fileUrl ?? custom?.previewImage?.fileUrl ?? '';
     const slug = product?.slug ?? '';
 
-    const basePrice = item.product?.basePrice ?? variant?.basePrice ?? 0;
+    const basePrice = item.product?.basePrice ?? variant?.basePrice ?? custom?.finalPrice ?? 0;
     const salePrice = item.product?.salePrice ?? variant?.salePrice ?? 0;
     const discount = basePrice ? Math.round(((basePrice - salePrice) / basePrice) * 100) : 0;
 
@@ -27,6 +28,11 @@ export const mapCartResponseToCartItemsState = (cartItems: CartItem[] = []): Car
       basePrice,
       salePrice,
       discount,
+      customStickerValues: {
+        font: custom?.font,
+        lines: custom?.lines ?? [],
+        material: custom?.material,
+      },
       attributeValues: variant?.attributeValues ?? [],
     };
   });
