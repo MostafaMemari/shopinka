@@ -6,6 +6,7 @@ import CartControls from '@/features/cart/components/CartControls';
 import Image from 'next/image';
 import ProductCartPrice from '../../ProductCartPrice';
 import { Package } from 'lucide-react';
+import CartItemCustomSticler from '../../CartItemCustomSticker';
 
 interface CartPageItemProps {
   cartItem: CartItemState;
@@ -44,6 +45,7 @@ function CartPageItem({ cartItem, isLast = false }: CartPageItemProps) {
 
           <div className="text-xs text-gray-500">
             <CartItemAttributes type={cartItem.type} attributes={attributes} />
+            {cartItem.customStickerValues && <CartItemCustomSticler customStickerValues={cartItem.customStickerValues} />}
           </div>
         </div>
 

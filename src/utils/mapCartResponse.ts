@@ -29,9 +29,14 @@ export const mapCartResponseToCartItemsState = (cartItems: CartItem[] = []): Car
       salePrice,
       discount,
       customStickerValues: {
-        font: custom?.font,
-        lines: custom?.lines ?? [],
-        material: custom?.material,
+        font: {
+          name: custom?.font.displayName,
+        },
+        material: {
+          name: custom?.material.name,
+          surface: custom?.material.surface,
+          colorCode: custom?.material.colorCode,
+        },
       },
       attributeValues: variant?.attributeValues ?? [],
     };
@@ -42,14 +47,15 @@ export const mapCartResponseToCartItemState = (cartItems: CartItem): CartItemSta
   const isSimple = cartItems.product?.type === 'SIMPLE';
   const product = cartItems.product || cartItems.productVariant?.product;
   const variant = cartItems.productVariant;
+  const custom = cartItems.customSticker;
 
-  const id = cartItems.product?.id ?? variant?.id ?? 0;
+  const id = cartItems.product?.id ?? variant?.id ?? custom?.id ?? 0;
   const type: 'SIMPLE' | 'VARIABLE' = isSimple ? 'SIMPLE' : 'VARIABLE';
-  const title = product?.name ?? '';
-  const thumbnail = product?.mainImage?.fileUrl ?? '';
+  const title = product?.name ?? `برچسب ${custom?.lines.map((line) => line.text).join(' - ') ?? ''}`;
+  const thumbnail = product?.mainImage?.fileUrl ?? custom?.previewImage?.fileUrl ?? '';
   const slug = product?.slug ?? '';
 
-  const basePrice = cartItems.product?.basePrice ?? variant?.basePrice ?? 0;
+  const basePrice = cartItems.product?.basePrice ?? variant?.basePrice ?? custom?.finalPrice ?? 0;
   const salePrice = cartItems.product?.salePrice ?? variant?.salePrice ?? 0;
   const discount = basePrice ? Math.round(((basePrice - salePrice) / basePrice) * 100) : 0;
 
@@ -64,6 +70,16 @@ export const mapCartResponseToCartItemState = (cartItems: CartItem): CartItemSta
     basePrice,
     salePrice,
     discount,
+    customStickerValues: {
+      font: {
+        name: custom?.font.displayName,
+      },
+      material: {
+        name: custom?.material.name,
+        surface: custom?.material.surface,
+        colorCode: custom?.material.colorCode,
+      },
+    },
     attributeValues: variant?.attributeValues ?? [],
   };
 };

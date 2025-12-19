@@ -11,6 +11,10 @@ export interface CartItemState {
   salePrice: number;
   discount: number;
   count: number;
+  customStickerValues: {
+    font: { name: string };
+    material: { name: string; surface: 'MATTE' | 'GLOSSY' | 'RAINBOW' | 'REFLECTIVE'; colorCode: string };
+  };
   attributeValues: AttributeValues[];
 }
 
