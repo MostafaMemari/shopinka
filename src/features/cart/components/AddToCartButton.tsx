@@ -31,6 +31,7 @@ export function AddToCartButton({ product }: AddToCartButtonProps) {
     const item: CartData = {
       productId: isVariable ? null : product.id,
       productVariantId: isVariable ? selectedVariant?.id : null,
+      customStickerId: null,
       quantity: 1,
     };
 

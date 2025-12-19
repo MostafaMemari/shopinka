@@ -41,7 +41,7 @@ export default function FinalizeStickerDrawer({ isOpen, onOpenChange, onFinalize
         measuredLines.map((line, index) => ({
           text: line.text,
           ratio: line.width / line.height,
-          lineNumber: index,
+          lineNumber: index + 1,
           width: lines[index]?.width || null,
           height: lines[index]?.height || null,
         })),

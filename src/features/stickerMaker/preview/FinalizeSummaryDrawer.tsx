@@ -1,15 +1,26 @@
+'use client';
+
 import MobileDrawer from '@/components/common/Drawer';
 import FinalizePreview from './FinalizePreview';
 import TomanIcon from '@/components/common/svg/TomanIcon';
 import { formatPrice } from '@/utils/formatter';
 import PrimaryButton from '@/components/common/PrimaryButton';
 import { useEffect, useState } from 'react';
-import { customStickerPricing } from '@/features/custom-sticker/services/customStickerService';
+import {
+  createCustomStickerProduct,
+  customStickerPricing,
+  uploadPreviewImage,
+} from '@/features/custom-sticker/services/customStickerService';
 import { useSelectedStickerAssets } from '@/hooks/useSelectedStickerAssets';
 import { useAppSelector } from '@/store/hooks';
 import { useBoolean } from '@/hooks/use-boolean';
 import { openAuthDialog } from '@/store/slices/authDialogSlice';
 import { useDispatch } from 'react-redux';
+import AddToCartButton from '@/features/cart/components/AddToCartButton';
+import { useCart } from '@/features/cart/hooks/useCart';
+import { showAddToCartToast } from '@/utils/toastUtils';
+import { useRouter } from 'next/navigation';
+import { CartData } from '@/features/cart/cartType';
 
 interface FinalizeSummaryDrawerProps {
   isOpen: boolean;
@@ -20,39 +31,115 @@ export default function FinalizeSummaryDrawer({ isOpen, onOpenChange }: Finalize
   const { materialId, fontId, lines } = useSelectedStickerAssets();
   const isLogin = useAppSelector((state) => state.auth.isLogin);
   const dispatch = useDispatch();
+  const { addToCart, isAddingToCart } = useCart();
+  const router = useRouter();
+
+  const addToCartHandler = () => {
+    const item: CartData = {
+      productId: null,
+      productVariantId: null,
+      customStickerId: null,
+      quantity: 1,
+    };
+  };
 
   const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const [pendingAddToCart, setPendingAddToCart] = useState(false);
   const [price, setPrice] = useState(0);
-
-  console.log(previewImage);
+  const [loading, setLoading] = useState(false);
 
   const finalizeControl = useBoolean(false);
 
   useEffect(() => {
-    if (!lines || lines.length === 0) return;
-    if (!fontId || !materialId) return;
+    if (!lines?.length || !fontId || !materialId) return;
 
     customStickerPricing({
-      fontId: fontId,
-      materialId: materialId,
+      fontId,
+      materialId,
       lines: lines
-        .filter((line) => line.width != null && line.height != null)
+        .filter((l) => l.width != null && l.height != null)
         .map((line, index) => ({
-          lineNumber: index,
-          width: line?.width!,
-          height: line?.height!,
+          lineNumber: index + 1,
+          width: line.width!,
+          height: line.height!,
         })),
-    }).then((response) => {
-      if (response.success && response.data) {
-        setPrice(response.data.pricing);
+    }).then((res) => {
+      if (res.success && res.data) {
+        setPrice(res.data.pricing);
       }
     });
-  }, []);
+  }, [lines, fontId, materialId]);
 
   const handleAddToCart = () => {
-    if (isLogin) finalizeControl.onTrue();
-    else dispatch(openAuthDialog());
+    if (!isLogin) {
+      setPendingAddToCart(true);
+      dispatch(openAuthDialog());
+      return;
+    }
+
+    startFinalizeFlow();
   };
+
+  useEffect(() => {
+    if (isLogin && pendingAddToCart) {
+      setPendingAddToCart(false);
+      startFinalizeFlow();
+    }
+  }, [isLogin]);
+
+  const startFinalizeFlow = async () => {
+    if (!previewImage || !fontId || !materialId || !lines?.length) return;
+
+    try {
+      setLoading(true);
+
+      const uploadRes = await uploadPreviewImage(previewImage).then((res) => {
+        if (res.success && res.data) {
+          return res.data.galleryItem.id;
+        }
+      });
+
+      const productRes = await createCustomStickerProduct({
+        fontId,
+        materialId,
+        previewImageId: uploadRes!,
+        lines: lines.map((line, index) => ({
+          text: line.text,
+          ratio: line.ratio,
+          lineNumber: index + 1,
+          width: line.width!,
+          height: line.height!,
+        })),
+        style: 'normal',
+        weight: 'regular',
+        letterSpacing: 0,
+        description: 'استیکر سفارشی',
+      }).then((res) => {
+        if (res.success && res.data) {
+          return res.data;
+        }
+      });
+
+      addToCart(
+        {
+          productId: null,
+          productVariantId: null,
+          customStickerId: productRes?.customSticker.id,
+          quantity: 1,
+        },
+        {
+          onSuccess: () => showAddToCartToast(router),
+        },
+      );
+
+      finalizeControl.onTrue();
+    } catch (error) {
+      console.error('Finalize error:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <MobileDrawer
       open={isOpen}
@@ -63,17 +150,13 @@ export default function FinalizeSummaryDrawer({ isOpen, onOpenChange }: Finalize
       actions={
         <div className="flex justify-between items-center w-full">
           <div className="w-1/2 mx-1">
-            <PrimaryButton
-              onClick={handleAddToCart}
-              type="button"
-              className="flex w-full items-center justify-center gap-2 shadow-md shadow-primary/50 transition-all duration-300 hover:shadow-none"
-            >
-              افزودن به سبد خرید
+            <PrimaryButton onClick={handleAddToCart} disabled={loading} className="flex w-full items-center justify-center gap-2">
+              {loading ? 'در حال پردازش...' : 'افزودن به سبد خرید'}
             </PrimaryButton>
           </div>
 
-          <div className="flex items-center gap-1 text-left font-semibold text-primary text-base">
-            <span className="text-base font-semibold lg:text-lg lg:font-bold">{formatPrice(price)}</span>
+          <div className="flex items-center gap-1 font-semibold text-primary">
+            <span>{formatPrice(price)}</span>
             <TomanIcon className="w-4 h-4" />
           </div>
         </div>
