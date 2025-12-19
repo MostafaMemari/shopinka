@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store';
-import { setColorStart, setColorSuccess, setFontStart, setFontSuccess, setLines } from '@/store/slices/stickerSlice';
+import { setColorStart, setColorSuccess, setFontStart, setFontSuccess, setLines, setText } from '@/store/slices/stickerSlice';
 import { FontItem } from '@/types/fontType';
 import { MaterialStickerItem } from '@/types/materialStickerType';
 
@@ -52,5 +52,7 @@ export function useInitializeStickerOptions({
     }
 
     dispatch(setLines([]));
+
+    dispatch(setText(''));
   }, [fontLoading, materialLoading, fontData, materialData, options, dispatch]);
 }

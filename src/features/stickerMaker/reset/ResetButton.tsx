@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { resetStickerState } from '@/store/slices/stickerSlice';
+import { resetStickerState, setLines, setText } from '@/store/slices/stickerSlice';
 import { RotateCcw } from 'lucide-react';
 import React from 'react';
 import { useDispatch } from 'react-redux';
@@ -8,7 +8,8 @@ function ResetButton() {
   const dispatch = useDispatch();
 
   const handleReset = () => {
-    dispatch(resetStickerState());
+    dispatch(setText(''));
+    dispatch(setLines([]));
   };
 
   return (

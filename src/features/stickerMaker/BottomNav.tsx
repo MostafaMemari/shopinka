@@ -84,7 +84,13 @@ export default function BottomNav({
             <FinalizeStickerDrawer isOpen={isDrawerOpen} onOpenChange={setIsDrawerOpen} onFinalize={() => setIsFinalDrawerOpen(true)} />
           )}
 
-          {isFinalDrawerOpen && <FinalizeSummaryDrawer isOpen={isFinalDrawerOpen} onOpenChange={setIsFinalDrawerOpen} />}
+          {isFinalDrawerOpen && (
+            <FinalizeSummaryDrawer
+              isOpen={isFinalDrawerOpen}
+              onOpenChange={setIsFinalDrawerOpen}
+              onCloseFinalizeSticker={() => setIsDrawerOpen(false)}
+            />
+          )}
         </div>
       </div>
     </>

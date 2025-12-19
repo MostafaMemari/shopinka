@@ -19,13 +19,15 @@ import { useDispatch } from 'react-redux';
 import { useCart } from '@/features/cart/hooks/useCart';
 import { showAddToCartToast } from '@/utils/toastUtils';
 import { useRouter } from 'next/navigation';
+import { setLines, setText } from '@/store/slices/stickerSlice';
 
 interface FinalizeSummaryDrawerProps {
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
+  onCloseFinalizeSticker: () => void;
 }
 
-export default function FinalizeSummaryDrawer({ isOpen, onOpenChange }: FinalizeSummaryDrawerProps) {
+export default function FinalizeSummaryDrawer({ isOpen, onOpenChange, onCloseFinalizeSticker }: FinalizeSummaryDrawerProps) {
   const { materialId, fontId, lines } = useSelectedStickerAssets();
   const isLogin = useAppSelector((state) => state.auth.isLogin);
   const dispatch = useDispatch();
@@ -117,7 +119,13 @@ export default function FinalizeSummaryDrawer({ isOpen, onOpenChange }: Finalize
           quantity: 1,
         },
         {
-          onSuccess: () => showAddToCartToast(router),
+          onSuccess: () => {
+            showAddToCartToast(router);
+            dispatch(setText(''));
+            dispatch(setLines([]));
+            onCloseFinalizeSticker();
+            onOpenChange(false);
+          },
         },
       );
 

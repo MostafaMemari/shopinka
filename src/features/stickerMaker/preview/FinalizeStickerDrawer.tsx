@@ -49,6 +49,7 @@ export default function FinalizeStickerDrawer({ isOpen, onOpenChange, onFinalize
     );
   }, [text, selectedFont, width]);
 
+  const isLines = lines.length > 0;
   const isFirstLine = currentLineIndex === 0;
   const isLastLine = currentLineIndex === lines.length - 1;
   const currentLine = lines[currentLineIndex];
@@ -63,15 +64,17 @@ export default function FinalizeStickerDrawer({ isOpen, onOpenChange, onFinalize
         title="پیش نمایش"
         className="max-w-[500px] m-auto"
         actions={
-          <LineNavigationButtons
-            isFirstLine={isFirstLine}
-            isLastLine={isLastLine}
-            disabledNext={!isCurrentLineValid}
-            disabledFinalize={!isCurrentLineValid}
-            onNextLine={() => setCurrentLineIndex((i) => i + 1)}
-            onPrevLine={() => setCurrentLineIndex((i) => i - 1)}
-            onFinalize={onFinalize || (() => {})}
-          />
+          isLines && (
+            <LineNavigationButtons
+              isFirstLine={isFirstLine}
+              isLastLine={isLastLine}
+              disabledNext={!isCurrentLineValid}
+              disabledFinalize={!isCurrentLineValid}
+              onNextLine={() => setCurrentLineIndex((i) => i + 1)}
+              onPrevLine={() => setCurrentLineIndex((i) => i - 1)}
+              onFinalize={onFinalize || (() => {})}
+            />
+          )
         }
       >
         {lines.length > 0 ? (

@@ -10,24 +10,38 @@ interface BaseFieldProps {
   label: string;
   className?: string;
   onChange?: (value: string) => void;
+  onFocus?: () => void;
+  autoFocus?: boolean;
 }
 
-// Input Field
-export function FormInput({ control, name, label, className, onChange, type = 'text' }: BaseFieldProps & { type?: string }) {
+export function FormInput({
+  control,
+  name,
+  label,
+  className,
+  onChange,
+  onFocus,
+  autoFocus = false,
+  type = 'text',
+}: BaseFieldProps & { type?: string }) {
   return (
     <FormField
       control={control}
       name={name}
       render={({ field }) => (
         <FormItem className={className}>
-          <FormLabel>{label}</FormLabel>
+          <FormLabel htmlFor={name}>{label}</FormLabel>
 
           <FormControl>
             <Input
               {...field}
               id={name}
               type={type}
+              autoFocus={autoFocus}
               value={field.value ?? ''}
+              onFocus={() => {
+                onFocus?.();
+              }}
               onChange={(e) => {
                 field.onChange(e);
                 onChange?.(e.target.value);

@@ -139,7 +139,14 @@ export default function StickerDimensionForm({ line, onValidityChange }: Props) 
         <FormInput control={form.control} name="text" label="متن" className="text-right" onChange={handleTextChange} />
 
         <div className="grid grid-cols-2 gap-4 items-start">
-          <FormInput control={form.control} name="width" label="عرض (cm)" className="flex-1 text-right" onChange={handleWidthChange} />
+          <FormInput
+            control={form.control}
+            autoFocus
+            name="width"
+            label="عرض (cm)"
+            className="flex-1 text-right"
+            onChange={handleWidthChange}
+          />
 
           <FormInput control={form.control} name="height" label="طول (cm)" className="flex-1 text-right" onChange={handleHeightChange} />
         </div>
