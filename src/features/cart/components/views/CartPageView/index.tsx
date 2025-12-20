@@ -34,8 +34,6 @@ function CartPageView() {
   const { cart, isLoading, error, clearAllCartItems, isClearOnCart } = useCart();
   const cartItems = cart?.items || [];
 
-  console.log(cart);
-
   const isMounted = useIsMounted();
 
   const totalQuantity = cartItems.reduce((sum, item) => sum + item.count, 0);

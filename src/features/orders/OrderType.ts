@@ -4,6 +4,7 @@ import { Pager } from '../../types/pagerType';
 import { ShippingItem } from '../shippings/ShippingType';
 import { Transaction } from '../../types/transactionType';
 import { Product, ProductVariant } from '../products/ProductType';
+import { Line } from '@/store/slices/stickerSlice';
 
 export interface Order {
   pager: Pager;
@@ -36,10 +37,19 @@ export interface OrderProductItem {
   productId: number;
   productVariantId: null;
   price: number;
+  unitPrice: number;
   quantity: number;
   createdAt: string;
   product: Product;
   productVariant: ProductVariant | null;
+  customSticker: {
+    id: number;
+    finalPrice: number;
+    previewImage: {
+      fileUrl: string;
+    };
+    lines: Line[];
+  };
 }
 
 export interface OrderResponse {

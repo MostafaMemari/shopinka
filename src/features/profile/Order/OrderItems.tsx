@@ -25,10 +25,15 @@ const OrderItems: React.FC<OrderItemsProps> = ({ items, itemCount }) => {
           const variantAttributes = item.productVariant?.attributeValues;
           const primaryAttribute = variantAttributes?.[0] || null;
           const product = item?.product || item?.productVariant?.product;
-          const productName = product?.name || '';
+          const productName = product?.name || `برچسب ${item?.customSticker?.lines.map((line: any) => line.text).join(' ')}` || '';
           const productSlug = product?.slug || '';
           const productImageUrl =
-            item?.product?.mainImage?.fileUrl || item?.productVariant?.product?.mainImage?.fileUrl || '/images/no-image.webp';
+            item?.product?.mainImage?.fileUrl ||
+            item?.productVariant?.product?.mainImage?.fileUrl ||
+            item?.customSticker?.previewImage?.fileUrl ||
+            '/images/no-image.webp';
+
+          const priceItem = item?.unitPrice || 0;
 
           return (
             <Card key={item.id} className="border hover:shadow-lg transition-shadow duration-300">
@@ -61,7 +66,7 @@ const OrderItems: React.FC<OrderItemsProps> = ({ items, itemCount }) => {
                       )}
 
                       <div className="text-sm text-primary-600 dark:text-primary-400 font-semibold mt-1">
-                        {formatPrice(item.price)} <span className="text-xs font-normal mr-1">تومان</span>
+                        {formatPrice(priceItem)} <span className="text-xs font-normal mr-1">تومان</span>
                       </div>
                     </div>
                   </div>

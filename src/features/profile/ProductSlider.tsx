@@ -29,10 +29,15 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ orderProductItems }) => {
       >
         {orderProductItems.map((item) => {
           const product = item?.product || item?.productVariant?.product;
-          const productName = product?.name || '';
+          const productName = product?.name || `برچسب ${item?.customSticker?.lines.map((line: any) => line.text).join(' ')}` || '';
           const productSlug = product?.slug || '';
           const productImageUrl =
-            item?.product?.mainImage?.fileUrl || item?.productVariant?.product?.mainImage?.fileUrl || '/images/no-image.webp';
+            item?.product?.mainImage?.fileUrl ||
+            item?.productVariant?.product?.mainImage?.fileUrl ||
+            item?.customSticker?.previewImage?.fileUrl ||
+            '/images/no-image.webp';
+
+          console.log(item);
 
           return (
             <SwiperSlide key={item?.id}>
