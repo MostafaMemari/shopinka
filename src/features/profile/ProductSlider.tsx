@@ -38,8 +38,6 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ orderProductItems }) => {
             item?.customSticker?.previewImage?.fileUrl ||
             '/images/no-image.webp';
 
-          console.log(productSlug);
-
           return (
             <SwiperSlide key={item?.id}>
               <Link

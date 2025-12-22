@@ -1,8 +1,8 @@
+import { FontItem } from '@/types/fontType';
 import { useEffect, useState } from 'react';
-import { FontItemType } from '@/types/font';
 
 export function useFontByTitle(title: string | null) {
-  const [font, setFont] = useState<FontItemType | null>(null);
+  const [font, setFont] = useState<FontItem | null>(null);
 
   useEffect(() => {
     if (!title) return;

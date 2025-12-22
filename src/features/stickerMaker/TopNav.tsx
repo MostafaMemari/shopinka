@@ -7,15 +7,13 @@ import React from 'react';
 import CartIconTotalQuantity from '../cart/components/CartIconTotalQuantity';
 import { useRouter } from 'next/navigation';
 
-interface TopNavProps {}
-
-export default function TopNav({}: TopNavProps) {
+export default function TopNav() {
   const router = useRouter();
   const handleCartIconClick = () => {
     router.push('/checkout/cart');
   };
   return (
-    <div className="flex items-center justify-between w-full py-2">
+    <div className="flex items-center justify-between w-full">
       <Button asChild variant="ghost" size="sm" className="size-12 cursor-pointer mr-2">
         <Phone />
       </Button>

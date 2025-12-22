@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { resetStickerState, setLines, setText } from '@/store/slices/stickerSlice';
+import { setLines, setText } from '@/store/slices/stickerSlice';
 import { RotateCcw } from 'lucide-react';
 import React from 'react';
 import { useDispatch } from 'react-redux';

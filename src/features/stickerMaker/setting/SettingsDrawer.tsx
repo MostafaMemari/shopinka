@@ -39,7 +39,6 @@ export default function SettingsDrawer({ open, onClose }: SettingsDrawerProps) {
               const cleanedText = text.replace(/ـ+/g, '');
               const newText = addSpacerBetweenChars(cleanedText, count);
 
-              console.log(newText);
               dispatch(setText(newText));
             }}
             className={cn('w-full')}

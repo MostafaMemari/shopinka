@@ -91,6 +91,7 @@ export default function FinalizeSummaryDrawer({ isOpen, onOpenChange, onCloseFin
       });
 
       const productRes = await createCustomStickerProduct({
+        name: 'استیکر سفارشی',
         fontId,
         materialId,
         previewImageId: uploadRes!,

@@ -31,7 +31,7 @@ export async function renderStickerImage({
 
   const rawLines = text.split('\n');
 
-  let lines = [...rawLines];
+  const lines = [...rawLines];
   while (lines.length > 1 && lines[lines.length - 1].trim() === '') {
     lines.pop();
   }
