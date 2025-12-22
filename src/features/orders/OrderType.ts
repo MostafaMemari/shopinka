@@ -44,6 +44,7 @@ export interface OrderProductItem {
   productVariant: ProductVariant | null;
   customSticker: {
     id: number;
+    name: string;
     finalPrice: number;
     previewImage: {
       fileUrl: string;

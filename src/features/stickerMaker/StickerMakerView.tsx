@@ -39,6 +39,14 @@ function StickerMakerView() {
 
   useInitializeStickerOptions({ fontData: fontData?.items, materialData: materialData?.items, fontLoading, materialLoading });
 
+  if (loading && materialLoading && fontLoading) {
+    return (
+      <div className="absolute inset-0 bg-black/20 flex items-center justify-center z-50">
+        <div className="w-10 h-10 border-4 border-white border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
+
   return (
     <div className="relative w-full p-0 overflow-hidden rounded-none touch-none m-auto h-screen">
       <StickerDataProvider
@@ -48,12 +56,6 @@ function StickerMakerView() {
         fontLoading={fontLoading}
       >
         <EditableTextArea onStartEditing={handleStartEditing} />
-
-        {loading && materialLoading && fontLoading && (
-          <div className="absolute inset-0 bg-black/20 flex items-center justify-center z-50">
-            <div className="w-10 h-10 border-4 border-white border-t-transparent rounded-full animate-spin" />
-          </div>
-        )}
 
         <div className="fixed bottom-1 left-0 right-0 z-20 max-w-[500px] m-auto">
           <div className="flex w-[calc(100%-1rem)] mx-2 mb-2 rounded-2xl justify-between py-0 [&_button]:flex-1 bg-white">

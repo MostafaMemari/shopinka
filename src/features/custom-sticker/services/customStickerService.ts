@@ -11,6 +11,7 @@ export interface CustomStickerPricingData {
 }
 
 export const createCustomStickerProduct = async (data: {
+  name: string;
   fontId: number;
   materialId: number;
   previewImageId: number;
@@ -21,12 +22,16 @@ export const createCustomStickerProduct = async (data: {
     width: number;
     height: number;
   }[];
-  style: 'normal' | 'bold';
+  style: 'normal' | 'italic';
   weight: 'regular' | 'bold';
   letterSpacing: number;
   description: string;
 }): Promise<ApiResponse<{ message: string; customSticker: { id: number } }>> => {
-  return await shopApiFetch('/custom-sticker', { method: 'POST', auth: true, body: { ...data } });
+  return await shopApiFetch('/custom-sticker', {
+    method: 'POST',
+    auth: true,
+    body: { ...data, name: `برچسب ${data.lines.map((line) => line.text).join(' ')}` },
+  });
 };
 
 const dataURLtoFile = (dataUrl: string, filename: string): File => {

@@ -1,8 +1,9 @@
 'use client';
 
+import 'swiper/css';
+
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode } from 'swiper/modules';
-import 'swiper/css';
 import Link from 'next/link';
 import { OrderProductItem } from '@/features/orders/OrderType';
 import Image from 'next/image';
@@ -29,20 +30,20 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ orderProductItems }) => {
       >
         {orderProductItems.map((item) => {
           const product = item?.product || item?.productVariant?.product;
-          const productName = product?.name || `برچسب ${item?.customSticker?.lines.map((line: any) => line.text).join(' ')}` || '';
-          const productSlug = product?.slug || '';
+          const productName = product?.name || item?.customSticker?.name || '';
+          const productSlug = product?.slug;
           const productImageUrl =
             item?.product?.mainImage?.fileUrl ||
             item?.productVariant?.product?.mainImage?.fileUrl ||
             item?.customSticker?.previewImage?.fileUrl ||
             '/images/no-image.webp';
 
-          console.log(item);
+          console.log(productSlug);
 
           return (
             <SwiperSlide key={item?.id}>
               <Link
-                href={`/product/${productSlug}`}
+                href={productSlug ? `/product/${productSlug}` : '#'}
                 className="
               flex items-center gap-x-3 rounded-xl border border-gray-100 bg-white
               px-2 py-2 shadow-sm transition hover:shadow-lg hover:border-primary mb-0.5

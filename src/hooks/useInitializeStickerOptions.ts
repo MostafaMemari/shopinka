@@ -53,6 +53,6 @@ export function useInitializeStickerOptions({
 
     dispatch(setLines([]));
 
-    dispatch(setText(''));
+    // dispatch(setText(''));
   }, [fontLoading, materialLoading, fontData, materialData, options, dispatch]);
 }

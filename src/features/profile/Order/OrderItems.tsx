@@ -25,7 +25,7 @@ const OrderItems: React.FC<OrderItemsProps> = ({ items, itemCount }) => {
           const variantAttributes = item.productVariant?.attributeValues;
           const primaryAttribute = variantAttributes?.[0] || null;
           const product = item?.product || item?.productVariant?.product;
-          const productName = product?.name || `برچسب ${item?.customSticker?.lines.map((line: any) => line.text).join(' ')}` || '';
+          const productName = product?.name || item?.customSticker?.name || '';
           const productSlug = product?.slug || '';
           const productImageUrl =
             item?.product?.mainImage?.fileUrl ||
