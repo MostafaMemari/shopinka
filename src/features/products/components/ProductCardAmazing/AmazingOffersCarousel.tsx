@@ -68,27 +68,30 @@ export default function AmazingProducts({ products, title, viewAllLink }: Amazin
         </CardHeader>
         <CardContent className="bg-white rounded-[var(--radius)] md:rounded-e-[var(--radius)] col-span-1 md:col-span-9 lg:col-span-10 p-0">
           <div className="relative overflow-hidden">
-            {!isMounted && <ProductCarouselSkeleton />}
-            <Swiper
-              slidesPerView={productSwiperConfigAmazing.slidesPerView}
-              spaceBetween={productSwiperConfigAmazing.spaceBetween}
-              breakpoints={productSwiperConfigAmazing.breakpoints}
-              loop={true}
-              className="amazing-product-carousel"
-              navigation={{
-                nextEl: '.swiper-button-prev-amazing',
-                prevEl: '.swiper-button-next-amazing',
-              }}
-              modules={[Navigation]}
-              style={{ direction: 'rtl' }}
-              onInit={() => setIsMounted(true)}
-            >
-              {products.map((product) => (
-                <SwiperSlide key={product.id} className="flex-shrink-0 w-56">
-                  <ProductCardAmazing product={product} />
-                </SwiperSlide>
-              ))}
-            </Swiper>
+            {!isMounted ? (
+              <ProductCarouselSkeleton />
+            ) : (
+              <Swiper
+                slidesPerView={productSwiperConfigAmazing.slidesPerView}
+                spaceBetween={productSwiperConfigAmazing.spaceBetween}
+                breakpoints={productSwiperConfigAmazing.breakpoints}
+                loop={true}
+                className="amazing-product-carousel"
+                navigation={{
+                  nextEl: '.swiper-button-prev-amazing',
+                  prevEl: '.swiper-button-next-amazing',
+                }}
+                modules={[Navigation]}
+                style={{ direction: 'rtl' }}
+                onInit={() => setIsMounted(true)}
+              >
+                {products.map((product) => (
+                  <SwiperSlide key={product.id} className="flex-shrink-0 w-56">
+                    <ProductCardAmazing product={product} />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            )}
           </div>
         </CardContent>
       </div>

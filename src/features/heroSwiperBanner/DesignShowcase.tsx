@@ -9,16 +9,20 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import type SwiperCore from 'swiper';
 
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/autoplay';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { designItems } from './heroItems';
 import HeroSwiperCard from './HeroSwiperCard';
+import SwiperCardSkeleton from './skeleton/SwiperCardSkeleton';
 
 export default function DomingoHeroWithSwiper() {
   const [activeIndex, setActiveIndex] = useState(0);
   const swiperRef = useRef<SwiperCore | null>(null);
+
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const getInitialSlideIndex = useCallback(() => {
     return 0;
@@ -79,15 +83,20 @@ export default function DomingoHeroWithSwiper() {
           slidesPerView="auto"
           spaceBetween={12}
           className="flex"
+          onInit={() => setIsMounted(true)}
         >
           {designItems.map((item, index) => {
             const isActive = index === activeIndex;
 
             return (
-              <SwiperSlide key={item.id} className="!w-[120px] sm:!w-[150px] flex cursor-pointer my-1">
-                <Link key={item.id} href={item.link || '/'}>
-                  <HeroSwiperCard item={item} isActive={isActive} />
-                </Link>
+              <SwiperSlide key={item.id} className="!w-[120px] sm:!w-[150px] flex cursor-pointer my-1 gap-2">
+                {!isMounted ? (
+                  <SwiperCardSkeleton />
+                ) : (
+                  <Link key={item.id} href={item.link || '/'}>
+                    <HeroSwiperCard item={item} isActive={isActive} />
+                  </Link>
+                )}
               </SwiperSlide>
             );
           })}
