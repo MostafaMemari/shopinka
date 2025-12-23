@@ -6,9 +6,13 @@ export default function ProductLoader() {
     <div className="container">
       {/* Desktop Loader */}
       <div className="hidden lg:block">
-        <div className="mb-6">
-          <Skeleton className="h-8 w-1/2 rounded-lg" />
-        </div>
+        {/* Breadcrumb Skeleton Loader */}
+        <Card className="mb-6 w-1/4 p-4">
+          <div className="flex items-center gap-2">
+            <Skeleton className="h-5 w-1/3 rounded-lg" />
+            <Skeleton className="h-5 w-1/3 rounded-lg" />
+          </div>
+        </Card>
 
         <Card className="mb-6 p-6">
           <div className="mb-10 grid grid-cols-12 gap-4">
