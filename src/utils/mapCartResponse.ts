@@ -30,9 +30,12 @@ export const mapCartResponseToCartItemsState = (cartItems: CartItem[] = []): Car
       discount,
       customStickerValues: custom
         ? {
-            ...custom,
-            font: { name: custom.font.displayName },
-            previewImage: custom.previewImage ? { fileUrl: custom.previewImage.fileUrl } : undefined,
+            name: custom.name ?? '',
+            font: { displayName: custom.font.displayName },
+            prewiewImage: custom.previewImage ? { fileUrl: custom.previewImage.fileUrl } : null,
+            lines: custom.lines,
+            id: custom.id,
+            material: custom.material,
           }
         : null,
       attributeValues: variant?.attributeValues ?? [],
@@ -69,11 +72,15 @@ export const mapCartResponseToCartItemState = (cartItems: CartItem): CartItemSta
     discount,
     customStickerValues: custom
       ? {
-          ...custom,
-          font: { name: custom.font.displayName },
-          previewImage: custom.previewImage ? { fileUrl: custom.previewImage.fileUrl } : undefined,
+          name: custom.name ?? '',
+          font: { displayName: custom.font.displayName },
+          prewiewImage: custom.previewImage ? { fileUrl: custom.previewImage.fileUrl } : null,
+          lines: custom.lines,
+          id: custom.id,
+          material: custom.material,
         }
       : null,
+
     attributeValues: variant?.attributeValues ?? [],
   };
 };

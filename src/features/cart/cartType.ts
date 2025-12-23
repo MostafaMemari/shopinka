@@ -58,6 +58,7 @@ export interface CartItem {
   } | null;
   customSticker: {
     id: number;
+    name: string | null;
     userId: number;
     fontId: number;
     materialId: number;

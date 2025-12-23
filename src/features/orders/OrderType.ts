@@ -4,7 +4,6 @@ import { Pager } from '../../types/pagerType';
 import { ShippingItem } from '../shippings/ShippingType';
 import { Transaction } from '../../types/transactionType';
 import { Product, ProductVariant } from '../products/ProductType';
-import { Line } from '@/store/slices/stickerSlice';
 import { CustomStickerValues } from '../cart/cartType';
 
 export interface Order {
