@@ -45,7 +45,7 @@ export default function CustomStickerDialog({ open, onOpenChange, customStickerV
           <div className="flex flex-wrap gap-2 justify-center">
             <Badge variant="secondary" className="gap-1.5 px-3 py-1 text-xs font-normal">
               <Type className="w-3.5 h-3.5 text-muted-foreground" />
-              فونت: {font.name}
+              فونت: {font.displayName}
             </Badge>
             <Badge variant="secondary" className="px-3 py-1 text-xs font-normal">
               جنس: {material.name}

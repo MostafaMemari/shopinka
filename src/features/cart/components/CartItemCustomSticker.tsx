@@ -1,16 +1,8 @@
 import React from 'react';
+import { CustomStickerValues } from '../cartType';
 
 interface CartItemCustomStickerProps {
-  customStickerValues: {
-    font: {
-      name: string;
-    };
-    material: {
-      name: string;
-      surface: 'MATTE' | 'GLOSSY' | 'RAINBOW' | 'REFLECTIVE';
-      colorCode: string;
-    };
-  };
+  customStickerValues: CustomStickerValues;
 }
 
 function CartItemCustomSticker({ customStickerValues }: CartItemCustomStickerProps) {
@@ -26,9 +18,9 @@ function CartItemCustomSticker({ customStickerValues }: CartItemCustomStickerPro
           </div>
         )}
 
-        {customStickerValues.font.name && (
+        {customStickerValues.font.displayName && (
           <div className="flex items-center gap-x-1">
-            <span>فونت: {customStickerValues.font.name}</span>
+            <span>فونت: {customStickerValues.font.displayName}</span>
           </div>
         )}
       </div>

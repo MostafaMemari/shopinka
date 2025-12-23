@@ -20,7 +20,7 @@ export interface CustomStickerValues {
   id: number;
   name: string;
   prewiewImage: { fileUrl: string } | null;
-  font: { name: string };
+  font: { displayName: string };
   material: { name: string; surface: 'MATTE' | 'GLOSSY' | 'RAINBOW' | 'REFLECTIVE'; colorCode: string };
   previewImage?: { fileUrl: string };
   lines: Line[];

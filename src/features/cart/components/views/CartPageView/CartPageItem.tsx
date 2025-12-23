@@ -67,9 +67,9 @@ function CartPageItem({ cartItem, isLast = false }: CartPageItemProps) {
           )}
 
           <div className="flex items-center mt-1 gap-3">
-            <div className="flex items-center gap-1 text-xs text-gray-500 ">
+            <div className="flex items-center gap-1 text-xs text-gray-500">
               <Package className="w-4 h-4 text-gray-400" />
-              <span>موجود در انبار</span>
+              <span>{isCustomSticker ? 'سفارشی‌ سازی‌ شده' : 'موجود در انبار'}</span>
             </div>
 
             <div className="text-xs text-gray-500">

@@ -26,7 +26,7 @@ const ProductPrice: FC<Props> = ({ basePrice, salePrice, quantity }) => {
   }
 
   if (!salePrice && !basePrice) {
-    return <Wrapper>{basePrice ? <PriceWithIcon price={basePrice} /> : <Unavailable text="غیر قابل فروش" />}</Wrapper>;
+    return <Wrapper>{basePrice ? <PriceWithIcon price={basePrice} /> : <Unavailable text="توقف فروش" />}</Wrapper>;
   }
 
   return (
