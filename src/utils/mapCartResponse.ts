@@ -30,15 +30,9 @@ export const mapCartResponseToCartItemsState = (cartItems: CartItem[] = []): Car
       discount,
       customStickerValues: custom
         ? {
-            font: {
-              name: custom.font.displayName,
-            },
-            material: {
-              name: custom.material.name,
-              surface: custom.material.surface,
-              colorCode: custom.material.colorCode,
-            },
-            lines: custom.lines,
+            ...custom,
+            font: { name: custom.font.displayName },
+            previewImage: custom.previewImage ? { fileUrl: custom.previewImage.fileUrl } : undefined,
           }
         : null,
       attributeValues: variant?.attributeValues ?? [],
@@ -75,15 +69,9 @@ export const mapCartResponseToCartItemState = (cartItems: CartItem): CartItemSta
     discount,
     customStickerValues: custom
       ? {
-          font: {
-            name: custom.font.displayName,
-          },
-          material: {
-            name: custom.material.name,
-            surface: custom.material.surface,
-            colorCode: custom.material.colorCode,
-          },
-          lines: custom.lines,
+          ...custom,
+          font: { name: custom.font.displayName },
+          previewImage: custom.previewImage ? { fileUrl: custom.previewImage.fileUrl } : undefined,
         }
       : null,
     attributeValues: variant?.attributeValues ?? [],

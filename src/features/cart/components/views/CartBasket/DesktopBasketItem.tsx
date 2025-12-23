@@ -68,9 +68,7 @@ export default function DesktopBasketItem({ item }: ItemCardBasketProp) {
         </div>
       </div>
 
-      {isCustomSticker && (
-        <CustomStickerDialog open={open} onOpenChange={setOpen} thumbnail={item.thumbnail} customStickerValues={item.customStickerValues} />
-      )}
+      {isCustomSticker && <CustomStickerDialog open={open} onOpenChange={setOpen} customStickerValues={item.customStickerValues} />}
     </>
   );
 }

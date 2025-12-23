@@ -5,6 +5,7 @@ import { ShippingItem } from '../shippings/ShippingType';
 import { Transaction } from '../../types/transactionType';
 import { Product, ProductVariant } from '../products/ProductType';
 import { Line } from '@/store/slices/stickerSlice';
+import { CustomStickerValues } from '../cart/cartType';
 
 export interface Order {
   pager: Pager;
@@ -42,15 +43,8 @@ export interface OrderProductItem {
   createdAt: string;
   product: Product;
   productVariant: ProductVariant | null;
-  customSticker: {
-    id: number;
-    name: string;
-    finalPrice: number;
-    previewImage: {
-      fileUrl: string;
-    };
-    lines: Line[];
-  };
+  customStickerId: number | null;
+  customSticker: CustomStickerValues | null;
 }
 
 export interface OrderResponse {

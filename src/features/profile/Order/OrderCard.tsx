@@ -1,9 +1,10 @@
 'use client';
 
+// import 'swiper/css';
+// import 'swiper/css/navigation';
+// import 'swiper/css/pagination';
+
 import Link from 'next/link';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
 
 import { getStatusConfig } from '@/config/orderStatusConfig';
 import ProductSlider from '../ProductSlider';

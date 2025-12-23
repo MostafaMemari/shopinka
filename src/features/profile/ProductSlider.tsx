@@ -7,12 +7,16 @@ import { FreeMode } from 'swiper/modules';
 import Link from 'next/link';
 import { OrderProductItem } from '@/features/orders/OrderType';
 import Image from 'next/image';
+import { useState } from 'react';
+import CustomStickerDialog from '../cart/components/views/CartBasket/CustomStickerDialog';
 
 interface ProductSliderProps {
   orderProductItems: OrderProductItem[];
 }
 
 const ProductSlider: React.FC<ProductSliderProps> = ({ orderProductItems }) => {
+  const [open, setOpen] = useState(false);
+
   return (
     <div className="orders-product-swiper">
       <Swiper
@@ -38,21 +42,27 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ orderProductItems }) => {
             item?.customSticker?.previewImage?.fileUrl ||
             '/images/no-image.webp';
 
+          const isCustomSticker = item?.customStickerId;
+
           return (
-            <SwiperSlide key={item?.id}>
-              <Link
-                href={productSlug ? `/product/${productSlug}` : '#'}
-                className="
+            <>
+              <SwiperSlide key={item?.id}>
+                <Link
+                  href={productSlug ? `/product/${productSlug}` : '#'}
+                  className="
               flex items-center gap-x-3 rounded-xl border border-gray-100 bg-white
               px-2 py-2 shadow-sm transition hover:shadow-lg hover:border-primary mb-0.5
             "
-              >
-                <div className="flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden bg-gray-50 flex items-center justify-center">
-                  <Image alt={productName} src={productImageUrl} className="object-contain w-14 h-14" width={60} height={60} />
-                </div>
-                <p className="line-clamp-2 text-xs sm:text-sm text-gray-700 font-medium">{productName}</p>
-              </Link>
-            </SwiperSlide>
+                >
+                  <div className="flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden bg-gray-50 flex items-center justify-center">
+                    <Image alt={productName} src={productImageUrl} className="object-contain w-14 h-14" width={60} height={60} />
+                  </div>
+                  <p className="line-clamp-2 text-xs sm:text-sm text-gray-700 font-medium">{productName}</p>
+                </Link>
+              </SwiperSlide>
+
+              {isCustomSticker && <CustomStickerDialog open={open} onOpenChange={setOpen} customStickerValues={item.customSticker} />}
+            </>
           );
         })}
       </Swiper>
