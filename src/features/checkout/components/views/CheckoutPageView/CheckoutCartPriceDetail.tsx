@@ -5,18 +5,18 @@ import PrimaryButton from '@/components/common/PrimaryButton';
 import CartSummary from '@/features/cart/components/CartSummary';
 import { ShippingItem } from '@/features/shippings/ShippingType';
 import { usePayment } from '@/features/payment/hooks/usePayment';
-import MobileCartSticky from '../../../components/common/MobileCartSticky';
+import MobileCartSticky from '../../../../../components/common/MobileCartSticky';
 import { formatPrice } from '@/utils/formatter';
 import { CartState } from '@/features/cart/cartType';
 import TomanIcon from '@/components/common/svg/TomanIcon';
 
-interface CartPriceDetailProps {
+interface CheckoutCartPriceDetailProps {
   selectedAddressId: number | null;
   selectedShippingItem: ShippingItem | null;
   cart: CartState;
 }
 
-export default function CartPriceDetail({ selectedAddressId, selectedShippingItem, cart }: CartPriceDetailProps) {
+export default function CheckoutCartPriceDetail({ selectedAddressId, selectedShippingItem, cart }: CheckoutCartPriceDetailProps) {
   const { items: cartItems, payablePrice, totalDiscountPrice, totalPrice } = cart;
 
   const totalQuantity = cartItems?.reduce((sum, item) => sum + item.count, 0) || 0;

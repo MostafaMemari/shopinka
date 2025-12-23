@@ -14,6 +14,7 @@ export interface Option {
 
 interface AddressSectionProps {
   onAddressSelect: (id: number | null) => void;
+  onShippingSelect: (id: number | null) => void;
 }
 
 export default function AddressSection({ onAddressSelect }: AddressSectionProps) {
