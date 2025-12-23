@@ -13,7 +13,7 @@ export default function TopNav() {
     router.push('/checkout/cart');
   };
   return (
-    <div className="flex items-center justify-between w-full">
+    <div className="flex items-center justify-between w-full py-1">
       <Button asChild variant="ghost" size="sm" className="size-12 cursor-pointer mr-2">
         <Phone />
       </Button>

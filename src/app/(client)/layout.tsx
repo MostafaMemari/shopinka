@@ -7,7 +7,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <>
       <Header />
       <MobileLayout />
-      <main className="container pb-14 pt-22 md:pt-36">
+      <main className="container pb-14 pt-22 md:pt-48">
         <div className="col-span-12 lg:col-span-9">{children}</div>
       </main>
       <Footer />

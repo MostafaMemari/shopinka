@@ -34,7 +34,7 @@ function FinalizePreview({ lines, onPreviewImageChange }: Props) {
               <StickerLineDimensions width={line.width} height={line.height} />
             </div>
 
-            <span className="text-xs text-gray-400">خط {line.lineNumber + 1}</span>
+            <span className="text-xs text-gray-400">خط {line.lineNumber}</span>
           </div>
         ))}
       </div>
