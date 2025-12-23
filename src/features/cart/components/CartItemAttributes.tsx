@@ -2,7 +2,7 @@ import { AttributeValues } from '@/types/attributeType';
 import React from 'react';
 
 interface CartItemAttributesProps {
-  type: 'SIMPLE' | 'VARIABLE';
+  type: 'SIMPLE' | 'VARIABLE' | 'CUSTOM_STICKER';
   attributes: AttributeValues[];
 }
 

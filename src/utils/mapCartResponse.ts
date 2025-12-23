@@ -8,7 +8,7 @@ export const mapCartResponseToCartItemsState = (cartItems: CartItem[] = []): Car
     const custom = item.customSticker;
 
     const id = item.product?.id ?? variant?.id ?? custom?.id ?? 0;
-    const type: 'SIMPLE' | 'VARIABLE' = isSimple ? 'SIMPLE' : 'VARIABLE';
+    const type: 'SIMPLE' | 'VARIABLE' | 'CUSTOM_STICKER' = isSimple ? 'SIMPLE' : custom ? 'CUSTOM_STICKER' : 'VARIABLE';
     const title = product?.name ?? `برچسب ${custom.lines.map((line) => line.text).join(' - ')}`;
     const thumbnail = product?.mainImage?.fileUrl ?? custom?.previewImage?.fileUrl ?? '';
     const slug = product?.slug ?? '';
@@ -28,16 +28,18 @@ export const mapCartResponseToCartItemsState = (cartItems: CartItem[] = []): Car
       basePrice,
       salePrice,
       discount,
-      customStickerValues: {
-        font: {
-          name: custom?.font.displayName,
-        },
-        material: {
-          name: custom?.material.name,
-          surface: custom?.material.surface,
-          colorCode: custom?.material.colorCode,
-        },
-      },
+      customStickerValues: custom
+        ? {
+            font: {
+              name: custom.font.displayName,
+            },
+            material: {
+              name: custom.material.name,
+              surface: custom.material.surface,
+              colorCode: custom.material.colorCode,
+            },
+          }
+        : null,
       attributeValues: variant?.attributeValues ?? [],
     };
   });
@@ -50,7 +52,7 @@ export const mapCartResponseToCartItemState = (cartItems: CartItem): CartItemSta
   const custom = cartItems.customSticker;
 
   const id = cartItems.product?.id ?? variant?.id ?? custom?.id ?? 0;
-  const type: 'SIMPLE' | 'VARIABLE' = isSimple ? 'SIMPLE' : 'VARIABLE';
+  const type: 'SIMPLE' | 'VARIABLE' | 'CUSTOM_STICKER' = isSimple ? 'SIMPLE' : custom ? 'CUSTOM_STICKER' : 'VARIABLE';
   const title = product?.name ?? `برچسب ${custom?.lines.map((line) => line.text).join(' - ') ?? ''}`;
   const thumbnail = product?.mainImage?.fileUrl ?? custom?.previewImage?.fileUrl ?? '';
   const slug = product?.slug ?? '';
@@ -70,16 +72,18 @@ export const mapCartResponseToCartItemState = (cartItems: CartItem): CartItemSta
     basePrice,
     salePrice,
     discount,
-    customStickerValues: {
-      font: {
-        name: custom?.font.displayName,
-      },
-      material: {
-        name: custom?.material.name,
-        surface: custom?.material.surface,
-        colorCode: custom?.material.colorCode,
-      },
-    },
+    customStickerValues: custom
+      ? {
+          font: {
+            name: custom.font.displayName,
+          },
+          material: {
+            name: custom.material.name,
+            surface: custom.material.surface,
+            colorCode: custom.material.colorCode,
+          },
+        }
+      : null,
     attributeValues: variant?.attributeValues ?? [],
   };
 };

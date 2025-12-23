@@ -3,7 +3,7 @@ import { AttributeValues } from '@/types/attributeType';
 export interface CartItemState {
   itemId?: number;
   id: number;
-  type: 'SIMPLE' | 'VARIABLE';
+  type: 'SIMPLE' | 'VARIABLE' | 'CUSTOM_STICKER';
   title: string;
   slug: string;
   thumbnail: string;
@@ -14,7 +14,7 @@ export interface CartItemState {
   customStickerValues: {
     font: { name: string };
     material: { name: string; surface: 'MATTE' | 'GLOSSY' | 'RAINBOW' | 'REFLECTIVE'; colorCode: string };
-  };
+  } | null;
   attributeValues: AttributeValues[];
 }
 
