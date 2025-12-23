@@ -1,3 +1,6 @@
+import './globals.css';
+import './tailwind.css';
+
 import ClientProvider from './ClientProvider';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import NextTopLoader from 'nextjs-toploader';
@@ -7,9 +10,6 @@ import ScrollToTop from '@/components/common/ScrollToTop';
 import { Toaster } from '@/components/ui/sonner';
 import { iranyekan } from '@/lib/fonts';
 import { cn } from '@/lib/utils';
-
-import './globals.css';
-import './tailwind.css';
 
 export const metadata = {
   title: {

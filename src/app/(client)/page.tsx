@@ -19,22 +19,24 @@ export default async function Home() {
   ]);
 
   return (
-    <div className="space-y-4">
-      <DomingoHeroWithSwiper />
+    <>
+      <div className="space-y-4">
+        <DomingoHeroWithSwiper />
 
-      {discountProducts.success && <AmazingProducts products={discountProducts.data.items} viewAllLink="/shop?hasDiscount=true" />}
+        {discountProducts.success && <AmazingProducts products={discountProducts.data.items} viewAllLink="/shop?hasDiscount=true" />}
 
-      {discountProducts.success && (
-        <CarouselProduct key="discount" title="فروش ویژه" products={discountProducts.data.items} viewAllLink="/shop?hasDiscount=true" />
-      )}
+        {discountProducts.success && (
+          <CarouselProduct key="discount" title="فروش ویژه" products={discountProducts.data.items} viewAllLink="/shop?hasDiscount=true" />
+        )}
 
-      {newestProducts.success && (
-        <CarouselProduct key="newest" title="جدیدترین محصولات" products={newestProducts.data.items} viewAllLink="/shop?sortBy=newest" />
-      )}
+        {newestProducts.success && (
+          <CarouselProduct key="newest" title="جدیدترین محصولات" products={newestProducts.data.items} viewAllLink="/shop?sortBy=newest" />
+        )}
 
-      <CategoryCirclesBanners basePath={`/product-category/${categories.slug}`} categories={categories.children} />
+        <CategoryCirclesBanners basePath={`/product-category/${categories.slug}`} categories={categories.children} />
 
-      {blogs.success && <CarouselBlog title="آخرین مقالات" blogs={blogs.data.items} viewAllLink="/shop?sortBy=newest" />}
-    </div>
+        {blogs.success && <CarouselBlog title="آخرین مقالات" blogs={blogs.data.items} viewAllLink="/shop?sortBy=newest" />}
+      </div>
+    </>
   );
 }

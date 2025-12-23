@@ -11,7 +11,7 @@ interface MobileCartStickyProps {
 }
 
 export default function MobileCartSticky({ children, position = 'bottom', className }: MobileCartStickyProps) {
-  const positionClass = position === 'top' ? 'top-3' : 'bottom-3';
+  const positionClass = position === 'top' ? 'top-10' : 'bottom-3';
 
   return (
     <div className="md:hidden">
