@@ -38,6 +38,7 @@ export const mapCartResponseToCartItemsState = (cartItems: CartItem[] = []): Car
               surface: custom.material.surface,
               colorCode: custom.material.colorCode,
             },
+            lines: custom.lines,
           }
         : null,
       attributeValues: variant?.attributeValues ?? [],
@@ -82,6 +83,7 @@ export const mapCartResponseToCartItemState = (cartItems: CartItem): CartItemSta
             surface: custom.material.surface,
             colorCode: custom.material.colorCode,
           },
+          lines: custom.lines,
         }
       : null,
     attributeValues: variant?.attributeValues ?? [],

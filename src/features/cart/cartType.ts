@@ -1,3 +1,4 @@
+import { Line } from '@/store/slices/stickerSlice';
 import { AttributeValues } from '@/types/attributeType';
 
 export interface CartItemState {
@@ -11,13 +12,15 @@ export interface CartItemState {
   salePrice: number;
   discount: number;
   count: number;
-  customStickerValues: {
-    font: { name: string };
-    material: { name: string; surface: 'MATTE' | 'GLOSSY' | 'RAINBOW' | 'REFLECTIVE'; colorCode: string };
-  } | null;
+  customStickerValues: CustomStickerValues | null;
   attributeValues: AttributeValues[];
 }
 
+export interface CustomStickerValues {
+  font: { name: string };
+  material: { name: string; surface: 'MATTE' | 'GLOSSY' | 'RAINBOW' | 'REFLECTIVE'; colorCode: string };
+  lines: Line[];
+}
 export interface CartState {
   items: CartItemState[];
   payablePrice: number;
