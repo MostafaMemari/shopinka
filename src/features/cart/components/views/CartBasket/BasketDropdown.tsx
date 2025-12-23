@@ -4,10 +4,10 @@ import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import DesktopBasketItem from './DesktopBasketItem';
 import { formatPrice } from '@/utils/formatter';
-import CartIconTotalQuantity from '../CartIconTotalQuantity';
+import CartIconTotalQuantity from '../../CartIconTotalQuantity';
 import { useRouter } from 'next/navigation';
 import { ChevronLeft, ShoppingCart } from 'lucide-react';
-import { useCart } from '../../hooks/useCart';
+import { useCart } from '../../../hooks/useCart';
 
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 import { ScrollArea } from '@/components/ui/scroll-area';

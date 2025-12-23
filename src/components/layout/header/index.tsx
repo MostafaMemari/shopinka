@@ -1,7 +1,7 @@
 import DesktopLogo from '../../common/Logo/DesktopLogo';
 import ProfileDropdown from './ProfileDropdown';
 import SearchBarBase from './Search/SearchBar';
-import BasketDropdown from '../../../features/cart/components/views/BasketDropdown';
+import BasketDropdown from '../../../features/cart/components/views/CartBasket/BasketDropdown';
 import DesktopNavbar from './DesktopNavbar';
 import { getCategoriesCatch } from '@/features/categories/cartService';
 import { cn } from '@/lib/utils';

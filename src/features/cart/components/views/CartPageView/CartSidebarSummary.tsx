@@ -1,6 +1,7 @@
 import PrimaryButton from '@/components/common/PrimaryButton';
-import CartSummary from '../../CartSummary';
 import { CartState } from '@/features/cart/cartType';
+
+import CartSummary from '../../CartSummary';
 
 interface Props {
   cart: CartState;

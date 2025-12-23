@@ -1,18 +1,20 @@
 'use client';
 
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useDispatch } from 'react-redux';
+
 import { useCart } from '@/features/cart/hooks/useCart';
 import { useBoolean } from '@/hooks/use-boolean';
 import { useIsMounted } from '@/hooks/useIsMounted';
 import { useAppSelector } from '@/store/hooks';
 import { openAuthDialog } from '@/store/slices/authDialogSlice';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { Card } from '@/components/ui/card';
+
 import CartLoadingState from './CartLoadingState';
 import CartErrorState from './CartErrorState';
 import CartEmptyState from './CartEmptyState';
 import CartFooterSticky from './CartFooterSticky';
-import { Card } from '@/components/ui/card';
 import CartHeader from './CartHeader';
 import { CartItemsList } from './CartItemsList';
 import CartSidebarSummary from './CartSidebarSummary';

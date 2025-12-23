@@ -5,7 +5,7 @@ import PrimaryButton from '@/components/common/PrimaryButton';
 import CartSummary from '@/features/cart/components/CartSummary';
 import { ShippingItem } from '@/features/shippings/ShippingType';
 import { usePayment } from '@/features/payment/hooks/usePayment';
-import MobileCartSticky from '../../../../../components/common/MobileCartSticky';
+import MobileCartSticky from '@/components/common/MobileCartSticky';
 import { formatPrice } from '@/utils/formatter';
 import { CartState } from '@/features/cart/cartType';
 import TomanIcon from '@/components/common/svg/TomanIcon';

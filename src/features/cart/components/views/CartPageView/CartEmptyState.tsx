@@ -1,6 +1,7 @@
+import { Link, ShoppingBasket } from 'lucide-react';
+
 import { Card } from '@/components/ui/card';
 import EmptyState from '@/features/profile/EmptyState';
-import { Link, ShoppingBasket } from 'lucide-react';
 
 export default function CartEmptyState() {
   return (

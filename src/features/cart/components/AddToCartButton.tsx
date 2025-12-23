@@ -1,14 +1,16 @@
 'use client';
 
-import { ProductCardLogic } from '@/types/productCardLogic';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+
+import { ProductCardLogic } from '@/types/productCardLogic';
+import PrimaryButton from '@/components/common/PrimaryButton';
+import { showAddToCartToast } from '@/utils/toastUtils';
+
 import CartControls from './CartControls';
 import { useCartLogic } from '../hooks/useCartLogic';
-import PrimaryButton from '@/components/common/PrimaryButton';
 import { useCart } from '../hooks/useCart';
 import { CartData } from '../cartType';
-import { showAddToCartToast } from '@/utils/toastUtils';
-import { useRouter } from 'next/navigation';
 
 interface AddToCartButtonProps {
   product: ProductCardLogic;

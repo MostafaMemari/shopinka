@@ -1,11 +1,12 @@
 'use client';
 
-import { useIsMounted } from '@/hooks/useIsMounted';
-import { cn } from '@/lib/utils';
 import { ShoppingCart } from 'lucide-react';
-import { useCart } from '../hooks/useCart';
 
+import { cn } from '@/lib/utils';
+import { useIsMounted } from '@/hooks/useIsMounted';
 import { Skeleton } from '@/components/ui/skeleton';
+
+import { useCart } from '../hooks/useCart';
 
 interface CartIconTotalQuantityProps {
   className?: string;
