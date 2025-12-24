@@ -24,6 +24,8 @@ export default function CustomStickerDialog({ open, onOpenChange, customStickerV
   const { font, material, lines } = customStickerValues;
   const thumbnail = customStickerValues.previewImage?.fileUrl || null;
 
+  console.log(thumbnail);
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-md p-6 overflow-hidden">

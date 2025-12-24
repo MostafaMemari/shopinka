@@ -19,10 +19,9 @@ export interface CartItemState {
 export interface CustomStickerValues {
   id: number;
   name: string;
-  prewiewImage: { fileUrl: string } | null;
+  previewImage: { fileUrl: string } | null;
   font: { displayName: string };
   material: { name: string; surface: 'MATTE' | 'GLOSSY' | 'RAINBOW' | 'REFLECTIVE'; colorCode: string };
-  previewImage?: { fileUrl: string };
   lines: Line[];
 }
 export interface CartState {

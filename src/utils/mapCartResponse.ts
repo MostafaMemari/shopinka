@@ -32,7 +32,7 @@ export const mapCartResponseToCartItemsState = (cartItems: CartItem[] = []): Car
         ? {
             name: custom.name ?? '',
             font: { displayName: custom.font.displayName },
-            prewiewImage: custom.previewImage ? { fileUrl: custom.previewImage.fileUrl } : null,
+            previewImage: custom.previewImage ? { fileUrl: custom.previewImage.fileUrl } : null,
             lines: custom.lines,
             id: custom.id,
             material: custom.material,
@@ -74,7 +74,7 @@ export const mapCartResponseToCartItemState = (cartItems: CartItem): CartItemSta
       ? {
           name: custom.name ?? '',
           font: { displayName: custom.font.displayName },
-          prewiewImage: custom.previewImage ? { fileUrl: custom.previewImage.fileUrl } : null,
+          previewImage: custom.previewImage ? { fileUrl: custom.previewImage.fileUrl } : null,
           lines: custom.lines,
           id: custom.id,
           material: custom.material,
