@@ -9,12 +9,18 @@ import { useRouter } from 'next/navigation';
 
 export default function TopNav() {
   const router = useRouter();
+
+  const handlePhoneIconClick = () => {
+    window.location.href = 'tel:+989123456789';
+  };
+
   const handleCartIconClick = () => {
     router.push('/checkout/cart');
   };
+
   return (
     <div className="flex items-center justify-between w-full py-1">
-      <Button asChild variant="ghost" size="sm" className="size-12 cursor-pointer mr-2">
+      <Button onClick={handlePhoneIconClick} asChild variant="ghost" size="sm" className="size-12 cursor-pointer mr-2">
         <Phone />
       </Button>
 
