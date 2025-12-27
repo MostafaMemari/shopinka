@@ -23,7 +23,6 @@ const FavoriteActions = () => {
 
   return (
     <>
-      {' '}
       {isLoading || isToggleFavoriteLoading ? (
         <LoadingSpinner />
       ) : error ? (

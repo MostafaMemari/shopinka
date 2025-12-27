@@ -1,6 +1,5 @@
 import { Card } from '@/components/ui/card';
 import React from 'react';
-import { Heart, Share2 } from 'lucide-react';
 
 import Breadcrumb from '@/components/common/Breadcrumb';
 import ProductCommentCount from '@/features/comments/components/ProductComments/ProductCommentCount';
@@ -12,6 +11,8 @@ import ProductImageSwiper from '../../ProductImageSwiper';
 import ProductSku from '../../ProductSku';
 import { ProductDetailsPrice } from '../../ProductDetailsPrice';
 import { ProductStatusList } from '../../ProductStatusList';
+import ProductFavoriteIcon from '../../ProductFavoriteIcon';
+import ProductShareIcon from '../../ProductShareIcon';
 
 interface ProductMobileDetailsProps {
   product: ProductDetails;
@@ -45,6 +46,11 @@ function ProductMobileDetails({ product, breadcrumbItems, ProductVariant, AddToC
           <div className="flex items-center gap-x-4">
             <ProductSku sku={product.sku ?? ''} />
             <ProductCommentCount key={product.id} productId={product.id} />
+          </div>
+
+          <div className="flex items-center gap-x-4">
+            <ProductShareIcon />
+            <ProductFavoriteIcon productId={product.id} />
           </div>
         </div>
 
