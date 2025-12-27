@@ -2,7 +2,6 @@ import { getCategoriesCatch } from '@/features/categories/cartService';
 import BasketDropdown from '@/features/cart/components/views/CartBasket/BasketDropdown';
 
 import DesktopLogo from '../../../common/Logo/DesktopLogo';
-import CustomStickerBanner from '../../banner/CustomStickerBanner';
 import SearchBarBase from '../DesktopHeader/Search/SearchBar';
 import ProfileDropdown from '../DesktopHeader/ProfileDropdown';
 import DesktopNavbar from './DesktopNavbar';
@@ -19,8 +18,6 @@ async function DesktopHeader() {
   return (
     <>
       <div className="bg-white shadow-sm">
-        <CustomStickerBanner />
-
         <div className="container z-30 flex items-center justify-between gap-x-4 py-4">
           <div className="flex items-center gap-x-6">
             <DesktopLogo />
