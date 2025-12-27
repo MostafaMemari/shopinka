@@ -3,7 +3,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 export default function ProductLoader() {
   return (
-    <>
+    <div className="container">
       {/* Desktop Loader */}
       <div className="hidden lg:block">
         {/* Breadcrumb Skeleton Loader */}
@@ -74,6 +74,6 @@ export default function ProductLoader() {
           </div>
         </Card>
       </div>
-    </>
+    </div>
   );
 }

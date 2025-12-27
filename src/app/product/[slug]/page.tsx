@@ -33,21 +33,25 @@ export default async function Page({ params }: Props) {
 
   return (
     <>
-      {/* <MobileHeader productId={product.id} /> */}
-      <ProductDetailsView product={product} />
-      {discountProducts.success && (
-        <div className="mt-4">
-          <CarouselProduct
-            title="محصولات مرتبط"
-            products={discountProducts?.data.items}
-            viewAllLink={`/shop?categoryIds=${categoryIds.join(',')}`}
-          />
-        </div>
-      )}
+      <MobileHeader productId={product.id} />
 
-      <div className="mt-4">
-        <ProductTabs description={product?.description} specifications={product?.properties} productId={product.id} />
-      </div>
+      <main className="container pb-14 mt-4">
+        <ProductDetailsView product={product} />
+
+        {discountProducts.success && (
+          <div className="mt-4">
+            <CarouselProduct
+              title="محصولات مرتبط"
+              products={discountProducts?.data.items}
+              viewAllLink={`/shop?categoryIds=${categoryIds.join(',')}`}
+            />
+          </div>
+        )}
+
+        <div className="mt-4">
+          <ProductTabs description={product?.description} specifications={product?.properties} productId={product.id} />
+        </div>
+      </main>
     </>
   );
 }
