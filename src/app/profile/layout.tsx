@@ -12,8 +12,9 @@ export default function Layout({ children }: Readonly<{ children: React.ReactNod
     <>
       <AuthGuard>
         <Header />
-        <div className="container pb-14">
-          <div className="grid grid-cols-12 gap-4">
+
+        <div className="container pb-14 mt-2">
+          <div className="grid grid-cols-12 gap-2">
             <div className="col-span-12 lg:col-span-3">
               <Card className="hidden w-full overflow-hidden p-0 lg:block">
                 <div className="p-4">
@@ -25,7 +26,7 @@ export default function Layout({ children }: Readonly<{ children: React.ReactNod
             <div className="col-span-12 lg:col-span-9">
               <ProfileMenuDrawer />
               <div className="col-span-12 lg:col-span-9">
-                <Card className="p-5">{children}</Card>
+                <Card>{children}</Card>
               </div>
             </div>
           </div>
