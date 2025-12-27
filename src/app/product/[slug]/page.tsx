@@ -33,7 +33,7 @@ export default async function Page({ params }: Props) {
 
   return (
     <>
-      <MobileHeader productId={product.id} />
+      {/* <MobileHeader productId={product.id} /> */}
       <ProductDetailsView product={product} />
       {discountProducts.success && (
         <div className="mt-4">

@@ -4,7 +4,7 @@ import MobileHeader from './MobileHeader';
 
 async function Header() {
   return (
-    <header>
+    <header className="sticky top-0 z-50">
       <CustomStickerBanner />
 
       <div className="hidden md:block sticky top-0 z-50">
