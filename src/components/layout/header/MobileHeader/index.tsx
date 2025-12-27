@@ -7,7 +7,6 @@ import { usePathname, useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
 import CartIconTotalQuantity from '@/features/cart/components/CartIconTotalQuantity';
-import MobileBottomNav from '@/components/common/MobileLayout/MobileBottomNav';
 
 const MobileHeader = () => {
   const pathname = usePathname();

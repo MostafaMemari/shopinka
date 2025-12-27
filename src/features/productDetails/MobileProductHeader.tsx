@@ -1,6 +1,5 @@
 import React from 'react';
 import CartIconTotalQuantity from '../cart/components/CartIconTotalQuantity';
-import ShareProductAction from './ActionButtons/ShareProductAction';
 import { X } from 'lucide-react';
 import MobileLogo from '@/components/common/Logo/MobileLogo';
 

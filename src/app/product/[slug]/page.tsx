@@ -1,7 +1,6 @@
 import { fetchProductBySlug, getProducts } from '@/features/products/productService';
 import ProductDetailsView from '@/features/productDetails/views/ProductDetailsView';
 import { notFound } from 'next/navigation';
-import MobileHeader from '@/features/productDetails/MobileProductHeader';
 import { Metadata } from 'next';
 import { generateProductMetadata } from './metadata';
 import CarouselProduct from '@/features/products/components/ProductCarousel';
