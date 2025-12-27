@@ -7,7 +7,7 @@ async function Header() {
     <header className="sticky top-0 z-50">
       <CustomStickerBanner />
 
-      <div className="hidden md:block sticky top-0 z-50">
+      <div className="hidden md:block">
         <DesktopHeader />
       </div>
 

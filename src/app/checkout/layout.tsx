@@ -1,6 +1,6 @@
 import Footer from '@/components/layout/footer';
 import Header from '@/components/layout/header';
-import MobileLayout from '@/components/common/MobileLayout/MobileLayout';
+// import MobileLayout from '@/components/common/MobileLayout/MobileLayout';
 import { AuthGuard } from '@/auth/guard/auth-guard';
 import CustomStickerBanner from '@/components/layout/banner/CustomStickerBanner';
 
@@ -11,7 +11,7 @@ export default function Layout({ children }: Readonly<{ children: React.ReactNod
         <CustomStickerBanner />
       </div>
       <Header />
-      <MobileLayout showHeader={true} showNav={false} />
+      {/* <MobileLayout showHeader={true} showNav={false} /> */}
 
       <main className="pb-14 pt-24 lg:pt-52">
         <div className="container">

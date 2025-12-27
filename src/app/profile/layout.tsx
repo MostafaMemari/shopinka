@@ -1,5 +1,6 @@
 import { AuthGuard } from '@/auth/guard/auth-guard';
-import MobileLayout from '@/components/common/MobileLayout/MobileLayout';
+// import MobileLayout from '@/components/common/MobileLayout/MobileLayout';
+
 import CustomStickerBanner from '@/components/layout/banner/CustomStickerBanner';
 import Footer from '@/components/layout/footer';
 import Header from '@/components/layout/header';
@@ -16,7 +17,7 @@ export default function Layout({ children }: Readonly<{ children: React.ReactNod
           <CustomStickerBanner />
         </div>
         <Header />
-        <MobileLayout />
+        {/* <MobileLayout /> */}
         <div className="container pb-14 pt-22 lg:pt-52">
           <div className="grid grid-cols-12 gap-4">
             <div className="col-span-12 lg:col-span-3">
