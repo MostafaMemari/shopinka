@@ -41,6 +41,7 @@ const MobileHeader = () => {
               <PhoneIcon />
             </div>
           </div>
+
           <MobileBottomNav />
         </>
       )}

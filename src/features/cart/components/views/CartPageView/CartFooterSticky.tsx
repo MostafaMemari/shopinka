@@ -7,7 +7,7 @@ export default function CartFooterSticky({ price, isLoading, onContinue }: { pri
   return (
     <MobileCartSticky position="bottom">
       <div className="flex justify-between items-center">
-        <PrimaryButton onClick={onContinue} isLoading={isLoading}>
+        <PrimaryButton className="w-1/2" onClick={onContinue} isLoading={isLoading}>
           ادامه فرایند خرید
         </PrimaryButton>
 

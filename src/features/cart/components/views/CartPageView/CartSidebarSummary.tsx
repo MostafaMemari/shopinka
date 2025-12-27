@@ -2,6 +2,7 @@ import PrimaryButton from '@/components/common/PrimaryButton';
 import { CartState } from '@/features/cart/cartType';
 
 import CartSummary from '../../CartSummary';
+import useIsMdUp from '@/hooks/useIsMdUp';
 
 interface Props {
   cart: CartState;
@@ -11,6 +12,7 @@ interface Props {
 }
 
 export default function CartSidebarSummary({ cart, totalQuantity, isLoading, onContinue }: Props) {
+  const isMdUp = useIsMdUp();
   return (
     <CartSummary
       totalQuantity={totalQuantity}
@@ -18,9 +20,11 @@ export default function CartSidebarSummary({ cart, totalQuantity, isLoading, onC
       totalDiscountPrice={cart.totalDiscountPrice}
       totalPrice={cart.totalPrice}
     >
-      <PrimaryButton className="w-full" onClick={onContinue} isLoading={isLoading}>
-        ادامه فرایند خرید
-      </PrimaryButton>
+      {isMdUp && (
+        <PrimaryButton className="w-full" onClick={onContinue} isLoading={isLoading}>
+          ادامه فرایند خرید
+        </PrimaryButton>
+      )}
     </CartSummary>
   );
 }
