@@ -31,19 +31,15 @@ const MobileHeader = () => {
           </div>
         </div>
       ) : (
-        <>
-          <div className="h-[60px] w-full bg-white shadow-sm">
-            <div className="flex items-center justify-between py-2 px-2">
-              <DropdownItemMobile />
+        <div className="h-[60px] w-full bg-white shadow-sm">
+          <div className="flex items-center justify-between py-2 px-2">
+            <DropdownItemMobile />
 
-              <MobileLogo />
+            <MobileLogo />
 
-              <PhoneIcon />
-            </div>
+            <PhoneIcon />
           </div>
-
-          <MobileBottomNav />
-        </>
+        </div>
       )}
     </>
   );
