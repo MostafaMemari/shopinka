@@ -1,3 +1,5 @@
+'use client';
+
 import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList } from '@/components/ui/navigation-menu';
 import { cn } from '@/lib/utils';
 import { TableOfContents } from 'lucide-react';
@@ -35,7 +37,7 @@ export default function NavigationMenuDesktop({ categories }: NavigationMenuWith
                     'text-primary': isOpen,
                   })}
                 >
-                  <TableOfContents className="w-4 h-4" /> دسته‌بندی‌ها
+                  <TableOfContents className="w-4 h-4" /> دسته‌بندی‌ ها
                 </div>
               </HoverCardTrigger>
               <HoverCardContent align="start" className="w-[800px] p-0 mt-0.5 rounded-none rounded-b-2xl" sideOffset={-2}>
