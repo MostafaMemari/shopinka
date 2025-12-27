@@ -3,7 +3,7 @@
 import { Category } from '@/features/categories/CategoryType';
 import MenuItem from './MenuItem';
 import { cn } from '@/lib/utils';
-import NavigationMenuDesktop from '@/components/layout/header/DesktopNavbar/NavigationMenuDesktop';
+import NavigationMenuDesktop from '@/components/layout/header/DesktopHeader/DesktopNavbar/NavigationMenuDesktop';
 import { useScrollDirection } from '@/hooks/useScrollDirection';
 
 interface DesktopNavbarProps {

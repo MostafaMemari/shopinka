@@ -27,21 +27,21 @@ const MobileLayout = ({ showHeader = true, showNav = true }: MobileLayoutProps) 
   return (
     <div className="lg:hidden">
       {showHeader && (
-        <MobileCartSticky position="top">
-          <header>
-            <div className="flex items-center justify-between py-2 h-[60px]">
-              <Button asChild onClick={toggleMenu} variant="ghost" size="sm" className="size-12 cursor-pointer">
-                <MenuIcon />
-              </Button>
+        // <MobileCartSticky position="top">
+        <header className="w-full bg-white">
+          <div className="flex items-center justify-between py-2 h-[60px]">
+            <Button asChild onClick={toggleMenu} variant="ghost" size="sm" className="size-12 cursor-pointer">
+              <MenuIcon />
+            </Button>
 
-              <MobileLogo />
+            <MobileLogo />
 
-              <Button asChild variant="ghost" size="sm" className="size-12 cursor-pointer">
-                <Phone />
-              </Button>
-            </div>
-          </header>
-        </MobileCartSticky>
+            <Button asChild variant="ghost" size="sm" className="size-12 cursor-pointer">
+              <Phone />
+            </Button>
+          </div>
+        </header>
+        // </MobileCartSticky>
       )}
 
       <SideMenu isMenuOpen={isMenuOpen} onToggleMenu={setIsMenuOpen} />
