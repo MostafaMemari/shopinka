@@ -9,6 +9,7 @@ import MobileCartSticky from '@/components/common/MobileCartSticky';
 import { formatPrice } from '@/utils/formatter';
 import { CartState } from '@/features/cart/cartType';
 import TomanIcon from '@/components/common/svg/TomanIcon';
+import useIsMdUp from '@/hooks/useIsMdUp';
 
 interface CheckoutCartPriceDetailProps {
   selectedAddressId: number | null;
@@ -18,6 +19,7 @@ interface CheckoutCartPriceDetailProps {
 
 export default function CheckoutCartPriceDetail({ selectedAddressId, selectedShippingItem, cart }: CheckoutCartPriceDetailProps) {
   const { items: cartItems, payablePrice, totalDiscountPrice, totalPrice } = cart;
+  const isMdUp = useIsMdUp();
 
   const totalQuantity = cartItems?.reduce((sum, item) => sum + item.count, 0) || 0;
   const isCheckoutDisabled = !selectedAddressId;
@@ -70,15 +72,17 @@ export default function CheckoutCartPriceDetail({ selectedAddressId, selectedShi
         />
 
         <CartSummary payablePrice={payablePrice + shippingPrice}>
-          <PrimaryButton
-            type="submit"
-            className="w-full"
-            disabled={isCheckoutDisabled}
-            isLoading={isCreatePaymentLoading}
-            onClick={handleCreatePayment}
-          >
-            {isCheckoutDisabled ? 'لطفاً آدرس را انتخاب کنید' : 'پرداخت'}
-          </PrimaryButton>
+          {isMdUp && (
+            <PrimaryButton
+              type="submit"
+              className="w-full"
+              disabled={isCheckoutDisabled}
+              isLoading={isCreatePaymentLoading}
+              onClick={handleCreatePayment}
+            >
+              {isCheckoutDisabled ? 'لطفاً آدرس را انتخاب کنید' : 'پرداخت'}
+            </PrimaryButton>
+          )}
         </CartSummary>
       </div>
     </>

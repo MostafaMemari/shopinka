@@ -13,6 +13,7 @@ interface Props {
 
 export default function CartSidebarSummary({ cart, totalQuantity, isLoading, onContinue }: Props) {
   const isMdUp = useIsMdUp();
+
   return (
     <CartSummary
       totalQuantity={totalQuantity}
