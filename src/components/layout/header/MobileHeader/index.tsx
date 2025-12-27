@@ -7,6 +7,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
 import CartIconTotalQuantity from '@/features/cart/components/CartIconTotalQuantity';
+import MobileBottomNav from '@/components/common/MobileLayout/MobileBottomNav';
 
 const MobileHeader = () => {
   const pathname = usePathname();
@@ -30,15 +31,18 @@ const MobileHeader = () => {
           </div>
         </div>
       ) : (
-        <div className="h-[60px] w-full bg-white shadow-sm">
-          <div className="flex items-center justify-between py-2 px-2">
-            <DropdownItemMobile />
+        <>
+          <div className="h-[60px] w-full bg-white shadow-sm">
+            <div className="flex items-center justify-between py-2 px-2">
+              <DropdownItemMobile />
 
-            <MobileLogo />
+              <MobileLogo />
 
-            <PhoneIcon />
+              <PhoneIcon />
+            </div>
           </div>
-        </div>
+          <MobileBottomNav />
+        </>
       )}
     </>
   );

@@ -6,7 +6,6 @@ export default function Layout({ children }: Readonly<{ children: React.ReactNod
   return (
     <>
       <Header />
-
       <main className="container pb-14 mt-2">{children}</main>
       <Footer />
     </>
