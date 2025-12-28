@@ -2,53 +2,79 @@
 
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
-import MainImage from './MainImage';
-import GalleryImage from './GalleryImage';
-import GalleryDialog from './GalleryDialog';
+import useFancybox from '@/hooks/useFancybox';
 import { ProductGalleriesType } from '@/types/productGalleriesType';
-import { useBoolean } from '@/hooks/use-boolean';
 
 interface ProductGalleryProps {
   product: ProductGalleriesType;
 }
 
 export default function ProductGallery({ product }: ProductGalleryProps) {
-  const galleryImageDialogController = useBoolean();
-
   const { selectedVariant } = useSelector((state: RootState) => state.product);
+
+  const [fancyboxRef] = useFancybox({
+    Carousel: {
+      infinite: false,
+      Thumbs: false,
+      Toolbar: {
+        display: {
+          left: ['close', 'fullscreen'],
+          right: ['counter'],
+        },
+      },
+    },
+  });
 
   const mainImage = product.type === 'VARIABLE' && selectedVariant?.mainImage ? selectedVariant.mainImage : product.mainImage;
 
-  const displayedImages = product.galleryImages?.slice(0, 3);
-  const hasMoreImages = product.galleryImages?.length > 3;
-  const blurredImage = hasMoreImages ? product.galleryImages[3] : null;
+  const images = mainImage ? [mainImage, ...(product.galleryImages ?? [])] : (product.galleryImages ?? []);
 
-  const modalImages = mainImage ? [mainImage, ...product.galleryImages] : product.galleryImages;
+  if (!images.length) return null;
 
   return (
-    <>
-      <div className="space-y-4">
-        <div onClick={galleryImageDialogController.onTrue} className="cursor-pointer">
-          {mainImage && <MainImage src={mainImage.fileUrl} alt={mainImage.title ?? product.name} />}
-        </div>
+    <div ref={fancyboxRef} className="space-y-4">
+      <a
+        href={images[0].fileUrl}
+        data-fancybox="product-gallery"
+        data-caption={images[0].title ?? product.name}
+        className="block cursor-zoom-in"
+      >
+        <img
+          src={images[0].fileUrl}
+          data-thumb-src={images[0].fileUrl}
+          alt={images[0].title ?? product.name}
+          className="w-full rounded-lg object-contain"
+        />
+      </a>
 
-        {product.galleryImages?.length > 0 && (
-          <div className="flex items-center justify-center gap-x-2">
-            {displayedImages.map((image, index) => (
-              <div key={index} onClick={galleryImageDialogController.onTrue}>
-                <GalleryImage src={image.fileUrl} alt={image.title ?? product.name} isBlurred={false} />
-              </div>
-            ))}
-            {blurredImage && (
-              <div onClick={galleryImageDialogController.onTrue} className="shrink-0">
-                <GalleryImage src={blurredImage.fileUrl} alt={blurredImage.title ?? product.name} isBlurred={true} />
-              </div>
-            )}
-          </div>
-        )}
+      <div className="flex justify-center gap-2">
+        {images.slice(1, 4).map((img, index) => (
+          <a
+            key={index}
+            href={img.fileUrl}
+            data-fancybox="product-gallery"
+            data-caption={img.title ?? product.name}
+            className="block cursor-zoom-in"
+          >
+            <img
+              src={img.fileUrl}
+              data-thumb-src={img.fileUrl}
+              alt={img.title ?? product.name}
+              className="h-20 w-20 rounded-md object-cover"
+            />
+          </a>
+        ))}
       </div>
 
-      <GalleryDialog dialogController={galleryImageDialogController} images={modalImages} title={product.name} />
-    </>
+      {images.slice(4).map((img, index) => (
+        <a
+          key={`hidden-${index}`}
+          href={img.fileUrl}
+          data-fancybox="product-gallery"
+          data-caption={img.title ?? product.name}
+          className="hidden"
+        />
+      ))}
+    </div>
   );
 }
