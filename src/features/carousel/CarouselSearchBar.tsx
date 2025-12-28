@@ -2,7 +2,7 @@
 
 import { FC, useMemo } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
+import Image from '@/components/common/UnoptimizedImage';
 import { searchBarSwiperConfig } from '@/config/swiper';
 import Carousel from './Carousel';
 import { ChevronLeft } from 'lucide-react';

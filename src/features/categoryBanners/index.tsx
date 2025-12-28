@@ -1,6 +1,6 @@
 import { Category } from '@/features/categories/CategoryType';
 import { PlaceholderImageEnum } from '@/types/enums/PlaceholderImageEnum';
-import Image from 'next/image';
+import Image from '@/components/common/UnoptimizedImage';
 import Link from 'next/link';
 
 interface CategoryCirclesBannersProps {

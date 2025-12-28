@@ -1,6 +1,6 @@
 import { Product } from '@/features/products/ProductType';
 import { formatPrice } from '@/utils/formatter';
-import Image from 'next/image';
+import Image from '@/components/common/UnoptimizedImage';
 import Link from 'next/link';
 import React from 'react';
 

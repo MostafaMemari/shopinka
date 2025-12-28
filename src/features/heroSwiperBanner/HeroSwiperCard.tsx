@@ -1,6 +1,6 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
-import Image from 'next/image';
+import Image from '@/components/common/UnoptimizedImage';
 import React from 'react';
 
 interface HeroSwiperCardProps {

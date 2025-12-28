@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import Image from 'next/image';
+import Image from '@/components/common/UnoptimizedImage';
 import Link from 'next/link';
 
 import { CartItemState } from '@/features/cart/cartType';

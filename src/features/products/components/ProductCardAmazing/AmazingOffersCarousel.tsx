@@ -9,7 +9,7 @@ import { Navigation } from 'swiper/modules';
 import { productSwiperConfigAmazing } from '@/config/swiper';
 import ProductCardAmazing from '.';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import Image from 'next/image';
+import Image from '@/components/common/UnoptimizedImage';
 import { ProductCarouselSkeleton } from './ProductCardAmazingSkeleton';
 import Link from 'next/link';
 

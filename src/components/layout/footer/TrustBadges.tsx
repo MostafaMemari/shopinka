@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import Image from 'next/image';
+import Image from '@/components/common/UnoptimizedImage';
 import { TrustBadge } from '@/data/footerData';
 import Link from 'next/link';
 import { Card } from '@/components/ui/card';

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import Image from 'next/image';
+import Image from '@/components/common/UnoptimizedImage';
 import { PlaceholderImageEnum } from '@/types/enums/PlaceholderImageEnum';
 
 const fallbackSrc = PlaceholderImageEnum.SQUARE;

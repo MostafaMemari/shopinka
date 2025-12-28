@@ -6,7 +6,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode } from 'swiper/modules';
 import Link from 'next/link';
 import { OrderProductItem } from '@/features/orders/OrderType';
-import Image from 'next/image';
+import Image from '@/components/common/UnoptimizedImage';
 import { useState } from 'react';
 import CustomStickerDialog from '../cart/components/views/CartBasket/CustomStickerDialog';
 

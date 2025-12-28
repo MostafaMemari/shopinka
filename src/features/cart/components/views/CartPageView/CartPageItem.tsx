@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
+import Image from '@/components/common/UnoptimizedImage';
 import { Package } from 'lucide-react';
 
 import { CartItemState } from '@/features/cart/cartType';

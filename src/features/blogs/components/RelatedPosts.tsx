@@ -1,7 +1,7 @@
 import { Card } from '@/components/ui/card';
 import { BlogItem } from '@/features/blogs/BlogType';
 import { NoImage } from '@/types/noImageEnum';
-import Image from 'next/image';
+import Image from '@/components/common/UnoptimizedImage';
 import Link from 'next/link';
 import { FC } from 'react';
 

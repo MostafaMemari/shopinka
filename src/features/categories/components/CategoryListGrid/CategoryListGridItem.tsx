@@ -1,6 +1,6 @@
 'use client';
 
-import Image from 'next/image';
+import Image from '@/components/common/UnoptimizedImage';
 import { PlaceholderImageEnum } from '@/types/enums/PlaceholderImageEnum';
 import { ReactNode } from 'react';
 import { cn } from '@/lib/utils';

@@ -1,6 +1,6 @@
 'use client';
 
-import Image from 'next/image';
+import Image from '@/components/common/UnoptimizedImage';
 import { useState, useEffect } from 'react';
 
 interface MainImageProps {

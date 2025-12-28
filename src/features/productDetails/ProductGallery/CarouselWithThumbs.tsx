@@ -5,7 +5,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi } from '@/components/ui/carousel';
 import { cn } from '@/lib/utils';
 import { ImageType } from './GalleryDialog';
-import Image from 'next/image';
+import Image from '@/components/common/UnoptimizedImage';
 
 interface CarouselWithThumbsProps {
   images: ImageType[];

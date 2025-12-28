@@ -1,6 +1,6 @@
 'use client';
 
-import Image from 'next/image';
+import Image from '@/components/common/UnoptimizedImage';
 
 interface GalleryImageProps {
   src: string;

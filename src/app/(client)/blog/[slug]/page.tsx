@@ -4,7 +4,7 @@ import Sidebar from '@/features/blogs/components/Sidebar';
 import { Category } from '@/features/categories/CategoryType';
 import type { Metadata } from 'next';
 import { generateBlogMetadata } from './metadata';
-import Image from 'next/image';
+import Image from '@/components/common/UnoptimizedImage';
 import { NoImage } from '@/types/noImageEnum';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card, CardContent } from '@/components/ui/card';

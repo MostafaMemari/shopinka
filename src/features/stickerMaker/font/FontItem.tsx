@@ -1,5 +1,5 @@
 import { type FontItem } from '@/types/fontType';
-import Image from 'next/image';
+import Image from '@/components/common/UnoptimizedImage';
 import { useEffect, useRef, useState } from 'react';
 
 interface Props {

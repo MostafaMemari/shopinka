@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { NoImage } from '@/types/noImageEnum';
-import Image from 'next/image';
+import Image from '@/components/common/UnoptimizedImage';
 
 interface Category {
   name: string;

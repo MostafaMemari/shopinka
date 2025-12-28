@@ -1,7 +1,7 @@
 'use client';
 
 import { Instagram, Twitter } from 'lucide-react';
-import Image from 'next/image';
+import Image from '@/components/common/UnoptimizedImage';
 
 export default function GlobalError({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
   return (
