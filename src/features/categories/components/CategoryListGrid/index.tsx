@@ -6,6 +6,7 @@ import CategoryItemShop from './CategoryListGridItem';
 import { Plus } from 'lucide-react';
 import { useIsMounted } from '@/hooks/useIsMounted';
 import { Skeleton } from '@/components/ui/skeleton';
+import { CategoryListGridItemSkeleton } from '../../CategoryListGridItem';
 
 interface CategoryChildrenGridProps {
   name: string;
@@ -52,7 +53,7 @@ export default function CategoryChildrenGrid({ name, categories, basePath }: Cat
         <Skeleton className="h-8 w-48 mb-4" />
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8 gap-4">
           {Array.from({ length: 2 }).map((_, index) => (
-            <Skeleton key={index} className="h-32 w-full rounded-lg" />
+            <CategoryListGridItemSkeleton key={index} />
           ))}
         </div>
       </section>

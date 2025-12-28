@@ -22,7 +22,7 @@ interface ProductDesktopDetailsProps {
 
 function ProductDesktopDetails({ product, breadcrumbItems, ProductVariant, AddToCard }: ProductDesktopDetailsProps) {
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-3">
       <Breadcrumb variant="boxed" items={[{ label: 'خانه', href: '/' }, ...breadcrumbItems]} />
       <Card>
         <div className="mb-10 grid grow grid-cols-12 gap-4">
