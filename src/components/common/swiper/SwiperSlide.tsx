@@ -7,7 +7,7 @@ import './styles.css';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
-import Image from 'next/image';
+import Image from '@/components/common/UnoptimizedImage';
 
 const images = ['/banners/banner top 1.webp', '/banners/banner top 2.webp'];
 

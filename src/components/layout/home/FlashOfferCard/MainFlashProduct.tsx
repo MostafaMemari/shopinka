@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { FlashProduct } from './types';
-import Image from 'next/image';
+import Image from '@/components/common/UnoptimizedImage';
 
 export function MainFlashProduct({ product }: { product: FlashProduct }) {
   if (!product) return null;
