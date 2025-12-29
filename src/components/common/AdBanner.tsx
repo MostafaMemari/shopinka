@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from '@/components/common/UnoptimizedImage';
 
 export function AdBanner({ href, image, alt }: { href: string; image: string; alt: string }) {
   return (
