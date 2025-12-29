@@ -51,17 +51,9 @@ export default async function Home() {
 
         <div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <AdBanner
-              href="http://localhost:3300/sticker-maker"
-              image="https://s3.shopinka.ir/galleryItemImages/1767034328854.webp"
-              alt="بنر تبلیغاتی محصولات"
-            />
+            <AdBanner href="http://localhost:3300/sticker-maker" image="/banners/banner right.webp" alt="بنر تبلیغاتی محصولات" />
 
-            <AdBanner
-              href="http://localhost:3300/shop"
-              image="https://s3.shopinka.ir/galleryItemImages/1767034327128.webp"
-              alt="بنر تبلیغاتی محصولات"
-            />
+            <AdBanner href="http://localhost:3300/shop" image="/banners/banner left.webp" alt="بنر تبلیغاتی محصولات" />
           </div>
         </div>
 

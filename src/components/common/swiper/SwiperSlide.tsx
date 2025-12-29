@@ -9,10 +9,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import Image from 'next/image';
 
-const images = [
-  'https://s3.shopinka.ir/galleryItemImages/1767034329630.webp',
-  'https://s3.shopinka.ir/galleryItemImages/1767034330581.webp',
-];
+const images = ['/banners/banner top 1.webp', '/banners/banner top 2.webp'];
 
 export default function SwiperSlideExample() {
   return (
