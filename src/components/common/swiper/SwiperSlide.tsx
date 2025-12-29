@@ -10,8 +10,8 @@ import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import Image from 'next/image';
 
 const images = [
-  'https://car.vimascript.ir/media/library/2025-01-12/1/file.1736700859.41955.webp',
-  'https://car.vimascript.ir/media/library/2025-01-14/1/file.1736860214.21292.webp',
+  'https://s3.shopinka.ir/galleryItemImages/1767034329630.webp',
+  'https://s3.shopinka.ir/galleryItemImages/1767034330581.webp',
 ];
 
 export default function SwiperSlideExample() {

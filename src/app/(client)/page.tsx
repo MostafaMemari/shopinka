@@ -52,27 +52,27 @@ export default async function Home() {
         <div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <AdBanner
-              href="/products?tag=دنا"
-              image="https://car.vimascript.ir/media/library/2025-01-14/1/file.1736852801.27717.webp"
-              alt="دنا"
+              href="http://localhost:3300/sticker-maker"
+              image="https://s3.shopinka.ir/galleryItemImages/1767034328854.webp"
+              alt="بنر تبلیغاتی محصولات"
             />
 
             <AdBanner
-              href="/products"
-              image="https://car.vimascript.ir/media/library/2025-01-14/1/file.1736853057.14332.webp"
-              alt="لوازم جلو بندی برلیانس h330"
+              href="http://localhost:3300/shop"
+              image="https://s3.shopinka.ir/galleryItemImages/1767034327128.webp"
+              alt="بنر تبلیغاتی محصولات"
             />
           </div>
         </div>
 
         {discountProducts.success && <AmazingProducts products={discountProducts.data.items} viewAllLink="/shop?hasDiscount=true" />}
-        {discountProducts.success && (
-          <CarouselProduct key="discount" title="فروش ویژه" products={discountProducts.data.items} viewAllLink="/shop?hasDiscount=true" />
-        )}
+
         {newestProducts.success && (
           <CarouselProduct key="newest" title="جدیدترین محصولات" products={newestProducts.data.items} viewAllLink="/shop?sortBy=newest" />
         )}
+
         <CategoryCirclesBanners basePath={`/product-category/${categories.slug}`} categories={categories.children} />
+
         {blogs.success && <CarouselBlog title="آخرین مقالات" blogs={blogs.data.items} viewAllLink="/shop?sortBy=newest" />}
       </div>
     </>
