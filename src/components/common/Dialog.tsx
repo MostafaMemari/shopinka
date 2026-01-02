@@ -26,7 +26,7 @@ interface DialogProps {
   actions?: ReactNode;
   className?: string;
   size?: DialogSize;
-  showDefaultCloseButton?: boolean;
+  showClose?: boolean;
 }
 
 const sizeMap: Record<DialogSize, string> = {
@@ -45,7 +45,7 @@ const Dialog: FC<DialogProps> = ({
   trigger,
   className,
   size = 'md',
-  showDefaultCloseButton = true,
+  showClose = true,
 }) => {
   const descriptionId = useId();
 
@@ -63,10 +63,10 @@ const Dialog: FC<DialogProps> = ({
 
         {children}
 
-        {(actions || showDefaultCloseButton) && (
+        {(actions || showClose) && (
           <DialogFooter className="pt-5 border-t flex gap-2 items-center justify-between">
             {actions}
-            {showDefaultCloseButton && (
+            {showClose && (
               <DialogClose asChild>
                 <Button variant="outline" className="w-24">
                   بستن

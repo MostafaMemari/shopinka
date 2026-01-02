@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { setLines, Line, setText } from '@/store/slices/stickerSlice';
@@ -30,6 +30,28 @@ export default function StickerDimensionForm({ line, onValidityChange }: Props) 
       height: line.height != null ? String(line.height) : '',
     },
   });
+
+  const mountedRef = useRef(false);
+
+  useEffect(() => {
+    if (!mountedRef.current) {
+      mountedRef.current = true;
+
+      requestAnimationFrame(() => {
+        if (document.activeElement instanceof HTMLElement) {
+          document.activeElement.blur();
+        }
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    form.reset({
+      text: line.text ?? '',
+      width: line.width != null ? String(line.width) : '',
+      height: line.height != null ? String(line.height) : '',
+    });
+  }, [line.lineNumber]);
 
   const formatNumber = (num: number) => {
     const str = num.toFixed(1);
@@ -70,7 +92,6 @@ export default function StickerDimensionForm({ line, onValidityChange }: Props) 
 
     if (line.ratio) {
       const newWidth = height * line.ratio;
-
       form.setValue('width', formatNumber(newWidth), { shouldValidate: true });
     }
   };
@@ -78,15 +99,10 @@ export default function StickerDimensionForm({ line, onValidityChange }: Props) 
   const handleTextChange = (value: string) => {
     if (value === textState) return;
 
-    dispatch(setLines(lines.map((l) => (l.lineNumber === line.lineNumber ? { ...l, text: value } : l))));
-    dispatch(
-      setText(
-        lines
-          .map((l) => (l.lineNumber === line.lineNumber ? { ...l, text: value } : l))
-          .map((l) => l.text)
-          .join('\n'),
-      ),
-    );
+    const updatedLines = lines.map((l) => (l.lineNumber === line.lineNumber ? { ...l, text: value } : l));
+
+    dispatch(setLines(updatedLines));
+    dispatch(setText(updatedLines.map((l) => l.text).join('\n')));
 
     if (line.ratio) {
       handleWidthChange(form.getValues('width'));
@@ -105,14 +121,6 @@ export default function StickerDimensionForm({ line, onValidityChange }: Props) 
   useEffect(() => {
     onValidityChange(isValid);
   }, [isValid]);
-
-  useEffect(() => {
-    form.reset({
-      text: line.text ?? '',
-      width: line.width != null ? String(line.width) : '',
-      height: line.height != null ? String(line.height) : '',
-    });
-  }, [line.lineNumber]);
 
   useEffect(() => {
     if (!isValid) return;
@@ -141,14 +149,21 @@ export default function StickerDimensionForm({ line, onValidityChange }: Props) 
         <div className="grid grid-cols-2 gap-4 items-start">
           <FormInput
             control={form.control}
-            autoFocus
+            type="number"
             name="width"
             label="عرض (cm)"
             className="flex-1 text-right"
             onChange={handleWidthChange}
           />
 
-          <FormInput control={form.control} name="height" label="طول (cm)" className="flex-1 text-right" onChange={handleHeightChange} />
+          <FormInput
+            control={form.control}
+            type="number"
+            name="height"
+            label="طول (cm)"
+            className="flex-1 text-right"
+            onChange={handleHeightChange}
+          />
         </div>
       </form>
     </Form>
