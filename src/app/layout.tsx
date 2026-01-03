@@ -43,6 +43,7 @@ export default function RootLayout({
         <Suspense>
           <ScrollToTop />
         </Suspense>
+
         <ClientProvider>
           <div className="flex min-h-screen flex-col">
             <NuqsAdapter>

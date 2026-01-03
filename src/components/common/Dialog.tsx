@@ -64,7 +64,7 @@ const Dialog: FC<DialogProps> = ({
         {children}
 
         {(actions || showClose) && (
-          <DialogFooter className="pt-5 border-t flex gap-2 items-center justify-between">
+          <DialogFooter className="pt-5 border-t flex !flex-row items-center justify-end gap-2">
             {actions}
             {showClose && (
               <DialogClose asChild>

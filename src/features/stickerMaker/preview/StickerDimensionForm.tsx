@@ -33,17 +33,17 @@ export default function StickerDimensionForm({ line, onValidityChange }: Props) 
 
   const mountedRef = useRef(false);
 
-  useEffect(() => {
-    if (!mountedRef.current) {
-      mountedRef.current = true;
+  // useEffect(() => {
+  //   if (!mountedRef.current) {
+  //     mountedRef.current = true;
 
-      requestAnimationFrame(() => {
-        if (document.activeElement instanceof HTMLElement) {
-          document.activeElement.blur();
-        }
-      });
-    }
-  }, []);
+  //     requestAnimationFrame(() => {
+  //       if (document.activeElement instanceof HTMLElement) {
+  //         document.activeElement.blur();
+  //       }
+  //     });
+  //   }
+  // }, []);
 
   useEffect(() => {
     form.reset({
@@ -149,6 +149,7 @@ export default function StickerDimensionForm({ line, onValidityChange }: Props) 
         <div className="grid grid-cols-2 gap-4 items-start">
           <FormInput
             control={form.control}
+            autoFocus
             type="number"
             name="width"
             label="عرض (cm)"
