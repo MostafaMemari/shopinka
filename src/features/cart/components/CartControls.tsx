@@ -19,7 +19,7 @@ export function CartControls({ product, className }: CartControlsProps) {
   return (
     <div
       className={cn(
-        'flex h-12 w-full items-center justify-between rounded-lg border border-gray-200 bg-white px-2 py-1 shadow-sm transition-all dark:border-gray-700 dark:bg-gray-800',
+        'flex h-12 w-full items-center justify-between rounded-lg border border-gray-200 bg-white shadow-sm transition-all dark:border-gray-700 dark:bg-gray-800',
         className,
       )}
     >
@@ -27,16 +27,16 @@ export function CartControls({ product, className }: CartControlsProps) {
         variant="ghost"
         size="icon"
         onClick={() => increaseCount(product)}
-        className="h-8 w-8 text-primary hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
-        aria-label="افزایش تعداد"
         disabled={isLoading}
+        aria-label="افزایش تعداد"
+        className="h-8 w-8 shrink-0 text-primary dark:hover:bg-gray-700"
       >
         <Plus className="h-5 w-5" />
       </Button>
 
-      <div className="flex h-9 w-8 items-center justify-center">
+      <div className="flex h-9 w-6 shrink-0 items-center justify-center overflow-hidden">
         {isLoading ? (
-          <Ellipsis className="!w-10 !h-10 animate-side-to-side text-primary/50" />
+          <Ellipsis className="h-6 w-6 animate-side-to-side text-primary/50" />
         ) : (
           <span className="w-full text-center font-bold text-gray-900 dark:text-gray-100">{product.count}</span>
         )}
@@ -47,9 +47,9 @@ export function CartControls({ product, className }: CartControlsProps) {
           variant="ghost"
           size="icon"
           onClick={() => decreaseCount(product)}
-          className="h-8 w-8 text-primary hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
-          aria-label="کاهش تعداد"
           disabled={isLoading}
+          aria-label="کاهش تعداد"
+          className="h-8 w-8 shrink-0 text-primary hover:bg-gray-100 dark:hover:bg-gray-700"
         >
           <Minus className="h-5 w-5" />
         </Button>
@@ -58,9 +58,9 @@ export function CartControls({ product, className }: CartControlsProps) {
           variant="ghost"
           size="icon"
           onClick={() => deleteFromCart(product)}
-          className="h-8 w-8 text-primary hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
-          aria-label="حذف از سبد خرید"
           disabled={isLoading}
+          aria-label="حذف از سبد خرید"
+          className="h-8 w-8 shrink-0 text-primary hover:bg-gray-100 dark:hover:bg-gray-700"
         >
           <Trash2 className="h-5 w-5" />
         </Button>

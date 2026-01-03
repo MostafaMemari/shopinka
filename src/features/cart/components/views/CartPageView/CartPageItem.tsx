@@ -80,8 +80,8 @@ function CartPageItem({ cartItem, isLast = false }: CartPageItemProps) {
 
           <div className="flex items-center justify-between mt-3">
             <div className="flex items-center gap-3">
-              <CartControls product={cartItem} className="w-22 lg:w-30 h-8 lg:h-10" />
-              <span className="text-xs hidden lg:block text-gray-600">تعداد: {cartItem.count}</span>
+              <CartControls product={cartItem} className="h-8 lg:h-10" />
+              <span className="text-xs hidden lg:block text-gray-600 shrink-0 whitespace-nowrap">تعداد: {cartItem.count}</span>
             </div>
             <ProductCartPrice salePrice={cartItem.salePrice * cartItem.count} basePrice={cartItem.basePrice * cartItem.count} />
           </div>
