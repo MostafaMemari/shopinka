@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { setLines, Line, setText } from '@/store/slices/stickerSlice';
@@ -30,20 +30,6 @@ export default function StickerDimensionForm({ line, onValidityChange }: Props) 
       height: line.height != null ? String(line.height) : '',
     },
   });
-
-  const mountedRef = useRef(false);
-
-  // useEffect(() => {
-  //   if (!mountedRef.current) {
-  //     mountedRef.current = true;
-
-  //     requestAnimationFrame(() => {
-  //       if (document.activeElement instanceof HTMLElement) {
-  //         document.activeElement.blur();
-  //       }
-  //     });
-  //   }
-  // }, []);
 
   useEffect(() => {
     form.reset({

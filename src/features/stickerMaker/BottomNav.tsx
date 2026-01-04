@@ -3,8 +3,6 @@
 import PrimaryButton from '@/components/common/PrimaryButton';
 import { Palette, Settings, Type } from 'lucide-react';
 import React, { useState } from 'react';
-import FinalizeStickerDrawer from './preview/FinalizeStickerDrawer';
-import FinalizeSummaryDrawer from './preview/FinalizeSummaryDrawer';
 import FinalizeStickerDialog from './preview/FinalizeStickerDialog';
 import FinalizeSummaryDialog from './preview/FinalizeSummaryDialog';
 
@@ -83,7 +81,6 @@ export default function BottomNav({
           </PrimaryButton>
 
           {isDrawerOpen && (
-            // <FinalizeStickerDrawer isOpen={isDrawerOpen} onOpenChange={setIsDrawerOpen} onFinalize={() => setIsFinalDrawerOpen(true)} />
             <FinalizeStickerDialog isOpen={isDrawerOpen} onOpenChange={setIsDrawerOpen} onFinalize={() => setIsFinalDrawerOpen(true)} />
           )}
 
@@ -93,11 +90,6 @@ export default function BottomNav({
               onOpenChange={setIsFinalDrawerOpen}
               onCloseFinalizeSticker={() => setIsDrawerOpen(false)}
             />
-            // <FinalizeSummaryDrawer
-            //   isOpen={isFinalDrawerOpen}
-            //   onOpenChange={setIsFinalDrawerOpen}
-            //   onCloseFinalizeSticker={() => setIsDrawerOpen(false)}
-            // />
           )}
         </div>
       </div>

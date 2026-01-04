@@ -1,6 +1,5 @@
 'use client';
 
-import MobileDrawer from '@/components/common/Drawer';
 import FinalizePreview from './FinalizePreview';
 import TomanIcon from '@/components/common/svg/TomanIcon';
 import { formatPrice } from '@/utils/formatter';
