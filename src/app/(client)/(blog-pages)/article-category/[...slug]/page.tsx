@@ -3,7 +3,6 @@ import { parseArrayParam } from '@/utils/parseArrayParam';
 import { SearchParams } from 'nuqs';
 import { getCategories } from '@/features/categories/cartService';
 import CategoryChildrenGrid from '@/features/categories/components/CategoryListGrid';
-import SidebarFilters from '@/features/filter/SidebarFilters';
 import CategoryOverview from '@/features/categories/components/CategoryOverview';
 import BlogList from '@/features/blogs/components/Blog/BlogList';
 import { BlogParams } from '@/features/blogs/BlogType';
