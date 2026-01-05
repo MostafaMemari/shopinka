@@ -13,7 +13,7 @@ interface Props {
 const BlogCard: FC<Props> = ({ blog }) => {
   return (
     <Card className="p-px mb-0.5">
-      <Link href={`/blog/${blog.slug}`}>
+      <Link href={`/article/${blog.slug}`}>
         <div className="p-2">
           <div className="mb-2 md:mb-5" draggable={false}>
             <BlogImage src={blog?.mainImage?.fileUrl ?? NoImage.BLOG} alt={blog.title} />

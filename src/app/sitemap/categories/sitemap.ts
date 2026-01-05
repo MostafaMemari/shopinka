@@ -16,7 +16,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   function traverse(category: any) {
     urls.push({
-      url: `${BASE_URL}/product-category/${category.slugParent}`,
+      url: `${BASE_URL}/${category.type === 'BLOG' ? 'category' : 'product-cateogory'}/${category.slugParent}`,
       lastModified: category.updatedAt ? new Date(category.updatedAt) : undefined,
     });
 
