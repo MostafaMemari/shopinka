@@ -1,0 +1,3 @@
+User-agent: ia_archiver
+
+Sitemap: https://shopinka.ir/sitemap.xml
