@@ -6,7 +6,7 @@ const TAKE = 200;
 
 export async function generateSitemaps() {
   const res = await fetch(`${API_BASE_URL}/product?page=1&take=1`, {
-    next: { revalidate: 60 * 60 },
+    next: { revalidate: 6 * 60 * 60 }, // 6 hours
   });
 
   if (!res.ok) return [];
@@ -15,9 +15,7 @@ export async function generateSitemaps() {
   const totalCount = data.pager.totalCount;
   const totalFiles = Math.ceil(totalCount / TAKE);
 
-  return Array.from({ length: totalFiles }, (_, i) => ({
-    id: i,
-  }));
+  return Array.from({ length: totalFiles }, (_, i) => ({ id: i }));
 }
 
 export default async function sitemap(props: { id: Promise<string> }): Promise<MetadataRoute.Sitemap> {
@@ -25,7 +23,6 @@ export default async function sitemap(props: { id: Promise<string> }): Promise<M
   const page = id + 1;
 
   const res = await fetch(`${API_BASE_URL}/product?page=${page}&take=${TAKE}`);
-
   if (!res.ok) return [];
 
   const data = await res.json();
@@ -33,5 +30,7 @@ export default async function sitemap(props: { id: Promise<string> }): Promise<M
   return data.items.map((product: any) => ({
     url: `${BASE_URL}/product/${encodeURIComponent(product.slug)}`,
     lastModified: new Date(product.updatedAt),
+    changeFrequency: 'daily',
+    priority: 0.9,
   }));
 }

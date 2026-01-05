@@ -6,8 +6,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const TAKE = 200;
 
   const res = await fetch(`${API_BASE_URL}/product?page=1&take=1`, {
-    next: { revalidate: 60 * 60 },
+    next: { revalidate: 6 * 60 * 60 }, // 6 hours
   });
+
+  if (!res.ok) return [];
 
   const data = await res.json();
   const totalCount = data.pager.totalCount;
@@ -17,5 +19,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     url: `${BASE_URL}/sitemap/products/sitemap/${i}.xml`,
   }));
 
-  return [{ url: `${BASE_URL}/sitemap/categories/sitemap.xml` }, { url: `${BASE_URL}/sitemap/tags/sitemap.xml` }, ...productSitemaps];
+  return [{ url: `${BASE_URL}/sitemap/categories/sitemap.xml` }, ...productSitemaps];
 }
