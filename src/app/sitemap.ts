@@ -19,5 +19,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     url: `${BASE_URL}/sitemap/products/sitemap/${i}.xml`,
   }));
 
-  return [{ url: `${BASE_URL}/sitemap/categories/sitemap.xml` }, ...productSitemaps];
+  return [{ url: `${BASE_URL}/sitemap/categories/sitemap.xml` }, { url: `${BASE_URL}/sitemap/articles/sitemap.xml` }, ...productSitemaps];
 }
