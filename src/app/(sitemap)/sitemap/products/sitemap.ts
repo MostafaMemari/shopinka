@@ -2,7 +2,7 @@ import type { MetadataRoute } from 'next';
 
 const BASE_URL = process.env.SITE_URL || 'https://shopinka.ir';
 const API_BASE_URL = process.env.API_BASE_URL || 'https://api.shopinka.ir/api/v1';
-const TAKE = 200;
+const TAKE = 1000;
 
 export async function generateSitemaps() {
   const res = await fetch(`${API_BASE_URL}/product?page=1&take=1`, {
