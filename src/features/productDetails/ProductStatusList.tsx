@@ -11,7 +11,7 @@ interface ProductStatusListProps {
 
 export function ProductStatusList({ specialFeature }: ProductStatusListProps) {
   return (
-    <Card className="bg-muted/50">
+    <Card className="bg-muted/50 w-full">
       <ul className="flex flex-col gap-2">
         <ProductStatusBadge
           icon={<Store />}

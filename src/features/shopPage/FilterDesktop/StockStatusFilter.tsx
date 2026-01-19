@@ -15,7 +15,7 @@ function StockStatusFilter() {
     shallow: false,
   });
 
-  useResetPageOnQueryChange(JSON.stringify(isInStock));
+  // useResetPageOnQueryChange(JSON.stringify(isInStock));
 
   return (
     <div className="flex items-center justify-between">

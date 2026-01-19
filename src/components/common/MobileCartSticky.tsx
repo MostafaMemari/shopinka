@@ -14,7 +14,7 @@ export default function MobileCartSticky({ children, position = 'bottom', classN
   const positionClass = position === 'top' ? 'top-10' : 'bottom-3';
 
   return (
-    <div className="md:hidden">
+    <div className="lg:hidden">
       <Card className={cn(`fixed right-3 left-3 z-50 px-2 h-14 flex justify-center ${positionClass}`, className)} role="region">
         {children}
       </Card>

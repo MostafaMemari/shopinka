@@ -21,7 +21,7 @@ const CategorySelector: React.FC<Props> = ({ queryKey = 'categoryIds', title = '
     shallow: false,
   });
 
-  useResetPageOnQueryChange(categoryIds);
+  // useResetPageOnQueryChange(categoryIds);
 
   const selectedCategories = useMemo(() => (categoryIds ? categoryIds.split(',').map(Number) : []), [categoryIds]);
 

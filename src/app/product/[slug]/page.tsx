@@ -34,15 +34,15 @@ export default async function Page({ params }: Props) {
     <>
       <ProductDetailsView product={product} />
 
-      {discountProducts.success && (
-        <div className="mt-4">
+      <div className="mt-4">
+        {discountProducts.success && (
           <CarouselProduct
             title="محصولات مرتبط"
             products={discountProducts?.data.items}
             viewAllLink={`/shop?categoryIds=${categoryIds.join(',')}`}
           />
-        </div>
-      )}
+        )}
+      </div>
 
       <div className="mt-4">
         <ProductTabs description={product?.description} specifications={product?.properties} productId={product.id} />

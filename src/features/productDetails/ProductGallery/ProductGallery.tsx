@@ -32,18 +32,18 @@ export default function ProductGallery({ product }: ProductGalleryProps) {
   if (!images.length) return null;
 
   return (
-    <div ref={fancyboxRef} className="space-y-4">
+    <div ref={fancyboxRef}>
       <a
         href={images[0].fileUrl}
         data-fancybox="product-gallery"
         data-caption={images[0].title ?? product.name}
-        className="block cursor-zoom-in"
+        className="block cursor-zoom-in mb-2 lg:mb-4 shadow-md rounded-lg"
       >
         <img
           src={images[0].fileUrl}
           data-thumb-src={images[0].fileUrl}
           alt={images[0].title ?? product.name}
-          className="w-full rounded-lg object-contain"
+          className="mx-auto w-full rounded-lg object-contain"
         />
       </a>
 
@@ -54,7 +54,7 @@ export default function ProductGallery({ product }: ProductGalleryProps) {
             href={img.fileUrl}
             data-fancybox="product-gallery"
             data-caption={img.title ?? product.name}
-            className="block cursor-zoom-in"
+            className="block cursor-zoom-in shadow"
           >
             <img
               src={img.fileUrl}
@@ -72,7 +72,7 @@ export default function ProductGallery({ product }: ProductGalleryProps) {
           href={img.fileUrl}
           data-fancybox="product-gallery"
           data-caption={img.title ?? product.name}
-          className="hidden"
+          className="hidden shadow"
         />
       ))}
     </div>

@@ -27,7 +27,7 @@ function ProductCommentCount({ productId }: ProductCommentCountProps) {
   return (
     <>
       {isLoading ? (
-        <div className="animate-pulse rounded-lg bg-gray-200 h-6 w-24" />
+        <div className="animate-pulse rounded-lg bg-gray-200 h-4 w-24" />
       ) : isDesktop ? (
         <div>
           <span>{CommentCount} دیدگاه</span>

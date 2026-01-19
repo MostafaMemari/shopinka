@@ -119,7 +119,7 @@ export default function ProductVariants({ variants, attributes, productType, def
   if (productType === 'SIMPLE') return null;
 
   return (
-    <Card className="mb-6">
+    <div>
       <div className="flex justify-between items-center mb-4">
         <h3 className="text-lg font-semibold text-gray-800">انتخاب مشخصات</h3>
         {(selectedColor || selectedButton) && (
@@ -150,6 +150,6 @@ export default function ProductVariants({ variants, attributes, productType, def
           />
         </div>
       )}
-    </Card>
+    </div>
   );
 }

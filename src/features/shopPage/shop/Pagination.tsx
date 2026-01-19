@@ -11,11 +11,7 @@ interface PaginationProps {
 }
 
 const Pagination: FC<PaginationProps> = ({ currentPage, totalPages }) => {
-  const [, setQueryPage] = useQueryState('page', {
-    defaultValue: '',
-    history: 'replace',
-    shallow: false,
-  });
+  const [_, setQueryPage] = useQueryState('page', { defaultValue: '', history: 'replace', shallow: false });
 
   const maxPagesToShow = 3;
   const pages: (number | { type: 'ellipsis'; id: string })[] = [];
@@ -53,7 +49,7 @@ const Pagination: FC<PaginationProps> = ({ currentPage, totalPages }) => {
         disabled={currentPage === 1}
         className="h-8 w-8"
       >
-        <ChevronLeft className="h-5 w-5" />
+        <ChevronRight className="h-5 w-5" />
       </Button>
 
       <div className="flex items-center gap-1">
@@ -83,7 +79,7 @@ const Pagination: FC<PaginationProps> = ({ currentPage, totalPages }) => {
         disabled={currentPage === totalPages}
         className="h-8 w-8"
       >
-        <ChevronRight className="h-5 w-5" />
+        <ChevronLeft className="h-5 w-5" />
       </Button>
     </div>
   );

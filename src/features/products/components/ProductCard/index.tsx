@@ -32,20 +32,6 @@ const ProductCard: FC<Props> = ({ product }) => {
   const basePrice = isVariableProduct ? defaultVariant?.basePrice : product.basePrice;
   const quantity = isVariableProduct ? defaultVariant?.quantity : product.quantity;
 
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Product',
-    name: productName,
-    image: imageUrl,
-    description: product.name ?? productName,
-    offers: {
-      '@type': 'Offer',
-      priceCurrency: 'IRR',
-      price: salePrice ?? basePrice ?? 0,
-      availability: product.quantity && product.quantity > 0 ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
-    },
-  };
-
   return (
     <Card className="p-px mb-0.5">
       <div className="p-2 md:p-5">
@@ -60,7 +46,6 @@ const ProductCard: FC<Props> = ({ product }) => {
           </Link>
         </div>
         <ProductPrice salePrice={salePrice} basePrice={basePrice} quantity={quantity} />
-        <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       </div>
     </Card>
   );

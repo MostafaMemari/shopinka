@@ -15,7 +15,7 @@ function DiscountFilter() {
     shallow: false,
   });
 
-  useResetPageOnQueryChange(JSON.stringify(hasDiscount));
+  // useResetPageOnQueryChange(JSON.stringify(hasDiscount));
 
   return (
     <div className="flex items-center justify-between">

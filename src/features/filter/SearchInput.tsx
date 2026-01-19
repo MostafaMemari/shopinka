@@ -33,7 +33,7 @@ const SearchInput = ({
 
   const [inputValue, setInputValue] = useState(searchQuery);
 
-  useResetPageOnQueryChange(searchQuery);
+  // useResetPageOnQueryChange(searchQuery);
 
   useEffect(() => {
     setInputValue(searchQuery);
