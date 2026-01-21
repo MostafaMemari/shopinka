@@ -6,7 +6,7 @@ import { formatPrice } from '@/utils/formatter';
 export default function CartFooterSticky({ price, isLoading, onContinue }: { price: number; isLoading: boolean; onContinue: () => void }) {
   return (
     <MobileCartSticky position="bottom">
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center w-full mx-3">
         <PrimaryButton className="w-1/2" onClick={onContinue} isLoading={isLoading}>
           ادامه فرایند خرید
         </PrimaryButton>

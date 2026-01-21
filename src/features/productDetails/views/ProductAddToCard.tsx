@@ -41,9 +41,9 @@ function ProductAddToCard({ product }: Props) {
         <div className="w-full flex justify-center lg:justify-start">{AddToCard}</div>
       </div>
 
-      <MobileCartSticky position="bottom" className="p-0">
-        <div className="flex justify-between items-center w-full">
-          <div className="w-1/2 mx-1">{AddToCard}</div>
+      <MobileCartSticky position="bottom">
+        <div className="flex justify-between items-center w-full px-2">
+          <div className="w-1/2">{AddToCard}</div>
 
           <div className="p-2">
             <ProductDetailsPrice

@@ -5,10 +5,11 @@ import Header from '@/components/layout/header';
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <Header />
       <div className="block md:hidden">
         <MobileBottomNav />
       </div>
+
+      <Header />
 
       <main className="container pb-14 mt-2">
         <div className="col-span-12 lg:col-span-9">{children}</div>

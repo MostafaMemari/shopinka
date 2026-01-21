@@ -15,9 +15,18 @@ export default function MobileCartSticky({ children, position = 'bottom', classN
 
   return (
     <div className="lg:hidden">
-      <Card className={cn(`fixed right-3 left-3 z-50 px-2 h-14 flex justify-center ${positionClass}`, className)} role="region">
+      <div
+        className={cn(`fixed right-0 left-0 bottom-0 z-50 h-16 flex justify-center w-full bg-white border-t-2`, className)}
+        role="region"
+      >
         {children}
-      </Card>
+      </div>
     </div>
+
+    // <div className="lg:hidden">
+    //   <Card className={cn(`fixed right-3 left-3 z-50 px-2 h-14 flex justify-center ${positionClass}`, className)} role="region">
+    //     {children}
+    //   </Card>
+    // </div>
   );
 }

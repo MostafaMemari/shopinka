@@ -41,7 +41,7 @@ export default function CheckoutCartPriceDetail({ selectedAddressId, selectedShi
   return (
     <>
       <MobileCartSticky position="bottom">
-        <div className="flex justify-between items-center w-full">
+        <div className="flex justify-between items-center w-full mx-3">
           <div className="w-1/2">
             <PrimaryButton
               onClick={handleCreatePayment}

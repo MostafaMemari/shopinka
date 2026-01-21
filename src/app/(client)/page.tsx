@@ -8,11 +8,11 @@ import CategoryCirclesBanners from '@/features/categoryBanners';
 import CarouselBlog from '@/features/blogs/components/CarouselBlog';
 import CarouselProduct from '@/features/products/components/ProductCarousel';
 import AmazingProducts from '@/features/products/components/ProductCardAmazing/AmazingOffersCarousel';
-import SwiperSlideExample from '@/components/common/swiper/SwiperSlide';
-import { Card } from '@/components/ui/card';
 import { AdBanner } from '@/components/common/AdBanner';
 import FlashOfferCard from '@/components/layout/home/FlashOfferCard/FlashOfferCard';
 import { generateFlashOffer } from '@/lib/flashOffers';
+import BannerRow from '@/features/banner/components/BannerRow';
+import HeroSlider from '@/features/banner/components/HeroSlider';
 
 export default async function Home() {
   const [discountProducts, newestProducts, blogs, categories] = await Promise.all([
@@ -34,9 +34,7 @@ export default async function Home() {
       <div className="space-y-4">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
           <div className="lg:col-span-8">
-            <Card className="p-0 m-0">
-              <SwiperSlideExample />
-            </Card>
+            <HeroSlider />
           </div>
 
           <div className="lg:col-span-4 space-y-2">
@@ -49,13 +47,7 @@ export default async function Home() {
           </div>
         </div>
 
-        <div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <AdBanner href="/sticker-maker" image="/banners/banner right.webp" alt="بنر تبلیغاتی محصولات" />
-
-            <AdBanner href="/shop" image="/banners/banner left.webp" alt="بنر تبلیغاتی محصولات" />
-          </div>
-        </div>
+        <BannerRow />
 
         {discountProducts.success && <AmazingProducts products={discountProducts.data.items} viewAllLink="/shop?hasDiscount=true" />}
 
