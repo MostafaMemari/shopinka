@@ -5,7 +5,6 @@ import { openAuthDialog } from '@/store/slices/authDialogSlice';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useMemo } from 'react';
 import { useDispatch } from 'react-redux';
-import CartIconTotalQuantity from '../../../features/cart/components/CartIconTotalQuantity';
 
 import { BookOpen, House, List, ShoppingCart } from 'lucide-react';
 
@@ -45,12 +44,6 @@ function MobileBottomNav() {
         icon: <ShoppingCart size={22} />,
         isActive: pathname === '/checkout/cart',
       },
-      // {
-      //   label: 'سبد خرید',
-      //   onClick: () => router.push('/checkout/cart'),
-      //   icon: <CartIconTotalQuantity badgePosition="left" />,
-      //   isActive: pathname === '/checkout/cart',
-      // },
       {
         label: 'حساب کاربری',
         onClick: () => {

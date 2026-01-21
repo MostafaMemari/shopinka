@@ -1,16 +1,10 @@
-export const revalidate = 60;
-
 import { getProducts } from '@/features/products/productService';
 import { getBlogs } from '@/features/blogs/blogsService';
-
 import { getCategoryBySlug } from '@/features/categories/cartService';
 import CategoryCirclesBanners from '@/features/categoryBanners';
 import CarouselBlog from '@/features/blogs/components/CarouselBlog';
 import CarouselProduct from '@/features/products/components/ProductCarousel';
 import AmazingProducts from '@/features/products/components/ProductCardAmazing/AmazingOffersCarousel';
-import { AdBanner } from '@/components/common/AdBanner';
-import FlashOfferCard from '@/features/flash-offer/components/FlashOfferCard';
-import { generateFlashOffer } from '@/lib/flashOffers';
 import BannerRow from '@/features/banner/components/BannerRow';
 import HeroSlider from '@/features/banner/components/HeroSlider';
 import FlashOfferSection from '@/features/flash-offer/components/FlashOfferSection';
