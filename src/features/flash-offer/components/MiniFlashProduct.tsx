@@ -1,8 +1,8 @@
 import Link from 'next/link';
-import { FlashProduct } from './types';
 import Image from '@/components/common/UnoptimizedImage';
+import { FlashProductOffer } from '../flashOfferTypes';
 
-export function MiniFlashProduct({ product }: { product: FlashProduct }) {
+export function MiniFlashProduct({ product }: { product: FlashProductOffer }) {
   if (!product) return null;
 
   return (

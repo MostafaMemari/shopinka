@@ -2,14 +2,14 @@ import { Card } from '@/components/ui/card';
 import Link from 'next/link';
 import { MainFlashProduct } from './MainFlashProduct';
 import { MiniFlashProduct } from './MiniFlashProduct';
-import { FlashProduct } from './types';
+import { FlashProductOffer } from '../flashOfferTypes';
 
 export type FlashOfferCardProps = {
   title: string;
   subtitle?: string;
   moreLink?: string;
-  mainProduct: FlashProduct;
-  items: FlashProduct[];
+  mainProduct: FlashProductOffer;
+  items: FlashProductOffer[];
 };
 
 export default function FlashOfferCard({ title, subtitle, moreLink, mainProduct, items }: FlashOfferCardProps) {

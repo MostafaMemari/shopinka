@@ -9,10 +9,11 @@ import CarouselBlog from '@/features/blogs/components/CarouselBlog';
 import CarouselProduct from '@/features/products/components/ProductCarousel';
 import AmazingProducts from '@/features/products/components/ProductCardAmazing/AmazingOffersCarousel';
 import { AdBanner } from '@/components/common/AdBanner';
-import FlashOfferCard from '@/components/layout/home/FlashOfferCard/FlashOfferCard';
+import FlashOfferCard from '@/features/flash-offer/components/FlashOfferCard';
 import { generateFlashOffer } from '@/lib/flashOffers';
 import BannerRow from '@/features/banner/components/BannerRow';
 import HeroSlider from '@/features/banner/components/HeroSlider';
+import FlashOfferSection from '@/features/flash-offer/components/FlashOfferSection';
 
 export default async function Home() {
   const [discountProducts, newestProducts, blogs, categories] = await Promise.all([
@@ -27,8 +28,6 @@ export default async function Home() {
     ...(newestProducts.success ? newestProducts.data.items : []),
   ];
 
-  const { flashOfferItems, mainProduct } = generateFlashOffer(allItems);
-
   return (
     <>
       <div className="space-y-4">
@@ -38,12 +37,7 @@ export default async function Home() {
           </div>
 
           <div className="lg:col-span-4 space-y-2">
-            <FlashOfferCard
-              title="پیشنهادات لحظه ای"
-              subtitle="لذت بررسی و خرید آنلاین محصولات"
-              items={flashOfferItems}
-              mainProduct={mainProduct!}
-            />
+            <FlashOfferSection products={allItems} />
           </div>
         </div>
 
