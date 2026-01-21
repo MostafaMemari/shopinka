@@ -37,13 +37,13 @@ export default function ProductGallery({ product }: ProductGalleryProps) {
         href={images[0].fileUrl}
         data-fancybox="product-gallery"
         data-caption={images[0].title ?? product.name}
-        className="block cursor-zoom-in mb-2 lg:mb-4 shadow-md rounded-lg"
+        className="block cursor-zoom-in mb-2 lg:mb-4 shadow-xs rounded-lg"
       >
         <img
           src={images[0].fileUrl}
           data-thumb-src={images[0].fileUrl}
           alt={images[0].title ?? product.name}
-          className="mx-auto w-full rounded-lg object-contain"
+          className="mx-auto w-full md:max-w-[350px] lg:max-w-[450px] h-[250px] md:h-[250px] lg:h-[350px] rounded-lg object-contain"
         />
       </a>
 
@@ -60,7 +60,7 @@ export default function ProductGallery({ product }: ProductGalleryProps) {
               src={img.fileUrl}
               data-thumb-src={img.fileUrl}
               alt={img.title ?? product.name}
-              className="h-20 w-20 rounded-md object-cover"
+              className="h-16 w-16 lg:h-20 lg:w-20 rounded-md object-cover"
             />
           </a>
         ))}

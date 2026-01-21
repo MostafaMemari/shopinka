@@ -27,7 +27,7 @@ export default function ButtonSelector({ options, selectedOption, onOptionChange
 
   return (
     <div>
-      {title && <div className="mb-4 text-sm font-medium text-muted-foreground">{title}</div>}
+      {title && <div className="text-sm font-medium text-muted-foreground mb-2">{title}</div>}
 
       <RadioGroup value={selectedOption ?? ''} onValueChange={onOptionChange} className="flex flex-wrap gap-2">
         {sortedOptions.map((option) => (

@@ -14,17 +14,17 @@ const guarantees = [
   },
   {
     icon: Phone,
-    text: 'هفت روز هفته',
+    text: 'پشتیبانی هفت روز هفته',
   },
   {
     icon: Zap,
-    text: 'تحویل اکسپرس در تهران، کرج',
+    text: 'ارسال با پست یا تیپاکسی (۲ روز کاری)',
   },
 ];
 
 export default function ProductGuarantees() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-4 gap-3 w-full">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 w-full">
       {guarantees.map((item, index) => (
         <Card key={index} className="border p-2">
           <CardContent className="flex items-center gap-x-3 p-2 text-sm text-muted-foreground">

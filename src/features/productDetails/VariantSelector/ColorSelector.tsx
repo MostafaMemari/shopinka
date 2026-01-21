@@ -22,7 +22,7 @@ export default function ColorSelector({ colors, selectedColor, onColorChange, la
 
   return (
     <div>
-      {label && <div className="mb-4 text-sm font-medium text-muted-foreground">{label}</div>}
+      {label && <div className="text-sm font-medium text-muted-foreground mb-2">{label}</div>}
 
       <RadioGroup value={selectedColor ?? ''} onValueChange={onColorChange} className="flex flex-wrap gap-2">
         {sortedColors.map((color) => (

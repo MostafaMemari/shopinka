@@ -119,9 +119,9 @@ export default function ProductVariants({ variants, attributes, productType, def
   if (productType === 'SIMPLE') return null;
 
   return (
-    <div>
-      <div className="flex justify-between items-center mb-4">
-        <h3 className="text-lg font-semibold text-gray-800">انتخاب مشخصات</h3>
+    <div className="space-y-2">
+      <div className="flex justify-between items-center text-md md:text-sm">
+        <h3 className="font-semibold text-gray-800">انتخاب مشخصات</h3>
         {(selectedColor || selectedButton) && (
           <button onClick={handleReset} className="text-sm text-blue-600 hover:text-blue-800 transition-colors">
             پاک کردن انتخاب‌ها
@@ -130,7 +130,7 @@ export default function ProductVariants({ variants, attributes, productType, def
       </div>
 
       {validColors.length > 0 && (
-        <div className="mb-4">
+        <div>
           <ColorSelector label={colorLabel} colors={validColors} selectedColor={selectedColor} onColorChange={onChangeColor} />
           {selectedColor && validButtons.every((button) => button.isDisabled) && (
             <p className="text-sm text-gray-500 mt-2">این رنگ نوع برچسب ندارد.</p>
@@ -139,7 +139,7 @@ export default function ProductVariants({ variants, attributes, productType, def
       )}
 
       {validButtons.length > 0 && (
-        <div className="mb-4">
+        <div>
           <ButtonSelector
             title={buttonLabel}
             options={validButtons}

@@ -1,12 +1,8 @@
 'use client';
-
-import { toast } from 'sonner';
-import { cn } from '@/lib/utils';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { useMediaQuery } from '@/hooks/use-media-query';
-import { Share2 } from 'lucide-react';
+import { toast } from 'sonner';
 
-function ProductShareIcon({ className }: { className?: string }) {
+export const useShareAction = () => {
   const isDesktop = useMediaQuery('(min-width: 1024px)');
 
   const handleShare = async () => {
@@ -36,20 +32,5 @@ function ProductShareIcon({ className }: { className?: string }) {
     }
   };
 
-  return (
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <Share2
-            size={22}
-            onClick={handleShare}
-            className={cn('text-gray-700 hover:text-blue-500 dark:text-white transition-colors duration-200', className)}
-          />
-        </TooltipTrigger>
-        {isDesktop && <TooltipContent>اشتراک‌گذاری</TooltipContent>}
-      </Tooltip>
-    </TooltipProvider>
-  );
-}
-
-export default ProductShareIcon;
+  return { handleShare };
+};
