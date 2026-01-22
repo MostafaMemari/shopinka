@@ -1,7 +1,7 @@
 'use client';
 
 import React, { ReactNode, useEffect, useState } from 'react';
-import MobileDrawer from '@/components/common/Drawer';
+import AppDrawer from '@/components/wrappers/AppDrawer';
 import StickerDimensionForm from './StickerDimensionForm';
 import { measureMultilineText } from '@/utils/measureText';
 import { useSelectedStickerAssets } from '@/hooks/useSelectedStickerAssets';
@@ -56,7 +56,7 @@ export default function FinalizeStickerDrawer({ isOpen, onOpenChange, onFinalize
 
   return (
     <>
-      <MobileDrawer
+      <AppDrawer
         open={isOpen}
         onOpenChange={onOpenChange}
         trigger={trigger}
@@ -94,7 +94,7 @@ export default function FinalizeStickerDrawer({ isOpen, onOpenChange, onFinalize
         ) : (
           <div className="text-center py-4 text-gray-500">هیچ متنی برای پیش‌نمایش وجود ندارد</div>
         )}
-      </MobileDrawer>
+      </AppDrawer>
     </>
   );
 }

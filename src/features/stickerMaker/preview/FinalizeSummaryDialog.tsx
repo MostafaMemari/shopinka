@@ -19,7 +19,7 @@ import { useCart } from '@/features/cart/hooks/useCart';
 import { showAddToCartToast } from '@/utils/toastUtils';
 import { useRouter } from 'next/navigation';
 import { setLines, setText } from '@/store/slices/stickerSlice';
-import Dialog from '@/components/common/Dialog';
+import AppDialog from '@/components/wrappers/AppDialog';
 import { formatPrice } from '@/lib/utils';
 
 interface FinalizeSummaryDialogProps {
@@ -140,7 +140,7 @@ export default function FinalizeSummaryDialog({ isOpen, onOpenChange, onCloseFin
   };
 
   return (
-    <Dialog
+    <AppDialog
       open={isOpen}
       onOpenChange={onOpenChange}
       showClose={false}
@@ -164,6 +164,6 @@ export default function FinalizeSummaryDialog({ isOpen, onOpenChange, onCloseFin
       <div className="mt-4">
         <FinalizePreview lines={lines} onPreviewImageChange={setPreviewImage} />
       </div>
-    </Dialog>
+    </AppDialog>
   );
 }

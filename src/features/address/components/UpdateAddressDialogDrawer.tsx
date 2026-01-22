@@ -5,10 +5,10 @@ import * as React from 'react';
 import { useMediaQuery } from '@/hooks/use-media-query';
 import { AddressItem } from '@/features/address/AddressType';
 import AddressForm from './AddressForm';
-import MobileDrawer from '@/components/common/Drawer';
+import AppDrawer from '@/components/wrappers/AppDrawer';
 import { useState } from 'react';
 import PrimaryButton from '@/components/common/PrimaryButton';
-import Dialog from '@/components/common/Dialog';
+import AppDialog from '@/components/wrappers/AppDialog';
 
 interface UpdateAddressDialogDrawerProps {
   open: boolean;
@@ -33,7 +33,7 @@ export function UpdateAddressDialogDrawer({ open, onOpenChange, item }: UpdateAd
 
   if (isDesktop) {
     return (
-      <Dialog
+      <AppDialog
         open={open}
         onOpenChange={onOpenChange}
         title="ویرایش آدرس"
@@ -44,12 +44,12 @@ export function UpdateAddressDialogDrawer({ open, onOpenChange, item }: UpdateAd
         }
       >
         <AddressForm className="pt-2" onSuccess={handleSuccess} initialValues={item} ref={formRef} onLoadingChange={setIsLoadingSubmit} />
-      </Dialog>
+      </AppDialog>
     );
   }
 
   return (
-    <MobileDrawer
+    <AppDrawer
       open={open}
       onOpenChange={onOpenChange}
       title="ویرایش آدرس"
@@ -60,6 +60,6 @@ export function UpdateAddressDialogDrawer({ open, onOpenChange, item }: UpdateAd
       }
     >
       <AddressForm className="px-4" onSuccess={handleSuccess} initialValues={item} onLoadingChange={setIsLoadingSubmit} />
-    </MobileDrawer>
+    </AppDrawer>
   );
 }

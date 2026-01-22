@@ -8,7 +8,7 @@ import ReplyComment from '../AddReplyComment/ReplyComment';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useBoolean } from '@/hooks/use-boolean';
 import { UserCircle } from 'lucide-react';
-import MobileDrawer from '@/components/common/Drawer';
+import AppDrawer from '@/components/wrappers/AppDrawer';
 
 interface CommentsDrawerProps {
   drawerHandlers: ReturnType<typeof useBoolean>;
@@ -30,22 +30,22 @@ function CommentsDrawer({ drawerHandlers, productId }: CommentsDrawerProps) {
 
   if (isLoading) {
     return (
-      <MobileDrawer open={drawerHandlers.value} onOpenChange={onOpenChange} title="دیدگاه ها">
+      <AppDrawer open={drawerHandlers.value} onOpenChange={onOpenChange} title="دیدگاه ها">
         <p className="text-center text-text/60 py-10">در حال بارگذاری دیدگاه ها...</p>
-      </MobileDrawer>
+      </AppDrawer>
     );
   }
 
   if (!comments.length) {
     return (
-      <MobileDrawer open={drawerHandlers.value} onOpenChange={onOpenChange} title="دیدگاه ها">
+      <AppDrawer open={drawerHandlers.value} onOpenChange={onOpenChange} title="دیدگاه ها">
         <p className="text-center text-text/60 py-10">دیدگاهی برای نمایش وجود ندارد.</p>
-      </MobileDrawer>
+      </AppDrawer>
     );
   }
 
   return (
-    <MobileDrawer open={drawerHandlers.value} onOpenChange={onOpenChange} title="دیدگاه ها">
+    <AppDrawer open={drawerHandlers.value} onOpenChange={onOpenChange} title="دیدگاه ها">
       <ul className="space-y-5 pb-8 mx-4">
         {comments.map((comment) => (
           <li key={comment.id}>
@@ -80,7 +80,7 @@ function CommentsDrawer({ drawerHandlers, productId }: CommentsDrawerProps) {
           </li>
         ))}
       </ul>
-    </MobileDrawer>
+    </AppDrawer>
   );
 }
 

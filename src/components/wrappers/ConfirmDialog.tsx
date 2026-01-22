@@ -12,9 +12,9 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import PrimaryButton from './PrimaryButton';
+import PrimaryButton from '../common/PrimaryButton';
 
-interface ConfirmDialogProps {
+interface Props {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   title: string;
@@ -27,7 +27,7 @@ interface ConfirmDialogProps {
   isConfirmLoading?: boolean;
 }
 
-const ConfirmDialog: FC<ConfirmDialogProps> = ({
+const ConfirmDialog: FC<Props> = ({
   open,
   onOpenChange,
   title,

@@ -14,7 +14,7 @@ import { validationOtpSchema } from '@/validation/ValidateOtp';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { clearOtp } from '@/store/slices/otpSlice';
 import { OtpTimer } from './OtpTimer';
-import { Alert } from '@/components/common/Alert';
+import { AppAlert } from '@/components/wrappers/AppAlert';
 import { UseMutateFunction } from '@tanstack/react-query';
 import { VerifyOtpResponse } from '../AuthType';
 import { ApiResponse } from '@/service/api';
@@ -88,7 +88,7 @@ function InputOTPForm({ verifyOtp, ref }: InputOTPFormProps) {
 
   return (
     <>
-      {error && <Alert variant="destructive" icon="error" title={error} className="mb-1" />}
+      {error && <AppAlert variant="destructive" icon="error" title={error} className="mb-1" />}
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)} ref={ref} className="flex flex-col gap-4 mt-1">

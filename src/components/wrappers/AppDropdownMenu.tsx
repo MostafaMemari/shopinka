@@ -1,7 +1,7 @@
 'use client';
 
 import {
-  DropdownMenu as ShadcnDropdownMenu,
+  DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
@@ -20,7 +20,7 @@ type DropdownMenuItemType = {
   disabled?: boolean;
 };
 
-type AppDropdownMenuProps = {
+type Props = {
   trigger: ReactNode;
   items: DropdownMenuItemType[];
   align?: 'start' | 'end' | 'center';
@@ -31,10 +31,10 @@ type AppDropdownMenuProps = {
   modal?: boolean;
 };
 
-const DropdownMenu = forwardRef<HTMLDivElement, AppDropdownMenuProps>(
+const AppDropdownMenu = forwardRef<HTMLDivElement, Props>(
   ({ trigger, items, align = 'end', className, triggerClassName, open, onOpenChange, modal = false }, ref) => {
     return (
-      <ShadcnDropdownMenu modal={modal} open={open} onOpenChange={onOpenChange}>
+      <DropdownMenu modal={modal} open={open} onOpenChange={onOpenChange}>
         <DropdownMenuTrigger asChild className={cn(triggerClassName)}>
           {trigger}
         </DropdownMenuTrigger>
@@ -62,11 +62,11 @@ const DropdownMenu = forwardRef<HTMLDivElement, AppDropdownMenuProps>(
             </div>
           ))}
         </DropdownMenuContent>
-      </ShadcnDropdownMenu>
+      </DropdownMenu>
     );
   },
 );
 
-DropdownMenu.displayName = 'DropdownMenu';
+AppDropdownMenu.displayName = 'AppDropdownMenu';
 
-export default DropdownMenu;
+export default AppDropdownMenu;

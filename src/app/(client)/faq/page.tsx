@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { faqData } from '@/data/faqData';
 import { Search } from 'lucide-react';
-import { Accordion } from '@/components/common/Accordion';
+import { AppAccordion } from '@/components/wrappers/AppAccordion';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { SectionHeader } from '@/components/common/SectionHeader';
 
@@ -58,7 +58,7 @@ function Page() {
                 <div key={index} className="space-y-4">
                   <h2 className="font-bold text-lg">{section.category}</h2>
 
-                  <Accordion
+                  <AppAccordion
                     items={section.items.map((item, idx) => ({
                       value: `${section.category}-${idx}`,
                       trigger: item.question,

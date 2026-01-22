@@ -6,7 +6,7 @@ import { profileMenuItems } from '@/data/menuData';
 import { Button } from '@/components/ui/button';
 import { useBoolean } from '@/hooks/use-boolean';
 import { useAuth } from '@/features/auth/hooks/useAuth';
-import DropdownMenu from '@/components/common/DropdownMenu';
+import AppDropdownMenu from '@/components/wrappers/AppDropdownMenu';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 
@@ -22,7 +22,7 @@ const ProfileMenu = () => {
   };
 
   return (
-    <DropdownMenu
+    <AppDropdownMenu
       trigger={
         <Button variant="outline" className="flex items-center justify-center gap-2 h-10">
           <User className="h-5 w-5" />

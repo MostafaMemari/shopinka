@@ -4,7 +4,7 @@ import { type FC, type ReactNode } from 'react';
 import { Sheet as SheetShadcn, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetDescription } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 
-interface SheetWrapperProps {
+interface Props {
   triggerText?: string;
   title?: string;
   description?: string;
@@ -16,7 +16,7 @@ interface SheetWrapperProps {
   style?: React.CSSProperties;
 }
 
-const SheetWrapper: FC<SheetWrapperProps> = ({
+const AppShhet: FC<Props> = ({
   triggerText = 'باز کردن',
   title = 'منو',
   description = 'برای جابجایی بین بخش‌های مختلف، گزینه مورد نظر را انتخاب کنید.',
@@ -43,4 +43,4 @@ const SheetWrapper: FC<SheetWrapperProps> = ({
   );
 };
 
-export default SheetWrapper;
+export default AppShhet;

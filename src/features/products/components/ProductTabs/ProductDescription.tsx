@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import MobileDrawer from '@/components/common/Drawer';
+import AppDrawer from '@/components/wrappers/AppDrawer';
 import { ChevronLeft } from 'lucide-react';
 
 interface Props {
@@ -56,11 +56,11 @@ export default function ProductDescription({ description }: Props) {
         </div>
       )}
 
-      <MobileDrawer open={isOpenDrawer} onOpenChange={setIsOpenDrawer} title="توضیحات محصول">
+      <AppDrawer open={isOpenDrawer} onOpenChange={setIsOpenDrawer} title="توضیحات محصول">
         <div>
           {description && <div className="prose prose-sm max-w-none text-text/80 p-4" dangerouslySetInnerHTML={{ __html: description }} />}
         </div>
-      </MobileDrawer>
+      </AppDrawer>
     </div>
   );
 }

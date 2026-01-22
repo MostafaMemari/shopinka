@@ -6,7 +6,7 @@ import { useAppSelector } from '@/store/hooks';
 import { useBoolean } from '@/hooks/use-boolean';
 import { Menu, UserCircle } from 'lucide-react';
 import { useMediaQuery } from '@/hooks/use-media-query';
-import MobileDrawer from '@/components/common/Drawer';
+import AppDrawer from '@/components/wrappers/AppDrawer';
 import ProfileMenu from '../ProfileMenu';
 import { Card } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
@@ -38,7 +38,7 @@ function ProfileMenuCard() {
             <Label className="text-text/60 text-md">{user?.mobile}</Label>
           </div>
           <div>
-            <MobileDrawer
+            <AppDrawer
               open={drawerControl.value}
               onOpenChange={drawerControl.setValue}
               title="منوی پنل کاربری"
@@ -50,7 +50,7 @@ function ProfileMenuCard() {
               }
             >
               <ProfileMenu onClose={drawerControl.onFalse} />
-            </MobileDrawer>
+            </AppDrawer>
           </div>
         </div>
       </div>

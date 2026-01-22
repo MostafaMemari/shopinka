@@ -35,7 +35,7 @@ const sizeMap: Record<DialogSize, string> = {
   lg: 'sm:max-w-2xl',
 };
 
-const Dialog: FC<DialogProps> = ({
+const AppDialog: FC<DialogProps> = ({
   open,
   onOpenChange,
   title,
@@ -80,4 +80,4 @@ const Dialog: FC<DialogProps> = ({
   );
 };
 
-export default Dialog;
+export default AppDialog;

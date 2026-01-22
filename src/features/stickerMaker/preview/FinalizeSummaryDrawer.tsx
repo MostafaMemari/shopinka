@@ -1,6 +1,6 @@
 'use client';
 
-import MobileDrawer from '@/components/common/Drawer';
+import AppDrawer from '@/components/wrappers/AppDrawer';
 import FinalizePreview from './FinalizePreview';
 import TomanIcon from '@/components/common/svg/TomanIcon';
 
@@ -140,7 +140,7 @@ export default function FinalizeSummaryDrawer({ isOpen, onOpenChange, onCloseFin
   };
 
   return (
-    <MobileDrawer
+    <AppDrawer
       open={isOpen}
       onOpenChange={onOpenChange}
       showClose={false}
@@ -164,6 +164,6 @@ export default function FinalizeSummaryDrawer({ isOpen, onOpenChange, onCloseFin
       <div className="mt-4">
         <FinalizePreview lines={lines} onPreviewImageChange={setPreviewImage} />
       </div>
-    </MobileDrawer>
+    </AppDrawer>
   );
 }

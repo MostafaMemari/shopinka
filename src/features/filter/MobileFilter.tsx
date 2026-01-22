@@ -7,7 +7,7 @@ import CategorySelector from '../categories/components/CategorySelector';
 import { Category } from '@/features/categories/CategoryType';
 import { Button } from '@/components/ui/button';
 import { Funnel } from 'lucide-react';
-import MobileDrawer from '@/components/common/Drawer';
+import AppDrawer from '@/components/wrappers/AppDrawer';
 import { Card } from '@/components/ui/card';
 
 interface MobileFilterProps {
@@ -21,7 +21,7 @@ const MobileFilter: FC<MobileFilterProps> = ({ totalCount, categories, title }) 
   const [open, setOpen] = useState(false);
 
   return (
-    <MobileDrawer
+    <AppDrawer
       open={open}
       onOpenChange={setOpen}
       showClose={false}
@@ -51,7 +51,7 @@ const MobileFilter: FC<MobileFilterProps> = ({ totalCount, categories, title }) 
           <DiscountFilter />
         </div>
       </div>
-    </MobileDrawer>
+    </AppDrawer>
   );
 };
 

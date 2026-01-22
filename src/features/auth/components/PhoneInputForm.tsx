@@ -9,7 +9,7 @@ import { setOtpSentAt, setMobile } from '@/store/slices/otpSlice';
 import { RootState } from '@/store';
 import { phoneValidationSchema } from '@/validation/validateIranPhoneNumber';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Alert } from '@/components/common/Alert';
+import { AppAlert } from '@/components/wrappers/AppAlert';
 
 interface PhoneInputFormProps {
   className?: string;
@@ -47,7 +47,7 @@ function PhoneInputForm({ className, ref, sendOtp }: PhoneInputFormProps) {
 
   return (
     <>
-      {error && <Alert variant="destructive" icon="error" title={error} className="mb-1" />}
+      {error && <AppAlert variant="destructive" icon="error" title={error} className="mb-1" />}
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)} ref={ref} className={cn('flex flex-col gap-4 mt-1', className)}>
           <FormField

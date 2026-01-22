@@ -8,11 +8,11 @@ import { closeAuthDialog } from '@/store/slices/authDialogSlice';
 import { OTP_EXPIRE_SECONDS } from '@/constants';
 import { useAppSelector } from '@/store/hooks';
 import InputOTPForm from './OtpForm';
-import Dialog from '@/components/common/Dialog';
+import AppDialog from '@/components/wrappers/AppDialog';
 import PrimaryButton from '@/components/common/PrimaryButton';
 import { useRef } from 'react';
 import { useAuth } from '../hooks/useAuth';
-import MobileDrawer from '@/components/common/Drawer';
+import AppDrawer from '@/components/wrappers/AppDrawer';
 import { clearAddToCart } from '@/store/slices/pendingActionSlice';
 
 export function AuthDialogDrawer() {
@@ -54,7 +54,7 @@ export function AuthDialogDrawer() {
   if (isLogin) return null;
 
   return isDesktop ? (
-    <Dialog
+    <AppDialog
       open={open}
       onOpenChange={handleClose}
       title={title}
@@ -67,9 +67,9 @@ export function AuthDialogDrawer() {
       }
     >
       {!otpStep ? <PhoneInputForm ref={phoneInputFormRef} sendOtp={sendOtp} /> : <InputOTPForm verifyOtp={verifyOtp} ref={otpFormRef} />}
-    </Dialog>
+    </AppDialog>
   ) : (
-    <MobileDrawer
+    <AppDrawer
       open={open}
       onOpenChange={handleClose}
       showClose={false}
@@ -82,6 +82,6 @@ export function AuthDialogDrawer() {
       }
     >
       {!otpStep ? <PhoneInputForm ref={phoneInputFormRef} sendOtp={sendOtp} /> : <InputOTPForm verifyOtp={verifyOtp} ref={otpFormRef} />}
-    </MobileDrawer>
+    </AppDrawer>
   );
 }

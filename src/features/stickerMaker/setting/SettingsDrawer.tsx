@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import MobileDrawer from '@/components/common/Drawer';
+import AppDrawer from '@/components/wrappers/AppDrawer';
 import { cn } from '@/lib/utils';
 import { Slider } from '@/components/ui/slider';
 import { useDispatch, useSelector } from 'react-redux';
@@ -21,7 +21,7 @@ export default function SettingsDrawer({ open, onClose }: SettingsDrawerProps) {
   const { text, options } = useSelector((state: RootState) => state.sticker);
 
   return (
-    <MobileDrawer open={open} onOpenChange={onClose} showClose={false} title="تنظیمات" className="max-w-[500px] m-auto" isModal={false}>
+    <AppDrawer open={open} onOpenChange={onClose} showClose={false} title="تنظیمات" className="max-w-[500px] m-auto" isModal={false}>
       <div className="flex flex-col gap-6 max-h-[70vh] overflow-y-auto px-4 pb-8 text-sm">
         <TextStyleToolbar />
 
@@ -45,6 +45,6 @@ export default function SettingsDrawer({ open, onClose }: SettingsDrawerProps) {
           />
         </div>
       </div>
-    </MobileDrawer>
+    </AppDrawer>
   );
 }

@@ -14,7 +14,7 @@ import {
 import { cn } from '@/lib/utils';
 import { Button } from '../ui/button';
 
-interface MobileDrawerProps {
+interface Props {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   title: string;
@@ -27,7 +27,7 @@ interface MobileDrawerProps {
   isModal?: boolean;
 }
 
-const MobileDrawer: FC<MobileDrawerProps> = ({
+const AppDrawer: FC<Props> = ({
   title,
   description,
   actions,
@@ -94,4 +94,4 @@ const MobileDrawer: FC<MobileDrawerProps> = ({
   );
 };
 
-export default MobileDrawer;
+export default AppDrawer;

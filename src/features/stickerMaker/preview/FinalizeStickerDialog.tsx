@@ -8,7 +8,7 @@ import PreviewLines from './PreviewLines';
 import { useDispatch } from 'react-redux';
 import { setLines } from '@/store/slices/stickerSlice';
 import LineNavigationButtons from './LineNavigationButtons';
-import Dialog from '@/components/common/Dialog';
+import AppDialog from '@/components/wrappers/AppDialog';
 
 interface FinalizeStickerDialogProps {
   isOpen: boolean;
@@ -55,47 +55,45 @@ export default function FinalizeStickerDialog({ isOpen, onOpenChange, onFinalize
   const currentLine = lines[currentLineIndex];
 
   return (
-    <>
-      <Dialog
-        open={isOpen}
-        onOpenChange={onOpenChange}
-        trigger={trigger}
-        title="پیش نمایش"
-        showClose={false}
-        className="max-w-[500px] m-auto"
-        actions={
-          isLines && (
-            <LineNavigationButtons
-              isFirstLine={isFirstLine}
-              isLastLine={isLastLine}
-              disabledNext={!isCurrentLineValid}
-              disabledFinalize={!isCurrentLineValid}
-              onNextLine={() => setCurrentLineIndex((i) => i + 1)}
-              onPrevLine={() => setCurrentLineIndex((i) => i - 1)}
-              onFinalize={onFinalize || (() => {})}
+    <AppDialog
+      open={isOpen}
+      onOpenChange={onOpenChange}
+      trigger={trigger}
+      title="پیش نمایش"
+      showClose={false}
+      className="max-w-[500px] m-auto"
+      actions={
+        isLines && (
+          <LineNavigationButtons
+            isFirstLine={isFirstLine}
+            isLastLine={isLastLine}
+            disabledNext={!isCurrentLineValid}
+            disabledFinalize={!isCurrentLineValid}
+            onNextLine={() => setCurrentLineIndex((i) => i + 1)}
+            onPrevLine={() => setCurrentLineIndex((i) => i - 1)}
+            onFinalize={onFinalize || (() => {})}
+          />
+        )
+      }
+    >
+      {lines.length > 0 ? (
+        currentLine ? (
+          <>
+            <PreviewLines
+              key={currentLine.lineNumber}
+              line={currentLine}
+              fontFamily={selectedFont?.name}
+              fontWeight={options.weight}
+              fontStyle={options.style}
+              fontSize={selectedFont?.size}
             />
-          )
-        }
-      >
-        {lines.length > 0 ? (
-          currentLine ? (
-            <>
-              <PreviewLines
-                key={currentLine.lineNumber}
-                line={currentLine}
-                fontFamily={selectedFont?.name}
-                fontWeight={options.weight}
-                fontStyle={options.style}
-                fontSize={selectedFont?.size}
-              />
 
-              <StickerDimensionForm line={currentLine} onValidityChange={setIsCurrentLineValid} />
-            </>
-          ) : null
-        ) : (
-          <div className="text-center py-4 text-gray-500">هیچ متنی برای پیش‌نمایش وجود ندارد</div>
-        )}
-      </Dialog>
-    </>
+            <StickerDimensionForm line={currentLine} onValidityChange={setIsCurrentLineValid} />
+          </>
+        ) : null
+      ) : (
+        <div className="text-center py-4 text-gray-500">هیچ متنی برای پیش‌نمایش وجود ندارد</div>
+      )}
+    </AppDialog>
   );
 }

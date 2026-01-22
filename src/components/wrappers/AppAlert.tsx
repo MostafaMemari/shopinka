@@ -3,7 +3,7 @@ import { Alert as AlertShadcn, AlertDescription, AlertTitle } from '@/components
 import { AlertCircleIcon, CheckCircle2Icon, PopcornIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-type AlertProps = {
+type Props = {
   variant?: 'default' | 'destructive';
   icon?: 'success' | 'error' | 'info';
   title: string;
@@ -17,7 +17,7 @@ const iconMap = {
   info: <PopcornIcon className="h-5 w-5" />,
 };
 
-export function Alert({ variant = 'default', icon = 'info', title, description, className }: AlertProps) {
+export function AppAlert({ variant = 'default', icon = 'info', title, description, className }: Props) {
   return (
     <AlertShadcn variant={variant} className={cn(className)}>
       {iconMap[icon]}

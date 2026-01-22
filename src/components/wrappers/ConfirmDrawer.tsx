@@ -13,9 +13,9 @@ import {
 } from '@/components/ui/drawer';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import PrimaryButton from './PrimaryButton';
+import PrimaryButton from '../common/PrimaryButton';
 
-interface ConfirmDrawerProps {
+interface Props {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   title: string;
@@ -28,7 +28,7 @@ interface ConfirmDrawerProps {
   isConfirmLoading?: boolean;
 }
 
-const ConfirmDrawer: FC<ConfirmDrawerProps> = ({
+const ConfirmDrawer: FC<Props> = ({
   open,
   onOpenChange,
   title = 'تأیید عملیات',

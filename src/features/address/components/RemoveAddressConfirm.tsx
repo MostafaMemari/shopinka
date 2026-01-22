@@ -1,5 +1,5 @@
-import ConfirmDialog from '@/components/common/ConfirmDialog';
-import ConfirmDrawer from '@/components/common/ConfirmDrawer';
+import ConfirmDialog from '@/components/wrappers/ConfirmDialog';
+import ConfirmDrawer from '@/components/wrappers/ConfirmDrawer';
 import { COMPONENT_BREAKPOINTS } from '@/constants';
 import { useBoolean } from '@/hooks/use-boolean';
 import { useMediaQuery } from '@/hooks/use-media-query';

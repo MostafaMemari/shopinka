@@ -1,12 +1,12 @@
 import { MenuIcon } from 'lucide-react';
 import React from 'react';
 
-import DropdownMenu from '@/components/common/DropdownMenu';
+import AppAppDropdownMenu from '@/components/wrappers/AppDropdownMenu';
 import { Button } from '@/components/ui/button';
 
 function DropdownItemMobile() {
   return (
-    <DropdownMenu
+    <AppAppDropdownMenu
       items={[
         { label: 'صفحه نخست', href: '/' },
         { label: 'مجله', href: '/blog' },

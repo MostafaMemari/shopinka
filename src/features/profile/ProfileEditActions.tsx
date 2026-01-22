@@ -2,11 +2,11 @@
 
 import { useRef, useState } from 'react';
 import ProfileField from './ProfileField';
-import MobileDrawer from '../../components/common/Drawer';
+import AppDrawer from '../../components/wrappers/AppDrawer';
 import FullNameForm from './FullNameForm';
 import { useChangeFullName } from '@/hooks/reactQuery/user/userUser';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
-import Dialog from '../../components/common/Dialog';
+import Dialog from '../../components/wrappers/AppDialog';
 import useIsMdUp from '@/hooks/useIsMdUp';
 import ErrorState from './ErrorState';
 import { useAppSelector } from '@/store/hooks';
@@ -99,7 +99,7 @@ const ProfileEditActions = () => {
                 {renderFormContent()}
               </Dialog>
             ) : (
-              <MobileDrawer
+              <AppDrawer
                 open={modalState.isOpen}
                 onOpenChange={(open) => setModalState({ type: 'fullName', isOpen: open })}
                 title="تغییر نام و نام خانوادگی"
@@ -116,7 +116,7 @@ const ProfileEditActions = () => {
                 }
               >
                 {renderFormContent()}
-              </MobileDrawer>
+              </AppDrawer>
             )}
           </>
         )}

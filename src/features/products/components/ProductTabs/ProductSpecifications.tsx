@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { ChevronLeft } from 'lucide-react';
-import MobileDrawer from '@/components/common/Drawer';
+import AppDrawer from '@/components/wrappers/AppDrawer';
 
 interface ProductSpecificationsProps {
   specifications: Array<{
@@ -69,7 +69,7 @@ export default function ProductSpecifications({ specifications }: ProductSpecifi
         </div>
       )}
 
-      <MobileDrawer open={isDrawerOpen} onOpenChange={onOpenChange} title="مشخصات محصول">
+      <AppDrawer open={isDrawerOpen} onOpenChange={onOpenChange} title="مشخصات محصول">
         {specifications?.length > 0 &&
           specifications.map((spec, index) => (
             <li key={index} className="grid grid-cols-3 gap-x-2 lg:grid-cols-5">
@@ -83,7 +83,7 @@ export default function ProductSpecifications({ specifications }: ProductSpecifi
               </div>
             </li>
           ))}
-      </MobileDrawer>
+      </AppDrawer>
     </div>
   );
 }

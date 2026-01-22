@@ -7,14 +7,14 @@ export interface AccordionData {
   content: React.ReactNode;
 }
 
-interface AccordionProps {
+interface Props {
   items: AccordionData[];
   type?: 'single' | 'multiple';
   collapsible?: boolean;
   className?: string;
 }
 
-export function Accordion({ items, type = 'single', collapsible = true, className }: AccordionProps) {
+export function AppAccordion({ items, type = 'single', collapsible = true, className }: Props) {
   return (
     <AccordionShadcn
       type={type}

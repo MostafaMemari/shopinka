@@ -6,8 +6,8 @@ import { ChevronLeft } from 'lucide-react';
 import CommentForm from './CommentForm';
 import { useDispatch } from 'react-redux';
 import { openAuthDialog } from '@/store/slices/authDialogSlice';
-import MobileDrawer from '@/components/common/Drawer';
-import Dialog from '@/components/common/Dialog';
+import AppDrawer from '@/components/wrappers/AppDrawer';
+import AppDialog from '@/components/wrappers/AppDialog';
 import PrimaryButton from '@/components/common/PrimaryButton';
 import { useCreateComment } from '../../hooks/useCreateComment';
 import { useRef } from 'react';
@@ -46,7 +46,7 @@ function ReplyComment({ productId, parentId, commentTitle }: ReplyCommentProps) 
         <ChevronLeft />
       </Button>
       {isDesktop ? (
-        <Dialog
+        <AppDialog
           open={commentControl.value}
           onOpenChange={commentControl.onToggle}
           title={commentFormTitle}
@@ -63,9 +63,9 @@ function ReplyComment({ productId, parentId, commentTitle }: ReplyCommentProps) 
             onSuccess={commentControl.onFalse}
             createComment={createComment}
           />
-        </Dialog>
+        </AppDialog>
       ) : (
-        <MobileDrawer
+        <AppDrawer
           open={commentControl.value}
           onOpenChange={commentControl.onToggle}
           title="پاسخ به دیدگاه"
@@ -83,7 +83,7 @@ function ReplyComment({ productId, parentId, commentTitle }: ReplyCommentProps) 
             onSuccess={commentControl.onFalse}
             createComment={createComment}
           />
-        </MobileDrawer>
+        </AppDrawer>
       )}
     </>
   );

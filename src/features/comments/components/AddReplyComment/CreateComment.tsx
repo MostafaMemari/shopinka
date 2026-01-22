@@ -4,11 +4,11 @@ import { useMediaQuery } from '@/hooks/use-media-query';
 import { MessageCirclePlus } from 'lucide-react';
 import CommentForm from './CommentForm';
 import { useBoolean } from '@/hooks/use-boolean';
-import Dialog from '@/components/common/Dialog';
+import AppDialog from '@/components/wrappers/AppDialog';
 import PrimaryButton from '@/components/common/PrimaryButton';
 import { useCreateComment } from '@/features/comments/hooks/useCreateComment';
 import { Button } from '@/components/ui/button';
-import MobileDrawer from '@/components/common/Drawer';
+import AppDrawer from '@/components/wrappers/AppDrawer';
 import { useAppSelector } from '@/store/hooks';
 import { useDispatch } from 'react-redux';
 import { openAuthDialog } from '@/store/slices/authDialogSlice';
@@ -40,7 +40,7 @@ function CreateComment({ productId }: { productId: number }) {
         <MessageCirclePlus /> {commentButtonLabel}
       </Button>
       {isDesktop ? (
-        <Dialog
+        <AppDialog
           open={commentControl.value}
           onOpenChange={commentControl.onToggle}
           title={commentFormTitle}
@@ -57,9 +57,9 @@ function CreateComment({ productId }: { productId: number }) {
             productId={productId}
             onSuccess={commentControl.onFalse}
           />
-        </Dialog>
+        </AppDialog>
       ) : (
-        <MobileDrawer open={commentControl.value} onOpenChange={commentControl.onToggle} title={commentFormTitle} showClose={false}>
+        <AppDrawer open={commentControl.value} onOpenChange={commentControl.onToggle} title={commentFormTitle} showClose={false}>
           <CommentForm
             className="px-4 mb-4"
             ref={formRef}
@@ -75,7 +75,7 @@ function CreateComment({ productId }: { productId: number }) {
           >
             ثبت دیدگاه
           </PrimaryButton>
-        </MobileDrawer>
+        </AppDrawer>
       )}
     </>
   );

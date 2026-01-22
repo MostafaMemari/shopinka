@@ -6,7 +6,7 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { useQueryState } from 'nuqs';
 import { Card } from '@/components/ui/card';
-import MobileDrawer from '@/components/common/Drawer';
+import AppDrawer from '@/components/wrappers/AppDrawer';
 
 interface SortOption {
   label: string;
@@ -38,7 +38,7 @@ function MobileSortDrawer({ options }: MobileSortDrawerProps) {
   };
 
   return (
-    <MobileDrawer
+    <AppDrawer
       open={open}
       onOpenChange={setOpen}
       showClose={false}
@@ -67,7 +67,7 @@ function MobileSortDrawer({ options }: MobileSortDrawerProps) {
           ))}
         </RadioGroup>
       </div>
-    </MobileDrawer>
+    </AppDrawer>
   );
 }
 

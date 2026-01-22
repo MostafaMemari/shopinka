@@ -6,8 +6,8 @@ import { useMediaQuery } from '@/hooks/use-media-query';
 import { useState } from 'react';
 import AddressForm from './AddressForm';
 import { COMPONENT_BREAKPOINTS } from '@/constants';
-import Dialog from '@/components/common/Dialog';
-import MobileDrawer from '@/components/common/Drawer';
+import AppDialog from '@/components/wrappers/AppDialog';
+import AppDrawer from '@/components/wrappers/AppDrawer';
 import PrimaryButton from '@/components/common/PrimaryButton';
 import AddressNewCard from './AddressNewCard';
 
@@ -29,7 +29,7 @@ export function CreateAddressDialogDrawer() {
 
   if (isDesktop) {
     return (
-      <Dialog
+      <AppDialog
         open={open}
         onOpenChange={setOpen}
         trigger={<AddressNewCard />}
@@ -41,16 +41,16 @@ export function CreateAddressDialogDrawer() {
         }
       >
         <AddressForm className="pt-2" onSuccess={handleSuccess} ref={formRef} onLoadingChange={setIsLoadingSubmit} />
-      </Dialog>
+      </AppDialog>
     );
   }
 
   return (
-    <MobileDrawer trigger={<AddressNewCard />} open={open} showClose={false} onOpenChange={setOpen} title="افزودن آدرس جدید">
+    <AppDrawer trigger={<AddressNewCard />} open={open} showClose={false} onOpenChange={setOpen} title="افزودن آدرس جدید">
       <AddressForm className="px-4 mb-4" onSuccess={handleSuccess} ref={formRef} onLoadingChange={setIsLoadingSubmit} />
       <PrimaryButton className="w-full mb-2" onClick={handleSubmit} isLoading={isLoadingSubmit}>
         ثبت
       </PrimaryButton>
-    </MobileDrawer>
+    </AppDrawer>
   );
 }
