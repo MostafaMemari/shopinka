@@ -41,10 +41,10 @@ function ReplyComment({ productId, parentId, commentTitle }: ReplyCommentProps) 
 
   return (
     <>
-      <Button variant="ghost" onClick={handleReplyComment} className="cursor-pointer">
+      <button onClick={handleReplyComment} className="flex justify-center items-center gap-2 text-sm cursor-pointer">
         {commentButtonLabel}
-        <ChevronLeft />
-      </Button>
+        <ChevronLeft className="w-4 h-4" />
+      </button>
       {isDesktop ? (
         <AppDialog
           open={commentControl.value}

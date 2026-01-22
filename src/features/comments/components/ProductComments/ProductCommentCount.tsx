@@ -2,7 +2,6 @@
 
 import { useComment } from '@/features/comments/hooks/useComment';
 import React, { useEffect } from 'react';
-import CommentsDrawer from './CommentsDrawer';
 import { useBoolean } from '@/hooks/use-boolean';
 import { useMediaQuery } from '@/hooks/use-media-query';
 import { COMPONENT_BREAKPOINTS } from '@/constants';
@@ -28,15 +27,9 @@ function ProductCommentCount({ productId }: ProductCommentCountProps) {
     <>
       {isLoading ? (
         <div className="animate-pulse rounded-lg bg-gray-200 h-4 w-24" />
-      ) : isDesktop ? (
-        <div>
-          <span>{CommentCount} دیدگاه</span>
-        </div>
       ) : (
         <div>
-          <span onClick={drawerHandlers.onTrue}>{CommentCount} دیدگاه</span>
-
-          <CommentsDrawer drawerHandlers={drawerHandlers} productId={productId} />
+          <span>{CommentCount} دیدگاه</span>
         </div>
       )}
     </>

@@ -8,12 +8,12 @@ interface RecommendationProps {
 const Recommendation = ({ isRecommended }: RecommendationProps) => {
   return (
     <div
-      className={cn('flex items-center gap-x-2 text-sm', {
+      className={cn('flex items-center gap-x-2 text-xs md:text-sm', {
         'text-emerald-600': isRecommended,
         'text-red-500 dark:text-red-400': !isRecommended,
       })}
     >
-      {isRecommended ? <ThumbsUp className="h-5 w-5" /> : <ThumbsDown className="h-5 w-5" />}
+      {isRecommended ? <ThumbsUp className="h-4 w-4 md:h-5 md:w-4" /> : <ThumbsDown className="h-5 w-5" />}
       {isRecommended ? 'پیشنهاد میکنم' : 'پیشنهاد نمیکنم'}
     </div>
   );

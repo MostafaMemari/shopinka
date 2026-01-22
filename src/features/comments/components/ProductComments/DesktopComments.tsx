@@ -26,19 +26,15 @@ function CommentBox({
 }) {
   return (
     <div
-      className={`
-        p-6 
-        ${isReply ? 'bg-muted/10 border-r-4 border-primary/60 mr-8' : 'bg-white dark:bg-zinc-900'}
-        rounded-xl shadow-sm
-        transition
-        hover:shadow-lg
-      `}
+      className={`p-4 sm:p-6 
+    ${isReply ? 'bg-muted/10 border-r-4 border-primary/60 mr-4 sm:mr-8' : 'bg-white dark:bg-zinc-900'}
+    rounded-xl shadow-sm transition hover:shadow-lg flex flex-col gap-3`}
     >
       <div className="flex items-center justify-between gap-2">
-        <h5 className="mb-2 leading-relaxed font-semibold xl:text-lg text-primary">{title}</h5>
+        <h5 className="leading-relaxed font-semibold xl:text-lg text-primary">{title}</h5>
         {replyActions}
       </div>
-      <div className="mb-4 flex items-center gap-x-4 border-b pb-2">
+      <div className="mb-4 flex items-center justify-between md:justify-start gap-x-4 border-b pb-2">
         {typeof isRecommended !== 'undefined' && <Recommendation isRecommended={isRecommended} />}
         <div className="flex items-center gap-x-2 text-xs text-text/60">
           <span className="bg-gray-100 dark:bg-muted/20 rounded-full px-2 py-0.5 flex items-center gap-1">{'کاربر'}</span>
@@ -61,11 +57,7 @@ export default function DesktopComments({ comment }: Props) {
         content={comment.content}
         createdAt={comment.createdAt}
         isRecommended={comment.isRecommended}
-        replyActions={
-          <>
-            <ReplyComment productId={comment.productId} parentId={comment.id} commentTitle={comment.title} />
-          </>
-        }
+        replyActions={<ReplyComment productId={comment.productId} parentId={comment.id} commentTitle={comment.title} />}
       />
 
       {comment.parentId === null && comment.replies?.length > 0 && (
