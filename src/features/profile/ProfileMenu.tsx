@@ -1,12 +1,12 @@
 'use client';
 
 import { profileMenuItem } from '@/data/profileMenuItem';
-import { cn } from '@/utils/utils';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useAuth } from '../auth/hooks/useAuth';
 import { LogOut } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 type ProfileMenuProps = {
   onClose?: () => void;

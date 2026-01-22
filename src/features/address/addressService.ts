@@ -1,7 +1,7 @@
 import { ApiResponse, shopApiFetch } from '@/service/api';
 import { AddressFormValues, AddressItem } from '@/features/address/AddressType';
 import { pager } from '@/types/paginationType';
-import { cleanObject } from '@/utils/cleanObject';
+import { cleanObject } from '@/lib/utils';
 
 export const createAddress = async (data: AddressFormValues): Promise<ApiResponse<AddressItem>> => {
   return await shopApiFetch('/address', {

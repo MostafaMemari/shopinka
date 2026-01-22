@@ -1,8 +1,9 @@
 import { Product } from '@/features/products/ProductType';
-import { formatPrice } from '@/utils/formatter';
+
 import Image from '@/components/common/UnoptimizedImage';
 import Link from 'next/link';
 import React from 'react';
+import { formatPrice } from '@/lib/utils';
 
 interface SearchItemProps {
   product: Product;

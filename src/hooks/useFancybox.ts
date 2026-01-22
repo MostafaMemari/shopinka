@@ -1,6 +1,7 @@
 'use client';
 
 import '@fancyapps/ui/dist/fancybox/fancybox.css';
+
 import { useState, useEffect } from 'react';
 
 import { type FancyboxOptions, Fancybox } from '@fancyapps/ui/dist/fancybox/';

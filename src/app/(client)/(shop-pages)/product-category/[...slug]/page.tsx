@@ -1,6 +1,6 @@
 import { getProducts } from '@/features/products/productService';
-import { loadSearchParams } from '@/utils/loadSearchParams';
-import { parseArrayParam } from '@/utils/parseArrayParam';
+import { loadSearchParams } from '@/lib/utils';
+import { parseArrayParam } from '@/lib/utils';
 import { SearchParams } from 'nuqs';
 import SortBar from '@/features/filter/SortBar';
 import MobileFilter from '@/features/filter/MobileFilter';

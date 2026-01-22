@@ -2,7 +2,7 @@
 
 import FinalizePreview from './FinalizePreview';
 import TomanIcon from '@/components/common/svg/TomanIcon';
-import { formatPrice } from '@/utils/formatter';
+
 import PrimaryButton from '@/components/common/PrimaryButton';
 import { useEffect, useState } from 'react';
 import {
@@ -20,6 +20,7 @@ import { showAddToCartToast } from '@/utils/toastUtils';
 import { useRouter } from 'next/navigation';
 import { setLines, setText } from '@/store/slices/stickerSlice';
 import Dialog from '@/components/common/Dialog';
+import { formatPrice } from '@/lib/utils';
 
 interface FinalizeSummaryDialogProps {
   isOpen: boolean;

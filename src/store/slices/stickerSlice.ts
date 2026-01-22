@@ -1,4 +1,4 @@
-import { sanitizeInput } from '@/utils/sanitizeInput';
+import { sanitizeInput } from '@/lib/utils';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface StickerOptions {

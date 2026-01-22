@@ -1,4 +1,4 @@
-import { cn } from '@/utils/utils';
+import { cn } from '@/lib/utils';
 import { ButtonHTMLAttributes } from 'react';
 import { Button } from '../ui/button';
 import { Ellipsis } from 'lucide-react';

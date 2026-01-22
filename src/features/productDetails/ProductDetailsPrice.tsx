@@ -3,9 +3,10 @@
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
-import { formatPrice } from '@/utils/formatter';
+
 import DiscountBadge from '@/components/common/DiscountBadge';
 import TomanIcon from '@/components/common/svg/TomanIcon';
+import { formatPrice } from '@/lib/utils';
 
 interface ProductPriceProps {
   product: {

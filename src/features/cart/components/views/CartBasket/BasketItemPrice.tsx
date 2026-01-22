@@ -1,5 +1,5 @@
-import { calculateDiscount } from '@/utils/calculateDiscount';
-import { formatPrice } from '@/utils/formatter';
+import { calculateDiscount, formatPrice } from '@/lib/utils';
+
 import { FC } from 'react';
 
 interface Props {

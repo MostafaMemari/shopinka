@@ -5,10 +5,11 @@ import Link from 'next/link';
 
 import { Card, CardContent } from '@/components/ui/card';
 import { OrderProductItem } from '@/features/orders/OrderType';
-import { formatPrice } from '@/utils/formatter';
+
 import { BaggageClaim } from 'lucide-react';
 import CustomStickerDialog from '@/features/cart/components/views/CartBasket/CustomStickerDialog';
 import { useState } from 'react';
+import { formatPrice } from '@/lib/utils';
 
 interface OrderItemsProps {
   items: OrderProductItem[];

@@ -1,7 +1,7 @@
 import MobileCartSticky from '@/components/common/MobileCartSticky';
 import PrimaryButton from '@/components/common/PrimaryButton';
 import TomanIcon from '@/components/common/svg/TomanIcon';
-import { formatPrice } from '@/utils/formatter';
+import { formatPrice } from '@/lib/utils';
 
 export default function CartFooterSticky({ price, isLoading, onContinue }: { price: number; isLoading: boolean; onContinue: () => void }) {
   return (

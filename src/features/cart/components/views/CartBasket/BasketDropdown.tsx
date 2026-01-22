@@ -1,19 +1,19 @@
 'use client';
 
 import Link from 'next/link';
-import { cn } from '@/lib/utils';
+import { cn, formatPrice } from '@/lib/utils';
 import DesktopBasketItem from './DesktopBasketItem';
-import { formatPrice } from '@/utils/formatter';
-import CartIconTotalQuantity from '../../CartIconTotalQuantity';
+
 import { useRouter } from 'next/navigation';
 import { ChevronLeft, ShoppingCart } from 'lucide-react';
-import { useCart } from '../../../hooks/useCart';
 
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useState } from 'react';
 import PrimaryButton from '@/components/common/PrimaryButton';
 import TomanIcon from '@/components/common/svg/TomanIcon';
+import { useCart } from '@/features/cart/hooks/useCart';
+import CartIconTotalQuantity from '../../CartIconTotalQuantity';
 
 export default function BasketDropdown() {
   const { cart } = useCart();

@@ -3,7 +3,7 @@ import PaymentActions from '@/features/payment/components/PaymentActions';
 import PaymentDetails from '@/features/payment/components/PaymentDetails';
 import PaymentWarnings from '@/features/payment/components/PaymentWarnings';
 import { getOrderById } from '@/features/orders/orderService';
-import { formatAmount, formatDate, getRemainingTime } from '@/utils/formatter';
+import { formatAmount, formatDate, getRemainingTime } from '@/lib/utils';
 import { Card } from '@/components/ui/card';
 import { CheckCircle, XCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';

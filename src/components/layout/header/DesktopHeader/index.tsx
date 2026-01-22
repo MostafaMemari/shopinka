@@ -1,10 +1,10 @@
 import { getCategoriesCatch } from '@/features/categories/cartService';
 import BasketDropdown from '@/features/cart/components/views/CartBasket/BasketDropdown';
 
-import DesktopLogo from '../../../common/Logo/DesktopLogo';
 import SearchBarBase from '../DesktopHeader/Search/SearchBar';
 import ProfileDropdown from '../DesktopHeader/ProfileDropdown';
 import DesktopNavbar from './DesktopNavbar';
+import DesktopLogo from '@/components/common/Logo/DesktopLogo';
 
 async function DesktopHeader() {
   const categories = (

@@ -1,8 +1,8 @@
 'use client';
 
-import { calculateDiscount } from '@/utils/calculateDiscount';
-import { formatPrice } from '@/utils/formatter';
 import React from 'react';
+
+import { calculateDiscount, formatPrice } from '@/lib/utils';
 
 interface ProductCartPriceProps {
   basePrice?: number | null;

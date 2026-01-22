@@ -1,7 +1,7 @@
 'use server';
 
 import { ContactItem } from '@/types/contactType';
-import { cleanObject } from '@/utils/cleanObject';
+import { cleanObject } from '@/lib/utils';
 import { ApiResponse, shopApiFetch } from '../../service/api';
 import { ContactForm } from '@/validation/validationContactSchema';
 

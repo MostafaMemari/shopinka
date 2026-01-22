@@ -1,9 +1,5 @@
 'use client';
 
-// import 'swiper/css';
-// import 'swiper/css/navigation';
-// import 'swiper/css/pagination';
-
 import Link from 'next/link';
 
 import { getStatusConfig } from '@/config/orderStatusConfig';
@@ -11,10 +7,10 @@ import ProductSlider from '../ProductSlider';
 import { OrderItem } from '@/features/orders/OrderType';
 import RetryPaymentButton from '../../payment/components/RetryPaymentButton';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
-import { cn } from '@/lib/utils';
+import { cn, formatPrice } from '@/lib/utils';
 import { ChevronLeft } from 'lucide-react';
 import { RemainingTimeItem } from './RemainingTimeItem';
-import { formatPrice } from '@/utils/formatter';
+
 import { Separator } from '@/components/ui/separator';
 
 interface OrderCardProps {

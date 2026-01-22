@@ -1,4 +1,4 @@
-import { loadSearchParams } from '@/utils/loadSearchParams';
+import { loadSearchParams } from '@/lib/utils';
 import { SearchParams } from 'nuqs';
 import { getCategories } from '@/features/categories/cartService';
 import CategoryChildrenGrid from '@/features/categories/components/CategoryListGrid';

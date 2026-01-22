@@ -1,7 +1,7 @@
 import { OrderStatus } from '@/features/orders/OrderType';
 import { TransactionStatus } from '@/types/transactionType';
-import { getRemainingTime } from '@/utils/formatter';
 import { Item } from './OrderCardDetails';
+import { getRemainingTime } from '@/lib/utils';
 
 interface RemainingTimeItemProps {
   orderStatus: OrderStatus;

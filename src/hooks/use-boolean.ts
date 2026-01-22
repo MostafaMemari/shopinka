@@ -2,8 +2,6 @@
 
 import { useCallback, useMemo, useState } from 'react';
 
-// ----------------------------------------------------------------------
-
 interface UseBooleanReturn {
   value: boolean;
   onTrue: () => void;

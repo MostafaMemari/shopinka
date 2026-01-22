@@ -6,7 +6,7 @@ import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { useEffect, useRef, useState } from 'react';
 import { useCountdownSeconds } from '@/hooks/use-countdown';
-import { secondsToTime } from '@/utils/utils';
+import { secondsToTime } from '@/lib/utils';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { OTP_EXPIRE_SECONDS } from '@/constants';

@@ -1,6 +1,5 @@
-import { loadSearchParams } from '@/utils/loadSearchParams';
-import { parseArrayParam } from '@/utils/parseArrayParam';
 import { SearchParams } from 'nuqs';
+
 import { getCategories } from '@/features/categories/cartService';
 import CategoryChildrenGrid from '@/features/categories/components/CategoryListGrid';
 import CategoryOverview from '@/features/categories/components/CategoryOverview';
@@ -10,6 +9,7 @@ import { getBlogs } from '@/features/blogs/blogsService';
 import SearchInput from '@/features/filter/SearchInput';
 import { Card } from '@/components/ui/card';
 import CategorySelector from '@/features/categories/components/CategorySelector';
+import { loadSearchParams, parseArrayParam } from '@/lib/utils';
 
 type PageProps = {
   searchParams: Promise<SearchParams>;
