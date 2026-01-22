@@ -13,7 +13,7 @@ export default function BannerCard({ banner, priority = false }: Props) {
       <div className="relative w-full aspect-[16/6] md:aspect-[16/5]">
         <Image
           src={banner.image}
-          alt={banner.alt ?? 'بنر تبلیغاتی'}
+          alt="بنر تبلیغاتی"
           fill
           priority={priority}
           className="object-cover shadow-md transition-transform duration-300 group-hover:scale-105"

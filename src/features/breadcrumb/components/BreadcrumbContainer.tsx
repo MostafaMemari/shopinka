@@ -1,7 +1,7 @@
 import React from 'react';
 import BreadcrumbBoxed from './BreadcrumbBoxed';
 import BreadcrumbCompact from './BreadcrumbCompact';
-import { BreadcrumbItemType } from './breadcrumbTypes';
+import { BreadcrumbItemType } from '../breadcrumbTypes';
 
 interface Props {
   items: BreadcrumbItemType[];

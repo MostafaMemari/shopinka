@@ -40,7 +40,7 @@ export default function CheckoutCartPriceDetail({ selectedAddressId, selectedShi
 
   return (
     <>
-      <MobileCartSticky position="bottom">
+      <MobileCartSticky>
         <div className="flex justify-between items-center w-full mx-3">
           <div className="w-1/2">
             <PrimaryButton

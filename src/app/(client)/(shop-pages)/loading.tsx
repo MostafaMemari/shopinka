@@ -1,6 +1,6 @@
 import { Card } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
-import { CategoryListGridItemSkeleton } from '@/features/categories/CategoryListGridItem';
+import { CategoryListGridItemSkeleton } from '@/features/categories/components/CategoryListGridItem';
 
 export default function ShopPageSkeleton() {
   return (

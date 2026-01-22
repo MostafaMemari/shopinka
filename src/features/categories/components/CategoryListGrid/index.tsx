@@ -6,7 +6,7 @@ import CategoryItemShop from './CategoryListGridItem';
 import { Plus } from 'lucide-react';
 import { useIsMounted } from '@/hooks/useIsMounted';
 import { Skeleton } from '@/components/ui/skeleton';
-import { CategoryListGridItemSkeleton } from '../../CategoryListGridItem';
+import { CategoryListGridItemSkeleton } from '../CategoryListGridItem';
 
 interface CategoryChildrenGridProps {
   name: string;

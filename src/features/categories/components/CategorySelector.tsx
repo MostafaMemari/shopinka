@@ -5,7 +5,6 @@ import { useQueryState } from 'nuqs';
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Category } from '@/features/categories/CategoryType';
-import { useResetPageOnQueryChange } from '@/hooks/useResetPageOnQueryChange';
 import { Label } from '@/components/ui/label';
 
 interface Props {
@@ -20,8 +19,6 @@ const CategorySelector: React.FC<Props> = ({ queryKey = 'categoryIds', title = '
     history: 'replace',
     shallow: false,
   });
-
-  // useResetPageOnQueryChange(categoryIds);
 
   const selectedCategories = useMemo(() => (categoryIds ? categoryIds.split(',').map(Number) : []), [categoryIds]);
 

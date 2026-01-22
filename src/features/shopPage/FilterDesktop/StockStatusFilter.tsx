@@ -1,6 +1,5 @@
 'use client';
 
-import { useResetPageOnQueryChange } from '@/hooks/useResetPageOnQueryChange';
 import { useQueryState } from 'nuqs';
 import React from 'react';
 import { Switch } from '@/components/ui/switch';
@@ -14,8 +13,6 @@ function StockStatusFilter() {
     history: 'replace',
     shallow: false,
   });
-
-  // useResetPageOnQueryChange(JSON.stringify(isInStock));
 
   return (
     <div className="flex items-center justify-between">

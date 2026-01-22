@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/breadcrumb';
 import { ChevronLeft } from 'lucide-react';
 import React from 'react';
-import { BreadcrumbItemType } from './breadcrumbTypes';
+import { BreadcrumbItemType } from '../breadcrumbTypes';
 
 interface Props {
   items: BreadcrumbItemType[];

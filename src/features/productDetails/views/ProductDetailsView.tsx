@@ -11,7 +11,7 @@ import { Card } from '@/components/ui/card';
 import React from 'react';
 
 import ProductAddToCard from './ProductAddToCard';
-import BreadcrumbCompact from '@/features/breadcrumb/BreadcrumbCompact';
+import BreadcrumbCompact from '@/features/breadcrumb/components/BreadcrumbCompact';
 import ProductActionToggle from './ProductActionToggle';
 import Link from 'next/link';
 

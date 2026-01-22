@@ -89,7 +89,7 @@ export default function BlogList({ initialBlogs, initialQuery, pager }: BlogList
         </div>
       )}
 
-      {showPagination && <Pagination currentPage={page} totalPages={pager.totalPages} />}
+      {showPagination && <Pagination totalPages={pager.totalPages} />}
     </>
   );
 }

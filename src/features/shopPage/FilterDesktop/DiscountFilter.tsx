@@ -2,7 +2,6 @@
 
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
-import { useResetPageOnQueryChange } from '@/hooks/useResetPageOnQueryChange';
 import { useQueryState } from 'nuqs';
 import React from 'react';
 
@@ -14,8 +13,6 @@ function DiscountFilter() {
     history: 'replace',
     shallow: false,
   });
-
-  // useResetPageOnQueryChange(JSON.stringify(hasDiscount));
 
   return (
     <div className="flex items-center justify-between">

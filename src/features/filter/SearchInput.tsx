@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { useQueryState } from 'nuqs';
 import { useDebouncedCallback } from 'use-debounce';
-import { useResetPageOnQueryChange } from '@/hooks/useResetPageOnQueryChange';
 import { Search } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
@@ -32,8 +31,6 @@ const SearchInput = ({
   });
 
   const [inputValue, setInputValue] = useState(searchQuery);
-
-  // useResetPageOnQueryChange(searchQuery);
 
   useEffect(() => {
     setInputValue(searchQuery);

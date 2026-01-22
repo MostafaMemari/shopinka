@@ -1,6 +1,6 @@
 import React from 'react';
 import { type AddressItem } from '@/features/address/AddressType';
-import { useAddress } from '@/features/address/useAddress';
+import { useAddress } from '@/features/address/addressHooks';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Circle, CircleCheckBig } from 'lucide-react';
 import { cn } from '@/lib/utils';

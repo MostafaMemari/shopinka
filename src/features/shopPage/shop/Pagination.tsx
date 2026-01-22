@@ -2,53 +2,61 @@
 
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useQueryState } from 'nuqs';
-import { FC } from 'react';
+import { FC, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 
 interface PaginationProps {
-  currentPage: number;
   totalPages: number;
 }
 
-const Pagination: FC<PaginationProps> = ({ currentPage, totalPages }) => {
-  const [_, setQueryPage] = useQueryState('page', { defaultValue: '', history: 'replace', shallow: false });
+const Pagination: FC<PaginationProps> = ({ totalPages }) => {
+  const [queryPage, setQueryPage] = useQueryState('page', {
+    defaultValue: '1',
+    history: 'replace',
+    shallow: false,
+  });
 
+  const currentPage = Number(queryPage) || 1;
   const maxPagesToShow = 3;
-  const pages: (number | { type: 'ellipsis'; id: string })[] = [];
 
-  if (totalPages <= maxPagesToShow + 2) {
-    for (let i = 1; i <= totalPages; i++) {
-      pages.push(i);
+  const pages = useMemo(() => {
+    const result: (number | { type: 'ellipsis'; id: string })[] = [];
+
+    if (totalPages <= maxPagesToShow + 2) {
+      for (let i = 1; i <= totalPages; i++) result.push(i);
+      return result;
     }
-  } else {
-    pages.push(1);
+
+    result.push(1);
+
     if (currentPage > 3) {
-      pages.push({ type: 'ellipsis', id: 'start' });
+      result.push({ type: 'ellipsis', id: 'start' });
     }
 
     const startPage = Math.max(2, currentPage - 1);
     const endPage = Math.min(totalPages - 1, currentPage + 1);
 
     for (let i = startPage; i <= endPage; i++) {
-      pages.push(i);
+      result.push(i);
     }
 
     if (currentPage < totalPages - 2) {
-      pages.push({ type: 'ellipsis', id: 'end' });
+      result.push({ type: 'ellipsis', id: 'end' });
     }
 
-    pages.push(totalPages);
-  }
+    result.push(totalPages);
+
+    return result;
+  }, [currentPage, totalPages]);
+
+  const goToPage = (page: number) => {
+    if (page < 1 || page > totalPages) return;
+    setQueryPage(String(page));
+  };
 
   return (
     <div className="flex items-center justify-center gap-2 md:justify-end">
-      <Button
-        variant="outline"
-        size="icon"
-        onClick={() => currentPage > 1 && setQueryPage(String(currentPage - 1))}
-        disabled={currentPage === 1}
-        className="h-8 w-8"
-      >
+      <Button variant="outline" size="icon" onClick={() => goToPage(currentPage - 1)} disabled={currentPage === 1} className="h-8 w-8">
         <ChevronRight className="h-5 w-5" />
       </Button>
 
@@ -59,7 +67,7 @@ const Pagination: FC<PaginationProps> = ({ currentPage, totalPages }) => {
               key={`page-${page}`}
               variant={page === currentPage ? 'default' : 'outline'}
               size="sm"
-              onClick={() => setQueryPage(String(page))}
+              onClick={() => goToPage(page)}
               className="h-8 w-8"
             >
               {page}
@@ -75,7 +83,7 @@ const Pagination: FC<PaginationProps> = ({ currentPage, totalPages }) => {
       <Button
         variant="outline"
         size="icon"
-        onClick={() => currentPage < totalPages && setQueryPage(String(currentPage + 1))}
+        onClick={() => goToPage(currentPage + 1)}
         disabled={currentPage === totalPages}
         className="h-8 w-8"
       >

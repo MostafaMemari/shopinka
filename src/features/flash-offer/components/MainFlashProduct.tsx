@@ -1,8 +1,9 @@
 import Link from 'next/link';
-import { FlashProduct } from '../../../components/layout/home/FlashOfferCard/types';
 import Image from '@/components/common/UnoptimizedImage';
 
-export function MainFlashProduct({ product }: { product: FlashProduct }) {
+import { FlashProductOffer } from '../flashOfferTypes';
+
+export function MainFlashProduct({ product }: { product: FlashProductOffer }) {
   if (!product) return null;
 
   return (

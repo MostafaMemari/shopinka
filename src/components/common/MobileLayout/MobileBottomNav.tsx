@@ -60,7 +60,7 @@ function MobileBottomNav() {
   }, [isLogin, pathname, router, dispatch]);
 
   return (
-    <MobileCartSticky position="bottom">
+    <MobileCartSticky>
       <nav className="w-full">
         <ul className="flex justify-between items-center text-xs h-[60px]">
           {navItems.map(({ label, icon, onClick, isActive }) => (
