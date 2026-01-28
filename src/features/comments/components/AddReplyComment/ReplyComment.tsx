@@ -1,5 +1,4 @@
 import { useAppSelector } from '@/store/hooks';
-import { Button } from '@/components/ui/button';
 import { useMediaQuery } from '@/hooks/use-media-query';
 import { useBoolean } from '@/hooks/use-boolean';
 import { ChevronLeft } from 'lucide-react';

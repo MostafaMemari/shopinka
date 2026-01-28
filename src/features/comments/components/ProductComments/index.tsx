@@ -7,8 +7,6 @@ import { CommentItem } from '@/types/commentType';
 import { useComment } from '@/features/comments/hooks/useComment';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 import CreateComment from '../AddReplyComment/CreateComment';
-import { useBoolean } from '@/hooks/use-boolean';
-import { ChevronLeftCircle } from 'lucide-react';
 
 interface Props {
   productId: number;
@@ -16,7 +14,6 @@ interface Props {
 
 export default function ProductComments({ productId }: Props) {
   const [currentPage, setCurrentPage] = useState(1);
-  const drawerHandlers = useBoolean();
 
   const { data, isLoading, error } = useComment({
     params: { productId, page: currentPage },
