@@ -14,17 +14,8 @@ interface Props {
 }
 
 const CategorySelector: React.FC<Props> = ({ queryKey = 'categoryIds', title = 'دسته‌بندی‌ها', categories }) => {
-  const [categoryIds, setCategoryIds] = useQueryState(queryKey, {
-    defaultValue: '',
-    history: 'replace',
-    shallow: false,
-  });
-
-  const [, setPage] = useQueryState('page', {
-    defaultValue: '1',
-    history: 'replace',
-    shallow: false,
-  });
+  const [categoryIds, setCategoryIds] = useQueryState(queryKey, { defaultValue: '', history: 'replace', shallow: false });
+  const [, setPage] = useQueryState('page', { defaultValue: '1', history: 'replace', shallow: false });
 
   const selectedCategories = useMemo(() => (categoryIds ? categoryIds.split(',').map(Number) : []), [categoryIds]);
 

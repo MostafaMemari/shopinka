@@ -29,7 +29,7 @@ const CartSummary: React.FC<CartSummaryProps> = ({
     <Card>
       <CardContent className="p-0 divide-y divide-gray-200">
         {totalQuantity != null && totalPrice != null && totalPrice > 0 && (
-          <div className="flex justify-between items-center py-4">
+          <div className="flex justify-between items-center py-2">
             <span className="text-sm text-gray-600 font-medium">قیمت کالاها ({totalQuantity})</span>
             <div className="text-sm text-gray-900">
               <span className="font-bold">{formatPrice(totalPrice)}</span>
@@ -39,7 +39,7 @@ const CartSummary: React.FC<CartSummaryProps> = ({
         )}
 
         {totalDiscountPrice != null && totalDiscountPrice > 0 && (
-          <div className="flex justify-between items-center py-4">
+          <div className="flex justify-between items-center py-2">
             <span className="text-sm text-gray-600 font-medium">تخفیف کالاها</span>
             <div className="text-sm text-red-500">
               <span className="font-bold">{formatPrice(totalDiscountPrice)}</span>
@@ -49,7 +49,7 @@ const CartSummary: React.FC<CartSummaryProps> = ({
         )}
 
         {shippingPrice != null && shippingPrice > 0 && (
-          <div className="flex justify-between items-center py-4">
+          <div className="flex justify-between items-center py-2">
             <span className="text-sm text-gray-600 font-medium">هزینه ارسال</span>
             <div className="text-sm text-gray-900">
               <span className="font-bold">{formatPrice(shippingPrice)}</span>
@@ -59,7 +59,7 @@ const CartSummary: React.FC<CartSummaryProps> = ({
         )}
 
         {cartPrice != null && cartPrice > 0 && (
-          <div className="flex justify-between items-center py-4">
+          <div className="flex justify-between items-center py-2">
             <span className="text-sm text-gray-600 font-medium">جمع کل سبد خرید</span>
             <div className="text-sm text-gray-900">
               <span className="font-bold">{formatPrice(cartPrice)}</span>
@@ -69,7 +69,7 @@ const CartSummary: React.FC<CartSummaryProps> = ({
         )}
 
         {payablePrice != null && payablePrice > 0 && (
-          <div className="flex justify-between items-center py-4">
+          <div className="flex justify-between items-center py-2">
             <span className="text-sm text-gray-600 font-medium">مبلغ قابل پرداخت</span>
             <div className="text-sm text-gray-900">
               <span className="font-bold">{formatPrice(payablePrice)}</span>
@@ -78,9 +78,9 @@ const CartSummary: React.FC<CartSummaryProps> = ({
           </div>
         )}
 
-        {shippingNote && <div className="py-4 text-xs text-gray-500 leading-relaxed">{shippingNote}</div>}
+        {shippingNote && <div className="py-2 text-xs text-gray-500 leading-relaxed">{shippingNote}</div>}
 
-        {children && <div className="py-4">{children}</div>}
+        {children && <div className="py-2">{children}</div>}
       </CardContent>
     </Card>
   );

@@ -9,12 +9,13 @@ import { useShareAction } from '../hooks/useShareAction';
 
 interface Props {
   productId: number;
+  productName: string;
   isTooltip?: boolean;
 }
 
-export default function ProductActionToggle({ productId, isTooltip }: Props) {
+export default function ProductActionToggle({ productId, productName, isTooltip }: Props) {
   const { isFavoriteProduct, isFavoriteLoading, handleAddToFavorite } = useFavoriteAction(productId);
-  const { handleShare } = useShareAction();
+  const { handleShare } = useShareAction({ productName });
 
   const handleChange = (value: 'favorite' | 'share') => {
     if (value === 'favorite') handleAddToFavorite();

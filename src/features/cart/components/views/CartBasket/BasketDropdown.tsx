@@ -14,6 +14,7 @@ import PrimaryButton from '@/components/common/PrimaryButton';
 import TomanIcon from '@/components/common/svg/TomanIcon';
 import { useCart } from '@/features/cart/hooks/useCart';
 import CartIconTotalQuantity from '../../CartIconTotalQuantity';
+import CartIcon from '@/components/layout/header/MobileHeader/CartIcon';
 
 export default function BasketDropdown() {
   const { cart } = useCart();
@@ -31,7 +32,8 @@ export default function BasketDropdown() {
   return (
     <HoverCard openDelay={40} closeDelay={150}>
       <HoverCardTrigger>
-        <CartIconTotalQuantity />
+        {/* <CartIconTotalQuantity /> */}
+        <CartIcon />
       </HoverCardTrigger>
 
       <HoverCardContent className={cn('w-[350px]')} sideOffset={10}>

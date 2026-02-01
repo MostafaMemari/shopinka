@@ -2,7 +2,7 @@
 import { useMediaQuery } from '@/hooks/use-media-query';
 import { toast } from 'sonner';
 
-export const useShareAction = () => {
+export const useShareAction = ({ productName }: { productName: string }) => {
   const isDesktop = useMediaQuery('(min-width: 1024px)');
 
   const handleShare = async () => {
@@ -12,7 +12,7 @@ export const useShareAction = () => {
       if (!isDesktop && navigator.share) {
         await navigator.share({
           title: document.title,
-          text: 'این محصول رو ببین 👇',
+          text: `${productName} \n`,
           url,
         });
       } else if (navigator.clipboard?.writeText) {

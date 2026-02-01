@@ -25,7 +25,7 @@ async function DesktopHeader() {
           </div>
           <div className="flex items-center gap-x-3">
             <ProfileDropdown />
-            <div className="h-6 w-px bg-gray-300" />
+            {/* <div className="h-6 w-px bg-gray-300" /> */}
             <BasketDropdown />
           </div>
         </div>

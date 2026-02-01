@@ -25,7 +25,11 @@ const SortBar = ({ options, queryKey = 'sortBy', title = 'مرتب‌سازی ب
     shallow: false,
   });
 
+  const [, setPage] = useQueryState('page', { defaultValue: '1', history: 'replace', shallow: false });
+
   const handleSortClick = (key: string) => {
+    setPage('1');
+
     if (key === 'default' || !options[key]?.value) {
       setSortBy('');
     } else {

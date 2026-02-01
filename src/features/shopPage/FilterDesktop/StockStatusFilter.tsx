@@ -14,12 +14,19 @@ function StockStatusFilter() {
     shallow: false,
   });
 
+  const [, setPage] = useQueryState('page', { defaultValue: '1', history: 'replace', shallow: false });
+
+  const handleToggle = () => {
+    setPage('1');
+    setIsInStock(!isInStock);
+  };
+
   return (
     <div className="flex items-center justify-between">
       <Label htmlFor="inStock" className="cursor-pointer w-full">
         فقط کالاهای موجود
       </Label>
-      <Switch id="inStock" checked={isInStock} onCheckedChange={(checked) => setIsInStock(checked)} />
+      <Switch id="inStock" checked={isInStock} onCheckedChange={handleToggle} />
     </div>
   );
 }

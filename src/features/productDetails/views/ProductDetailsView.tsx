@@ -40,7 +40,7 @@ const ProductDetailsView: FC<ProductDetailsViewProps> = ({ product }) => {
       <Card>
         <div className="grid grow grid-cols-1 lg:grid-cols-12 gap-0 lg:gap-4">
           <div className="flex flex-col items-center justify-center gap-3 col-span-4">
-            <ProductActionToggle productId={product.id} isTooltip />
+            <ProductActionToggle productId={product.id} productName={product.name} isTooltip />
 
             <div className="mb-4">
               <ProductGallery

@@ -24,11 +24,9 @@ const SearchInput = ({
   wrapperClassName = '',
   autoFocus = false,
 }: SearchInputProps) => {
-  const [searchQuery, setSearchQuery] = useQueryState(queryKey, {
-    defaultValue: '',
-    history: 'replace',
-    shallow: false,
-  });
+  const [searchQuery, setSearchQuery] = useQueryState(queryKey, { defaultValue: '', history: 'replace', shallow: false });
+
+  const [, setPage] = useQueryState('page', { defaultValue: '1', history: 'replace', shallow: false });
 
   const [inputValue, setInputValue] = useState(searchQuery);
 
@@ -37,6 +35,7 @@ const SearchInput = ({
   }, [searchQuery]);
 
   const debouncedSearch = useDebouncedCallback((value: string) => {
+    setPage('1');
     setSearchQuery(value);
   }, 500);
 
