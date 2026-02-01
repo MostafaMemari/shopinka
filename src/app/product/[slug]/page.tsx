@@ -5,6 +5,7 @@ import { Metadata } from 'next';
 import { generateProductMetadata } from './metadata';
 import CarouselProduct from '@/features/products/components/ProductCarousel';
 import ProductTabs from '@/features/products/components/ProductTabs';
+import { buildProductJsonLd } from './productJsonLd';
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -23,6 +24,8 @@ export default async function Page({ params }: Props) {
 
   const product = res.data;
 
+  const jsonLd = buildProductJsonLd(product, process.env.NEXT_PUBLIC_SITE_URL!);
+
   const lastCategory = product.categories?.[product.categories.length - 1];
   const categoryIds = lastCategory ? [lastCategory.id] : [];
 
@@ -30,6 +33,13 @@ export default async function Page({ params }: Props) {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c'),
+        }}
+      />
+
       <ProductDetailsView product={product} />
 
       <div className="mt-4">
