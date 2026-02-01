@@ -7,16 +7,18 @@ import { Button } from '@/components/ui/button';
 
 interface PaginationProps {
   totalPages: number;
+  currentPage?: number;
 }
 
-const Pagination: FC<PaginationProps> = ({ totalPages }) => {
+const Pagination: FC<PaginationProps> = ({ totalPages, currentPage: propPage }) => {
   const [queryPage, setQueryPage] = useQueryState('page', {
     defaultValue: '1',
     history: 'replace',
     shallow: false,
   });
 
-  const currentPage = Number(queryPage) || 1;
+  const page = propPage ?? (Number(queryPage) || 1);
+
   const maxPagesToShow = 3;
 
   const pages = useMemo(() => {
@@ -29,64 +31,58 @@ const Pagination: FC<PaginationProps> = ({ totalPages }) => {
 
     result.push(1);
 
-    if (currentPage > 3) {
+    if (page > 3) {
       result.push({ type: 'ellipsis', id: 'start' });
     }
 
-    const startPage = Math.max(2, currentPage - 1);
-    const endPage = Math.min(totalPages - 1, currentPage + 1);
+    const startPage = Math.max(2, page - 1);
+    const endPage = Math.min(totalPages - 1, page + 1);
 
     for (let i = startPage; i <= endPage; i++) {
       result.push(i);
     }
 
-    if (currentPage < totalPages - 2) {
+    if (page < totalPages - 2) {
       result.push({ type: 'ellipsis', id: 'end' });
     }
 
     result.push(totalPages);
 
     return result;
-  }, [currentPage, totalPages]);
+  }, [page, totalPages]);
 
-  const goToPage = (page: number) => {
-    if (page < 1 || page > totalPages) return;
-    setQueryPage(String(page));
+  const goToPage = (p: number) => {
+    if (p < 1 || p > totalPages) return;
+    setQueryPage(String(p));
   };
 
   return (
     <div className="flex items-center justify-center gap-2 md:justify-end">
-      <Button variant="outline" size="icon" onClick={() => goToPage(currentPage - 1)} disabled={currentPage === 1} className="h-8 w-8">
+      <Button variant="outline" size="icon" onClick={() => goToPage(page - 1)} disabled={page === 1} className="h-8 w-8">
         <ChevronRight className="h-5 w-5" />
       </Button>
 
       <div className="flex items-center gap-1">
-        {pages.map((page) =>
-          typeof page === 'number' ? (
+        {pages.map((p) =>
+          typeof p === 'number' ? (
             <Button
-              key={`page-${page}`}
-              variant={page === currentPage ? 'default' : 'outline'}
+              key={`page-${p}`}
+              variant={p === page ? 'default' : 'outline'}
               size="sm"
-              onClick={() => goToPage(page)}
+              onClick={() => goToPage(p)}
               className="h-8 w-8"
             >
-              {page}
+              {p}
             </Button>
           ) : (
-            <span key={`ellipsis-${page.id}`} className="text-sm text-muted-foreground">
+            <span key={`ellipsis-${p.id}`} className="text-sm text-muted-foreground">
               ...
             </span>
           ),
         )}
       </div>
 
-      <Button
-        variant="outline"
-        size="icon"
-        onClick={() => goToPage(currentPage + 1)}
-        disabled={currentPage === totalPages}
-        className="h-8 w-8"
-      >
+      <Button variant="outline" size="icon" onClick={() => goToPage(page + 1)} disabled={page === totalPages} className="h-8 w-8">
         <ChevronLeft className="h-5 w-5" />
       </Button>
     </div>

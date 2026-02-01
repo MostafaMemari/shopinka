@@ -1,12 +1,11 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import { Category } from '@/features/categories/CategoryType';
-import CategoryItemShop from './CategoryListGridItem';
-import { Plus } from 'lucide-react';
 import { useIsMounted } from '@/hooks/useIsMounted';
 import { Skeleton } from '@/components/ui/skeleton';
-import { CategoryListGridItemSkeleton } from '../CategoryListGridItem';
+import { CategoryListGridItemSkeleton } from './CategoryListGridItemSkeleton';
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
+import CategoryListGridItem from './CategoryListGridItem';
 
 interface CategoryChildrenGridProps {
   name: string;
@@ -14,56 +13,26 @@ interface CategoryChildrenGridProps {
   basePath?: string;
 }
 
-function getVisibleCountByScreenWidth(width: number): number {
-  if (width < 640) return 2;
-  if (width < 768) return 3;
-  if (width < 1024) return 4;
-  if (width < 1280) return 5;
-  if (width < 1536) return 6;
-  return 8;
-}
-
-function useResponsiveVisibleCount() {
-  const [visibleCount, setVisibleCount] = useState<number | null>(null);
-
-  useEffect(() => {
-    const update = () => {
-      const width = window.innerWidth;
-      setVisibleCount(getVisibleCountByScreenWidth(width));
-    };
-
-    update();
-    const resizeListener = () => update();
-
-    window.addEventListener('resize', resizeListener);
-    return () => window.removeEventListener('resize', resizeListener);
-  }, []);
-
-  return visibleCount;
-}
-
 export default function CategoryChildrenGrid({ name, categories, basePath }: CategoryChildrenGridProps) {
-  const [showAll, setShowAll] = useState(false);
-  const visibleCount = useResponsiveVisibleCount();
   const isMounted = useIsMounted();
 
   if (!isMounted)
     return (
       <section className="mb-6">
         <Skeleton className="h-8 w-48 mb-4" />
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8 gap-4">
-          {Array.from({ length: 2 }).map((_, index) => (
-            <CategoryListGridItemSkeleton key={index} />
-          ))}
-        </div>
+
+        <ScrollArea className="w-full">
+          <div className="flex w-max gap-2 pb-2">
+            {Array.from({ length: 5 }).map((_, index) => (
+              <CategoryListGridItemSkeleton key={index} className="flex-shrink-0 w-30" />
+            ))}
+          </div>
+          <ScrollBar orientation="horizontal" />
+        </ScrollArea>
       </section>
     );
 
-  if (!categories?.length || visibleCount === null) return null;
-
-  const slicedCount = showAll ? categories.length : visibleCount - 1;
-  const visibleCategories = categories.slice(0, slicedCount);
-  const shouldShowMore = !showAll && categories.length > slicedCount;
+  if (!categories?.length) return null;
 
   return (
     <section className="mb-4">
@@ -71,31 +40,21 @@ export default function CategoryChildrenGrid({ name, categories, basePath }: Cat
         <span className="text-xl font-bold text-gray-900">{name || 'دسته‌بندی'}</span>
       </div>
 
-      <div
-        className="
-          grid
-          grid-cols-2
-          sm:grid-cols-3
-          md:grid-cols-4
-          lg:grid-cols-5
-          xl:grid-cols-6
-          2xl:grid-cols-8
-          gap-4
-          overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300
-        "
-      >
-        {visibleCategories.map((child) => (
-          <div key={child.id}>
-            <CategoryItemShop
-              name={child.name}
-              imageUrl={child?.thumbnailImage?.fileUrl}
-              href={basePath ? `/${basePath}/${child.slug}` : child.slug}
-            />
-          </div>
-        ))}
+      <ScrollArea className="w-full">
+        <div className="flex w-max gap-2 pb-2">
+          {categories.map((child) => (
+            <div key={child.id} className="flex-shrink-0 w-30">
+              <CategoryListGridItem
+                name={child.name}
+                imageUrl={child?.thumbnailImage?.fileUrl}
+                href={basePath ? `/${basePath}/${child.slug}` : child.slug}
+              />
+            </div>
+          ))}
+        </div>
 
-        {shouldShowMore && <CategoryItemShop name="مشاهده بیشتر" onClick={() => setShowAll(true)} icon={<Plus size={36} />} isButton />}
-      </div>
+        <ScrollBar orientation="horizontal" />
+      </ScrollArea>
     </section>
   );
 }

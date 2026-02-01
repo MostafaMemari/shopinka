@@ -1,9 +1,10 @@
 import { Card } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
+import { cn } from '@/lib/utils';
 
-export function CategoryListGridItemSkeleton() {
+export function CategoryListGridItemSkeleton({ className }: { className?: string }) {
   return (
-    <Card className="flex flex-col items-center justify-center p-4 mb-1">
+    <Card className={cn('flex flex-col items-center justify-center p-4 mb-1', className)}>
       <div className="w-20 h-20 rounded-lg overflow-hidden flex items-center justify-center mb-2">
         <Skeleton className="w-full h-full rounded-lg" />
       </div>

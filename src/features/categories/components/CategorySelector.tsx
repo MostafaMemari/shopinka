@@ -20,19 +20,23 @@ const CategorySelector: React.FC<Props> = ({ queryKey = 'categoryIds', title = '
     shallow: false,
   });
 
-  const selectedCategories = useMemo(() => (categoryIds ? categoryIds.split(',').map(Number) : []), [categoryIds]);
+  const [, setPage] = useQueryState('page', {
+    defaultValue: '1',
+    history: 'replace',
+    shallow: false,
+  });
 
-  const collectCategoryIds = useCallback((category: Category): number[] => {
-    return [category.id, ...(category.children?.flatMap(collectCategoryIds) ?? [])];
-  }, []);
+  const selectedCategories = useMemo(() => (categoryIds ? categoryIds.split(',').map(Number) : []), [categoryIds]);
 
   const handleToggle = useCallback(
     (id: number) => {
       const updated = selectedCategories.includes(id) ? selectedCategories.filter((cid) => cid !== id) : [...selectedCategories, id];
 
       setCategoryIds(updated.length ? updated.join(',') : '');
+
+      setPage('1');
     },
-    [selectedCategories, setCategoryIds],
+    [selectedCategories, setCategoryIds, setPage],
   );
 
   if (!categories || categories.length === 0) return null;

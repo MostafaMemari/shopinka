@@ -89,7 +89,7 @@ export default function ProductListShop({ initialProducts, initialQuery, pager }
         </div>
       )}
 
-      {showPagination && <Pagination totalPages={pager.totalPages} />}
+      {showPagination && <Pagination totalPages={pager.totalPages} currentPage={page} />}
     </>
   );
 }

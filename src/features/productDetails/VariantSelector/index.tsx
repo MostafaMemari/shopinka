@@ -118,11 +118,11 @@ export default function ProductVariants({ variants, attributes, productType, def
   if (productType === 'SIMPLE') return null;
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-2 w-full">
       <div className="flex justify-between items-center text-md md:text-sm">
         <h3 className="font-semibold text-gray-800">انتخاب مشخصات</h3>
         {(selectedColor || selectedButton) && (
-          <button onClick={handleReset} className="text-sm text-blue-600 hover:text-blue-800 transition-colors">
+          <button onClick={handleReset} className="text-sm text-blue-600 hover:text-blue-800 transition-colors cursor-pointer">
             پاک کردن انتخاب‌ها
           </button>
         )}

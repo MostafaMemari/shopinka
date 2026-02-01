@@ -1,17 +1,23 @@
 import { Card } from '@/components/ui/card';
+import { ScrollBar } from '@/components/ui/scroll-area';
 import { Skeleton } from '@/components/ui/skeleton';
-import { CategoryListGridItemSkeleton } from '@/features/categories/components/CategoryListGridItem';
+import { CategoryListGridItemSkeleton } from '@/features/categories/components/CategoryListGrid/CategoryListGridItemSkeleton';
+import { ScrollArea } from '@radix-ui/react-scroll-area';
 
 export default function ShopPageSkeleton() {
   return (
     <div className="mx-auto">
       <section className="mb-6">
         <Skeleton className="h-8 w-48 mb-4" />
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8 gap-4">
-          {Array.from({ length: 2 }).map((_, index) => (
-            <CategoryListGridItemSkeleton key={index} />
-          ))}
-        </div>
+
+        <ScrollArea className="w-full">
+          <div className="flex w-max gap-2 pb-2">
+            {Array.from({ length: 5 }).map((_, index) => (
+              <CategoryListGridItemSkeleton key={index} className="flex-shrink-0 w-30" />
+            ))}
+          </div>
+          <ScrollBar orientation="horizontal" />
+        </ScrollArea>
       </section>
 
       <div className="mb-6 flex flex-col gap-4 md:hidden">

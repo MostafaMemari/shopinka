@@ -7,19 +7,19 @@ export default function ProductLoader() {
       {/* Desktop Loader */}
       <div className="hidden lg:block">
         {/* Breadcrumb Skeleton Loader */}
-        <Card className="mb-4 w-1/4 p-4">
+        <div className="mb-2 w-1/4">
           <div className="flex items-center gap-2">
             <Skeleton className="h-5 w-1/3 rounded-lg" />
             <Skeleton className="h-5 w-1/3 rounded-lg" />
           </div>
-        </Card>
+        </div>
 
         <Card className="mb-6 p-6">
           <div className="mb-10 grid grid-cols-12 gap-4">
             <div className="col-span-4">
-              <div className="mb-4 flex items-center gap-x-4">
-                <Skeleton className="h-8 w-8 rounded-full" />
-                <Skeleton className="h-8 w-8 rounded-full" />
+              <div className="mb-4 flex items-center justify-center gap-x-1">
+                <Skeleton className="h-8 w-8 rounded-md" />
+                <Skeleton className="h-8 w-8 rounded-md" />
               </div>
               <Skeleton className="mb-4 aspect-square w-full rounded-lg" />
               <div className="grid grid-cols-4 gap-2">
