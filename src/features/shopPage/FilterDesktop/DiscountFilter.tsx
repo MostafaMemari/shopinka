@@ -3,7 +3,7 @@
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { useQueryState } from 'nuqs';
-import React, { useEffect } from 'react';
+import React from 'react';
 
 function DiscountFilter() {
   const [hasDiscount, setHasDiscount] = useQueryState<boolean>('hasDiscount', {
