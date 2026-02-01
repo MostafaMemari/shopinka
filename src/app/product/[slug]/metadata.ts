@@ -1,19 +1,15 @@
 import { fetchProductBySlug } from '@/features/products/productService';
 import type { Metadata } from 'next';
 
-type Params = {
-  slug: string;
-};
+type Params = { slug: string };
 
 export async function generateProductMetadata({ slug }: Params): Promise<Metadata> {
+  console.log(slug);
+
   const res = await fetchProductBySlug(slug);
 
   if (!res.success) {
-    return {
-      title: 'محصول پیدا نشد',
-      description: 'محصول مورد نظر یافت نشد.',
-      robots: 'noindex, nofollow',
-    };
+    return { title: 'محصول پیدا نشد', description: 'محصول مورد نظر یافت نشد.', robots: 'noindex, nofollow' };
   }
 
   const product = res.data;
@@ -41,14 +37,7 @@ export async function generateProductMetadata({ slug }: Params): Promise<Metadat
       title: ogTitle,
       description: ogDescription,
       url: seo?.canonicalUrl,
-      images: [
-        {
-          url: imageUrl,
-          width: 1200,
-          height: 630,
-          alt: ogTitle,
-        },
-      ],
+      images: [{ url: imageUrl, width: 1200, height: 630, alt: ogTitle }],
     },
     robots: seo?.robotsTag || 'index, follow',
     keywords,

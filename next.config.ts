@@ -1,8 +1,11 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
+  // experimental: {
+  //   reactCompiler: true,
+  // },
   images: {
-    domains: ['s3.shopinka.ir', "api.domingo.ir" , "car.vimascript.ir"], 
+    domains: ['s3.shopinka.ir', 'api.domingo.ir', 'car.vimascript.ir'],
   },
 };
 

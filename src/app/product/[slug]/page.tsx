@@ -6,13 +6,11 @@ import { generateProductMetadata } from './metadata';
 import CarouselProduct from '@/features/products/components/ProductCarousel';
 import ProductTabs from '@/features/products/components/ProductTabs';
 
-type Props = {
-  params: Promise<{ slug: string }>;
-};
+type Props = { params: Promise<{ slug: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  return generateProductMetadata({ slug });
+  return await generateProductMetadata({ slug });
 }
 
 export default async function Page({ params }: Props) {
