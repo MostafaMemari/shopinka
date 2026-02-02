@@ -4,8 +4,6 @@ import type { Metadata } from 'next';
 type Params = { slug: string };
 
 export async function generateProductMetadata({ slug }: Params): Promise<Metadata> {
-  console.log(slug);
-
   const res = await fetchProductBySlug(slug);
 
   if (!res.success) {

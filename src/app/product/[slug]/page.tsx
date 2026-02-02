@@ -24,7 +24,7 @@ export default async function Page({ params }: Props) {
 
   const product = res.data;
 
-  const jsonLd = buildProductJsonLd(product, process.env.NEXT_PUBLIC_SITE_URL!);
+  const jsonLd = buildProductJsonLd(product);
 
   const lastCategory = product.categories?.[product.categories.length - 1];
   const categoryIds = lastCategory ? [lastCategory.id] : [];

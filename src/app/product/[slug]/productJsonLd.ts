@@ -1,6 +1,6 @@
 import { Product } from '@/features/products/ProductType';
 
-export function buildProductJsonLd(product: Product, siteUrl: string) {
+export function buildProductJsonLd(product: Product) {
   const hasDiscount = product.salePrice !== null;
 
   const finalPriceToman = hasDiscount ? product.salePrice! : product.basePrice || 0;
@@ -16,8 +16,11 @@ export function buildProductJsonLd(product: Product, siteUrl: string) {
     name: product.name,
     image: imageUrl ? [imageUrl] : [],
     sku: product.id.toString(),
-    url: `${siteUrl}/product/${product.slug}`,
-
+    url: `https://shopinka.ir/product/${product.slug}`,
+    brand: {
+      '@type': 'Brand',
+      name: 'Shopinka',
+    },
     offers: {
       '@type': 'Offer',
       priceCurrency: 'IRR',
