@@ -12,16 +12,16 @@ export default function ProductDetailsSkeleton() {
       </div>
 
       <Card>
-        <div className="grid grow grid-cols-1 lg:grid-cols-12 gap-0 lg:gap-4 p-4">
+        <div className="grid grow grid-cols-1 lg:grid-cols-12 gap-0 lg:gap-4">
           {/* Gallery / Actions */}
           <div className="flex flex-col items-center justify-center gap-3 lg:col-span-4">
             <div className="flex gap-2">
-              <Skeleton className="h-9 w-9 rounded-4xl" />
-              <Skeleton className="h-9 w-9 rounded-4xl" />
+              <Skeleton className="h-9 w-9 rounded-md" />
+              <Skeleton className="h-9 w-9 rounded-md" />
             </div>
 
             {/* Main Image */}
-            <Skeleton className="mx-auto w-3/5 md:max-w-[350px] lg:max-w-[450px] h-[230px] md:h-[230px] lg:h-[350px] rounded-lg object-contain" />
+            <Skeleton className="mx-auto w-3/5 md:max-w-[350px] lg:max-w-[450px] h-[250px] md:h-[250px] lg:h-[350px] rounded-lg object-contain" />
 
             {/* Thumbnails */}
             <div className="grid grid-cols-4 gap-2 w-full px-4">
