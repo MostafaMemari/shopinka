@@ -7,7 +7,7 @@ export default function Layout({ children }: Readonly<{ children: React.ReactNod
       <Header />
       <main className="container pb-14 mt-2">{children}</main>
 
-      <div className="mb-15 md:mb-0">
+      <div className="mt-auto">
         <Footer />
       </div>
     </>

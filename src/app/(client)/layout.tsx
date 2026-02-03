@@ -11,7 +11,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <div className="col-span-12 lg:col-span-9">{children}</div>
       </main>
 
-      <div className="mb-15 md:mb-0">
+      <div className="mt-auto">
         <Footer />
       </div>
 

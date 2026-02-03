@@ -21,7 +21,7 @@ export default function ProductDetailsSkeleton() {
             </div>
 
             {/* Main Image */}
-            <Skeleton className="mx-auto w-3/5 md:max-w-[350px] lg:max-w-[450px] h-[250px] md:h-[250px] lg:h-[350px] rounded-lg object-contain" />
+            <Skeleton className="mx-auto w-4/5 md:max-w-[350px] lg:max-w-[450px] h-[250px] md:h-[250px] lg:h-[350px] rounded-lg object-contain" />
 
             {/* Thumbnails */}
             <div className="grid grid-cols-4 gap-2 w-full px-4">

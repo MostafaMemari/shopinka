@@ -15,7 +15,9 @@ export default function Layout({ children }: Readonly<{ children: React.ReactNod
         </div>
       </main>
 
-      <Footer />
+      <div className="mt-auto">
+        <Footer />
+      </div>
     </AuthGuard>
   );
 }

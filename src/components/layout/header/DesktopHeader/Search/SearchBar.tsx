@@ -7,10 +7,14 @@ import { useProducts } from '@/features/products/hooks/useProduct';
 import SearchItem from './SearchItem';
 import { cn } from '@/lib/utils';
 import { Product } from '@/features/products/ProductType';
-
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 
 const SearchBar = () => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+
   const [isOpen, setIsOpen] = useState(false);
   const [searchInput, setSearchInput] = useState('');
   const [debouncedSearch] = useDebounce(searchInput.trim(), 500);
@@ -23,6 +27,27 @@ const SearchBar = () => {
   });
 
   const productItems: Product[] = data?.data?.items || [];
+
+  const handleSubmit = (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+
+    const value = searchInput.trim();
+    if (!value) return;
+
+    setIsOpen(false);
+    router.push(`/shop?search=${encodeURIComponent(value)}`);
+  };
+
+  useEffect(() => {
+    const urlSearch = searchParams.get('search') || '';
+    setSearchInput(urlSearch);
+  }, [searchParams]);
+
+  useEffect(() => {
+    if (pathname === '/') {
+      setSearchInput('');
+    }
+  }, [pathname]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent | TouchEvent) => {
@@ -41,13 +66,17 @@ const SearchBar = () => {
 
   return (
     <div ref={wrapperRef} className="relative w-full max-w-3xl flex-1">
-      <div
+      <form
+        onSubmit={handleSubmit}
         className={cn(
           'flex items-center rounded-lg border bg-background px-4 py-2 transition-all',
           isOpen ? 'border-primary shadow-md' : 'border-border',
         )}
       >
-        <Search className={cn('h-6 w-6 text-muted-foreground flex-shrink-0', isOpen && 'text-primary')} />
+        <Search
+          onClick={() => handleSubmit()}
+          className={cn('h-6 w-6 text-muted-foreground flex-shrink-0 cursor-pointer', isOpen && 'text-primary')}
+        />
         <input
           id="search"
           type="text"
@@ -58,16 +87,12 @@ const SearchBar = () => {
           placeholder="جستجو کنید ..."
           className="flex w-[350px] lg:w-[500px] bg-transparent border-none px-3 py-2 outline-none placeholder:text-sm placeholder:text-text/60 focus:ring-0 text-text/90"
         />
-      </div>
+      </form>
 
       {isOpen && debouncedSearch && (
-        <div
-          className={cn(
-            'absolute inset-x-0 top-full z-50 w-full overflow-hidden rounded-b-lg border border-t-transparent bg-background shadow-lg',
-          )}
-        >
+        <div className="absolute inset-x-0 top-full z-50 w-full overflow-hidden rounded-b-lg border border-t-transparent bg-background shadow-lg">
           <ScrollArea className="h-[400px] rounded-md border overflow-y-auto p-4">
-            {isFetching && isLoading ? (
+            {isFetching || isLoading ? (
               <p className="text-center text-muted-foreground">در حال بارگذاری...</p>
             ) : productItems.length === 0 ? (
               <p className="text-center text-muted-foreground">نتیجه‌ای یافت نشد</p>
