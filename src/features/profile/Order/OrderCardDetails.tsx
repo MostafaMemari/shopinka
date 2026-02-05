@@ -41,7 +41,7 @@ function OrderCardDetails({ order }: OrderCardDetailsProps) {
               label="مبلغ کل"
               value={
                 <span className="text-primary-500 dark:text-primary-400 font-bold">
-                  {formatPrice(paymentOrder)}
+                  {formatPrice(paymentOrder / 10)}
                   <span className="text-xs font-normal mr-1">تومان</span>
                 </span>
               }
