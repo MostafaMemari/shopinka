@@ -23,7 +23,7 @@ export default function CategoryChildrenGrid({ name, categories, basePath }: Cat
 
         <ScrollArea className="w-full">
           <div className="flex w-max gap-2 pb-2">
-            {Array.from({ length: 5 }).map((_, index) => (
+            {Array.from({ length: 2 }).map((_, index) => (
               <CategoryListGridItemSkeleton key={index} className="flex-shrink-0 w-30" />
             ))}
           </div>
