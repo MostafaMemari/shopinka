@@ -11,7 +11,7 @@ interface EditableTextProps {
 }
 
 const EditableText: React.FC<EditableTextProps> = ({ onStartEditing }) => {
-  const { selectedFont, selectedMaterial, text, options } = useSelectedStickerAssets();
+  const { selectedFont, selectedMaterial, text, options, lines } = useSelectedStickerAssets();
   const { fontLoaded, fontFamily } = useLoadFont(selectedFont);
 
   const dispatch = useDispatch();
@@ -70,6 +70,7 @@ const EditableText: React.FC<EditableTextProps> = ({ onStartEditing }) => {
         onBlur={(e) => {
           setIsFocused(false);
           const newText = (e.target as HTMLDivElement).innerText.trim();
+
           dispatch(setText(newText));
         }}
         className={cn(

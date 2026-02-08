@@ -7,22 +7,12 @@ import { setColorStart, setColorSuccess, setFontStart, setFontSuccess, setLines 
 import { FontItem } from '@/types/fontType';
 import { MaterialStickerItem } from '@/types/materialStickerType';
 
-export function useInitializeStickerOptions({
-  fontData,
-  materialData,
-  fontLoading,
-  materialLoading,
-}: {
-  fontData: FontItem[] | undefined;
-  materialData: MaterialStickerItem[] | undefined;
-  fontLoading: boolean;
-  materialLoading: boolean;
-}) {
+export function useInitializeStickerOptions({ fontData, materialData }: { fontData: FontItem[]; materialData: MaterialStickerItem[] }) {
   const dispatch = useDispatch();
   const { options, materialId, fontId, lines } = useSelector((state: RootState) => state.sticker);
 
   useEffect(() => {
-    if (fontLoading || materialLoading || !fontData || !materialData) return;
+    if (!fontData || !materialData) return;
 
     const defaultFont = fontData?.find((font: FontItem) => font.isDefault);
     const defaultMaterial = materialData?.find((material: MaterialStickerItem) => material.isDefault);
@@ -52,5 +42,5 @@ export function useInitializeStickerOptions({
     }
 
     dispatch(setLines([]));
-  }, [fontLoading, materialLoading, fontData, materialData, options, dispatch]);
+  }, [fontData, materialData, options, dispatch]);
 }

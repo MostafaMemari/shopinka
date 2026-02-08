@@ -10,7 +10,7 @@ import { refreshToken } from './refreshToken';
 export type ApiResponse<T> = { success: true; data: T } | { success: false; status: number; message: string };
 
 type ExtraOptions = {
-  revalidate?: string | string[] | boolean;
+  revalidate?: number;
   cache?: number;
   auth?: boolean;
 };

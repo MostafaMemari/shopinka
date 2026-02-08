@@ -5,10 +5,8 @@ import { MaterialStickerItem } from '@/types/materialStickerType';
 import React, { createContext, useContext, ReactNode } from 'react';
 
 interface StickerDataContextProps {
-  materialData: MaterialStickerItem[] | undefined;
-  fontData: FontItem[] | undefined;
-  materialLoading: boolean;
-  fontLoading: boolean;
+  materialData: MaterialStickerItem[];
+  fontData: FontItem[];
 }
 
 const StickerDataContext = createContext<StickerDataContextProps | undefined>(undefined);
@@ -17,10 +15,8 @@ interface StickerDataProviderProps extends StickerDataContextProps {
   children: ReactNode;
 }
 
-export const StickerDataProvider = ({ children, materialData, fontData, materialLoading, fontLoading }: StickerDataProviderProps) => {
-  return (
-    <StickerDataContext.Provider value={{ materialData, fontData, materialLoading, fontLoading }}>{children}</StickerDataContext.Provider>
-  );
+export const StickerDataProvider = ({ children, materialData, fontData }: StickerDataProviderProps) => {
+  return <StickerDataContext.Provider value={{ materialData, fontData }}>{children}</StickerDataContext.Provider>;
 };
 
 export const useStickerData = () => {

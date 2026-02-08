@@ -7,5 +7,6 @@ export const getMaterialSticker = async (params?: MaterialStickersParams): Promi
   return await shopApiFetch(`/material-sticker`, {
     auth: true,
     query: { repliesDepth: 1, includeReplies: true, ...params },
+    revalidate: 300,
   });
 };

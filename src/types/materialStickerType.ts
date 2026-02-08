@@ -35,6 +35,8 @@ export type SortDirection = 'asc' | 'desc';
 export interface MaterialStickersParams {
   page?: number;
   take?: number;
+  sortBy?: SortByFontParams;
+  sortDirection?: SortDirection;
   includeThumbnail?: boolean;
   includeFile?: boolean;
 }

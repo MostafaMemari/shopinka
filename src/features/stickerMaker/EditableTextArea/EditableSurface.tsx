@@ -23,15 +23,9 @@ const EditableSurface = () => {
 
   return (
     <div
-      className="absolute inset-1 rounded-2xl shadow-2xl border border-zinc-300 overflow-hidden pointer-events-none touch-action-none"
+      className="absolute inset-0 overflow-hidden pointer-events-none touch-action-none"
       style={{ background: backgroundGradient, backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)' }}
-    >
-      <div className="absolute inset-0 bg-white/10" />
-
-      <div className="absolute inset-0 opacity-10">
-        <div className="h-full w-full bg-grid-pattern" />
-      </div>
-    </div>
+    ></div>
   );
 };
 

@@ -11,10 +11,9 @@ import { useSelectedStickerAssets } from '@/hooks/useSelectedStickerAssets';
 
 interface Props {
   data: { items: MaterialStickerItem[] } | undefined;
-  isLoading: boolean;
 }
 
-export function MaterialGrid({ data, isLoading }: Props) {
+export function MaterialGrid({ data }: Props) {
   const { selectedMaterial } = useSelectedStickerAssets();
 
   const gridRef = useRef<HTMLDivElement>(null);
@@ -51,17 +50,9 @@ export function MaterialGrid({ data, isLoading }: Props) {
             }}
           >
             <div className="flex gap-3 px-2 py-2">
-              {isLoading
-                ? [...Array(5)].map((_, i) => (
-                    <div key={i} className="flex flex-col items-center min-w-[64px]">
-                      <div className="w-12 h-12 rounded-full border bg-gray-200 animate-pulse shadow-sm mb-1.5" />
-
-                      <div className="w-10 h-[11px] bg-gray-200 rounded animate-pulse" />
-                    </div>
-                  ))
-                : (data?.items ?? []).map((item) => (
-                    <ColorItem key={item.id} item={item} isSelected={isSelected(item.id)} onClick={handleMaterialClick.bind(null, item)} />
-                  ))}
+              {(data?.items ?? []).map((item) => (
+                <ColorItem key={item.id} item={item} isSelected={isSelected(item.id)} onClick={handleMaterialClick.bind(null, item)} />
+              ))}
             </div>
 
             <ScrollBar orientation="horizontal" />

@@ -50,7 +50,7 @@ export default function BottomNav({
 
   return (
     <>
-      <div className="grid grid-cols-12 items-center w-full h-14 bg-white rounded-2xl shadow-md">
+      <div className="grid grid-cols-12 items-center w-full h-14 bottom-0 bg-white rounded-2xl shadow-md">
         <div className="col-span-8 grid grid-cols-12">
           {navItems.map((item) => (
             <div key={item.label} className="col-span-4 flex justify-center">

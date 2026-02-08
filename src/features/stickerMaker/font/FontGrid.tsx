@@ -7,15 +7,13 @@ import { setFontStart, setFontSuccess } from '@/store/slices/stickerSlice';
 import { FontItem } from './FontItem';
 import { detectLanguage } from './detectLanguage';
 import { FontItem as FontItemType } from '@/types/fontType';
-import { Skeleton } from '@/components/ui/skeleton';
 import { useSelectedStickerAssets } from '@/hooks/useSelectedStickerAssets';
 
 interface Props {
-  data: { items: FontItemType[] } | undefined;
-  isLoading: boolean;
+  data: { items: FontItemType[] };
 }
 
-function FontGrid({ data, isLoading }: Props) {
+function FontGrid({ data }: Props) {
   const { selectedFont, text } = useSelectedStickerAssets();
 
   const gridRef = useRef<HTMLDivElement>(null);
@@ -43,23 +41,9 @@ function FontGrid({ data, isLoading }: Props) {
     <div ref={gridRef} className="m-2">
       <ScrollArea className="w-full h-[94px] bg-white rounded-md shadow-md border">
         <div className="flex gap-2 px-2">
-          {isLoading
-            ? [...Array(5)].map((_, i) => (
-                <div key={i}>
-                  <div className="Cell relative shrink-0" style={{ width: '134px' }}>
-                    <div className="flex flex-col items-center rounded-sm my-2 bg-white relative px-2 border border-gray-200">
-                      <div className="w-[130px] h-[45px] overflow-hidden flex items-center justify-center">
-                        <Skeleton className="w-full h-full rounded-sm" />
-                      </div>
-
-                      <Skeleton className="w-[78px] h-[12px] mt-2 rounded-sm" />
-                    </div>
-                  </div>
-                </div>
-              ))
-            : (filteredFonts ?? []).map((font: FontItemType) => (
-                <FontItem key={font.name} font={font} isSelected={isSelected(font.id)} onSelect={() => handleFontSelect(font)} />
-              ))}
+          {(filteredFonts ?? []).map((font: FontItemType) => (
+            <FontItem key={font.name} font={font} isSelected={isSelected(font.id)} onSelect={() => handleFontSelect(font)} />
+          ))}
         </div>
 
         <ScrollBar orientation="horizontal" />

@@ -7,5 +7,6 @@ export const getFonts = async (params?: FontParams): Promise<ApiResponse<FontRes
   return await shopApiFetch(`/font`, {
     auth: true,
     query: { repliesDepth: 1, includeReplies: true, ...params },
+    revalidate: 300,
   });
 };

@@ -1,14 +1,16 @@
 'use client';
 
 import React, { ReactNode, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+
+import AppDialog from '@/components/wrappers/AppDialog';
 import StickerDimensionForm from './StickerDimensionForm';
+import PreviewLines from './PreviewLines';
+import LineNavigationButtons from './LineNavigationButtons';
+
 import { measureMultilineText } from '@/utils/measureText';
 import { useSelectedStickerAssets } from '@/hooks/useSelectedStickerAssets';
-import PreviewLines from './PreviewLines';
-import { useDispatch } from 'react-redux';
 import { setLines } from '@/store/slices/stickerSlice';
-import LineNavigationButtons from './LineNavigationButtons';
-import AppDialog from '@/components/wrappers/AppDialog';
 
 interface FinalizeStickerDialogProps {
   isOpen: boolean;
@@ -22,19 +24,30 @@ export default function FinalizeStickerDialog({ isOpen, onOpenChange, onFinalize
 
   const { selectedFont, text, options, lines } = useSelectedStickerAssets();
 
-  const [isCurrentLineValid, setIsCurrentLineValid] = useState(false);
-
-  const [width, setWidth] = useState('');
   const [currentLineIndex, setCurrentLineIndex] = useState(0);
+  const [isCurrentLineValid, setIsCurrentLineValid] = useState(false);
+  const [, setWidth] = useState('');
 
   useEffect(() => {
+    if (!isOpen) {
+      dispatch(setLines([]));
+      setCurrentLineIndex(0);
+      setIsCurrentLineValid(false);
+      setWidth('');
+    }
+  }, [isOpen, dispatch]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
     if (!text || !selectedFont) {
       dispatch(setLines([]));
-      setWidth('');
       return;
     }
 
-    const { lines: measuredLines } = measureMultilineText(text, { fontFamily: selectedFont.name });
+    const { lines: measuredLines } = measureMultilineText(text, {
+      fontFamily: selectedFont.name,
+    });
 
     dispatch(
       setLines(
@@ -42,28 +55,37 @@ export default function FinalizeStickerDialog({ isOpen, onOpenChange, onFinalize
           text: line.text,
           ratio: line.width / line.height,
           lineNumber: index + 1,
-          width: lines[index]?.width || null,
-          height: lines[index]?.height || null,
+          width: lines[index]?.width ?? null,
+          height: lines[index]?.height ?? null,
         })),
       ),
     );
-  }, [text, selectedFont, width]);
+  }, [text, selectedFont, isOpen]);
 
-  const isLines = lines.length > 0;
+  const hasLines = lines.length > 0;
   const isFirstLine = currentLineIndex === 0;
   const isLastLine = currentLineIndex === lines.length - 1;
   const currentLine = lines[currentLineIndex];
 
+  const handleOpenChange = (open: boolean) => {
+    if (!open) {
+      dispatch(setLines([]));
+      setCurrentLineIndex(0);
+      setIsCurrentLineValid(false);
+    }
+    onOpenChange(open);
+  };
+
   return (
     <AppDialog
       open={isOpen}
-      onOpenChange={onOpenChange}
+      onOpenChange={handleOpenChange}
       trigger={trigger}
-      title="پیش نمایش"
+      title="پیش‌نمایش"
       showClose={false}
       className="max-w-[500px] m-auto"
       actions={
-        isLines && (
+        hasLines && (
           <LineNavigationButtons
             isFirstLine={isFirstLine}
             isLastLine={isLastLine}
@@ -76,23 +98,21 @@ export default function FinalizeStickerDialog({ isOpen, onOpenChange, onFinalize
         )
       }
     >
-      {lines.length > 0 ? (
-        currentLine ? (
-          <>
-            <PreviewLines
-              key={currentLine.lineNumber}
-              line={currentLine}
-              fontFamily={selectedFont?.name}
-              fontWeight={options.weight}
-              fontStyle={options.style}
-              fontSize={selectedFont?.size}
-            />
+      {hasLines && currentLine ? (
+        <>
+          <PreviewLines
+            key={currentLine.lineNumber}
+            line={currentLine}
+            fontFamily={selectedFont?.name}
+            fontWeight={options.weight}
+            fontStyle={options.style}
+            fontSize={selectedFont?.size}
+          />
 
-            <StickerDimensionForm line={currentLine} onValidityChange={setIsCurrentLineValid} />
-          </>
-        ) : null
+          <StickerDimensionForm line={currentLine} onValidityChange={setIsCurrentLineValid} />
+        </>
       ) : (
-        <div className="text-center py-4 text-gray-500">هیچ متنی برای پیش‌نمایش وجود ندارد</div>
+        <div className="py-4 text-center text-gray-500">هیچ متنی برای پیش‌نمایش وجود ندارد</div>
       )}
     </AppDialog>
   );

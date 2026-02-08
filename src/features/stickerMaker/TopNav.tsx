@@ -1,33 +1,17 @@
 'use client';
 
 import MobileLogo from '@/components/common/Logo/MobileLogo';
-import { Button } from '@/components/ui/button';
-import { Phone } from 'lucide-react';
 import React from 'react';
-import CartIconTotalQuantity from '../cart/components/CartIconTotalQuantity';
-import { useRouter } from 'next/navigation';
+import CartIcon from '@/components/layout/header/MobileHeader/CartIcon';
+import PhoneIcon from '@/components/layout/header/MobileHeader/PhoneIcon';
 
 export default function TopNav() {
-  const router = useRouter();
-
-  const handlePhoneIconClick = () => {
-    window.location.href = 'tel:+989123456789';
-  };
-
-  const handleCartIconClick = () => {
-    router.push('/checkout/cart');
-  };
-
   return (
-    <div className="flex items-center justify-between w-full py-1">
-      <Button onClick={handlePhoneIconClick} asChild variant="ghost" size="sm" className="size-12 cursor-pointer mr-2">
-        <Phone />
-      </Button>
-
-      <MobileLogo />
-
-      <div className="ml-4" onClick={handleCartIconClick}>
-        <CartIconTotalQuantity badgePosition="left" />
+    <div className="h-[64px] w-full bg-white shadow-sm rounded-2xl">
+      <div className="flex items-center justify-between py-2 px-2">
+        <PhoneIcon />
+        <MobileLogo />
+        <CartIcon />
       </div>
     </div>
   );
