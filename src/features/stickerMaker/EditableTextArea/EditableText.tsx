@@ -11,7 +11,7 @@ interface EditableTextProps {
 }
 
 const EditableText: React.FC<EditableTextProps> = ({ onStartEditing }) => {
-  const { selectedFont, selectedMaterial, text, options, lines } = useSelectedStickerAssets();
+  const { selectedFont, selectedMaterial, text, options } = useSelectedStickerAssets();
   const { fontLoaded, fontFamily } = useLoadFont(selectedFont);
 
   const dispatch = useDispatch();
