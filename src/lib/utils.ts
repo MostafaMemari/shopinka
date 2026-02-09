@@ -1,7 +1,7 @@
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { createLoader } from 'nuqs/server';
-import { coordinatesSearchParams } from '../config/searchParams.config';
+import { coordinatesSearchParams } from '../config/searchParamsConfig';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));

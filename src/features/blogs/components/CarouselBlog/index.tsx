@@ -7,10 +7,13 @@ import { BlogItem } from '@/features/blogs/BlogType';
 import BlogCard from './BlogCard';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
+import { Navigation } from 'swiper/modules';
+import { ChevronLeft, FileText } from 'lucide-react';
+
 import 'swiper/css';
 import 'swiper/css/navigation';
-import { Navigation } from 'swiper/modules';
-import { ChevronLeft } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 
 const SkeletonLoader = () => {
   return (
@@ -80,7 +83,18 @@ const CarouselBlog: FC<CarouselBlogProps> = ({ title, viewAllLink, viewAllText =
           </Swiper>
         </div>
       ) : (
-        <div className="text-center">هیچ بلاگی یافت نشد</div>
+        <div className="flex justify-center py-10">
+          <div className="max-w-sm text-center border-gray-200">
+            <div className="flex flex-col items-center gap-4">
+              <FileText className="w-16 h-16 text-gray-300" />
+              <h3 className="text-lg font-semibold">هیچ مقاله‌ای یافت نشد</h3>
+              <p className="text-sm text-gray-500">به نظر می‌رسد هنوز مقاله‌ای برای نمایش وجود ندارد.</p>
+              <Link href="/blogs" passHref>
+                <Button variant="default">مشاهده همه بلاگ‌ها</Button>
+              </Link>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );
