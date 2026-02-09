@@ -68,7 +68,7 @@ function OrderCardDetails({ order }: OrderCardDetailsProps) {
                   <span className="mr-1">تاریخ:</span> {updatedAt}{' '}
                 </span>
                 <span>
-                  <span className="mr-1">ساعت:</span> {updatedAt}{' '}
+                  <span className="mr-1">ساعت:</span> {expiresAt}{' '}
                 </span>
               </div>
             </div>
