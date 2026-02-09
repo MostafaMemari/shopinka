@@ -12,7 +12,6 @@ import { ChevronLeft, FileText } from 'lucide-react';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
-import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 
 const SkeletonLoader = () => {
