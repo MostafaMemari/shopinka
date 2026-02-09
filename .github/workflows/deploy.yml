@@ -1,0 +1,41 @@
+name: Deploy Shopinka Frontend
+
+on:
+  push:
+    branches: ['main']
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy to VPS
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: ${{ secrets.VPS_PORT }}
+          script: |
+            cd ~/projects/shopinka/shopinka-frontend/
+            git fetch origin main
+            git reset --hard origin/main
+            docker compose down --remove-orphans
+            docker compose up --build -d --force-recreate
+
+      - name: Telegram Notify Success
+        if: success()
+        run: |
+          curl -s -X POST https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage \
+            -d chat_id=${{ secrets.TELEGRAM_CHAT_ID }} \
+            -d text=$'✅ Deploy SUCCESS for Shopinka Frontend\nRepo: ${{ github.repository }}\nBranch: main\nCommit: ${{ github.sha }}'
+
+      - name: Telegram Notify Failure
+        if: failure()
+        run: |
+          curl -s -X POST https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage \
+            -d chat_id=${{ secrets.TELEGRAM_CHAT_ID }} \
+            -d text=$'❌ Deploy FAILED for Shopinka Frontend\nRepo: ${{ github.repository }}\nBranch: main\nCommit: ${{ github.sha }}'
