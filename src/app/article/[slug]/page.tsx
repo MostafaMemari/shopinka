@@ -25,9 +25,7 @@ export default async function Page({ params }: Props) {
   const { slug } = await params;
   const res = await getBlogBySlug(slug);
 
-  if (!res.success) return;
-
-  if (!res.data) return notFound();
+  if (!res.success || !res.data) notFound();
 
   const blog = res.data;
 

@@ -7,7 +7,7 @@ export async function generateProductMetadata({ slug }: Params): Promise<Metadat
   const res = await fetchProductBySlug(slug);
 
   if (!res.success) {
-    return { title: 'محصول پیدا نشد', description: 'محصول مورد نظر یافت نشد.', robots: 'noindex, nofollow' };
+    return { title: 'محصول پیدا نشد', description: 'محصول مورد نظر یافت نشد', robots: 'noindex, nofollow' };
   }
 
   const product = res.data;

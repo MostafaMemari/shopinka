@@ -23,16 +23,12 @@ export default async function NotFound() {
 
               <h2 className="text-base text-muted-foreground md:text-lg">صفحه‌ای که دنبال آن بودید پیدا نشد!</h2>
 
-              <div className="flex flex-col gap-3 sm:flex-row">
-                <Button asChild className="gap-2 px-6">
+              <div className="flex flex-col gap-3">
+                <Button asChild variant="outline" className="gap-2 px-6">
                   <Link href="/">
                     <Home className="h-4 w-4" />
                     بازگشت به صفحه اصلی
                   </Link>
-                </Button>
-
-                <Button asChild variant="outline" className="gap-2 px-6">
-                  <Link href="/shop">رفتن به فروشگاه</Link>
                 </Button>
               </div>
             </CardContent>

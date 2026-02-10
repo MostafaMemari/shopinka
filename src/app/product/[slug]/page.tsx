@@ -11,22 +11,19 @@ type Props = { params: Promise<{ slug: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  return await generateProductMetadata({ slug });
+  return generateProductMetadata({ slug });
 }
 
 export default async function Page({ params }: Props) {
   const { slug } = await params;
   const res = await fetchProductBySlug(slug);
 
-  if (!res.success) return;
-
-  if (!res.data) return notFound();
+  if (!res.success || !res.data) notFound();
 
   const product = res.data;
-
   const jsonLd = buildProductJsonLd(product);
 
-  const lastCategory = product.categories?.[product.categories.length - 1];
+  const lastCategory = product.categories?.at(-1);
   const categoryIds = lastCategory ? [lastCategory.id] : [];
 
   const discountProducts = await getProducts({ take: 14, categoryIds });
@@ -42,18 +39,18 @@ export default async function Page({ params }: Props) {
 
       <ProductDetailsView product={product} />
 
-      <div className="mt-4">
-        {discountProducts.success && (
+      {discountProducts.success && discountProducts.data?.items?.length > 0 && (
+        <div className="mt-4">
           <CarouselProduct
             title="محصولات مرتبط"
-            products={discountProducts?.data.items}
+            products={discountProducts.data.items}
             viewAllLink={`/shop?categoryIds=${categoryIds.join(',')}`}
           />
-        )}
-      </div>
+        </div>
+      )}
 
       <div className="mt-4">
-        <ProductTabs description={product?.description} specifications={product?.properties} productId={product.id} />
+        <ProductTabs description={product.description} specifications={product.properties} productId={product.id} />
       </div>
     </>
   );
