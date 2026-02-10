@@ -23,8 +23,7 @@ jobs:
             cd ~/projects/shopinka/shopinka-frontend/
             git fetch origin main
             git reset --hard origin/main
-            docker compose down --remove-orphans
-            docker compose up --build -d --force-recreate
+            docker compose up --build -d
 
       - name: Telegram Notify Success
         if: success()
