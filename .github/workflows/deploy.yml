@@ -1,12 +1,11 @@
-name: Deploy Shopinka Dashbaord
+name: Deploy Shopinka Frontend
 
 on:
   push:
     branches: ['main']
 
 env:
-  SERVICE_NAME: Shopinka Dashbaord
-  SERVICE_PATH: ~/projects/shopinka/shopinka-frontend
+  SERVICE_NAME: Shopinka Frontend
 
 jobs:
   deploy:
@@ -36,7 +35,7 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           port: ${{ secrets.VPS_PORT }}
           script: |
-            cd $SERVICE_PATH
+            cd ~/projects/shopinka/shopinka-frontend
             git fetch origin main
             git reset --hard origin/main
             docker compose up --build -d
