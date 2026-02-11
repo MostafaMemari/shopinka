@@ -11,10 +11,10 @@ import FlashOfferSection from '@/features/flash-offer/components/FlashOfferSecti
 
 export default async function Home() {
   const [discountProducts, newestProducts, blogs, categories] = await Promise.all([
-    getProducts({ take: 14, hasDiscount: true }),
-    getProducts({ take: 14, sortBy: 'newest' }),
-    getBlogs({ take: 14 }),
-    getCategoryBySlug('car-sticker'),
+    getProducts({ take: 14, hasDiscount: true }, { revalidate: 180 }),
+    getProducts({ take: 14, sortBy: 'newest' }, { revalidate: 180 }),
+    getBlogs({ take: 14 }, { revalidate: 300 }),
+    getCategoryBySlug('car-sticker', { revalidate: 3600 }),
   ]);
 
   const allItems = [
@@ -43,7 +43,9 @@ export default async function Home() {
           <CarouselProduct key="newest" title="جدیدترین محصولات" products={newestProducts.data.items} viewAllLink="/shop?sortBy=newest" />
         )}
 
-        <CategoryCirclesBanners basePath={`/product-category/${categories.slug}`} categories={categories.children} />
+        {categories.success && (
+          <CategoryCirclesBanners basePath={`/product-category/${categories.data.slug}`} categories={categories.data.children} />
+        )}
 
         {blogs.success && <CarouselBlog title="آخرین مقالات" blogs={blogs.data.items} viewAllLink="/shop?sortBy=newest" />}
       </div>

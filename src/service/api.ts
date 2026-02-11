@@ -9,9 +9,8 @@ import { refreshToken } from './refreshToken';
 
 export type ApiResponse<T> = { success: true; data: T } | { success: false; status: number; message: string };
 
-type ExtraOptions = {
+export type ExtraOptions = {
   revalidate?: number;
-  cache?: number;
   auth?: boolean;
 };
 
@@ -38,16 +37,10 @@ export async function shopApiFetch<T = any, R extends 'json' | 'text' = 'json'>(
   options: FetchOptions<R> & ExtraOptions = {},
 ): Promise<ApiResponse<MappedResponseType<R, T>>> {
   try {
-    const { revalidate, cache, auth, ...restOptions } = options;
+    const { revalidate, auth, ...restOptions } = options;
 
     if (revalidate !== undefined) {
       (restOptions as any).next = { revalidate };
-    }
-
-    if (cache !== undefined) {
-      const headers = new Headers(restOptions.headers as HeadersInit);
-      headers.set('Cache-Control', `s-maxage=${cache}`);
-      restOptions.headers = headers;
     }
 
     if (auth) {

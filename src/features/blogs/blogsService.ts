@@ -1,8 +1,8 @@
 import { BlogItem, BlogParams, BlogResponse } from '@/features/blogs/BlogType';
-import { ApiResponse, shopApiFetch } from '@/service/api';
+import { ApiResponse, ExtraOptions, shopApiFetch } from '@/service/api';
 
-export const getBlogs = async (params: BlogParams): Promise<ApiResponse<BlogResponse>> => {
-  return await shopApiFetch('/blog', { method: 'GET', query: { ...params, includeMainImage: true } });
+export const getBlogs = async (params: BlogParams, options?: ExtraOptions): Promise<ApiResponse<BlogResponse>> => {
+  return await shopApiFetch('/blog', { method: 'GET', query: { ...params, includeMainImage: true }, ...options });
 };
 
 export const getBlogBySlug = async (slug: string) => {
