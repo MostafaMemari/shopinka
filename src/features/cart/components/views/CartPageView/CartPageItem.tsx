@@ -10,45 +10,20 @@ import CartControls from '@/features/cart/components/CartControls';
 import ProductCartPrice from '../../ProductCartPrice';
 import CartItemCustomSticker from '../../CartItemCustomSticker';
 import CustomStickerDialog from '../CartBasket/CustomStickerDialog';
+import { PlaceholderImageEnum } from '@/types/enums/PlaceholderImageEnum';
 
 interface CartPageItemProps {
   cartItem: CartItemState;
   isLast?: boolean;
 }
 
-function ImageFallback() {
-  return (
-    <div className="w-24 h-24 rounded-md border bg-gray-100 flex items-center justify-center text-gray-400">
-      <Package className="w-8 h-8" />
-    </div>
-  );
-}
-
 function CartPageItem({ cartItem, isLast = false }: CartPageItemProps) {
   const [open, setOpen] = useState(false);
-  const [imageError, setImageError] = useState(false);
 
   const attributes = cartItem.type === 'VARIABLE' && cartItem.attributeValues ? cartItem.attributeValues : [];
-
   const productUrl = `/product/${cartItem.slug}`;
   const isCustomSticker = cartItem.type === 'CUSTOM_STICKER' || cartItem.customStickerValues !== null;
-
-  const hasImage = Boolean(cartItem.thumbnail) && !imageError;
-
-  const RenderImage = () =>
-    hasImage ? (
-      <Image
-        alt={cartItem.title}
-        src={cartItem.thumbnail}
-        width={96}
-        height={96}
-        loading="lazy"
-        onError={() => setImageError(true)}
-        className="w-24 h-24 rounded-md object-cover border"
-      />
-    ) : (
-      <ImageFallback />
-    );
+  const productThumbnail = cartItem.thumbnail.length ? cartItem.thumbnail : PlaceholderImageEnum.SQUARE;
 
   return (
     <>
@@ -56,11 +31,25 @@ function CartPageItem({ cartItem, isLast = false }: CartPageItemProps) {
         <div className="flex-shrink-0">
           {isCustomSticker ? (
             <button type="button" onClick={() => setOpen(true)} className="focus:outline-none cursor-pointer">
-              <RenderImage />
+              <Image
+                alt={cartItem.title}
+                src={productThumbnail}
+                width={96}
+                height={96}
+                loading="lazy"
+                className="w-24 h-24 rounded-md object-cover border"
+              />
             </button>
           ) : (
             <Link href={productUrl}>
-              <RenderImage />
+              <Image
+                alt={cartItem.title}
+                src={productThumbnail}
+                width={96}
+                height={96}
+                loading="lazy"
+                className="w-24 h-24 rounded-md object-cover border"
+              />
             </Link>
           )}
         </div>
@@ -69,7 +58,7 @@ function CartPageItem({ cartItem, isLast = false }: CartPageItemProps) {
           {isCustomSticker ? (
             <button
               onClick={() => setOpen(true)}
-              className="cursor-pointer text-sm sm:text-base text-start font-medium text-gray-900 hover:text-blue-600 line-clamp-2"
+              className="cursor-pointer text-sm text-start sm:text-base font-medium text-gray-900 hover:text-blue-600 line-clamp-2"
             >
               {cartItem.title}
             </button>
@@ -82,7 +71,7 @@ function CartPageItem({ cartItem, isLast = false }: CartPageItemProps) {
           <div className="flex items-center mt-1 gap-3">
             <div className="flex items-center gap-1 text-xs text-gray-500">
               <Package className="w-4 h-4 text-gray-400" />
-              <span>{isCustomSticker ? 'سفارشی‌سازی‌شده' : 'موجود در انبار'}</span>
+              <span>{isCustomSticker ? 'سفارشی‌ سازی‌ شده' : 'موجود در انبار'}</span>
             </div>
 
             <div className="text-xs text-gray-500">
@@ -94,9 +83,8 @@ function CartPageItem({ cartItem, isLast = false }: CartPageItemProps) {
           <div className="flex items-center justify-between mt-3">
             <div className="flex items-center gap-3">
               <CartControls product={cartItem} className="h-8 lg:h-10" />
-              <span className="text-xs hidden lg:block text-gray-600 whitespace-nowrap">تعداد: {cartItem.count}</span>
+              <span className="text-xs hidden lg:block text-gray-600 shrink-0 whitespace-nowrap">تعداد: {cartItem.count}</span>
             </div>
-
             <ProductCartPrice salePrice={cartItem.salePrice * cartItem.count} basePrice={cartItem.basePrice * cartItem.count} />
           </div>
         </div>

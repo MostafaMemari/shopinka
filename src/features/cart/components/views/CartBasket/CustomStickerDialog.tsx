@@ -1,12 +1,12 @@
 'use client';
 
-import { useState } from 'react';
 import Image from '@/components/common/UnoptimizedImage';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { CustomStickerValues } from '@/features/cart/cartType';
-import { MoveHorizontal, MoveVertical, Type, Package } from 'lucide-react';
+import { MoveHorizontal, MoveVertical, Type } from 'lucide-react';
+import { PlaceholderImageEnum } from '@/types/enums/PlaceholderImageEnum';
 
 interface CustomStickerDialogProps {
   open: boolean;
@@ -19,23 +19,14 @@ const SURFACE_LABELS: Record<string, string> = {
   MATTE: 'مات',
 };
 
-function ImageFallback() {
-  return (
-    <div className="w-[120px] h-[120px] rounded-lg border bg-muted flex items-center justify-center text-muted-foreground">
-      <Package className="w-10 h-10" />
-    </div>
-  );
-}
-
 export default function CustomStickerDialog({ open, onOpenChange, customStickerValues }: CustomStickerDialogProps) {
-  const [imageError, setImageError] = useState(false);
-
   if (!customStickerValues) return null;
 
   const { font, material, lines } = customStickerValues;
-  const thumbnail = customStickerValues.previewImage?.fileUrl || null;
 
-  const hasImage = Boolean(thumbnail) && !imageError;
+  console.log(customStickerValues);
+
+  const thumbnail = customStickerValues.previewImage?.fileUrl ? customStickerValues.previewImage.fileUrl : PlaceholderImageEnum.SQUARE;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -46,37 +37,28 @@ export default function CustomStickerDialog({ open, onOpenChange, customStickerV
 
         <div className="space-y-6">
           <div className="flex justify-center bg-muted/30 py-4 rounded-2xl border border-dashed">
-            {hasImage ? (
-              <Image
-                src={thumbnail!}
-                alt="پیش‌نمایش برچسب"
-                width={120}
-                height={120}
-                onError={() => setImageError(true)}
-                className="rounded-lg drop-shadow-md object-contain"
-              />
-            ) : (
-              <ImageFallback />
-            )}
+            <Image
+              src={thumbnail || '/placeholder.png'}
+              alt="برچسب"
+              width={120}
+              height={120}
+              className="rounded-lg drop-shadow-md object-contain"
+            />
           </div>
 
-          {/* ---------- Meta ---------- */}
           <div className="flex flex-wrap gap-2 justify-center">
             <Badge variant="secondary" className="gap-1.5 px-3 py-1 text-xs font-normal">
               <Type className="w-3.5 h-3.5 text-muted-foreground" />
               فونت: {font.displayName}
             </Badge>
-
             <Badge variant="secondary" className="px-3 py-1 text-xs font-normal">
               جنس: {material.name}
             </Badge>
-
             <Badge variant="outline" className="px-3 py-1 text-xs font-normal border-primary/30 text-primary">
               سطح {SURFACE_LABELS[material.surface] || material.surface}
             </Badge>
           </div>
 
-          {/* ---------- Lines ---------- */}
           <div className="space-y-3">
             <p className="text-xs font-bold text-muted-foreground mr-1">متن‌ها و ابعاد:</p>
 
@@ -85,7 +67,7 @@ export default function CustomStickerDialog({ open, onOpenChange, customStickerV
                 {lines.map((line) => (
                   <div
                     key={line.lineNumber}
-                    className="relative rounded-xl border bg-card p-4 pt-5 transition-colors hover:border-primary/30 shadow-sm"
+                    className="group relative rounded-xl border bg-card p-4 pt-5 transition-colors hover:border-primary/30 shadow-sm"
                   >
                     <span className="absolute -top-2 right-3 bg-background border px-2 py-0.5 rounded-full text-[10px] font-bold text-primary">
                       خط {line.lineNumber}

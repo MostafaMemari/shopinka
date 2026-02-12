@@ -10,6 +10,7 @@ import CartItemAttributes from '@/features/cart/components/CartItemAttributes';
 
 import BasketItemPrice from './BasketItemPrice';
 import CustomStickerDialog from './CustomStickerDialog';
+import { PlaceholderImageEnum } from '@/types/enums/PlaceholderImageEnum';
 
 export interface ItemCardBasketProp {
   item: CartItemState;
@@ -21,7 +22,9 @@ export default function DesktopBasketItem({ item }: ItemCardBasketProp) {
   const attributes = item.type === 'VARIABLE' && item.attributeValues ? item.attributeValues : [];
 
   const productUrl = `/product/${item.slug}`;
+  const productTitle = item.title;
   const isCustomSticker = item.type === 'CUSTOM_STICKER' || item.customStickerValues !== null;
+  const productThumbnail = item?.thumbnail?.length ? item.thumbnail : PlaceholderImageEnum.SQUARE;
 
   return (
     <>
@@ -29,11 +32,11 @@ export default function DesktopBasketItem({ item }: ItemCardBasketProp) {
         <div className="relative min-w-fit">
           {isCustomSticker ? (
             <button type="button" onClick={() => setOpen(true)} className="focus:outline-none cursor-pointer">
-              <Image alt={item.title} className="h-16 w-16 object-cover rounded" src={item.thumbnail ?? ''} width={64} height={64} />
+              <Image alt={productTitle} className="h-16 w-16 object-cover rounded" src={productThumbnail} width={64} height={64} />
             </button>
           ) : (
             <Link href={productUrl}>
-              <Image alt={item.title} className="h-16 w-16 object-cover rounded" src={item.thumbnail ?? ''} width={64} height={64} />
+              <Image alt={productTitle} className="h-16 w-16 object-cover rounded" src={productThumbnail} width={64} height={64} />
             </Link>
           )}
         </div>
@@ -43,13 +46,14 @@ export default function DesktopBasketItem({ item }: ItemCardBasketProp) {
             <button
               type="button"
               onClick={() => setOpen(true)}
-              className="text-sm font-medium text-gray-900 truncate block text-right cursor-pointer"
+              className="block w-full text-sm font-medium text-gray-900 text-right 
+             overflow-hidden whitespace-nowrap text-ellipsis cursor-pointer"
             >
               {item.title}
             </button>
           ) : (
             <Link href={productUrl} className="text-sm font-medium text-gray-900 truncate block">
-              {item.title}
+              {productTitle}
             </Link>
           )}
 
