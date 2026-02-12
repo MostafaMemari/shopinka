@@ -52,7 +52,10 @@ export const uploadPreviewImage = async (imageDataUrl: string): Promise<ApiRespo
   const file = dataURLtoFile(imageDataUrl, 'preview.webp');
 
   const formData = new FormData();
+
   formData.append('image', file);
+  formData.append('isWatermarked', 'true');
+  formData.append('isThumbnail', 'true');
 
   return await shopApiFetch('/gallery-item/custom-sticker-image', {
     method: 'POST',

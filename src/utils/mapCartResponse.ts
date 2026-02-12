@@ -9,7 +9,7 @@ export const mapCartResponseToCartItemsState = (cartItems: CartItem[] = []): Car
 
     const id = item.product?.id ?? variant?.id ?? custom?.id ?? 0;
     const type: 'SIMPLE' | 'VARIABLE' | 'CUSTOM_STICKER' = isSimple ? 'SIMPLE' : custom ? 'CUSTOM_STICKER' : 'VARIABLE';
-    const title = product?.name ?? `برچسب ${custom.lines.map((line) => line.text).join(' - ')}`;
+    const title = product?.name ?? `برچسب ماشین طرح ${custom.lines.map((line) => line.text).join(' - ')}`;
     const thumbnail = product?.mainImage?.fileUrl ?? custom?.previewImage?.fileUrl ?? '';
     const slug = product?.slug ?? '';
 
@@ -51,7 +51,7 @@ export const mapCartResponseToCartItemState = (cartItems: CartItem): CartItemSta
 
   const id = cartItems.product?.id ?? variant?.id ?? custom?.id ?? 0;
   const type: 'SIMPLE' | 'VARIABLE' | 'CUSTOM_STICKER' = isSimple ? 'SIMPLE' : custom ? 'CUSTOM_STICKER' : 'VARIABLE';
-  const title = product?.name ?? `برچسب ${custom?.lines.map((line) => line.text).join(' - ') ?? ''}`;
+  const title = product?.name ?? `برچسب ماشین طرح ${custom?.lines.map((line) => line.text).join(' - ') ?? ''}`;
   const thumbnail = product?.mainImage?.fileUrl ?? custom?.previewImage?.fileUrl ?? '';
   const slug = product?.slug ?? '';
 

@@ -18,12 +18,12 @@ export async function renderStickerImage({
   lineHeight = 1.2,
 }: StickerRenderParams) {
   const canvas = document.createElement('canvas');
-  canvas.width = 400;
-  canvas.height = 400;
+  canvas.width = 600;
+  canvas.height = 600;
 
   const ctx = canvas.getContext('2d')!;
   ctx.fillStyle = 'white';
-  ctx.fillRect(0, 0, 400, 400);
+  ctx.fillRect(0, 0, 600, 600);
 
   ctx.direction = 'rtl';
   ctx.textAlign = textAlign;
