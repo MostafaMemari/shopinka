@@ -36,6 +36,10 @@ export interface OrderProductItem {
   orderId: number;
   productId: number;
   productVariantId: null;
+
+  productTitle: string | null;
+  imageUrl: string | null;
+
   price: number;
   unitPrice: number;
   quantity: number;

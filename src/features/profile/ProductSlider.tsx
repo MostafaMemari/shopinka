@@ -9,6 +9,7 @@ import { OrderProductItem } from '@/features/orders/OrderType';
 import Image from '@/components/common/UnoptimizedImage';
 import { useState } from 'react';
 import CustomStickerDialog from '../cart/components/views/CartBasket/CustomStickerDialog';
+import { PlaceholderImageEnum } from '@/types/enums/PlaceholderImageEnum';
 
 interface ProductSliderProps {
   orderProductItems: OrderProductItem[];
@@ -41,7 +42,7 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ orderProductItems }) => {
             item?.product?.mainImage?.fileUrl ||
             item?.productVariant?.product?.mainImage?.fileUrl ||
             item?.customSticker?.previewImage?.fileUrl ||
-            '/images/no-image.webp';
+            PlaceholderImageEnum.SQUARE;
 
           const isCustomSticker = !!item?.customStickerId;
 

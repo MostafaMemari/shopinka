@@ -10,6 +10,7 @@ import { BaggageClaim } from 'lucide-react';
 import CustomStickerDialog from '@/features/cart/components/views/CartBasket/CustomStickerDialog';
 import { useState } from 'react';
 import { formatPrice } from '@/lib/utils';
+import { PlaceholderImageEnum } from '@/types/enums/PlaceholderImageEnum';
 
 interface OrderItemsProps {
   items: OrderProductItem[];
@@ -33,13 +34,9 @@ const OrderItems: React.FC<OrderItemsProps> = ({ items, itemCount }) => {
           const primaryAttribute = variantAttributes?.[0] || null;
           const product = item?.product || item?.productVariant?.product;
 
-          const productName = product?.name || item?.customSticker?.name || '';
-          const productSlug = product?.slug || '';
-          const productImageUrl =
-            item?.product?.mainImage?.fileUrl ||
-            item?.productVariant?.product?.mainImage?.fileUrl ||
-            item?.customSticker?.previewImage?.fileUrl ||
-            '/images/no-image.webp';
+          const productTitle = item.productTitle || 'بدون عنوان';
+          const productSlug = product?.slug || '#';
+          const productImageUrl = item.imageUrl || PlaceholderImageEnum.SQUARE;
 
           const priceItem = item?.unitPrice || 0;
           const isCustomSticker = !!item?.customStickerId;
@@ -55,11 +52,11 @@ const OrderItems: React.FC<OrderItemsProps> = ({ items, itemCount }) => {
                         onClick={() => setActiveSticker(item.customSticker)}
                         className="w-20 h-20 flex-shrink-0 relative cursor-pointer"
                       >
-                        <Image alt={productName} src={productImageUrl} fill className="rounded-lg object-cover shadow" />
+                        <Image alt={productTitle} src={productImageUrl} fill className="rounded-lg object-cover shadow" />
                       </button>
                     ) : (
                       <Link href={`/product/${productSlug}`} target="_blank" className="w-20 h-20 flex-shrink-0 relative">
-                        <Image alt={productName} src={productImageUrl} fill className="rounded-lg object-cover shadow" />
+                        <Image alt={productTitle} src={productImageUrl} fill className="rounded-lg object-cover shadow" />
                       </Link>
                     )}
 
@@ -70,11 +67,11 @@ const OrderItems: React.FC<OrderItemsProps> = ({ items, itemCount }) => {
                           onClick={() => setActiveSticker(item.customSticker)}
                           className="text-right cursor-pointer font-medium hover:text-primary"
                         >
-                          {productName}
+                          {productTitle}
                         </button>
                       ) : (
                         <Link href={`/product/${productSlug}`} target="_blank">
-                          {productName}
+                          {productTitle}
                         </Link>
                       )}
 
