@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
   // },
   output: "standalone",
   images: {
-    domains: ['s3.shopinka.ir', 'api.domingo.ir', 'car.vimascript.ir'],
+    domains: ['s3.shopinka.ir', 'shopinka-dev.s3.ir-thr-at1.arvanstorage.ir']
   },
 };
 
