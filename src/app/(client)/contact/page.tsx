@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import ContactInfo from '@/features/contact/components/ContactInfo';
-import ContactForm from '@/features/contact/components/ContactForm';
 import { Card, CardHeader } from '@/components/ui/card';
 import { SectionHeader } from '@/components/common/SectionHeader';
+import ContactForm from '@/features/contact/components/ContactForm';
 
 export default function ContactPage() {
   return (

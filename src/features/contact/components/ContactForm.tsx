@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { useContact } from '@/features/contact/hooks/useContact';
-import { type ContactForm, validationContactSchema } from '@/validation/validationContactSchema';
+import { type ContactForm as ContactFormType, validationContactSchema } from '@/validation/validationContactSchema';
 import { FormInput, FormTextarea } from '@/components/form/FormField';
 import PrimaryButton from '@/components/common/PrimaryButton';
 
@@ -23,7 +23,7 @@ function ContactForm() {
     },
   });
 
-  const onSubmit = async (data: ContactForm) => {
+  const onSubmit = async (data: ContactFormType) => {
     createContact(data, () => {
       form.reset();
     });

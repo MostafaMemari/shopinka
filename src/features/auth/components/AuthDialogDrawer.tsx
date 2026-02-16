@@ -14,10 +14,10 @@ import { useRef } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import AppDrawer from '@/components/wrappers/AppDrawer';
 import { clearAddToCart } from '@/store/slices/pendingActionSlice';
+import { useCloseOnRouteChange } from '@/hooks/useCloseOnRouteChange';
 
 export function AuthDialogDrawer() {
   const dispatch = useDispatch();
-
   const isDesktop = useMediaQuery('(min-width: 768px)');
 
   const { isLogin } = useAppSelector((state) => state.auth);
@@ -27,6 +27,8 @@ export function AuthDialogDrawer() {
   const { sendOtp, sendOtpStatus, verifyOtp, verifyOtpStatus } = useAuth();
 
   const otpStep = Boolean(mobile && otpSentAt && Date.now() - otpSentAt < OTP_EXPIRE_SECONDS * 1000);
+
+  useCloseOnRouteChange(open);
 
   const title = otpStep ? 'تایید شماره موبایل' : 'ورود / ثبت‌نام';
   const description = otpStep ? `کد اعتبارسنجی با موفقیت به شماره ${mobile} ارسال شد` : 'لطفا شماره تلفن همراه خود را وارد کنید';

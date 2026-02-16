@@ -1,5 +1,8 @@
 'use client';
 
+import 'swiper/css';
+import 'swiper/css/navigation';
+
 import { FC, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { blogSwiperConfig } from '@/config/swiper';
@@ -10,8 +13,6 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import { ChevronLeft, FileText } from 'lucide-react';
 
-import 'swiper/css';
-import 'swiper/css/navigation';
 import { Button } from '@/components/ui/button';
 
 const SkeletonLoader = () => {
@@ -82,16 +83,19 @@ const CarouselBlog: FC<CarouselBlogProps> = ({ title, viewAllLink, viewAllText =
           </Swiper>
         </div>
       ) : (
-        <div className="flex justify-center py-10">
-          <div className="max-w-sm text-center border-gray-200">
-            <div className="flex flex-col items-center gap-4">
-              <FileText className="w-16 h-16 text-gray-300" />
-              <h3 className="text-lg font-semibold">هیچ مقاله‌ای یافت نشد</h3>
-              <p className="text-sm text-gray-500">به نظر می‌رسد هنوز مقاله‌ای برای نمایش وجود ندارد.</p>
-              <Link href="/blogs" passHref>
-                <Button variant="default">مشاهده همه بلاگ‌ها</Button>
-              </Link>
-            </div>
+        <div className="flex items-center justify-center py-16">
+          <div className="flex flex-col items-center text-center space-y-4">
+            <FileText className="w-12 h-12 text-gray-300 dark:text-gray-600" />
+
+            <h3 className="text-base font-semibold text-gray-800 dark:text-gray-200">هنوز مقاله‌ای منتشر نشده</h3>
+
+            <p className="text-sm text-gray-500 dark:text-gray-400 max-w-xs">به‌زودی مطالب جذاب و آموزشی اینجا قرار می‌گیرند.</p>
+
+            <Link href="/blog">
+              <Button variant="outline" className="mt-2 rounded-full px-6 hover:scale-105 transition-transform">
+                مشاهده همه مقالات
+              </Button>
+            </Link>
           </div>
         </div>
       )}

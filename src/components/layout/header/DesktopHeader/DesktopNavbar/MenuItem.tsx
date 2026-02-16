@@ -31,36 +31,6 @@ const MenuItem = ({ menu, isAlwaysActive, className }: MenuItemProps) => {
       {isActive && (
         <span className="absolute bottom-0 left-1/2 -translate-x-1/2 h-0.5 w-0 bg-white dark:bg-gray-200 rounded-full animate-underline" />
       )}
-
-      <style jsx>{`
-        @keyframes pulse-unique {
-          0%,
-          100% {
-            transform: scale(1);
-            box-shadow: 0 0 10px 2px rgba(239, 68, 68, 0.3);
-            opacity: 1;
-          }
-          50% {
-            transform: scale(1.1);
-            box-shadow: 0 0 15px 6px rgba(239, 68, 68, 0.7);
-            opacity: 0.9;
-          }
-        }
-        .animate-pulse-unique {
-          animation: pulse-unique 1.8s infinite ease-in-out;
-        }
-        @keyframes underline {
-          0% {
-            width: 0;
-          }
-          100% {
-            width: 75%;
-          }
-        }
-        .animate-underline {
-          animation: underline 0.4s ease-out forwards;
-        }
-      `}</style>
     </Link>
   );
 };
