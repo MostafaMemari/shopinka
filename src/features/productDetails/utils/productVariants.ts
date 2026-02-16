@@ -75,11 +75,22 @@ export const getDefaultSelections = (
   attributes: Attribute[],
   defaultVariantId?: number,
 ): { defaultColor: string | null; defaultButton: string | null; defaultVariant: ProductVariant | null } => {
-  if (!defaultVariantId) {
+  if (!variants || variants.length === 0) {
     return { defaultColor: null, defaultButton: null, defaultVariant: null };
   }
 
-  const defaultVariant = variants.find((v) => v.id === defaultVariantId);
+  let defaultVariant: ProductVariant | undefined;
+
+  if (defaultVariantId) {
+    defaultVariant = variants.find((v) => v.id === defaultVariantId);
+  }
+
+  if (!defaultVariant) {
+    defaultVariant = variants
+      .filter((v) => (v.quantity ?? 0) > 0)
+      .reduce((min, current) => (getEffectivePrice(current) < getEffectivePrice(min) ? current : min));
+  }
+
   if (!defaultVariant) {
     return { defaultColor: null, defaultButton: null, defaultVariant: null };
   }
@@ -97,4 +108,8 @@ export const getDefaultSelections = (
   });
 
   return { defaultColor, defaultButton, defaultVariant };
+};
+
+const getEffectivePrice = (variant: ProductVariant): number => {
+  return variant.salePrice ?? variant.basePrice ?? Number.MAX_SAFE_INTEGER;
 };

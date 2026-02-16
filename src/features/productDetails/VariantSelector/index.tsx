@@ -33,7 +33,7 @@ export default function ProductVariants({ variants, attributes, productType, def
   }, [defaultVariantId, resetVariant]);
 
   useEffect(() => {
-    if (productType === 'VARIABLE' && defaultVariantId && !selectedVariant) {
+    if (productType === 'VARIABLE' && !selectedVariant) {
       const { defaultColor, defaultButton, defaultVariant } = getDefaultSelections(variants, attributes, defaultVariantId);
       if (defaultVariant) {
         dispatch(setSelectedVariant(defaultVariant));
