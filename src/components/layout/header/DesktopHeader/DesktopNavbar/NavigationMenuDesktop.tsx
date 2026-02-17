@@ -6,7 +6,7 @@ import { TableOfContents } from 'lucide-react';
 import Link from 'next/link';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '../../../../ui/hover-card';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Category } from '@/features/categories/CategoryType';
 import SubCategoryList from './SubCategoryList';
 import { navigationMenuItems } from '@/data/menuData';
@@ -14,9 +14,10 @@ import { Separator } from '@/components/ui/separator';
 
 interface NavigationMenuWithActiveItemProps {
   categories: Category[];
+  scrollDir: 'up' | 'down';
 }
 
-export default function NavigationMenuDesktop({ categories }: NavigationMenuWithActiveItemProps) {
+export default function NavigationMenuDesktop({ categories, scrollDir }: NavigationMenuWithActiveItemProps) {
   const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -24,6 +25,12 @@ export default function NavigationMenuDesktop({ categories }: NavigationMenuWith
     () => categories.find((cat) => cat.id === selectedCategoryId) || categories[0],
     [categories, selectedCategoryId],
   );
+
+  useEffect(() => {
+    if (scrollDir === 'down') {
+      setIsOpen(false);
+    }
+  }, [scrollDir]);
 
   return (
     <NavigationMenu>

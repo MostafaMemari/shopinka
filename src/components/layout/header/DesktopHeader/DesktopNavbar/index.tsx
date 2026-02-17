@@ -22,7 +22,7 @@ const DesktopNavbar = ({ categories }: DesktopNavbarProps) => {
     >
       <div className="mx-auto flex items-center gap-x-2">
         <div className="container flex w-full items-center justify-between">
-          <NavigationMenuDesktop categories={categories || []} />
+          <NavigationMenuDesktop categories={categories || []} scrollDir={scrollDir} />
           <MenuItem menu={{ id: 1, name: 'فروش ویژه', href: '/shop?hasDiscount=true' }} isAlwaysActive />
         </div>
 
