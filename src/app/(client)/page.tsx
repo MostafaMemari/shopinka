@@ -47,7 +47,7 @@ export default async function Home() {
           <CategoryCirclesBanners basePath={`/product-category/${categories.data.slug}`} categories={categories.data.children} />
         )}
 
-        {blogs.success && <CarouselBlog title="آخرین مقالات" blogs={blogs.data.items} viewAllLink="/shop?sortBy=newest" />}
+        {blogs.success && <CarouselBlog title="آخرین مقالات" blogs={blogs.data.items} viewAllLink="/blog" />}
       </div>
     </>
   );

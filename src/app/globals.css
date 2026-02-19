@@ -103,50 +103,6 @@ body {
   font-family: 'IRANYekan';
 }
 
-.embla {
-  overflow: hidden !important;
-}
-
-.embla__container {
-  display: flex !important;
-}
-
-.embla__slide {
-  flex: 0 0 100% !important;
-  min-width: 0 !important;
-}
-
-.embla-carousel-wrapper .embla {
-  overflow: hidden;
-}
-.embla-carousel-wrapper .embla__container {
-  display: flex;
-  flex-direction: row;
-}
-.embla-carousel-wrapper .embla__slide {
-  flex: 0 0 100%;
-  min-width: 0;
-}
-
-.custom-scrollbar {
-  scrollbar-width: thin;
-  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
-}
-
-.custom-scrollbar::-webkit-scrollbar {
-  width: var(--scrollbar-width);
-}
-
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: var(--scrollbar-track);
-  border-radius: var(--scrollbar-radius);
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: var(--scrollbar-thumb);
-  border-radius: var(--scrollbar-radius);
-  border: var(--scrollbar-border);
-}
 /******************* Amazing carousel ***********************/
 .amazing-product-carousel:not(.swiper-initialized) {
   opacity: 0;
@@ -182,19 +138,108 @@ body {
   height: auto;
 }
 
-.prose-custom h3 {
-  font-size: 1.375rem;
+/* ----------------------------- */
+
+.prose {
+  color: #111827;
+  line-height: 1.8;
+  letter-spacing: 0.01em;
+  font-weight: 400;
+}
+
+.prose a {
+  color: #3b82f6;
+  text-decoration: underline;
+}
+
+.prose h1 {
+  color: #111827;
+  font-size: 2rem;
   font-weight: 700;
   margin-top: 1.5em;
-  margin-bottom: 0.7em;
+  margin-bottom: 1em;
 }
-.prose-custom ul,
-.prose-custom ol {
-  padding-left: 1.5em !important;
+
+.prose h2 {
+  color: #1f2937;
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin-top: 1.25em;
+  margin-bottom: 0.75em;
 }
-.prose-custom li {
-  margin-bottom: 0.35em;
+
+.prose h3 {
+  color: #374151;
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
 }
+
+.prose p {
+  margin-top: 0.75em;
+  margin-bottom: 0.75em;
+}
+
+.prose ul,
+.prose ol {
+  padding-right: 1.5rem !important;
+  margin-top: 0.75em !important;
+  margin-bottom: 0.75em !important;
+  list-style-position: outside;
+}
+
+.prose ul {
+  list-style-type: disc !important;
+}
+
+.prose ul li::marker {
+  color: #111827 !important;
+  font-weight: bold;
+}
+
+.prose ol {
+  list-style-type: decimal !important;
+}
+
+.prose ol li::marker {
+  color: #111827 !important;
+  font-weight: bold;
+}
+
+.prose blockquote {
+  border-left: 4px solid #d1d5db;
+  padding-right: 1rem !important;
+  color: #6b7280;
+  font-style: italic;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.prose code {
+  background-color: #f3f4f6;
+  padding: 2px 4px !important;
+  border-radius: 4px;
+}
+
+.prose pre {
+  background-color: #f3f4f6;
+  padding: 1rem !important;
+  border-radius: 6px;
+  overflow-x: auto;
+}
+
+.prose img {
+  border-radius: 0.5rem;
+  max-width: 100%;
+}
+
+.prose hr {
+  border-color: #e5e7eb;
+  margin: 2em 0;
+}
+
+/* ----------------------------- */
 
 .swiper-button-prev,
 .swiper-button-next {

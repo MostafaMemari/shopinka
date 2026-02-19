@@ -6,15 +6,11 @@ import type { Metadata } from 'next';
 import { generateBlogMetadata } from './metadata';
 import Image from '@/components/common/UnoptimizedImage';
 import { NoImage } from '@/types/noImageEnum';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import { Calendar, Book } from 'lucide-react';
-import ShareButton from '@/features/blogs/components/ShareButton';
+import { Calendar, Timer, User2 } from 'lucide-react';
 
-type Props = {
-  params: Promise<{ slug: string }>;
-};
+type Props = { params: Promise<{ slug: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
@@ -29,71 +25,62 @@ export default async function Page({ params }: Props) {
 
   const blog = res.data;
 
-  const title = blog.title;
+  const title = blog.title ?? 'بدون عنوان';
   const content = blog.content ?? '';
-  const createdAt = blog.createdAt;
-  const image = blog.mainImage?.fileUrl ? blog.mainImage?.fileUrl : NoImage.BLOG;
-  const username = blog.user.fullName ?? 'نامشخص';
-  const readingTime = blog.readingTime;
+  const createdAt = blog.createdAt ?? new Date().toISOString();
+  const image = blog.mainImage?.fileUrl ?? NoImage.BLOG;
+  const username = blog.user?.fullName ?? 'نامشخص';
+  const readingTime = blog.readingTime ?? null;
+
+  const categoryIds = blog.categories?.map((c: Category) => c.id) ?? [];
 
   return (
-    <div className="grid grid-cols-12 grid-rows-[60px_min(500px,1fr)] gap-4">
-      <div className="col-span-12 space-y-4 md:col-span-8 lg:col-span-9">
+    <div className="grid grid-cols-12 gap-4">
+      <div className="col-span-12 md:col-span-8 lg:col-span-9 space-y-4">
         <Card className="shadow-md">
-          <CardContent>
-            <h1 className="mb-6 font-semibold text-xl md:text-2xl leading-relaxed">{title}</h1>
+          <CardContent className="space-y-4">
+            <h1 className="text-xl md:text-2xl font-semibold leading-relaxed">{title}</h1>
 
-            <div className="mb-6">
-              <Image src={image || NoImage.BLOG} alt="blog" width={800} height={500} className="w-full rounded-xl object-cover" />
-            </div>
+            <Separator />
 
-            <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between text-sm text-muted-foreground border-b pb-4">
-              <div className="flex flex-wrap items-center gap-4">
-                <div className="flex items-center gap-2">
-                  <Avatar className="h-6 w-6">
-                    <AvatarImage src={`https://api.dicebear.com/7.x/initials/svg?seed=${username}`} />
-                    <AvatarFallback>{username[0]}</AvatarFallback>
-                  </Avatar>
-                  <span className="font-medium">{username}</span>
-                </div>
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-sm text-muted-foreground w-full">
+              <div className="flex flex-wrap items-center justify-between gap-4 w-full">
+                <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-1">
+                    <User2 className="w-3 h-3 xl:w-4 xl:h-4" />
 
-                <Separator orientation="vertical" className="hidden sm:block h-5" />
+                    <span className="text-xs xl:text-sm">{username}</span>
+                  </div>
 
-                <div className="flex items-center gap-2">
-                  <Calendar className="w-4 h-4" />
-                  <span>
-                    {new Date(createdAt).toLocaleDateString('fa-IR', {
-                      year: 'numeric',
-                      month: '2-digit',
-                      day: '2-digit',
-                    })}
-                  </span>
+                  <div className="flex items-center gap-1">
+                    <Calendar className="w-3 h-3 xl:w-4 xl:h-4" />
+                    <span className="text-xs xl:text-sm">
+                      {new Date(createdAt).toLocaleDateString('fa-IR', { year: 'numeric', month: '2-digit', day: '2-digit' })}
+                    </span>
+                  </div>
                 </div>
 
                 {readingTime && (
-                  <>
-                    <Separator orientation="vertical" className="hidden sm:block h-5" />
-                    <div className="flex items-center gap-2">
-                      <Book className="w-4 h-4" />
-                      <span>{readingTime}</span>
-                    </div>
-                  </>
+                  <div className="flex items-center gap-1 whitespace-nowrap">
+                    <Timer className="w-3 h-3 xl:w-4 xl:h-4" />
+                    <span className="text-xs xl:text-sm">{readingTime} دقیقه مطالعه</span>
+                  </div>
                 )}
               </div>
-
-              <ShareButton />
             </div>
 
-            <div
-              className="prose prose-neutral dark:prose-invert prose-sm max-w-none text-foreground leading-relaxed"
-              style={{ lineHeight: '2', letterSpacing: '.01em' }}
-              dangerouslySetInnerHTML={{ __html: content }}
-            />
+            <div className="mb-6">
+              <Image src={image} alt={title} width={800} height={500} className="w-full rounded-xl object-cover" />
+            </div>
+
+            <div className="prose max-w-full" style={{ lineHeight: '1.8', letterSpacing: '.01em' }}>
+              <div dangerouslySetInnerHTML={{ __html: content }} />
+            </div>
           </CardContent>
         </Card>
       </div>
 
-      <Sidebar categoryIds={blog.categories?.map((category: Category) => category.id) || []} />
+      <Sidebar categoryIds={categoryIds} />
     </div>
   );
 }

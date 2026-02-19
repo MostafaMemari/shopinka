@@ -102,34 +102,23 @@
   }
   .selector-label-checked {
     border-width: 4px;
-    border-color: hsl(var(--primary)); /* قرمز-نارنجی برای حالت انتخاب‌شده */
+    border-color: hsl(var(--primary));
   }
   .selector-label-hover {
-    border-color: hsl(var(--primary)); /* قرمز-نارنجی برای هاور */
+    border-color: hsl(var(--primary));
   }
 }
-/*
-  The default border color has changed to `currentColor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
 
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
 @layer base {
   *,
   ::after,
   ::before,
   ::backdrop,
-  ::file-selector-button {
-    border-color: var(--color-gray-200, currentColor);
-  }
   html {
-    @apply scroll-smooth;
+    scroll-behavior: smooth;
+    box-sizing: border-box;
   }
-  html {
-    scrollbar-color: hsl(var(--text)) transparent;
-  }
+
   ::selection {
     background: oklch(62.68% 0 0 / 26.67%);
   }
@@ -155,14 +144,6 @@
 
   ::view-transition-new(root) {
     z-index: 2147483646;
-  }
-
-  .dark::view-transition-old(root) {
-    z-index: 2147483646;
-  }
-
-  .dark::view-transition-new(root) {
-    z-index: 1;
   }
 
   * {

@@ -30,7 +30,9 @@ const RelatedPosts: FC<RelatedPosts> = ({ posts }) => {
                 </div>
                 <div className="flex flex-col gap-y-2">
                   <p className="line-clamp-2 text-sm text-text/90 xl:text-base">{post.title}</p>
-                  <p className="text-xs text-text/60 xl:text-sm">{post.createdAt}</p>
+                  <p className="text-xs text-text/60 xl:text-sm">
+                    {new Date(post.createdAt).toLocaleDateString('fa-IR', { year: 'numeric', month: '2-digit', day: '2-digit' })}
+                  </p>
                 </div>
               </div>
             </Link>
