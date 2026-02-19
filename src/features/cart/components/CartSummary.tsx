@@ -48,12 +48,12 @@ const CartSummary: React.FC<CartSummaryProps> = ({
           </div>
         )}
 
-        {shippingPrice != null && shippingPrice > 0 && (
+        {shippingPrice != null && (
           <div className="flex justify-between items-center py-2">
             <span className="text-sm text-gray-600 font-medium">هزینه ارسال</span>
             <div className="text-sm text-gray-900">
-              <span className="font-bold">{formatPrice(shippingPrice)}</span>
-              <span className="text-xs mr-1">تومان</span>
+              {shippingPrice !== 0 && <span className="font-bold">{formatPrice(shippingPrice)}</span>}
+              <span className="text-xs mr-1">{shippingPrice === 0 ? 'پس کرایه' : 'تومان'}</span>
             </div>
           </div>
         )}

@@ -43,7 +43,7 @@ function DeliveryItem({ item, selected, setSelected, onShippingSelect }: Deliver
         <div className="flex flex-col gap-1">
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <Tag size={16} className="text-muted-foreground" />
-            <span>{item.price === 0 ? 'رایگان' : `${formatPrice(item.price)} تومان`}</span>
+            <span>{item.price === 0 ? 'پس کرایه' : `${formatPrice(item.price)} تومان`}</span>
           </div>
 
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
