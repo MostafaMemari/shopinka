@@ -7,6 +7,7 @@ import { redirect } from 'next/navigation';
 import DeliveryAddress from '@/features/address/components/DeliveryAddress';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft } from 'lucide-react';
+import ShippingMethodCard from '@/features/address/components/ShippingMethodCard';
 
 type PageProps = {
   params: Promise<{ id: string }>;
@@ -36,7 +37,16 @@ async function Page({ params }: PageProps) {
       </div>
 
       <OrderCardDetails order={order} />
-      <DeliveryAddress address={order.addressSnapshot} />
+      <div className="grid grid-cols-12 gap-0 lg:gap-6">
+        <div className="col-span-12 lg:col-span-8">
+          <DeliveryAddress address={order.addressSnapshot} />
+        </div>
+
+        <div className="col-span-12 lg:col-span-4">
+          <ShippingMethodCard method={order.shippingSnapshot} />
+        </div>
+      </div>
+
       <OrderItems items={order.items} itemCount={order.quantity} />
     </div>
   );

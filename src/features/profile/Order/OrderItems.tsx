@@ -30,8 +30,7 @@ const OrderItems: React.FC<OrderItemsProps> = ({ items, itemCount }) => {
 
       <div className="flex flex-col gap-4">
         {items.map((item) => {
-          const variantAttributes = item.productVariant?.attributeValues;
-          const primaryAttribute = variantAttributes?.[0] || null;
+          const variantAttributes = item.variantSnapshot;
           const product = item?.product || item?.productVariant?.product;
 
           const productTitle = item.productTitle || 'بدون عنوان';
@@ -39,7 +38,8 @@ const OrderItems: React.FC<OrderItemsProps> = ({ items, itemCount }) => {
           const productImageUrl = item.imageUrl || PlaceholderImageEnum.SQUARE;
 
           const priceItem = item?.unitPrice || 0;
-          const isCustomSticker = !!item?.customStickerId;
+          const isCustomSticker = item.itemType === 'CUSTOM_STICKER';
+          const customSticker = item.customStickerSnapshot;
 
           return (
             <Card key={item.id} className="border hover:shadow-lg transition-shadow duration-300">
@@ -49,7 +49,7 @@ const OrderItems: React.FC<OrderItemsProps> = ({ items, itemCount }) => {
                     {isCustomSticker ? (
                       <button
                         type="button"
-                        onClick={() => setActiveSticker(item.customSticker)}
+                        onClick={() => setActiveSticker(customSticker)}
                         className="w-20 h-20 flex-shrink-0 relative cursor-pointer"
                       >
                         <Image alt={productTitle} src={productImageUrl} fill className="rounded-lg object-cover shadow" />
@@ -64,7 +64,7 @@ const OrderItems: React.FC<OrderItemsProps> = ({ items, itemCount }) => {
                       {isCustomSticker ? (
                         <button
                           type="button"
-                          onClick={() => setActiveSticker(item.customSticker)}
+                          onClick={() => setActiveSticker(customSticker)}
                           className="text-right cursor-pointer font-medium hover:text-primary"
                         >
                           {productTitle}
@@ -75,13 +75,30 @@ const OrderItems: React.FC<OrderItemsProps> = ({ items, itemCount }) => {
                         </Link>
                       )}
 
-                      {primaryAttribute && (
-                        <div className="flex items-center gap-2 text-xs">
-                          <span
-                            className="h-4 w-4 rounded-full border"
-                            style={{ backgroundColor: primaryAttribute.colorCode || 'transparent' }}
-                          />
-                          <span>{primaryAttribute.name}</span>
+                      {variantAttributes && variantAttributes.length > 0 && (
+                        <div className="flex">
+                          {variantAttributes.map((variant) => (
+                            <div key={variant.id} className="flex">
+                              {variant.colorCode && (
+                                <div className="flex items-center gap-2 text-xs">
+                                  <span
+                                    className="h-4 w-4 rounded-full border"
+                                    style={{ backgroundColor: variant.colorCode || 'transparent' }}
+                                  />
+                                  <span>{variant.name}</span>
+                                </div>
+                              )}
+
+                              {variant.buttonLabel && (
+                                <div className="flex items-center gap-2 text-xs">
+                                  <span className="h-4 w-4" />
+                                  <>
+                                    جنس : <span>{variant.buttonLabel}</span>
+                                  </>
+                                </div>
+                              )}
+                            </div>
+                          ))}
                         </div>
                       )}
 
@@ -90,14 +107,14 @@ const OrderItems: React.FC<OrderItemsProps> = ({ items, itemCount }) => {
                           <div className="flex items-center gap-2 text-xs">
                             <span
                               className="h-4 w-4 rounded-full border"
-                              style={{ backgroundColor: item.customSticker?.material.colorCode || 'transparent' }}
+                              style={{ backgroundColor: customSticker?.material.colorCode || 'transparent' }}
                             />
-                            <span>{item.customSticker?.material.name}</span>
+                            <span>{customSticker?.material.name}</span>
                           </div>
 
                           <div className="flex items-center gap-2 text-xs">
                             <span className="h-4 w-4" />
-                            فونت : <span>{item.customSticker?.font.displayName}</span>
+                            فونت : <span>{customSticker?.font.displayName}</span>
                           </div>
                         </div>
                       )}

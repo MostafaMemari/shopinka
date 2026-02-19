@@ -11,6 +11,7 @@ export interface Order {
   items: OrderItem[];
 }
 export type OrderStatus = 'PENDING' | 'PROCESSING' | 'SHIPPED' | 'CANCELLED';
+export type OrderItemType = 'PRODUCT' | 'PRODUCT_VARIANT' | 'CUSTOM_STICKER';
 
 export interface OrderItem {
   id: number;
@@ -24,6 +25,7 @@ export interface OrderItem {
   createdAt: string;
   updatedAt: string;
   addressSnapshot: AddressItem;
+  shippingSnapshot: ShippingItem;
   expiresAt: string;
   items: OrderProductItem[] | [];
   shippingInfo: null;
@@ -39,6 +41,7 @@ export interface OrderProductItem {
 
   productTitle: string | null;
   imageUrl: string | null;
+  itemType: OrderItemType;
 
   price: number;
   unitPrice: number;
@@ -46,6 +49,10 @@ export interface OrderProductItem {
   createdAt: string;
   product: Product;
   productVariant: ProductVariant | null;
+  customStickerSnapshot: CustomStickerValues | null;
+
+  variantSnapshot: AttributeValues[] | null;
+
   customStickerId: number | null;
   customSticker: CustomStickerValues | null;
 }
