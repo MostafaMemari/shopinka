@@ -5,6 +5,7 @@ export type ShippingItem = {
   price: number;
   estimatedDays: number;
   isActive: boolean;
+  isDefault: boolean;
   createdAt: string;
   updatedAt: string;
 };

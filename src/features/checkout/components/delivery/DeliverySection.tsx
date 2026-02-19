@@ -6,6 +6,7 @@ import DeliveryItem from './DeliveryItem';
 import { Truck } from 'lucide-react';
 import { useShipping } from '@/features/shippings/useShipping';
 import { ShippingCardSkeleton } from './ShippingCardSkeleton';
+import { boolean } from 'zod';
 
 interface DeliverySectionProps {
   onShippingSelect: (shippingSelectedItem: ShippingItem | null) => void;
@@ -20,9 +21,9 @@ export default function DeliverySection({ onShippingSelect }: DeliverySectionPro
 
   useEffect(() => {
     if (shippings.length && selected === null) {
-      const firstItem = shippings[0];
-      setSelected(firstItem.id);
-      onShippingSelect(firstItem);
+      const defaultItem = shippings.find((s) => s.isDefault) || shippings[0];
+      setSelected(defaultItem.id);
+      onShippingSelect(defaultItem);
     }
   }, [shippings, selected, onShippingSelect]);
 
