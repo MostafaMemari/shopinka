@@ -67,17 +67,34 @@ const ProductDetailsView: FC<ProductDetailsViewProps> = ({ product }) => {
                     <ProductCommentCount key={product.id} productId={product.id} />
                   </div>
 
-                  <div className="flex lg:justify-start">
-                    <ProductVariants
-                      defaultVariantId={product.defaultVariantId ?? undefined}
-                      variants={product.variants}
-                      attributes={product.attributes}
-                      productType={product.type}
-                    />
-                  </div>
+                  <div className="flex flex-col gap-4 mb-2 md:mb-4">
+                    <div className="flex lg:justify-start ">
+                      <ProductVariants
+                        defaultVariantId={product.defaultVariantId ?? undefined}
+                        variants={product.variants}
+                        attributes={product.attributes}
+                        productType={product.type}
+                      />
+                    </div>
 
-                  <div className="flex flex-col gap-2 items-center lg:items-start">
-                    <ProductProperties />
+                    <div className="flex">
+                      <ProductProperties
+                        properties={[
+                          ...(product.width && product.length
+                            ? [
+                                {
+                                  label: 'ابعاد',
+                                  value: `${product.width} * ${product.length} سانتی متر`,
+                                },
+                              ]
+                            : []),
+
+                          { label: 'جنس', value: 'وینیل' },
+                          { label: 'ضدآب', value: '✓' },
+                          { label: 'برش', value: 'پلاتری' },
+                        ]}
+                      />
+                    </div>
                   </div>
                 </div>
 
