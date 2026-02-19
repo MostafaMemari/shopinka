@@ -6,7 +6,6 @@ import DeliveryItem from './DeliveryItem';
 import { Truck } from 'lucide-react';
 import { useShipping } from '@/features/shippings/useShipping';
 import { ShippingCardSkeleton } from './ShippingCardSkeleton';
-import { boolean } from 'zod';
 
 interface DeliverySectionProps {
   onShippingSelect: (shippingSelectedItem: ShippingItem | null) => void;
