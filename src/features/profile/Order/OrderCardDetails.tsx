@@ -33,7 +33,7 @@ function OrderCardDetails({ order }: OrderCardDetailsProps) {
       <Card className="border hover:shadow-lg transition-shadow duration-300">
         <CardContent className="flex flex-col lg:flex-row p-4 gap-4">
           <div className="flex-1 flex flex-col gap-4">
-            <RemainingTimeItem orderStatus={orderStatus} transactionStatus={transactionStatus} expiresAt={expiresAt} />
+            <RemainingTimeItem orderStatus={orderStatus} transactionStatus={transactionStatus} expiresAt={order.expiresAt} />
 
             <Item label="شماره سفارش" value={orderNumber} />
 
