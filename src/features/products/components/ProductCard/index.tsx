@@ -64,14 +64,18 @@ const ProductCard: FC<Props> = ({ product, showColors = false }) => {
 
           {showColors && colors.length > 0 && (
             <div className="absolute top-2 right-2 flex gap-1 bg-white/80 backdrop-blur px-2 py-1 rounded-full shadow-sm">
-              {colors.slice(0, 3).map((color) => (
-                <span
-                  key={color.id}
-                  className="w-3 h-3 rounded-full border border-gray-300"
-                  style={{ backgroundColor: color.colorCode ?? '#ccc' }}
-                  title={color.name}
-                />
-              ))}
+              {colors
+                .slice()
+                .sort((a, b) => a.id - b.id)
+                .slice(0, 3)
+                .map((color) => (
+                  <span
+                    key={color.id}
+                    className="w-3 h-3 rounded-full border border-gray-300"
+                    style={{ backgroundColor: color.colorCode ?? '#ccc' }}
+                    title={color.name}
+                  />
+                ))}
 
               {colors.length > 3 && <span className="text-[10px] text-gray-600 font-medium">+{colors.length - 3}</span>}
             </div>

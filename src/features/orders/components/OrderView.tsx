@@ -18,12 +18,10 @@ type OrderTabsProps = {
 };
 
 const OrderTabs = async ({ searchParams }: OrderTabsProps) => {
-  // دریافت تب فعال از searchParams
   const activeTabParam = searchParams.activeTab;
   const isValidTab = activeTabParam && TABS.some((tab) => tab.id === activeTabParam);
   const tabId: TabId = (isValidTab ? activeTabParam : DEFAULT_TAB) as TabId;
 
-  // دریافت تعداد سفارش‌ها از سرور
   const res = await getCountOrders();
   const tabCounts: Record<TabId, number> = {
     current: res.success ? res.data.current : 0,
