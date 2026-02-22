@@ -14,3 +14,17 @@ export const getCountOrders = async (): Promise<ApiResponse<OrderCountsResponse>
 export const getOrderById = async (id: number): Promise<ApiResponse<OrderItem>> => {
   return await shopApiFetch(`/order/my/${id}`, { method: 'GET', auth: true });
 };
+
+export const cancelOrderById = async ({
+  orderId,
+  reason,
+}: {
+  orderId: number;
+  reason: string;
+}): Promise<ApiResponse<{ message: string }>> => {
+  return await shopApiFetch(`/order/cancel/${orderId}`, {
+    method: 'PATCH',
+    auth: true,
+    body: { reason },
+  });
+};

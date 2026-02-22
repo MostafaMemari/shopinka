@@ -92,24 +92,24 @@ const OrderCard: React.FC<OrderCardProps> = ({ order }) => {
             )}
           </div>
         </CardContent>
-
-        <Separator className="my-4" />
-
-        {order.items?.length > 0 && (
-          <div className="border-gray-200 dark:border-gray-700">
-            <ProductSlider orderProductItems={order.items} />
-          </div>
-        )}
-
-        {order.status === 'PENDING' && (
-          <>
-            <Separator className="my-4" />
-            <CardFooter className="border-gray-200 dark:border-gray-700 text-left p-0">
-              <RetryPaymentButton orderId={order.id} />
-            </CardFooter>
-          </>
-        )}
       </Link>
+
+      <Separator className="my-4" />
+
+      {order.items?.length > 0 && (
+        <div className="border-gray-200 dark:border-gray-700">
+          <ProductSlider orderProductItems={order.items} />
+        </div>
+      )}
+
+      {order.status === 'PENDING' && (
+        <>
+          <Separator className="my-4" />
+          <CardFooter className="border-gray-200 dark:border-gray-700 text-left p-0">
+            <RetryPaymentButton orderId={order.id} />
+          </CardFooter>
+        </>
+      )}
     </Card>
   );
 };

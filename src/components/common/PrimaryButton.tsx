@@ -8,11 +8,19 @@ interface PrimaryButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   isLoading?: boolean;
   className?: string;
   disabled?: boolean;
+  variant?: 'link' | 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost';
 }
 
-export default function PrimaryButton({ children, isLoading = false, className, disabled, ...props }: PrimaryButtonProps) {
+export default function PrimaryButton({
+  children,
+  isLoading = false,
+  className,
+  disabled,
+  variant = 'default',
+  ...props
+}: PrimaryButtonProps) {
   return (
-    <Button className={cn('flex justify-center items-center', className)} disabled={disabled || isLoading} {...props}>
+    <Button className={cn('flex justify-center items-center', className)} disabled={disabled || isLoading} variant={variant} {...props}>
       {isLoading ? (
         <Ellipsis className="!w-9 !h-9 animate-side-to-side" />
       ) : (

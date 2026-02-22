@@ -6,6 +6,7 @@ import { RemainingTimeItem } from './RemainingTimeItem';
 
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { cn, formatPrice } from '@/lib/utils';
+import { CancelOrderDialogDrawer } from '@/features/CancellOrder/CancelOrderDialogDrawer';
 
 interface OrderCardDetailsProps {
   order: OrderItem;
@@ -75,11 +76,21 @@ function OrderCardDetails({ order }: OrderCardDetailsProps) {
           )}
         </CardContent>
 
-        {orderStatus === 'PENDING' && (
-          <CardFooter className="border-t border-gray-200 dark:border-gray-700 text-left">
-            <RetryPaymentButton orderId={orderId} />
-          </CardFooter>
-        )}
+        <CardFooter className="border-t border-gray-200 dark:border-gray-700 text-left px-0">
+          <div className="flex justify-between items-center w-full gap-2">
+            {(orderStatus === 'PENDING' || orderStatus === 'PROCESSING') && (
+              <div className="w-1/2">
+                <CancelOrderDialogDrawer orderId={orderId} />
+              </div>
+            )}
+
+            {orderStatus === 'PENDING' && (
+              <div className="w-1/2">
+                <RetryPaymentButton orderId={orderId} />
+              </div>
+            )}
+          </div>
+        </CardFooter>
       </Card>
     </>
   );
