@@ -7,10 +7,18 @@ import { RemainingTimeItem } from './RemainingTimeItem';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { cn, formatPrice } from '@/lib/utils';
 import { CancelOrderDialogDrawer } from '@/features/CancellOrder/CancelOrderDialogDrawer';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { AlertCircleIcon, AlertTriangleIcon } from 'lucide-react';
 
 interface OrderCardDetailsProps {
   order: OrderItem;
 }
+
+export const ORDER_CANCEL_MAP = {
+  USER: 'کاربر',
+  SYSTEM: 'سیستم',
+  ADMIN: 'ادمین',
+} as const;
 
 function OrderCardDetails({ order }: OrderCardDetailsProps) {
   const orderId = order.id;
@@ -21,11 +29,20 @@ function OrderCardDetails({ order }: OrderCardDetailsProps) {
   const createdAt = new Date(order.createdAt).toLocaleDateString('fa-IR');
   const updatedAt = new Date(order.updatedAt).toLocaleDateString('fa-IR');
   const expiresAt = new Date(order.expiresAt).toLocaleTimeString('fa-IR');
+  const cancelledByType = order.cancelledByType ? ORDER_CANCEL_MAP[order.cancelledByType] : undefined;
 
   const config = getStatusConfig(orderStatus, transactionStatus);
 
   return (
     <>
+      {orderStatus === 'CANCELLED' && (
+        <Alert className=" border-amber-200 bg-amber-50 text-amber-900">
+          <AlertTriangleIcon />
+          <AlertTitle>لغو شده توسط {cancelledByType}</AlertTitle>
+          <AlertDescription>{order.cancelReason}</AlertDescription>
+        </Alert>
+      )}
+
       <div className={cn('my-6 flex items-center gap-3 text-lg', config.headerColor)}>
         {config.headerIcon}
         <h2 className="font-semibold text-base md:text-lg">{config.headerLabel}</h2>
@@ -76,21 +93,23 @@ function OrderCardDetails({ order }: OrderCardDetailsProps) {
           )}
         </CardContent>
 
-        <CardFooter className="border-t border-gray-200 dark:border-gray-700 text-left px-0">
-          <div className="flex justify-between items-center w-full gap-2">
-            {(orderStatus === 'PENDING' || orderStatus === 'PROCESSING') && (
-              <div className="w-1/2">
-                <CancelOrderDialogDrawer orderId={orderId} />
-              </div>
-            )}
+        {(orderStatus === 'PENDING' || orderStatus === 'PROCESSING') && (
+          <CardFooter className="border-t border-gray-200 dark:border-gray-700 text-left px-0">
+            <div className="flex justify-between items-center w-full gap-2">
+              {(orderStatus === 'PENDING' || orderStatus === 'PROCESSING') && (
+                <div className="w-1/2">
+                  <CancelOrderDialogDrawer orderId={orderId} />
+                </div>
+              )}
 
-            {orderStatus === 'PENDING' && (
-              <div className="w-1/2">
-                <RetryPaymentButton orderId={orderId} />
-              </div>
-            )}
-          </div>
-        </CardFooter>
+              {orderStatus === 'PENDING' && (
+                <div className="w-1/2">
+                  <RetryPaymentButton orderId={orderId} />
+                </div>
+              )}
+            </div>
+          </CardFooter>
+        )}
       </Card>
     </>
   );

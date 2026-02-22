@@ -10,8 +10,9 @@ export interface Order {
   pager: Pager;
   items: OrderItem[];
 }
-export type OrderStatus = 'PENDING' | 'PROCESSING' | 'SHIPPED' | 'CANCELLED';
+export type OrderStatus = 'PENDING' | 'PROCESSING' | 'FULFILLING' | 'SHIPPED' | 'CANCELLED';
 export type OrderItemType = 'PRODUCT' | 'PRODUCT_VARIANT' | 'CUSTOM_STICKER';
+export type CancelledOrderByType = 'USER' | 'SYSTEM' | 'ADMIN';
 
 export interface OrderItem {
   id: number;
@@ -31,6 +32,11 @@ export interface OrderItem {
   shippingInfo: null;
   shipping: ShippingItem;
   transaction: Transaction;
+
+  cancelReason?: string | null;
+  cancelledAt?: string | null;
+  cancelledByType?: CancelledOrderByType | null;
+  cancelledById?: string | null;
 }
 
 export interface OrderProductItem {

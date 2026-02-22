@@ -37,6 +37,7 @@ async function Page({ params }: PageProps) {
       </div>
 
       <OrderCardDetails order={order} />
+
       <div className="grid grid-cols-12 gap-0 lg:gap-6">
         <div className="col-span-12 lg:col-span-8">
           <DeliveryAddress address={order.addressSnapshot} />

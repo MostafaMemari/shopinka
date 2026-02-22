@@ -1,6 +1,6 @@
 import { OrderStatus } from '@/features/orders/OrderType';
 import { TransactionStatus } from '@/types/transactionType';
-import { AlertTriangle, Box, CheckCircle2, Clock, Truck, X } from 'lucide-react';
+import { AlertTriangle, Box, CheckCircle2, Clock, PackageCheck, Truck, X } from 'lucide-react';
 import React from 'react';
 
 interface StatusConfig {
@@ -60,6 +60,15 @@ export const getStatusConfig = (orderStatus: OrderStatus, transactionStatus: Tra
       statusIcon: React.createElement(Box, { className: 'h-5 w-5 md:h-6 md:w-6' }),
       statusColor: 'text-blue-500',
       progressColor: 'bg-blue-500',
+    },
+    FULFILLING: {
+      showProgress: true,
+      progress: 65,
+      statusLabel: 'در حال آماده‌ سازی',
+      statusDescription: 'سفارش شما در حال بسته‌ بندی و آماده ‌سازی برای ارسال است.',
+      statusIcon: React.createElement(PackageCheck, { className: 'h-5 w-5 md:h-6 md:w-6' }),
+      statusColor: 'text-purple-500',
+      progressColor: 'bg-purple-500',
     },
     SHIPPED: {
       showProgress: true,
