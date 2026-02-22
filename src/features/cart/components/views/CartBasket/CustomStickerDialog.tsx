@@ -24,8 +24,6 @@ export default function CustomStickerDialog({ open, onOpenChange, customStickerV
 
   const { font, material, lines } = customStickerValues;
 
-  console.log(customStickerValues);
-
   const thumbnail = customStickerValues.previewImage?.fileUrl ? customStickerValues.previewImage.fileUrl : PlaceholderImageEnum.SQUARE;
 
   return (

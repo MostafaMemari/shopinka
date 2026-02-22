@@ -8,6 +8,7 @@ import DeliveryAddress from '@/features/address/components/DeliveryAddress';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft } from 'lucide-react';
 import ShippingMethodCard from '@/features/address/components/ShippingMethodCard';
+import ShippingInfoCard from '@/features/address/components/ShippingInfoCard';
 
 type PageProps = {
   params: Promise<{ id: string }>;
@@ -38,12 +39,14 @@ async function Page({ params }: PageProps) {
 
       <OrderCardDetails order={order} />
 
+      <ShippingInfoCard shippingInfo={order.shippingInfo} shippingSnapshot={order.shippingSnapshot} />
+
       <div className="grid grid-cols-12 gap-0 lg:gap-6">
-        <div className="col-span-12 lg:col-span-8">
+        <div className="col-span-12 lg:col-span-7">
           <DeliveryAddress address={order.addressSnapshot} />
         </div>
 
-        <div className="col-span-12 lg:col-span-4">
+        <div className="col-span-12 lg:col-span-5">
           <ShippingMethodCard method={order.shippingSnapshot} />
         </div>
       </div>

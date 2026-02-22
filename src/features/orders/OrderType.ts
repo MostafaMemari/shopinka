@@ -29,7 +29,7 @@ export interface OrderItem {
   shippingSnapshot: ShippingItem;
   expiresAt: string;
   items: OrderProductItem[] | [];
-  shippingInfo: null;
+  shippingInfo: ShippingInfo | null;
   shipping: ShippingItem;
   transaction: Transaction;
 
@@ -37,6 +37,16 @@ export interface OrderItem {
   cancelledAt?: string | null;
   cancelledByType?: CancelledOrderByType | null;
   cancelledById?: string | null;
+}
+
+export interface ShippingInfo {
+  createdAt: string;
+  id: number;
+  orderId: number;
+  sentAt: string;
+  shippingId: number;
+  trackingCode: string;
+  userId: number | null;
 }
 
 export interface OrderProductItem {

@@ -16,8 +16,6 @@ export function RemainingTimeItem({ orderStatus, transactionStatus, expiresAt }:
 
   const remainingTime = getRemainingTime(expiresAt);
 
-  console.log(remainingTime);
-
   return (
     <Item
       label="زمان باقی‌مانده"

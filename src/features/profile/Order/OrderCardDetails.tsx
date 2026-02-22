@@ -8,7 +8,7 @@ import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { cn, formatPrice } from '@/lib/utils';
 import { CancelOrderDialogDrawer } from '@/features/CancellOrder/CancelOrderDialogDrawer';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { AlertCircleIcon, AlertTriangleIcon } from 'lucide-react';
+import { AlertTriangleIcon } from 'lucide-react';
 
 interface OrderCardDetailsProps {
   order: OrderItem;
