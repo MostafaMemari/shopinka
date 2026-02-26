@@ -21,7 +21,7 @@ interface Props {
 }
 
 function StickerMakerView({ fontData, materialData }: Props) {
-  const [openPanel, setOpenPanel] = useState<OpenPanel>(null);
+  const [openPanel, setOpenPanel] = useState<OpenPanel>('font');
 
   const togglePanel = useCallback((panel: 'font' | 'color' | 'settings') => {
     setOpenPanel((prev) => (prev === panel ? null : panel));
