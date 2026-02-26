@@ -4,10 +4,10 @@ import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import React, { useRef, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { setFontStart, setFontSuccess } from '@/store/slices/stickerSlice';
-import { FontItem } from './FontItem';
 import { detectLanguage } from './detectLanguage';
 import { FontItem as FontItemType } from '@/types/fontType';
 import { useSelectedStickerAssets } from '@/hooks/useSelectedStickerAssets';
+import { FontCard } from './FontItem';
 
 interface Props {
   data: { items: FontItemType[] };
@@ -42,7 +42,7 @@ function FontGrid({ data }: Props) {
       <ScrollArea className="w-full h-[94px] bg-white rounded-md shadow-md border">
         <div className="flex gap-2 px-2">
           {(filteredFonts ?? []).map((font: FontItemType) => (
-            <FontItem key={font.name} font={font} isSelected={isSelected(font.id)} onSelect={() => handleFontSelect(font)} />
+            <FontCard key={font.name} font={font} isSelected={isSelected(font.id)} onSelect={() => handleFontSelect(font)} />
           ))}
         </div>
 

@@ -1,6 +1,5 @@
 'use client';
 import React, { useEffect, useRef, useState } from 'react';
-import { cn } from '@/lib/utils';
 import { useDispatch } from 'react-redux';
 import { useSelectedStickerAssets } from '@/hooks/useSelectedStickerAssets';
 import { useLoadFont } from '@/hooks/useLoadFont';
@@ -15,22 +14,36 @@ const EditableText: React.FC<EditableTextProps> = ({ onStartEditing }) => {
   const { fontLoaded, fontFamily } = useLoadFont(selectedFont);
 
   const dispatch = useDispatch();
-
   const editableRef = useRef<HTMLDivElement>(null);
 
-  const [isClient, setIsClient] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
 
-  useEffect(() => setIsClient(true), []);
+  useEffect(() => {
+    if (!fontLoaded) return;
+
+    const timeout = setTimeout(() => {
+      editableRef.current?.focus();
+      onStartEditing();
+    }, 0);
+
+    return () => clearTimeout(timeout);
+  }, [fontLoaded]);
 
   useEffect(() => {
-    if (editableRef.current && text !== editableRef.current.innerText) {
+    if (editableRef.current && editableRef.current.innerText !== text) {
       editableRef.current.innerText = text;
     }
-  }, [text, isClient]);
+  }, [text]);
+
+  if (!fontLoaded) {
+    return (
+      <div className="absolute flex items-center justify-center w-full h-full pointer-events-none">
+        <div className="w-6 h-6 border-2 border-gray-300 rounded-full opacity-40 animate-spin border-t-blue-600" />
+      </div>
+    );
+  }
 
   const colorValue = selectedMaterial?.colorCode || '#000000';
-
   const editableStyle: React.CSSProperties = {
     fontSize: selectedFont?.size
       ? `clamp(${selectedFont.size * 0.8}rem, ${selectedFont.size}rem + 1vw, ${selectedFont.size * 1.8}rem)`
@@ -47,14 +60,6 @@ const EditableText: React.FC<EditableTextProps> = ({ onStartEditing }) => {
     transition: 'opacity 0.2s ease',
   };
 
-  if (!isClient || !fontLoaded) {
-    return (
-      <div className="absolute flex items-center justify-center w-full h-full pointer-events-none">
-        <div className="w-6 h-6 border-2 border-gray-300 rounded-full opacity-40 animate-spin border-t-blue-600" />
-      </div>
-    );
-  }
-
   return (
     <div className="flex items-center justify-center p-0.5 w-full h-full relative">
       <div
@@ -69,17 +74,11 @@ const EditableText: React.FC<EditableTextProps> = ({ onStartEditing }) => {
         }}
         onBlur={(e) => {
           setIsFocused(false);
-          const newText = (e.target as HTMLDivElement).innerText.trim();
-
-          dispatch(setText(newText));
+          dispatch(setText(e.currentTarget.innerText.trim()));
         }}
-        className={cn(
-          'whitespace-pre-wrap outline-none text-center select-text relative min-h-[1.2em]',
-          isFocused ? 'opacity-100' : 'opacity-90',
-          !isFocused && !text
-            ? "before:content-['متن_را_اینجا_وارد_کنید_...'] before:text-gray-400 before:opacity-40 before:pointer-events-none before:select-none"
-            : '',
-        )}
+        className={`whitespace-pre-wrap outline-none text-center select-text relative min-h-[1.2em] ${
+          isFocused ? 'opacity-100' : 'opacity-90'
+        } ${!isFocused && !text ? "before:content-['متن_را_اینجا_وارد_کنید_...'] before:text-gray-400 before:opacity-40 before:pointer-events-none before:select-none" : ''}`}
         style={editableStyle}
       >
         {text}

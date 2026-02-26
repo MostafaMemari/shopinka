@@ -29,17 +29,18 @@ export default function BottomNav({
 
   const navItems = [
     {
-      label: 'رنگ',
-      onClick: toggleColorGrid,
-      icon: <Palette size={24} />,
-      isActive: showColorGrid,
-    },
-    {
       label: 'فونت',
       onClick: toggleFontGrid,
       icon: <Type size={24} />,
       isActive: showFontGrid,
     },
+    {
+      label: 'رنگ',
+      onClick: toggleColorGrid,
+      icon: <Palette size={24} />,
+      isActive: showColorGrid,
+    },
+
     {
       label: 'تنظیمات',
       onClick: toggleSettingsPanel,
